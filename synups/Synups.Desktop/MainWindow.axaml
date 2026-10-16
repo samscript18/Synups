@@ -124,6 +124,22 @@
           </StackPanel>
           <StackPanel IsVisible="{Binding IsPreferences}" Spacing="12">
             <TextBlock Text="Preferences" Classes="h1" />
+            <TextBlock Name="HistoryStorageHeading" Text="History storage" Classes="h2" />
+            <TextBlock Text="{Binding StorageSummary}" />
+            <TextBlock Text="{Binding StorageDetails}" Classes="muted" />
+            <TextBlock Text="{Binding StorageWarning}" />
+            <TextBlock Text="The capacity limits SQLite main database pages, not total disk use. Backups, sidecars, logs and temporary work need extra space. Measurements update every five seconds while monitoring; use Refresh while stopped. Only managed backups and the selected log folder are counted. External copies are not tracked." Classes="muted" />
+            <Button Content="Refresh storage usage" Click="RefreshStorageClicked" HorizontalAlignment="Left" />
+            <StackPanel IsEnabled="{Binding CanManageStorage}" Spacing="8">
+              <TextBlock Text="Database capacity in MiB (256–10240; 1024 MiB = 1 GiB default)" />
+              <TextBox Name="CapacityEditor" Text="{Binding PrefCapacityMiB, Mode=TwoWay}" AutomationProperties.Name="Maximum history database capacity in MiB" />
+              <Button Name="ApplyCapacity" Content="Apply database capacity" Click="ApplyCapacityClicked" HorizontalAlignment="Left" />
+              <TextBlock Text="Capacity is committed separately in SQLite and survives restart. Stop monitoring to change it. Raise capacity before Retry if writes are pending. Lowering below the allocated database size is refused without deleting any records." Classes="muted" />
+              <Button Name="BackupHistory" Content="Create full history backup…" Click="BackupHistoryClicked" HorizontalAlignment="Left" />
+              <TextBlock Text="Manual cleanup age in days (1–3650)" />
+              <TextBox Text="{Binding CleanupDays, Mode=TwoWay}" AutomationProperties.Name="Manual history cleanup age in days" />
+              <Button Name="CleanupHistory" Content="Back up and clean eligible history…" IsEnabled="{Binding CanCleanupHistory}" Click="CleanupHistoryClicked" HorizontalAlignment="Left" />
+            </StackPanel>
             <TextBlock Text="{Binding NativeAlertStatus}" Classes="muted" />
             <TextBlock Name="TrayCapability" Text="Tray initializes when the native window opens." Classes="muted" />
             <TextBlock Text="These preferences do not change OS login/startup registration. Launch-at-login is not implemented." Classes="muted" />
@@ -143,7 +159,7 @@
               <CheckBox Content="Export structured session logs and outage CSV automatically at session end" IsChecked="{Binding PrefLogs, Mode=TwoWay}" />
               <TextBlock Text="Absolute log directory (history database remains in the Synups data directory)" />
               <TextBox Text="{Binding PrefLogDirectory, Mode=TwoWay}" AutomationProperties.Name="Automatic log directory" />
-              <TextBlock Text="Retention days: 0 keeps all. A positive value deletes only old recovered incidents in fully ended sessions. Unresolved/interrupted sessions are retained. Logs have a separate 256MB cap and require manual archival." />
+              <TextBlock Text="Automatic history cleanup: 0 (default) preserves all history. A positive value (1–3650 days) requires confirmation and deletes only eligible fully ended sessions now, at launch and once daily during monitoring. Entire unresolved/interrupted sessions are retained. Freed pages are reused. Automatic logs keep their separate 256 MiB cap and require manual archival." />
               <TextBox Text="{Binding PrefRetentionDays, Mode=TwoWay}" AutomationProperties.Name="History retention days" />
               <Button Content="Apply preferences…" Click="ApplyPreferencesClicked" HorizontalAlignment="Left" />
               <Button Content="Recover unreadable preferences…" Click="RecoverPreferencesClicked" HorizontalAlignment="Left" />

@@ -17,12 +17,15 @@ public interface IHistoryStore : IAsyncDisposable
 }
 
 /// <summary>Single owned connection, serialized off-thread I/O. SQLite async APIs are synchronous.</summary>
-public sealed class SqliteHistoryStore(string fileName, long maxBytes = 64 * 1024 * 1024) : IHistoryStore
+public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryCapacity.DefaultBytes) : IHistoryStore, IHistoryStorageManagement
 {
     private readonly SemaphoreSlim io = new(1, 1);
     private readonly string path = Path.GetFullPath(fileName);
     private SqliteConnection? connection;
     private FileStream? lease;
+    private readonly long initialBytes = maxBytes;
+    private long configuredBytes = maxBytes;
+    private string BackupDirectory => path + ".backups";
     private bool disposed, recoveredOpenSessions;
     private static string Json<T>(T value) => JsonSerializer.Serialize(value);
     private static T Parse<T>(string value) => JsonSerializer.Deserialize<T>(value) ?? throw new InvalidDataException("Empty history record.");
@@ -47,15 +50,33 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = 64 * 102
             var integrity = Convert.ToString(Scalar("PRAGMA quick_check"), CultureInfo.InvariantCulture);
             if (integrity != "ok") throw new InvalidDataException($"History integrity check failed: {integrity}");
             Execute("PRAGMA journal_mode=DELETE; PRAGMA synchronous=FULL; PRAGMA journal_size_limit=0;");
-            Execute($"PRAGMA max_page_count={Math.Max(32, maxBytes / Convert.ToInt64(Scalar("PRAGMA page_size"), CultureInfo.InvariantCulture))};");
-            Execute("""
+            var hasPolicy = Number("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='storage_policy'") == 1;
+            configuredBytes = hasPolicy ? Number("SELECT max_bytes FROM storage_policy WHERE id=1") : initialBytes;
+            // The optional constructor override also supports bounded host/test stores. UI changes use the stricter public range.
+            if (configuredBytes < 128 * 1024 || configuredBytes > HistoryCapacity.MaximumBytes)
+                throw new InvalidDataException("Invalid stored history capacity. No reset performed.");
+            // An already oversized legacy database may need a few pages for additive policy metadata.
+            // Permit only this migration overhead, then cap growth at its actual allocation; never truncate old pages.
+            var allocation = checked(Number("PRAGMA page_count") * Number("PRAGMA page_size"));
+            var migrationLimit = !hasPolicy && allocation >= configuredBytes
+                ? checked(allocation + 16 * Number("PRAGMA page_size")) : configuredBytes;
+            ApplyPageLimit(migrationLimit, allowExistingLarger: true);
+            using var migration = connection.BeginTransaction();
+            using var schema = connection.CreateCommand(); schema.Transaction = migration;
+            schema.CommandText = """
+                CREATE TABLE IF NOT EXISTS storage_policy(id INTEGER PRIMARY KEY CHECK(id=1), max_bytes INTEGER NOT NULL);
+                INSERT OR IGNORE INTO storage_policy VALUES(1,$bytes);
                 CREATE TABLE IF NOT EXISTS outages(id TEXT PRIMARY KEY, session_id TEXT NOT NULL, recovered INTEGER NOT NULL, observed_end INTEGER NOT NULL, last_observed TEXT, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY, sequence INTEGER UNIQUE NOT NULL, session_id TEXT NOT NULL, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS sessions(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS metadata(id INTEGER PRIMARY KEY CHECK(id=1), sequence INTEGER NOT NULL);
                 INSERT OR IGNORE INTO metadata VALUES(1,0);
                 PRAGMA user_version=1;
-                """);
+                """;
+            schema.Parameters.AddWithValue("$bytes", configuredBytes);
+            schema.ExecuteNonQuery();
+            migration.Commit();
+            ApplyPageLimit(configuredBytes, allowExistingLarger: true);
         }
         catch { connection?.Dispose(); connection = null; lease?.Dispose(); lease = null; throw; }
     }
@@ -63,6 +84,90 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = 64 * 102
     { using var command = connection!.CreateCommand(); command.CommandText = sql; return command.ExecuteScalar(); }
     private void Execute(string sql)
     { using var command = connection!.CreateCommand(); command.CommandText = sql; command.ExecuteNonQuery(); }
+    private long Number(string sql) => Convert.ToInt64(Scalar(sql), CultureInfo.InvariantCulture);
+    private long ApplyPageLimit(long bytes, bool allowExistingLarger)
+    {
+        var pageSize = Number("PRAGMA page_size");
+        var requested = bytes / pageSize;
+        var existing = Number("PRAGMA page_count");
+        if (!allowExistingLarger && requested < existing)
+            throw new InvalidOperationException($"The database already allocates {checked(existing * pageSize)} bytes. Choose at least that capacity. No data was deleted and the previous setting is unchanged.");
+        var expected = Math.Max(requested, existing);
+        var effective = Number(FormattableString.Invariant($"PRAGMA max_page_count={expected}"));
+        if (effective != expected)
+            throw new IOException($"SQLite accepted {effective} pages instead of {expected}; capacity change refused.");
+        return checked(effective * pageSize);
+    }
+
+    public Task SetCapacityAsync(long bytes) => WorkAsync(() =>
+    {
+        HistoryCapacity.Validate(bytes); Open();
+        var previous = configuredBytes;
+        try
+        {
+            ApplyPageLimit(bytes, allowExistingLarger: false);
+            using var tx = connection!.BeginTransaction();
+            using var command = connection.CreateCommand(); command.Transaction = tx;
+            command.CommandText = "UPDATE storage_policy SET max_bytes=$bytes WHERE id=1";
+            command.Parameters.AddWithValue("$bytes", bytes);
+            if (command.ExecuteNonQuery() != 1) throw new InvalidDataException("History capacity policy is missing.");
+            tx.Commit();
+            configuredBytes = bytes; // The durable transaction is authoritative, never the draft UI/preferences file.
+        }
+        catch
+        {
+            // PRAGMA is connection state, not a transactional setting. Reopen from the last committed policy on any failure.
+            connection!.Dispose(); connection = null; lease!.Dispose(); lease = null; configuredBytes = previous;
+            throw;
+        }
+        return true;
+    });
+
+    public Task<StorageUsage> GetStorageUsageAsync(string logDirectory) => WorkAsync(() =>
+    {
+        Open();
+        static long Size(string name)
+        {
+            try { return new FileInfo(name).Length; }
+            catch (FileNotFoundException) { return 0; }
+            catch (DirectoryNotFoundException) { return 0; }
+        }
+        static long FolderSize(string directory, string pattern)
+        {
+            try { return new DirectoryInfo(directory).EnumerateFiles(pattern).Where(f => (f.Attributes & FileAttributes.ReparsePoint) == 0).Sum(f => f.Length); }
+            catch (DirectoryNotFoundException) { return 0; }
+        }
+        long? available = null;
+        // Use the containing mounted volume, including Unix mount points, rather than assuming the root volume.
+        var volume = DriveInfo.GetDrives().Where(d => path.StartsWith(d.RootDirectory.FullName, OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal))
+            .OrderByDescending(d => d.RootDirectory.FullName.Length).FirstOrDefault();
+        if (volume is { IsReady: true }) available = volume.AvailableFreeSpace;
+        return new StorageUsage(configuredBytes, checked(Number("PRAGMA max_page_count") * Number("PRAGMA page_size")),
+            Number("PRAGMA page_size"), Number("PRAGMA page_count"), Number("PRAGMA freelist_count"), Size(path), Size(path + "-wal"),
+            Size(path + "-shm"), Size(path + "-journal"), FolderSize(BackupDirectory, "*"), FolderSize(logDirectory, "Synups-*"), available, BackupDirectory);
+    });
+
+    public Task<string> BackupAsync() => WorkAsync(() =>
+    {
+        Open();
+        Directory.CreateDirectory(BackupDirectory);
+        var destination = Path.Combine(BackupDirectory, $"history-{DateTimeOffset.UtcNow:yyyyMMddTHHmmssfff}-{Guid.NewGuid():N}.db");
+        var temporary = destination + ".tmp";
+        try
+        {
+            using (var backup = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = temporary, Pooling = false }.ToString()))
+            {
+                backup.Open();
+                connection!.BackupDatabase(backup); // SQLite online backup includes committed WAL/journal state.
+                using var journal = backup.CreateCommand(); journal.CommandText = "PRAGMA journal_mode=DELETE; PRAGMA synchronous=FULL;"; journal.ExecuteNonQuery();
+                using var check = backup.CreateCommand(); check.CommandText = "PRAGMA quick_check";
+                if (!string.Equals(check.ExecuteScalar() as string, "ok", StringComparison.Ordinal)) throw new IOException("Backup integrity verification failed.");
+            }
+            File.Move(temporary, destination); // Unique closed snapshot; never overwrite any live database.
+            return destination;
+        }
+        finally { if (File.Exists(temporary)) File.Delete(temporary); }
+    });
 
     public Task<HistoryState> LoadAsync(bool includeAllEvents = false) => WorkAsync(() =>
     {
@@ -142,7 +247,7 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = 64 * 102
             }
             tx.Commit();
         }
-        Execute("VACUUM;");
+        // Freed pages are reused within the limit. Avoid a second, potentially disk-full VACUUM after a successful deletion.
         return count;
     });
     public async ValueTask DisposeAsync()

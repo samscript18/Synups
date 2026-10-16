@@ -79,6 +79,7 @@ public class ShellTests
         finally
         {
             await vm.DisposeAsync(); window.Close(); Dispatcher.UIThread.RunJobs();
+            await UntilAsync(() => !window.IsVisible);
             if (File.Exists(path)) File.Delete(path);
         }
         Assert.False(window.IsVisible);

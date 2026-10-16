@@ -1,6 +1,6 @@
 # Feature inventory and parity
 
-All legacy paths below are relative to `src/`. The legacy baseline was source-audited; original WPF runtime has not been exercised on this Mac. The original inventory below records Phase 1; the Phase 2 matrix and scoring that follow are current.
+All legacy paths below are relative to `src/`. The legacy baseline was source-audited; original WPF runtime has not been exercised on this Mac. The original inventory below records Phase 1; Phase 2 scoring is retained historically; Phase 3 scoring below is current.
 
 | Feature | Actual implementation and dependencies | Limitation / migration work | Synups Phase 1 |
 |---|---|---|---|
@@ -29,7 +29,7 @@ All legacy paths below are relative to `src/`. The legacy baseline was source-au
 Network overview, targets/groups, connectivity, outage/recovery information, configuration, session history and preferences already have legacy counterparts. A durable searchable history, redesigned overview, robust cancellation, explicit probe-error state, import workflow and platform-specific notification implementations are enhancements or substantial redesigns. No fabricated uptime, jitter, bandwidth, loss percentage or long-term statistics exist in this foundation.
 
 
-## Phase 2 parity — current implementation
+## Phase 2 parity — historical
 
 The score measures the original inventory, not new features or platform certification. Complete = 1 point, partial = 0.5, pending = 0. Simulation is intentionally excluded from production, and tests/builds are an engineering gate, so those two rows are excluded from the denominator. No baseline percentage was measured in Phase 1; this is the first explicit rubric.
 
@@ -60,3 +60,33 @@ Engineering gates: linked-original characterization tests, deterministic engine/
 
 ## Semantics and scope
 [LEGACY_SEMANTICS.md](LEGACY_SEMANTICS.md) records exact original transitions and deviations. Probe errors now reduce confidence instead of falsely recovering outages. Groups with mixed failure/error and no success are indeterminate. UTC is stored as evidence; monotonic intervals handle elapsed time. Stop never reports recovery. Configuration editing requires stop and applies only after successful save. Original user settings remain untouched; no importer is implied.
+
+
+## Phase 3 parity — current
+
+Same 18-item rubric and weights as Phase 2; new durable reload is an enhancement and earns no additional inventory row. Platform certification is assessed separately. Complete means the inventoried functional intent is implemented, not that every legacy UI detail or target OS is certified.
+
+| Original inventory item | Phase 3 evidence | Score |
+|---|---|---|
+| Startup / shutdown | Owned stop/save/close; optional auto-monitor/minimized; activation forwarding and legacy CLI absent | Partial 0.5 |
+| Main status UI | Preserved live state/freshness; some clipboard/status details absent | Partial 0.5 |
+| ViewModels / state | Preserved snapshots/observable rows; async storage/lifetime/error feedback | Complete 1 |
+| Named IP targets | Preserved validated CRUD/moves/stable IDs | Complete 1 |
+| Groups and timing | Preserved CRUD/timing/enablement | Complete 1 |
+| Default profile | Original literal XML/timings retained; discovery-only groups disabled | Partial 0.5 |
+| Discovery | TTL/candidate logic investigated; none runs or is exposed as completed migration | Pending 0 |
+| Connectivity | Real finite-timeout cancellable ICMP preserved | Complete 1 |
+| Poll orchestration | Bounded, non-overlapping groups and round-robin intent unchanged | Complete 1 |
+| Failure / recovery | Preserved characterized transitions and explicit Phase 2 corrections | Complete 1 |
+| Outage list/comments | Stable incidents/comments; durable reload is a Synups enhancement | Complete 1 |
+| Text logs / statistics | Durable transition records plus automatic JSON/CSV and close summaries; format changed, legacy percent/template omitted deliberately | Complete 1 |
+| Export | Preserved quoted UTC outage CSV and unknown recovery semantics | Complete 1 |
+| Alerts | Configurable deduplicated in-app alerts; optional macOS/Linux native requests; no Windows native adapter, sound/taskbar/focus parity | Partial 0.5 |
+| Preferences | Persisted topmost/confirm/minimize/auto-start/alerts/logs; login registration and filename format absent | Partial 0.5 |
+| Settings persistence | Profile and preferences safely saved; no validated legacy import | Partial 0.5 |
+| Placement / tray | Geometry restoration, Show/Exit and safe hide policy; macOS native smoke; broader native/menu/split-placement checks outstanding | Partial 0.5 |
+| Menus / dialogs | Preferences/confirmations/native export, original clipboard/help/about parity still incomplete | Partial 0.5 |
+
+**(9 complete × 1 + 8 partial × 0.5 + 1 pending × 0) / 18 = 13/18 = 72.2%.** Previous Phase 2: 61.1%, improvement 11.1 percentage points. This coarse inventory score excludes engineering effort, simulation and platform certification. Native verification remains macOS only.
+
+Durable history reload, interruption records, corruption/retention/capacity controls and group enablement are Synups enhancements. Original MIT resources/attribution and monitoring intent are retained. [Discovery and import investigation](LEGACY_INTEGRATIONS.md) records what remains unimplemented rather than labelling a hypothetical importer as compatible.

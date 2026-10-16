@@ -26,6 +26,8 @@ public sealed class MonitoringService : IAsyncDisposable
     private DateTimeOffset? lastMeasurement;
     private string? error, persistenceError;
     private bool disposed, historyLoaded;
+    private int retentionDays;
+    private DateTimeOffset nextRetentionUtc;
     public bool HasDurableHistory => history is not null;
     public bool HistoryReady { get { lock (gate) return history is null || historyLoaded; } }
     public bool HasUnsavedEvidence { get { lock (gate) return pending.Count > 0; } }
@@ -213,6 +215,8 @@ public sealed class MonitoringService : IAsyncDisposable
                 if (history is not null) pending.Enqueue(batch);
             }
             await FlushCoreAsync().ConfigureAwait(false);
+            if (history is not null && retentionDays > 0 && clock.UtcNow >= nextRetentionUtc)
+                await RetainCoreAsync(retentionDays).ConfigureAwait(false);
         }
         finally { evidence.Release(); }
     }
@@ -222,7 +226,7 @@ public sealed class MonitoringService : IAsyncDisposable
         while (true)
         {
             HistoryBatch batch;
-            lock (gate) { if (pending.Count == 0) { persistenceError = null; return; } batch = pending.Peek(); }
+            lock (gate) { if (pending.Count == 0) { if (historyLoaded) persistenceError = null; return; } batch = pending.Peek(); }
             try { await history.CommitAsync(batch).ConfigureAwait(false); }
             catch (Exception ex)
             {
@@ -256,10 +260,56 @@ public sealed class MonitoringService : IAsyncDisposable
         await evidence.WaitAsync().ConfigureAwait(false);
         try
         {
-            await history.RetainAsync(days, clock.UtcNow).ConfigureAwait(false);
             await FlushCoreAsync().ConfigureAwait(false);
-            var saved = await history.LoadAsync().ConfigureAwait(false);
-            lock (gate) { outages.Clear(); outages.AddRange(saved.Outages); events.Clear(); events.AddRange(saved.Events); sessions.Clear(); foreach (var s in saved.Sessions) sessions[s.Id] = s; historyRevision++; }
+            await RetainCoreAsync(days).ConfigureAwait(false);
+        }
+        finally { evidence.Release(); }
+    }
+    private async Task RetainCoreAsync(int days)
+    {
+        nextRetentionUtc = clock.UtcNow.AddDays(1);
+        await history!.RetainAsync(days, clock.UtcNow).ConfigureAwait(false);
+        var saved = await history.LoadAsync().ConfigureAwait(false);
+        lock (gate)
+        {
+            outages.Clear(); outages.AddRange(saved.Outages); events.Clear(); events.AddRange(saved.Events); sessions.Clear();
+            foreach (var s in saved.Sessions) sessions[s.Id] = s;
+            if (sessionId is { } id && !sessions.ContainsKey(id)) sessionId = null;
+            historyRevision++;
+        }
+    }
+    public async Task SetAutomaticRetentionAsync(int days)
+    {
+        if (days is < 0 or > 3650) throw new ArgumentOutOfRangeException(nameof(days));
+        await evidence.WaitAsync().ConfigureAwait(false);
+        try { retentionDays = days; nextRetentionUtc = clock.UtcNow; }
+        finally { evidence.Release(); }
+        if (days > 0 && HistoryReady) await ApplyRetentionAsync(days).ConfigureAwait(false);
+    }
+    public bool CanManageStorage => history is IHistoryStorageManagement;
+    public Task<StorageUsage> GetStorageUsageAsync(string logDirectory) => history is IHistoryStorageManagement storage
+        ? storage.GetStorageUsageAsync(logDirectory) : Task.FromException<StorageUsage>(new NotSupportedException("This host does not supply managed SQLite storage."));
+    public async Task SetHistoryCapacityAsync(long bytes)
+    {
+        await lifecycle.WaitAsync().ConfigureAwait(false);
+        try
+        {
+            ObjectDisposedException.ThrowIf(disposed, this);
+            if (runner is { IsCompleted: false }) throw new InvalidOperationException("Stop monitoring before changing storage capacity.");
+            if (history is not IHistoryStorageManagement storage) throw new NotSupportedException("Managed SQLite history is not available.");
+            // Do not flush first: raising capacity is a recovery path for pending SQLITE_FULL batches.
+            await storage.SetCapacityAsync(bytes).ConfigureAwait(false);
+        }
+        finally { lifecycle.Release(); }
+    }
+    public async Task<string> BackupHistoryAsync()
+    {
+        await evidence.WaitAsync().ConfigureAwait(false);
+        try
+        {
+            if (history is not IHistoryStorageManagement storage) throw new NotSupportedException("Managed SQLite history is not available.");
+            await FlushCoreAsync().ConfigureAwait(false);
+            return await storage.BackupAsync().ConfigureAwait(false);
         }
         finally { evidence.Release(); }
     }

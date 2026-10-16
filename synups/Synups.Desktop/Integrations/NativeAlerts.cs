@@ -29,10 +29,11 @@ public sealed class NativeAlertSink : INativeAlertSink
         start.UseShellExecute = false; start.RedirectStandardError = true; start.RedirectStandardOutput = true; start.CreateNoWindow = true;
         using var timeout = CancellationTokenSource.CreateLinkedTokenSource(token); timeout.CancelAfter(TimeSpan.FromSeconds(3));
         using var process = new Process { StartInfo = start };
+        Task<string>? stderr = null, stdout = null;
         try
         {
             process.Start();
-            var stderr = process.StandardError.ReadToEndAsync(timeout.Token); var stdout = process.StandardOutput.ReadToEndAsync(timeout.Token);
+            stderr = process.StandardError.ReadToEndAsync(timeout.Token); stdout = process.StandardOutput.ReadToEndAsync(timeout.Token);
             await process.WaitForExitAsync(timeout.Token).ConfigureAwait(false);
             await stdout.ConfigureAwait(false);
             var detail = await stderr.ConfigureAwait(false);
@@ -43,6 +44,13 @@ public sealed class NativeAlertSink : INativeAlertSink
         {
             try { if (process.Id > 0 && !process.HasExited) { process.Kill(true); await process.WaitForExitAsync().ConfigureAwait(false); } }
             catch (InvalidOperationException) { }
+            finally
+            {
+                timeout.Cancel();
+                try { if (stderr is not null && stdout is not null) await Task.WhenAll(stderr, stdout).ConfigureAwait(false); }
+                catch (OperationCanceledException) { }
+                catch (IOException) { }
+            }
         }
     }
 }

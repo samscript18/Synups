@@ -4,6 +4,9 @@ using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using Synups.Core.Alerts;
+using Synups.Core.Persistence;
+using Synups.Desktop.Integrations;
 
 namespace Synups.Desktop;
 
@@ -11,15 +14,85 @@ public partial class MainWindow : Window
 {
     private readonly DispatcherTimer refreshTimer = new() { Interval = TimeSpan.FromMilliseconds(250) };
     private Task pendingAction = Task.CompletedTask;
-    private bool closing, closedCleanly;
+    private bool closing, closedCleanly, initialized;
+    private TrayController? tray;
+    private WindowPlacement? normalPlacement;
+    public Func<Task<bool>>? ExitConfirmation { get; set; }
     private MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;
 
     public MainWindow()
     {
         InitializeComponent();
-        Opened += async (_, _) => await RunAsync(() => ViewModel?.InitializeAsync() ?? Task.CompletedTask);
+        Opened += async (_, _) => await RunAsync(async () =>
+        {
+            if (initialized) return;
+            initialized = true;
+            if (ViewModel is not { } vm) return;
+            await vm.InitializeAsync();
+            tray = new TrayController(RestoreFromTray, Close);
+            this.FindControl<TextBlock>("TrayCapability")!.Text = tray.Status;
+            ApplyDesktopPreferences(restorePlacement: true);
+            if (DesktopPolicy.StartOnLaunch(vm.SavedPreferences, vm.CanStart && vm.PreferencesError is null)) await vm.StartAsync();
+            if (vm.SavedPreferences.LaunchMinimized) WindowState = WindowState.Minimized;
+        });
+        PropertyChanged += (_, e) =>
+        {
+            if (e.Property == WindowStateProperty && WindowState == WindowState.Minimized &&
+                ViewModel is { } vm && DesktopPolicy.HideOnMinimize(vm.SavedPreferences, tray?.Restorable == true)) Hide();
+        };
+        PositionChanged += (_, _) => RememberNormalPlacement();
+        SizeChanged += (_, _) => RememberNormalPlacement();
         refreshTimer.Tick += (_, _) => { ViewModel?.Refresh(); if (ViewModel?.IsRunning != true) refreshTimer.Stop(); };
-        Closed += (_, _) => refreshTimer.Stop();
+        Closed += (_, _) => { refreshTimer.Stop(); tray?.Dispose(); };
+    }
+    public void RestoreFromTray()
+    {
+        Show(); WindowState = WindowState.Normal; Activate();
+    }
+    private void RememberNormalPlacement()
+    {
+        if (WindowState == WindowState.Normal && double.IsFinite(Bounds.Width) && Bounds.Width >= 300 && Bounds.Height >= 200)
+            normalPlacement = new(Bounds.Width, Bounds.Height, Position.X, Position.Y, false);
+    }
+    private void ApplyDesktopPreferences(bool restorePlacement = false)
+    {
+        if (ViewModel is not { } vm) return;
+        Topmost = vm.SavedPreferences.AlwaysOnTop;
+        if (restorePlacement && vm.SavedPreferences.Placement is { } saved)
+        {
+            var areas = Screens.All.Select(s => new WorkArea(s.WorkingArea.X, s.WorkingArea.Y, s.WorkingArea.Width, s.WorkingArea.Height, s.Scaling)).ToArray();
+            var safe = DesktopPolicy.Clamp(saved, areas);
+            MinWidth = Math.Min(MinWidth, safe.Width); MinHeight = Math.Min(MinHeight, safe.Height);
+            Width = safe.Width; Height = safe.Height; Position = new PixelPoint(safe.X, safe.Y);
+            normalPlacement = safe;
+            if (safe.Maximized) WindowState = WindowState.Maximized;
+        }
+        RememberNormalPlacement();
+    }
+    private async void ApplyPreferencesClicked(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel is { } vm && int.TryParse(vm.PrefRetentionDays, out var days) && days > 0 &&
+            !await ConfirmAsync("Enable automatic history cleanup", $"Delete completed, recovered sessions older than {days} days now, at launch and once daily while monitoring? Unresolved or interrupted sessions are kept. This also deletes eligible events/comments. Logs and backups are kept separately. Set retention to 0 to disable cleanup.")) return;
+        await RunAsync(async () => { if (ViewModel is { } model) await model.SavePreferencesAsync(confirmRetention: true); ApplyDesktopPreferences(); });
+    }
+    private async void RecoverPreferencesClicked(object? sender, RoutedEventArgs e)
+    {
+        if (await ConfirmAsync("Recover preferences", "Back up the unreadable preferences file and save the values currently shown? Retention, if enabled, deletes eligible old sessions."))
+            await RunAsync(async () => { if (ViewModel is { } vm) await vm.SavePreferencesAsync(recover: true, confirmRetention: true); ApplyDesktopPreferences(); });
+    }
+    private async void ApplyCapacityClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.SaveCapacityAsync() ?? Task.CompletedTask);
+    private async void RefreshStorageClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.RefreshStorageAsync(force: true) ?? Task.CompletedTask);
+    private async void BackupHistoryClicked(object? sender, RoutedEventArgs e)
+    {
+        if (await ConfirmAsync("Back up history", "Create a verified, complete SQLite history snapshot in the backup folder shown in Settings? This needs additional disk space. Existing backups are kept. Configuration, preferences and automatic logs are separate files."))
+            await RunAsync(() => ViewModel?.BackupHistoryAsync(confirmed: true) ?? Task.CompletedTask);
+    }
+    private async void CleanupHistoryClicked(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel is not { } vm) return;
+        if (!int.TryParse(vm.CleanupDays, out var days) || days is < 1 or > 3650) { vm.ReportError("Cleanup age must be 1–3650 days."); return; }
+        if (await ConfirmAsync("Clean history", $"First create a full SQLite backup, then delete sessions ended more than {days} days ago and their events, recovered outages and comments? Entire unresolved/interrupted sessions are kept. Freed pages are reused; the file is not shrunk. Automatic logs and backups remain. Cleanup is cancelled if backup fails."))
+            await RunAsync(() => vm.CleanupHistoryAsync(confirmed: true));
     }
     private async Task RunAsync(Func<Task> operation)
     {
@@ -85,12 +158,22 @@ public partial class MainWindow : Window
         try
         {
             await pendingAction;
-            if (ViewModel is { } vm) await vm.DisposeAsync();
+            if (ViewModel is { } vm)
+            {
+                if (vm.SavedPreferences.ConfirmExit && !IsVisible) RestoreFromTray();
+                if (vm.SavedPreferences.ConfirmExit && !(await (ExitConfirmation?.Invoke() ?? ConfirmAsync("Exit Synups", "Stop monitoring, save evidence and exit Synups? Unresolved incidents will remain unresolved."))))
+                { closing = false; return; }
+                RememberNormalPlacement();
+                if (normalPlacement is { } placement) await vm.SavePlacementAsync(placement with { Maximized = WindowState == WindowState.Maximized });
+                await vm.DisposeAsync();
+            }
             refreshTimer.Stop(); closedCleanly = true; Close();
         }
         catch (Exception ex)
         {
-            closing = false; ViewModel?.ReportError($"Could not finish shutdown: {ex.Message}");
+            closing = false;
+            if (!IsVisible) RestoreFromTray();
+            ViewModel?.Refresh(); ViewModel?.ReportError($"Could not finish shutdown: {ex.Message}");
             refreshTimer.Start();
         }
     }

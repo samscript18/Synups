@@ -33,7 +33,7 @@ public sealed record PreferencesLoad(AppPreferences Preferences, string? Error);
 public sealed class PreferencesStore(string path, string? defaultLogDirectory = null)
 {
     private readonly SemaphoreSlim writes = new(1, 1);
-    public async Task<PreferencesLoad> LoadAsync()
+    public Task<PreferencesLoad> LoadAsync() => Task.Run<PreferencesLoad>(async () =>
     {
         try
         {
@@ -44,8 +44,8 @@ public sealed class PreferencesStore(string path, string? defaultLogDirectory = 
             return new(prefs.Validate(), null);
         }
         catch (Exception ex) { return new(new() { LogDirectory = defaultLogDirectory ?? Path.Combine(SynupsPaths.DataDirectory, "logs") }, $"Preferences unreadable and preserved; safe defaults used: {ex.Message}"); }
-    }
-    public async Task SaveAsync(AppPreferences preferences, bool recover = false)
+    });
+    public Task SaveAsync(AppPreferences preferences, bool recover = false) => Task.Run(async () =>
     {
         preferences.Validate();
         await writes.WaitAsync().ConfigureAwait(false);
@@ -65,5 +65,5 @@ public sealed class PreferencesStore(string path, string? defaultLogDirectory = 
             finally { if (File.Exists(temporary)) File.Delete(temporary); }
         }
         finally { writes.Release(); }
-    }
+    });
 }

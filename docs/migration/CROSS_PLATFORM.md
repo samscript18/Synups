@@ -1,6 +1,6 @@
 # Cross-platform evidence and risks
 
-Targets are Windows, macOS and Linux. Target intent and successful cross-compilation do not establish runtime support. No downloadable release artifacts have been produced. Phase 1 evidence is retained below; Phase 2 results follow.
+Targets are Windows, macOS and Linux. Target intent and successful cross-compilation do not establish runtime support. No downloadable release has been created. Phase 1/2 evidence is historical below; Phase 3 is the current verification matrix.
 
 ## Toolchain
 - Avalonia 12.1.4 stable, verified via official latest release and NuGet index on 2026-10-16: https://github.com/AvaloniaUI/Avalonia/releases/tag/12.1.4
@@ -44,3 +44,48 @@ Synups always uses a finite 1–5000ms timeout and awaits disposal/completion. S
 Real networking was explicitly requested for testing: 127.0.0.1 only, no public IP, subnet scan or device discovery. Native harness observed a real 0ms integer RTT on loopback; that is an actual PingReply measurement, not an unknown value filled with zero. Real system-disconnect/reconnect testing, IPv6 and permission-denied ICMP on native Windows/Linux are outstanding.
 
 New CI has manual dispatch plus separate deterministic and explicitly enabled loopback steps on all three OS runners. These working-tree changes have not been committed or pushed, as instructed, so there is no remote workflow revision against which to execute them. No hosted result is claimed. Use `python3 eng/native-smoke.py --dotnet /path/to/dotnet` in a native macOS GUI session to reproduce the window integration; it creates only temporary loopback configuration.
+
+
+## Phase 3 — current evidence
+
+Environment: macOS 26.3.1 (25D2128), arm64, SDK 10.0.402, runtime 10.0.13, Avalonia 12.1.4. New direct dependency Microsoft.Data.Sqlite 10.0.13 with SQLitePCLRaw 2.1.13; Linux/Windows native bindings still need runtime proof.
+
+| Gate | macOS arm64 | Windows x64 | Linux x64 |
+|---|---|---|---|
+| Locked restore / Release compilation | Executed, passed, zero build warnings/errors | No Windows build runner used | No Linux build runner used |
+| Automated suite | 70 deterministic/headless passed; one deliberate opt-in skip | Not executed | Not executed |
+| Explicit production ICMP test | One loopback test passed separately | Not executed | Not executed |
+| Native UI / real measurements | Passed, two one-minute runs plus final two-process rerun | Not executed | Not executed |
+| Restart / normal shutdown | Real native process restarts reloaded committed session records; clean Stop/Close passed | Source/tests on Mac only | Source/tests on Mac only |
+| Tray | Native exporter/menu initialized; hide on minimize and restore handler passed | Source implementation only; no runtime claim | Hiding disabled; taskbar fallback; actual host unverified |
+| Native notifications | Optional adapter implemented, delivery/permission not tested | Native adapter absent; labelled in-app alerts | Optional notify-send adapter; daemon/permission untested |
+| Self-contained directory | Published from this Mac | Cross-published from this Mac | Cross-published from this Mac |
+| Published executable launch / packaging | Direct apphost launch, bundle identity/signing not verified | Not executed | Not executed |
+| Screenshots | Actual native client-area captures reviewed | Upstream WPF illustration only | None |
+
+Self-contained outputs live in ignored `artifacts/publish/{osx-arm64,win-x64,linux-x64}`. Publication is not execution. No release/upload/submission was performed. The native harness references production App/VM/engine/probe and exercises native Avalonia, not Headless; it does not prove the published apphost/package launch.
+
+CI now uses windows-latest (x64), macos-15 (arm64) and ubuntu-24.04 (x64), matching [GitHub runner documentation](https://docs.github.com/en/actions/reference/runners/github-hosted-runners). It retains restore/build/test/loopback/publish/native logs and TRX/captures/artifacts for 30 days, including failures. It publishes the RID matching each actual runner. Linux installs Xvfb and X11/graphics/font dependencies; `xvfb-run` supplies a virtual display for the native X11 test. This does not verify a physical Linux desktop, Wayland, notification daemon or tray host. Avalonia's [Linux deployment prerequisites](https://docs.avaloniaui.net/docs/deployment/linux) include libx11-6, libice6, libsm6 and libfontconfig1; normal .NET/graphics dependencies also apply. No audit/warning suppression or conditional permission-error skip was added.
+
+No final working-tree CI run can be initiated without an authorized commit/push. A previously existing repository commit is not evidence for these subsequent changes. The agent issued no commit/push. Hosted green jobs and their downloaded evidence remain required.
+
+The exact cause of the earlier OS `screencapture -l` failure is not established; no permission entitlement is claimed. Phase 3 uses Avalonia RenderTargetBitmap on the actual visible native window to save the client area. It includes real measured values, not a compositor screenshot or a hand-built mockup. See [capture metadata](../evidence/README.md).
+
+Permission denial, corrupt storage and native adapter failure are covered deterministically. Real native permission denial, external network outages, IPv6, suspend/VPN, long runs, accessibility and OS notification delivery are outstanding. Two one-minute loopback observations cannot establish days-long stability or external Internet health.
+
+
+`eng/package-artifacts.py` archives published directories as ZIP on Windows and tar.gz on macOS/Linux, with SHA-256 sidecars and simple run instructions. Unix executable permissions are verified inside the tar: raw [upload-artifact loses file modes](https://github.com/actions/upload-artifact#permission-loss). CI uploads these archives with logs/captures rather than a raw Unix directory. Archive integrity/mode verification is separate from executing the apphost. The helper uses Python standard-library APIs compatible with the locally verified Python 3.9.6; CI selects Python 3.12.
+
+
+Launch-at-login evaluation: **not implemented on any OS**. Windows legacy code writes HKCU Run; a Synups adapter would need an explicit user action and stable installed executable path. macOS needs a validated login-item/bundle identity/permission flow, which these unpackaged outputs do not establish. Linux needs desktop-session autostart/path verification across environments; no adapter was validated. Launch minimized and monitoring-on-launch apply only when Synups is started, and must not be presented as login registration.
+
+
+## Phase 4A — reviewed source checkpoint and hosted verification
+
+The user explicitly authorized reviewed commit/push for `feat/avalonia-migration` to `https://github.com/samscript18/Synups.git`. Remote metadata confirms the public, non-archived Synups fork; project RepositoryUrl matches. The only initial remote branch was upstream-baseline master. No history rewrite or force-push is needed.
+
+Fresh local validation of the current storage-policy implementation: locked restore passed; Release build passed with 0 warnings/errors (1.36s emitted); 94 deterministic/headless tests passed, with one opt-in networking skip, then the real loopback case passed separately (65ms). Native macOS harness passed two process launches, real ICMP, live UI, minimize/restore, Stop/Close and durable reload; each reopen reports 1 GiB configured/effective capacity. These are framework-dependent native harness runs, not published-apphost launches. Raw local evidence is in ignored `artifacts/phase4a-local/`.
+
+Packaging now requires the managed entry point, dependency/runtime manifests, the platform CoreCLR and native SQLite libraries, and original MIT licence. It includes the exact restored runtime pack's LICENSE.TXT and THIRD-PARTY-NOTICES.TXT under licenses/dotnet. An artifact manifest records RID, CI source SHA, runtime libraries and every published file hash; each archive is checked against those hashes. Unix mode and archive SHA-256 sidecars are retained. Application-specific third-party licensing audit remains a release gate; runtime notices are not claimed to cover every Avalonia/font/native dependency.
+
+At source-checkpoint preparation, no hosted pass is claimed. The new Synups workflow selects Synups.slnx on Windows x64, macOS arm64 and Linux x64, then separately runs tests, explicit loopback, native GUI harness and publishing/packaging. The original Windows-only WirePeep workflow is unchanged and only triggers for master/PRs to master. Published-executable startup and packaging/install/signing verification remain separate from the harness.

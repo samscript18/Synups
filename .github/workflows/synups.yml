@@ -1,4 +1,4 @@
-name: Synups monitoring
+name: Synups verification and artifacts
 on:
   push:
   pull_request:
@@ -6,29 +6,83 @@ on:
 permissions:
   contents: read
 jobs:
-  build-test:
+  build-test-publish:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            rid: win-x64
+          - os: macos-15
+            rid: osx-arm64
+          - os: ubuntu-24.04
+            rid: linux-x64
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
     defaults:
       run:
+        shell: bash
         working-directory: synups
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: synups/global.json
-      - run: dotnet restore ../Synups.slnx --locked-mode
-      - run: dotnet build ../Synups.slnx -c Release --no-restore
-      - run: dotnet test ../Synups.slnx -c Release --no-build --logger trx --results-directory ../artifacts/tests
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Evidence directory
+        run: mkdir -p ../artifacts/logs
+      - name: Linux native display prerequisites
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1
+      - name: Locked dependency restore
+        run: |
+          set -o pipefail
+          dotnet restore ../Synups.slnx --locked-mode --disable-parallel 2>&1 | tee ../artifacts/logs/restore.txt
+      - name: Release build
+        run: |
+          set -o pipefail
+          dotnet build ../Synups.slnx -c Release --no-restore 2>&1 | tee ../artifacts/logs/build.txt
+      - name: Deterministic and Avalonia headless tests
+        run: |
+          set -o pipefail
+          dotnet test ../Synups.slnx -c Release --no-build --logger trx --results-directory ../artifacts/tests 2>&1 | tee ../artifacts/logs/tests.txt
       - name: Explicit real loopback ICMP integration
-        run: dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~RealLoopback --logger trx --results-directory ../artifacts/real-network
+        run: |
+          set -o pipefail
+          dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~RealLoopback --logger trx --results-directory ../artifacts/real-network 2>&1 | tee ../artifacts/logs/icmp.txt
         env:
           SYNUPS_REAL_NETWORK_TESTS: '1'
-      - uses: actions/upload-artifact@v4
+      - name: Publish self-contained platform directory
+        run: |
+          set -o pipefail
+          dotnet publish Synups.Desktop -c Release -r ${{ matrix.rid }} --self-contained true --no-restore -o ../artifacts/publish/${{ matrix.rid }} 2>&1 | tee ../artifacts/logs/publish.txt
+          cp ../LICENSE ../artifacts/publish/${{ matrix.rid }}/LICENSE
+          cp ../README.md ../artifacts/publish/${{ matrix.rid }}/README.md
+      - name: Archive runnable files with Unix permissions and checksums
+        run: python ../eng/package-artifacts.py --source ../artifacts/publish/${{ matrix.rid }} --rid ${{ matrix.rid }} --output ../artifacts/packages --revision ${{ github.sha }}
+      - name: Native UI, real loopback, graceful close and process restart
+        if: runner.os != 'Linux'
+        run: |
+          set -o pipefail
+          python ../eng/native-smoke.py --screenshots ../artifacts/screenshots 2>&1 | tee ../artifacts/logs/native.txt
+      - name: Linux X11 native smoke under Xvfb
+        if: runner.os == 'Linux'
+        run: |
+          set -o pipefail
+          xvfb-run -a -s '-screen 0 1440x1000x24' python ../eng/native-smoke.py --screenshots ../artifacts/screenshots 2>&1 | tee ../artifacts/logs/native.txt
+      - name: Preserve verification evidence (including failures)
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: tests-${{ matrix.os }}
-          path: artifacts/
+          name: synups-${{ matrix.rid }}-${{ github.sha }}
+          path: |
+            artifacts/logs/
+            artifacts/tests/
+            artifacts/real-network/
+            artifacts/screenshots/
+            artifacts/packages/
+          retention-days: 30

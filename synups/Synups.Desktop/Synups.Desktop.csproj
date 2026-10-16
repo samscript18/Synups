@@ -4,6 +4,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Description>Local network reliability monitor with real ICMP group monitoring</Description>
+    <RuntimeIdentifiers>win-x64;osx-arm64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets/**" />

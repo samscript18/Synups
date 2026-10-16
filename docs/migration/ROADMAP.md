@@ -1,18 +1,19 @@
 # Migration roadmap
 
-Phase 2 now provides a functioning local ICMP monitoring flow. Remaining legacy and platform/distribution gates mean it is not a submission-ready entry.
+Phase 3 local functional work is implemented. Cross-platform runtime/distribution gates are outstanding, so Phase 3 is not declared fully complete or production-ready. See [release checklist](RELEASE_READINESS.md).
 
-## Phase 2 — implemented
-Real ICMP probing, cancellable bounded asynchronous group scheduling, legacy characterization, monotonic failure/recovery, editable profiles, atomic local persistence/recovery, live Avalonia state, session outages/comments and CSV export. See MIGRATION_LOG.md for actual checks. Outage history is process-session memory, with explicit export; durable reload is not implemented. Errors no longer imply recovery. Original default discovery rules are not executed.
+## Delivered
+Phase 1: separate Avalonia/Core/Tests solution, audit/provenance/design tokens. Phase 2: real ICMP, bounded cancellable groups, characterized legacy behavior, monotonic thresholds/recovery, editable profiles, live UI and CSV. Phase 3: durable SQLite incidents/comments/sessions, interrupted-session handling, automatic session logs/statistics, retention/capacity safeguards, configurable alerts, tray policy, window placement and desktop preferences. No monitoring engine replacement or visual redesign.
 
-## Phase 3 — recommended next, not started
-1. Run the working-tree CI after an explicitly authorized commit/push. Validate native Windows/Linux, IPv6, ICMP permission failures, external disconnect/reconnect, suspend/resume and low-resource scenarios.
-2. Complete legacy auto text logs, app preferences and explicit saved-WirePeep profile import. Add durable history only with corruption recovery and retention limits; never invent measurements across process gaps.
-3. Port capability-based alerts, tray, sound, login launch, window placement and single-instance/minimized behavior. Keep unsupported OS capabilities visible and documented.
-4. Finish remaining clipboard/about/help/menu parity and native keyboard/screen-reader verification. Address defects before cosmetic work or analytics.
+## Next milestone — platform proof and release hardening
+1. Review and commit/push the prepared changes explicitly. Run the three-OS workflow; preserve uploaded TRX, command logs, native captures and self-contained directories. Investigate every failure without disabling warnings or audits.
+2. Run the actual published executables on Windows x64, macOS arm64 and Linux x64. Verify Windows ICMP/cancellation, native Linux display/permission paths, tray restore/menu exit, native notification permissions/denials and user-facing file errors. Publishing from macOS is not runtime proof.
+3. Exercise external disconnect/reconnect, IPv6, VPN, sleep/resume, disconnected screens/DPI, disk-full repair and hours/days of monitoring. Run native keyboard/screen-reader tests and check resource trends. The two one-minute loopback runs are smoke evidence only.
+4. Obtain an actual Windows WirePeep .stgx fixture and original WPF runtime capture. Validate the exact Menees 5.1.2 schema and settings semantics before shipping preview/backup/import. Implement explicit bounded discovery only after capability tests; never restore automatic startup probing.
+5. Complete highest-value remaining legacy integrations: Windows native alert adapter, optional sound/focus/taskbar behavior where supported, explicit per-OS login registration, single-instance activation and clipboard/help/about. Keep fallback claims honest.
+6. Produce attributed third-party notices and reviewed platform packages, signing/notarization, launch instructions, published artifact checksums and a genuine desktop/window capture where possible. The current captures are accurate native client-area renders.
 
-## Later release gates
-Run tests and real network scenarios on Windows, macOS and Linux; verify keyboard/accessibility, high DPI, resizing, light/dark preferences, suspend/resume and shutdown. Capture original WPF screenshots at baseline SHA on Windows and authentic Synups screenshots. Produce, launch and verify self-contained artifacts per claimed OS/architecture; handle signing/notarization/packaging requirements. Run dependency/license audit, publish public MIT repository/release, finish an honest README migration account and submit the entry.
+No cloud, accounts, advanced analytics or major visual redesign is planned before these gates. No release, entry submission or automatic push is authorized by this phase.
 
-## Competition scope
-Primary: Best IT Pro Tool. Secondary: Best Cross-Platform Port / Best Legacy Revival. Official deadline: October 23, 2026 at 23:59 UTC (October 24 at 00:59 Africa/Lagos). Source: https://avaloniaui.net/blog/avalonia-port-challenge (checked October 16). Do not sacrifice reliability or claim untested platforms to meet the date. The original code predates the challenge; retained Git ancestry supplies provenance. No entry has been submitted by this work.
+## Competition
+Primary Best IT Pro Tool; secondary Best Cross-Platform Port / Best Legacy Revival. Recorded challenge deadline: October 23, 2026 at 23:59 UTC, per the [challenge announcement](https://avaloniaui.net/blog/avalonia-port-challenge). Retained upstream Git ancestry and MIT attribution remain prerequisites. This task did not submit an entry.

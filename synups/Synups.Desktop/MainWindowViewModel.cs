@@ -16,6 +16,31 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     public string? PreferencesError { get; private set; }
     public string HistoryStatus => service.PersistenceError ?? (service.HasUnsavedEvidence ? "Unsaved evidence awaiting Retry." : service.HasDurableHistory ? "SQLite history enabled; recovery is never inferred at session end." : "Session-memory history supplied by host.");
     private readonly AlertPolicy alertPolicy = new();
+    private readonly StorageWarningPolicy storageWarnings = new();
+    private Task storageRefresh = Task.CompletedTask;
+    private bool storageClosing;
+    private long nextStorageRefresh;
+    private StorageUsage? storageUsage;
+    private string storageReadError = "", prefCapacityMiB = "1024", cleanupDays = "30";
+    public string PrefCapacityMiB { get => prefCapacityMiB; set => Set(ref prefCapacityMiB, value ?? ""); }
+    public string CleanupDays { get => cleanupDays; set => Set(ref cleanupDays, value ?? ""); }
+    public bool CanManageStorage => !busy && !IsRunning && !disposed && service.CanManageStorage;
+    public bool CanCleanupHistory => CanManageStorage && service.HistoryReady && !service.HasUnsavedEvidence;
+    public StorageUsage? StorageUsage => storageUsage;
+    private static string Size(long bytes) => $"{bytes / (double)HistoryCapacity.MiB:F2} MiB ({bytes:N0} bytes)";
+    public string StorageSummary => storageUsage is { } u
+        ? $"Database allocated: {Size(u.AllocatedBytes)} of {Size(u.ConfiguredBytes)} configured ({100d * u.AllocatedBytes / u.ConfiguredBytes:F1}%). SQLite effective page limit: {Size(u.EffectiveLimitBytes)}."
+        : "Storage measurement unavailable. " + storageReadError;
+    public string StorageDetails => storageUsage is { } u
+        ? $"Database file: {Size(u.DatabaseBytes)}; WAL: {Size(u.WalBytes)}; SHM: {Size(u.ShmBytes)}; rollback journal: {Size(u.JournalBytes)}.\n" +
+          $"Reusable database pages: {Size(u.ReusableBytes)}; growth headroom: {Size(u.GrowthHeadroomBytes)}; available for records including reuse: {Size(u.AvailableDatabaseBytes)}.\n" +
+          $"Managed backups: {Size(u.BackupBytes)}; automatic logs in the selected folder: {Size(u.DerivedLogBytes)}. Total of these files: {Size(u.TotalDiskBytes)}.\n" +
+          $"Database volume free space: {(u.VolumeAvailableBytes is { } free ? Size(free) : "unavailable")}. This is shared disk space, not reserved capacity.\n" +
+          $"Warning at 80%: {Size(u.WarningBytes)}; critical at 95%: {Size(u.CriticalBytes)} of allocated database pages. Backup folder: {u.BackupDirectory}.\n" + storageReadError
+        : storageReadError;
+    public string StorageWarning => storageUsage is { } u && u.WarningLevel > 0
+        ? $"{(u.WarningLevel == 95 ? "Critical storage warning" : "Storage warning")}: database allocation is at least {u.WarningLevel}% of configured capacity. Increase capacity or back up and clean eligible history. Other files and temporary work require additional disk space."
+        : "";
     private readonly AlertDelivery alertDelivery = new();
     private string alertBanner = "", lastStorageAlert = "";
     public string AlertBanner { get => alertBanner; private set => Set(ref alertBanner, value); }
@@ -146,7 +171,9 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
         try { await service.InitializeHistoryAsync(); }
         catch (Exception ex) { Message = $"History unavailable. Existing evidence is preserved: {ex.Message}"; }
         alertPolicy.IgnoreExisting(service.Capture().Events);
-        if (service.HistoryReady && SavedPreferences.RetentionDays > 0) await service.ApplyRetentionAsync(SavedPreferences.RetentionDays);
+        await service.SetAutomaticRetentionAsync(SavedPreferences.RetentionDays);
+        await RefreshStorageAsync(force: true);
+        if (storageUsage is { } usage) PrefCapacityMiB = (usage.ConfiguredBytes / HistoryCapacity.MiB).ToString(CultureInfo.InvariantCulture);
         var result = await store.LoadAsync();
         recoveryRequired = result.NeedsRecovery; loaded = !result.NeedsRecovery;
         if (result.Configuration is { } config) SetConfiguration(config);
@@ -241,15 +268,17 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
         PrefNative = SavedPreferences.NativeNotifications; PrefLogs = SavedPreferences.AutomaticLogs;
         PrefLogDirectory = SavedPreferences.LogDirectory; PrefRetentionDays = SavedPreferences.RetentionDays.ToString(CultureInfo.InvariantCulture);
     }
-    public Task SavePreferencesAsync(bool recover = false) => ExecuteAsync(async () =>
+    public Task SavePreferencesAsync(bool recover = false, bool confirmRetention = false) => ExecuteAsync(async () =>
     {
         if (IsRunning) throw new InvalidOperationException("Stop monitoring before applying preferences.");
         if (!int.TryParse(PrefRetentionDays, out var days)) throw new ArgumentException("Retention must be an integer number of days.");
+        if (days > 0 && !confirmRetention) throw new InvalidOperationException("Confirm automatic history deletion before enabling retention.");
         var next = SavedPreferences with { ConfirmExit = PrefConfirmExit, AlwaysOnTop = PrefTopmost, MinimizeToTray = PrefTray,
             LaunchMinimized = PrefMinimized, MonitorOnLaunch = PrefAutoStart, NotifyOutages = PrefOutage, NotifyRecovery = PrefRecovery,
             NotifyErrors = PrefErrors, NativeNotifications = PrefNative, AutomaticLogs = PrefLogs, LogDirectory = PrefLogDirectory.Trim(), RetentionDays = days };
         next.Validate(); await preferencesStore.SaveAsync(next, recover); SavedPreferences = next; PreferencesError = null;
-        if (days > 0 && service.HistoryReady) await service.ApplyRetentionAsync(days);
+        await service.SetAutomaticRetentionAsync(days);
+        await RefreshStorageAsync(force: true);
         Message = "Preferences saved. Monitoring on launch applies at the next launch; OS login settings were not changed.";
         Changed(nameof(SavedPreferences));
     });
@@ -261,9 +290,61 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     public Task RetryHistoryAsync() => ExecuteAsync(async () =>
     {
         await service.InitializeHistoryAsync(); await service.RetryPersistenceAsync();
+        await RefreshStorageAsync(force: true);
         Message = "History storage ready; pending evidence saved.";
     });
-    private Task WriteAutomaticLogsAsync() => SavedPreferences.AutomaticLogs ? ExportAutomaticAsync() : Task.CompletedTask;
+    public Task SaveCapacityAsync() => ExecuteAsync(async () =>
+    {
+        if (!long.TryParse(PrefCapacityMiB, NumberStyles.None, CultureInfo.InvariantCulture, out var mib) || mib is < 256 or > 10240)
+            throw new ArgumentException("Enter a whole number of MiB from 256 to 10240 (10 GiB).");
+        await service.SetHistoryCapacityAsync(checked(mib * HistoryCapacity.MiB));
+        await RefreshStorageAsync(force: true);
+        Message = "History capacity committed. Existing records are preserved. Use Retry history storage to save any pending evidence.";
+    });
+    public Task BackupHistoryAsync(bool confirmed = false) => ExecuteAsync(async () =>
+    {
+        if (!confirmed) throw new InvalidOperationException("Confirm creation of a full history backup first.");
+        if (IsRunning) throw new InvalidOperationException("Stop monitoring before creating a backup.");
+        var destination = await service.BackupHistoryAsync();
+        await RefreshStorageAsync(force: true);
+        Message = $"Verified SQLite backup saved: {destination}. It contains committed sessions, events and comments. It does not include preferences, configuration or derived logs.";
+    });
+    public Task CleanupHistoryAsync(bool confirmed = false) => ExecuteAsync(async () =>
+    {
+        if (!confirmed) throw new InvalidOperationException("Confirm history cleanup first.");
+        if (IsRunning) throw new InvalidOperationException("Stop monitoring before cleaning history.");
+        if (!int.TryParse(CleanupDays, NumberStyles.None, CultureInfo.InvariantCulture, out var days) || days is < 1 or > 3650)
+            throw new ArgumentException("Cleanup age must be 1–3650 days.");
+        var backup = await service.BackupHistoryAsync(); // No deletion when a complete pre-cleanup backup cannot be made.
+        await service.ApplyRetentionAsync(days);
+        await RefreshStorageAsync(force: true);
+        Message = $"Eligible sessions older than {days} days cleaned. Unresolved/interrupted sessions kept. Freed pages can be reused; file size is unchanged. Backup: {backup}. Derived logs were kept.";
+    });
+    public async Task RefreshStorageAsync(bool force = false)
+    {
+        if (disposed || storageClosing || !service.CanManageStorage) return;
+        while (!storageRefresh.IsCompleted) await storageRefresh;
+        if (disposed || storageClosing || (!force && Environment.TickCount64 < nextStorageRefresh)) return;
+        nextStorageRefresh = Environment.TickCount64 + 5000;
+        await (storageRefresh = ReadStorageAsync());
+    }
+    private async Task ReadStorageAsync()
+    {
+        try
+        {
+            storageUsage = await service.GetStorageUsageAsync(SavedPreferences.LogDirectory);
+            storageReadError = "";
+            var warning = storageWarnings.Select(storageUsage);
+            if (warning > 0 && SavedPreferences.NotifyErrors)
+            {
+                AlertBanner = $"In-app storage alert — {StorageWarning}";
+                if (SavedPreferences.NativeNotifications) alertDelivery.Enqueue(new(Guid.NewGuid(), "Synups: history storage capacity", StorageWarning, MonitorEventKind.ProbeError));
+            }
+        }
+        catch (Exception ex) { storageReadError = $"Storage measurement failed: {ex.Message}"; storageUsage = null; }
+        Changed(nameof(StorageUsage)); Changed(nameof(StorageSummary)); Changed(nameof(StorageDetails)); Changed(nameof(StorageWarning));
+    }
+    private Task WriteAutomaticLogsAsync() => SavedPreferences.AutomaticLogs && service.HistoryReady ? ExportAutomaticAsync() : Task.CompletedTask;
     private async Task ExportAutomaticAsync() => await AutomaticLogExporter.WriteAsync(SavedPreferences.LogDirectory, await service.ReadArchiveAsync());
     public Task ExportAsync(Stream destination) => ExecuteAsync(async () =>
     { await CsvExporter.WriteAsync(destination, service.Capture().Outages); Message = "Outage CSV exported with UTC timestamps. Empty recovery fields mean no recovery was observed."; });
@@ -301,10 +382,11 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
         busy = true; NotifyControls();
         try { await action(); }
         catch (Exception ex) { Message = ex.Message; }
-        finally { busy = false; Refresh(); }
+        finally { busy = false; Refresh(); await RefreshStorageAsync(force: true); }
     }
     public void Refresh()
     {
+        _ = RefreshStorageAsync(); // At most one owned background measurement; no SQLite work on the dispatcher.
         var previousState = snapshot.State;
         snapshot = service.Capture();
         // Reusing a target ID after an address edit must never attach an old measurement to the new address.
@@ -333,9 +415,11 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
             // No window replacement: the bounded event viewport changes only when the event sequence changes.
             if (!Activity.Select(e => e.Sequence).SequenceEqual(snapshot.Events.Select(e => e.Sequence)))
             {
-                while (Activity.Count > 0 && !snapshot.Events.Any(e => e.Sequence == Activity[0].Sequence)) Activity.RemoveAt(0);
-                var last = Activity.LastOrDefault()?.Sequence ?? 0;
-                foreach (var e in snapshot.Events.Where(e => e.Sequence > last)) Activity.Add(e);
+                var retainedSequences = snapshot.Events.Select(e => e.Sequence).ToHashSet();
+                foreach (var removed in Activity.Where(e => !retainedSequences.Contains(e.Sequence)).ToArray()) Activity.Remove(removed);
+                // Retention can remove middle sessions and backfill older events into the 500-item viewport.
+                for (var i = 0; i < snapshot.Events.Count; i++)
+                    if (i >= Activity.Count || Activity[i].Sequence != snapshot.Events[i].Sequence) Activity.Insert(i, snapshot.Events[i]);
             }
             seenHistory = snapshot.HistoryRevision;
         }
@@ -347,13 +431,19 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     }
     private void NotifyControls()
     {
-        foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences) }) Changed(name);
+        foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences), nameof(CanManageStorage), nameof(CanCleanupHistory) }) Changed(name);
     }
     public async ValueTask DisposeAsync()
     {
         if (disposed) return;
         // Preserve ownership if Stop times out: caller must keep window open and retry instead of abandoning workers.
         await service.StopAsync(); await WriteAutomaticLogsAsync();
-        await service.DisposeAsync(); await alertDelivery.DisposeAsync(); disposed = true; Refresh();
+        storageClosing = true;
+        try
+        {
+            await storageRefresh;
+            await service.DisposeAsync(); await alertDelivery.DisposeAsync(); disposed = true; Refresh();
+        }
+        finally { if (!disposed) storageClosing = false; }
     }
 }

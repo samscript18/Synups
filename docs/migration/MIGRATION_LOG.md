@@ -128,3 +128,130 @@ Remaining work: durable history reload/retention, legacy automatic text logs and
 
 
 Final native rerun against the completed implementation: 2026-10-16 16:28:51 +01:00, NATIVE_VISIBLE=True, one connected group, real 127.0.0.1 response 0ms, NATIVE_START_MEASURE_STOP=PASS, process exit 0. Temporary harness build: 0 warnings/errors, 2.37s reported. This rerun includes the final lifecycle and stale-result fixes.
+
+# Phase 3 — durable evidence, desktop integration and platform preparation
+
+Work date: 2026-10-16. Phase 1/2 above remain historical; this section describes the current application. No development hours were instrumented or estimated. Command timings below are emitted build/test timings or measured command wall time, not labor. No agent-issued commit, push, history rewrite, release or submission occurred. HEAD observed during the task was `144ad224cc27b858a60f713c69c47b266305d09e`; this contains intermediate files and is not claimed as the final tested working-tree revision. Original upstream provenance remains `61ae14391151ca9f209223e62c98fae3df5482b8`.
+
+## Baseline and preserved ownership
+Read all migration records and source, including the original logger/discovery/settings and the current group engine, session ownership, configuration writes, CSV and UI timer. Initial Phase 2 suite passed 51 deterministic/headless cases, with its one real-network case intentionally skipped; reported duration 887ms. No monitoring algorithm replacement or visual redesign was undertaken. GroupMonitor's characterized transitions, round-robin/stop-on-success, stale samples, monotonic timing and bounded cancellation remain intact.
+
+## P0 implementation
+Added SqliteHistoryStore, stable event GUIDs, sessions and transactional evidence batches. Evaluated JSON snapshots/custom journals versus SQLite; chose a single serial connection with rollback journal and full synchronous commits. One new direct MIT dependency: Microsoft.Data.Sqlite 10.0.13, bringing SQLitePCLRaw 2.1.13 and native SQLite. There is no extra solution project or backend. See ARCHITECTURE.md for the tradeoff and deployment risk.
+
+MonitoringService now serializes evidence independently of lifecycle, commits heartbeat/outage/events/cursor atomically, retains failed batches and stops instead of dropping evidence. Interrupted sessions reload once without false recovery; duration ends at the last persisted observation. Clean shutdown saves session/observation end. Comments and event IDs survive a new store/service. Pending comments must save before retention. Corruption/version/permission/competing-writer failures preserve files. An idle corrupt archive does not prevent closing; it does block starting measurements.
+
+AutomaticLogExporter derives session JSON and outage CSV from committed SQLite evidence. Records include start/end/interruption, outage/recovery/error/comment text, observed elapsed time and group summaries. It replaces the original mixed text-log format, uses stable GUID filenames and atomic replace, and avoids duplicate appends. SQLite contains active-session evidence immediately; automatic copies are written at Stop/Close or comment changes. No Internet uptime percentage is inferred. Default keep-all retention is bounded by a 64MiB main DB limit; explicit positive retention removes eligible recovered sessions only. Logs have a separate 256MiB cap and manual archival policy. Errors stay visible; no silent evidence deletion or corrupt-file reset.
+
+## P1 implementation
+Added validated asynchronous preferences with explicit corrupt-file backup/recovery, always-on-top, exit confirmation, safe saved geometry/maximized state, launch minimized, opt-in monitoring-on-launch, log location/retention and independent outage/recovery/error alert preferences. No OS login setting is altered. Added native TrayIcon Show/Exit using the attributed original icon. macOS/Windows hide on minimize only with an initialized exporter; Linux keeps taskbar access. Restoring cannot re-run initialization or start duplicate sessions.
+
+AlertPolicy consumes transition sequence once, seeds history without replay, rate limits errors monotonically and respects preferences. In-app alerts are clearly labelled. Optional native worker has a bounded queue and owns cancellation/child process streams: macOS osascript and Linux notify-send adapters, explicit Windows in-app fallback. Native delivery/permission is not claimed verified. No alert sounds, taskbar tint, focus-on-outage or login registration is implemented.
+
+Close awaits pending UI actions, async geometry save, stop, log copies, evidence flush and disposal; declined confirmation leaves monitoring running. Failed log-copy shutdown immediately refreshes stopped state so Preferences can be used to recover. The single existing snapshot timer and row identity are preserved.
+
+Prepared CI with matching x64 Windows/Linux and arm64 macOS runners, locked restore, Release tests, explicit loopback, self-contained publishing, native UI/clean close/restart, Linux Xvfb dependencies, captures and always-uploaded logs/TRX/artifacts. Remote jobs cannot test the final uncommitted tree without an authorized commit/push. None was initiated or claimed.
+
+## Difficulties, failures and corrections
+- Initial project-file edit for the SQLite reference was malformed; corrected before restore. Actual restore and later locked restore passed, with no audit suppression.
+- Early storage integration over-broad Start failure handling changed state on duplicate Start. Existing stop-timeout regression caught it; only a session that actually began now faults.
+- Moved preferences file metadata/copy/rename operations entirely off the dispatcher. Target-typed lambda return inference initially failed CS8030/CS8031; added the explicit Task.Run result type and rebuilt.
+- First client-capture harness compiled with one obsolete Bitmap.Save warning. Used the supported PngBitmapEncoderOptions overload and enabled warnings-as-errors for the harness; final harness has zero warnings/errors.
+- Async placement persistence made an older shell test assert invisibility too early. It now awaits actual close completion.
+- New log-failure test exposed stale IsRunning presentation after stop succeeded but export failed. Refreshed the snapshot before reporting failed shutdown; user can immediately change log preferences and retry. A failing test cleanup also hid the original timeout; cleanup now awaits close.
+- Reviewed corrupt-history feedback so a no-op pending flush cannot erase an initialization error. Skip derived exports when history is not available, while preserving close refusal for actual pending evidence.
+- Final review reproduced a retained-history viewport defect: a test expected event sequences [1,3] after retention but saw [1,2,3]. Reconciled removals anywhere in the list and ordered backfill; added the passing regression. Also restore a hidden owner before exit confirmation/error feedback; the existing confirmation test now verifies this path.
+- Reviewed retention to flush pending evidence before deleting/reloading records; a queued comment cannot revive a deleted incident without its original session.
+- Sandbox DNS blocked original screenshot download; approved network retry succeeded. Earlier OS screenshot failure is not retrospectively attributed to a proven permission cause.
+
+## Tests and real runtime evidence
+Added eight history tests and eleven alert/preferences/headless tests (19 cases beyond Phase 2). Tests cover restart/IDs/comments, unresolved interruption, no false recovery, corruption preservation, transactional rollback/idempotent retry, retention, capacity, writer lease, failed-write ownership/retry, summaries, log errors/rebuild, alert dedup/preferences/cooldown/cancellation, safe tray policy, screen clamping, preferences corruption, auto-start/topmost/confirmation and close fallback. Existing engine/real-probe/UI regressions remain. Fakes/clocks exist only in tests. Uncommitted-transaction rollback is tested; no physical power-failure claim is made.
+
+Intermediate suites: 58 deterministic passes plus one opt-in skip (966ms), then 67 plus skip (968ms). Two later regression runs failed the async-close/log-failure issues above before correction. Final results supersede them, without omitting those failures.
+
+Two separate one-minute native monitoring processes passed with actual loopback; their last persisted session observation durations were 60.643s and 60.086s. This is a short stability smoke only. No external network or real outage was manipulated. Final rerun against completed source: native window visible, one actual connected group, last loopback response 0ms at 17:17:52 +01:00, native tray initialized, `MINIMIZED_VISIBLE=False`, restore/Start/Stop/Close passed. Reload counted one then two clean sessions and two then four events across separate process launches. No fabricated measurements were injected. Native requests for OS notification delivery were not exercised.
+
+## Final local gates
+
+SDK 10.0.402/runtime 10.0.13 on macOS 26.3.1 arm64. Commands preserve warnings-as-errors and security auditing.
+
+| Gate | Actual result |
+|---|---|
+| `dotnet restore Synups.slnx --locked-mode --disable-parallel -m:1 -nr:false` | Passed; Desktop 258ms, Core 4ms, Tests up to date. RID lock targets retained. |
+| Release solution build, no restore, one MSBuild worker | Passed, 0 warnings/errors; emitted build time 1.09s (1.280s measured command wall). |
+| Deterministic/headless suite, Release/no-build | 70 passed, 0 failed, 1 explicit real-network skip, total71; reported duration 1s. Includes nine Avalonia headless cases. |
+| Explicit `SYNUPS_REAL_NETWORK_TESTS=1`, RealLoopback filter | 1 passed, 0 failed/skipped; reported duration64ms. Across both runs all71 unique cases exercised successfully. |
+| Self-contained publish, no restore | osx-arm64, win-x64 and linux-x64 passed on this Mac; command wall3.441s/3.556s/3.486s. File headers confirm Mach-O arm64 / PE x64 / ELF x64. This is not Windows/Linux execution. |
+| Final native harness | Two process launches passed real Start→measure→minimize/hide→restore→Stop→Close and durable reload. Harness build0 warnings/errors, emitted2.38s; total command wall13.372s. |
+| Authentic captures | Actual visible native client-area overview/targets saved and reviewed. Original author illustration downloaded unchanged and attributed; no fresh WPF Windows run. |
+| Licence/provenance | LICENSE byte matches upstream. Original src/, WirePeep.sln, Build.cmd, eng/build.ps1 and original workflow unchanged relative to upstream. |
+| Production source | 23 C#/AXAML files scanned/reviewed; no fake probes, Random measurements, simulator or WebView. Only production IcmpProbe provides measurements. |
+| Hosted runtime evidence | None for final tree. Windows/Linux native execution, permissions and direct published apphost launch remain unverified. |
+
+Actual logs/TRX/command wall timings are retained locally in ignored `artifacts/phase3-final/`; local self-contained outputs in `artifacts/publish/`. [Verification manifest](../evidence/verification/2026-10-16-macos-arm64.json) records counts, commands and source/capture hashes. CI is configured to retain equivalent logs for 30 days when run; no CI success is invented.
+
+## Scope and readiness
+Durability is a Synups enhancement. Meaningful legacy logging, preferences and alerts are partially/fully restored as documented in FEATURE_PARITY.md. Same coarse rubric: **(9 complete +8 partial×0.5+1 pending)/18 =72.2%** (Phase2 61.1%). Product readiness **6.5/10**; local P0/P1 functional gates pass, but Phase3 is **not declared fully complete** because cross-OS runtime and release gates remain.
+
+P2 discovery/import were investigated without shipping speculative implementations. See LEGACY_INTEGRATIONS.md: original TTL/candidate discovery is explicit future work; no startup scans occur. Upstream Menees source documents file-store patterns, but no actual Windows baseline settings fixture or exact-version import validation exists here. Manual profile editing works. No automatic commit/push, release, competition submission or later-phase work was performed by this agent. Remaining platform proof, native alerts/sounds/login, importer/discovery, single-instance activation, accessibility/endurance, published executable launch, packaging/signing and complete notices are in RELEASE_READINESS.md.
+
+
+Phase 3 implementation files include Core `Persistence/HistoryStore.cs`, `AppPreferences.cs`, `AutomaticLogExporter.cs`, `Alerts/AlertPolicy.cs`, `Monitoring/MonitoringState.cs` and `MonitoringService.cs`; Desktop native adapters/tray/icon attribution, MainWindow/ViewModel/AXAML and project resources; Tests `HistoryTests.cs`, `DesktopPreferencesTests.cs` and existing comment/close callers; package references/locks/RIDs; CI and native harness; README and migration/evidence records. Some initial Phase 3 files were included in the user-owned observed commit; final working-tree changes were not committed by the agent.
+
+
+CI packaging follow-up: raw artifact uploads do not retain Unix executable bits, so added `eng/package-artifacts.py`: Windows ZIP, macOS/Linux tar.gz, executable-mode/integrity verification, run instructions and SHA-256 sidecars. First local attempts failed because Python 3.9.6 lacks hashlib.file_digest; replaced it with streaming SHA-256 (no dependency). This packaging fix does not change production application source. Final archive verification results are recorded in the evidence manifest. Source archives remain unsigned verification builds, not a release or proof of apphost execution.
+
+
+Final tooling check: sandboxed Python syntax validation attempted to write the system bytecode cache and was denied. Approved execution retry passed for both helper scripts; no sandbox bypass or production change was used. Final Markdown links and git diff whitespace checks passed. Login launch is explicitly unimplemented on all three OS targets; per-OS evaluation is recorded in CROSS_PLATFORM.md.
+
+
+# Configurable SQLite storage policy — 2026-10-16
+
+Implemented on top of the existing, uncommitted Phase 3 working tree. Monitoring evaluation/probes, original source/history and dependencies are preserved. No commit, push, publish, release or submission was performed for this change. Earlier 64 MiB statements above describe the historical Phase 3 baseline; the policy below supersedes them.
+
+## Actual storage behavior
+
+The desktop default is **1 GiB**, adjustable in Preferences → History storage from **256 to 10240 MiB** (10 GiB). Capacity has a separate Apply action and an authoritative `storage_policy` row in the history database. The worker validates allocation and the public range, computes pages with the existing page size and 64-bit arithmetic, checks the effective `PRAGMA max_page_count` scalar, and commits the row transaction before acknowledging success. Reopen reapplies the committed policy; a failed update closes the connection so an uncommitted PRAGMA cannot survive as the active policy. Preference geometry/log saves do not rewrite capacity.
+
+Legacy databases gain additive metadata in place, preserving sessions/outages/events/comments and IDs. An actual >256 MiB fixture is loaded under a 256 MiB configured value without truncation; effective growth is capped at current allocation. Legacy migration can need a small metadata allowance (up to 16 pages), immediately recapped after commit. Attempts to lower below allocated size fail unchanged. A successful increase leaves all existing data intact. The 10 GiB test verifies the actual effective setting/reopen, without allocating a 10 GiB archive.
+
+Settings show main/WAL/SHM/rollback-journal lengths, managed backup and selected log-folder lengths, page allocation/reuse, growth headroom, available database bytes, shared database-volume free space, and 80%/95% allocation thresholds. File-length totals do not include filesystem compression/sparse allocation accounting, external backups or previous log folders. A serialized measurement refreshes every five seconds during monitoring, after actions and on manual Refresh. Warnings emit at most once at each severity per capacity per process, so oscillation does not create a notification storm; restart can warn again.
+
+Retention stays off by default. Confirmed positive days persist in preferences and apply immediately, on launch and daily during monitoring under the evidence lock. Entire unresolved/interrupted sessions remain protected. Deletion returns pages for reuse without VACUUM or an implicit shrink. Confirmed manual cleanup first makes a full verified backup, then removes eligible ended sessions and their events/recovered incidents/comments; backup failure cancels deletion. Logs/backups are independent and never silently removed.
+
+Backups use SQLite's online backup API, include committed WAL evidence, set the destination to DELETE journal mode before closing it, run quick_check and atomically publish a unique snapshot beside the history database. Independent snapshot reopen validates records and policy. No raw copy of an active main file is used. Offline restore instructions preserve the entire old recovery file set before substituting a standalone snapshot; cross-filesystem restore/repair UX remains unverified. CSV remains an outage export, not a complete backup.
+
+Genuine writes still enqueue owned batches before commit; failure cancels monitoring and blocks clean disposal. A real SQLITE_FULL test proves no partial event commit, pending ownership, blocked backup/cleanup/close, stopped capacity increase, idempotent retry and successful subsequent outage/recovery monitoring. Increasing capacity deliberately does not flush first. Physical disk-full/permissions/corruption still require repair; pending memory is not force-quit/power-loss protection.
+
+## Failures found and corrected during this change
+
+- Initial compilation caught a primary-constructor parameter captured alongside its field initializer (CS9124); introduced an explicit initial-capacity field.
+- Sandbox builds could not write Avalonia's Library build log; the approved build retry passed. Sandboxed tests also failed MSBuild local communication pipes; approved one-worker tests passed, and the stranded sandbox test process was terminated after cancellation failed.
+- Sandboxed locked restore failed NU1900 because NuGet vulnerability data was inaccessible. Approved network retry passed with auditing still enabled; no warning/audit suppression was added.
+- First storage suite: 14 passed, 3 failed. The oversized legacy fixture exposed policy-metadata allocation at an already-full page cap; bounded additive migration overhead fixes it. The WAL snapshot left a WAL-mode destination whose later read generated sidecars; destination normalization fixes it. The existing-page-size fixture had not materialized a schema before closing; corrected the fixture to preserve its intended page size.
+- Corrected suite passed 22 storage/Settings cases. Added running-policy refusal and then a Stop/log-metric regression, bringing new coverage to 24 cases.
+- A first complete gate run passed 93 deterministic cases plus the opt-in loopback case and two one-minute native launches (60.637s/60.597s persisted observation). Visual inspection of Settings showed log totals could lag after Stop. Completed actions now await a fresh serialized measurement; shutdown drains it and prevents new measurements. The final results below supersede that earlier source snapshot.
+
+## Verification and limits
+
+Final Release/headless results: **94 passed, 0 failed, 1 intentional real-network skip** (95 total), followed by the separately enabled real-loopback case **1 passed** (66ms). All **95 unique cases** were exercised. Solution build emitted **0 warnings/errors**, 5.42s (5.692s command wall). Locked restore passed with audit enabled; no dependency changes were necessary. Tests cover legacy page size/records, default and 256 MiB/2 GiB/10 GiB capacities, invalid/overflow inputs, failed atomic updates, restart, oversized/lowering behavior, allocation thresholds/deduplication, real WAL/SHM/log/backup accounting, snapshot integrity/reopen, retention and confirmation/backup-failure guards, daily active-session protection, live-policy refusal, SQLITE_FULL recovery and corrupt bytes. Existing monitoring/lifecycle/headless regressions remain green.
+
+Logs/TRX/captures and exact final command timings are retained in ignored `artifacts/storage-verified/`; earlier storage failures remain in `artifacts/storage-initial/`. The new storage evidence manifest supplements, rather than rewrites, the historical Phase 3 manifest. Final native smoke: two one-minute process launches passed Start → real measurement → minimize/hide → restore → Stop → Close, preserving one then two clean sessions and two then four events. Persisted observation durations were **60.623s / 60.595s**. Both reopen checks returned configured/effective **1,073,741,824 bytes** with 4096-byte pages. Harness build emitted zero warnings/errors (2.56s); total native command wall was 131.469s. Final target measurement was 2026-10-16 17:57:31 +01:00 with an actual 0ms loopback reply. Overview/targets/Settings native client captures were inspected; post-Stop log bytes were present. Process inspection found no remaining Synups/test/harness processes. [Storage evidence manifest](../evidence/verification/2026-10-16-storage-policy-macos-arm64.json) records source/capture hashes, commands, counts and limits.
+
+The 256 MiB automatic-log cap is unchanged. Backups require extra space in the managed sibling directory; no in-app restore/relocation wizard exists. Physical ENOSPC, genuine abrupt-process/power loss, full-sized multi-GiB endurance, bounded-memory behavior and Windows/Linux runtime remain unverified. Load/export/retention still materializes historical records. Existing published artifacts predate this change and were not regenerated. Overall readiness remains **6.5/10**, with a 10/10 aspirational target; local storage tests do not establish production or competition readiness.
+
+
+# Phase 4A — reviewed checkpoint and cross-platform CI
+
+Work date: 2026-10-16. This request explicitly authorizes reviewed commits/pushes, superseding the previous no-commit scope. Starting branch `feat/avalonia-migration`, HEAD `144ad224cc27b858a60f713c69c47b266305d09e`, origin `https://github.com/samscript18/Synups.git`. Read current readiness/platform/log records, workflow, project settings, packaging/native tools and all changed production/test areas, including the completed storage-policy update. The earlier Phase 3 counts do not describe the current storage-policy suite.
+
+Review found only coherent Synups migration/storage/testing/documentation changes. Automated text screening reports no credential/private-key patterns, private absolute user paths, or proposed generated binaries/databases/artifacts. The two email-pattern hits were unchanged actions/version syntax in the original workflow. Reviewed screenshots contain only loopback verification state or the attributed author's upstream illustration. Original LICENSE matches upstream byte for byte, and original source/solution/build scripts/workflow remain unchanged. No AGENTS.md was found.
+
+A sandboxed remote query failed DNS resolution. Approved network retry verified the original master ref and public GitHub repository identity. Git uses its existing osxkeychain credential helper; no token was printed or added to source. No alternate account, guessed credentials or authentication bypass is authorized.
+
+Fresh locked restore passed (Core166ms/Desktop68ms); Release solution build passed with 0 warnings/errors (1.36s emitted). Default suite: 94 passed, 0 failed, 1 intentional opt-in skip (95 total), reported duration1s. Explicit real-loopback test: 1 passed, 0 failed/skipped,65ms. Native harness passed two real macOS process launches (18:02:29/18:02:32 +01:00), Start/measurement/minimize/restore/Stop/Close, sessions1→2 and events2→4, 1 GiB effective capacity and genuine loopback RTT2ms/0ms. Raw logs/TRX/captures are retained under ignored artifacts/phase4a-local. These checks do not claim a published executable was launched.
+
+Reviewed the three-OS workflow against Synups.slnx, matching RIDs, locked dependencies, security auditing, explicit loopback, native X11 under Xvfb and failure-evidence uploads. Hardened packaging to require actual runtime/native SQLite dependencies; retain the restored .NET runtime licence/notices; record RID/source revision/runtime inventory/file SHA-256; and verify every archived file against the published bytes. No production dependency or monitoring algorithm changed in this checkpoint task. Complete third-party notice review, apphost execution and signed packaging remain separate gates. All local publish/archive results and subsequent actual push/CI outcomes will be appended below.
+
+
+Local packaging completed successfully for the current storage-policy implementation: osx-arm64 and linux-x64 archives each verify 233 published files; win-x64 verifies236. Original licence bytes, restored runtime notices, every file hash, archive SHA-256 and Unix apphost mode were checked. These fresh build outputs stay under ignored artifacts/phase4a-publish and artifacts/phase4a-packages; they are not public releases. The proposed source set has no text-review credential/private-path findings. Workflow YAML syntax and git diff whitespace checks pass.
