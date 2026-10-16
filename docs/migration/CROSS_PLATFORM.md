@@ -1,13 +1,13 @@
 # Cross-platform evidence and risks
 
-Targets are Windows, macOS and Linux. Target intent and successful cross-compilation do not establish runtime support. No downloadable release has been created. Phase 1/2 evidence is historical below; Phase 3 is the current verification matrix.
+Targets are Windows, macOS and Linux. Target intent and successful cross-compilation do not establish runtime support. No downloadable release has been created. Phase 1/2 evidence is historical below; Phase 3 is historical; Phase 4A below is the current verification matrix.
 
 ## Toolchain
 - Avalonia 12.1.4 stable, verified via official latest release and NuGet index on 2026-10-16: https://github.com/AvaloniaUI/Avalonia/releases/tag/12.1.4
 - Official template Avalonia.Templates 12.1.4 generated avalonia.app with net10.0; package nuspec explicitly includes net10.0 (and net8.0) assets. Actual restore/build is the compatibility check.
 - .NET 10 is LTS: https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core. SDK installed for this audit: 10.0.402 osx-arm64. synups/global.json pins this SDK family; new packages have lock files in the working tree. Upgrade serviced SDK/package versions deliberately and revalidate.
 - Original WirePeep net48/net6.0-windows remains separate. The new synups/Directory.Build.props does not import legacy Windows targets, signing or analyzer packages. Scoped global.json avoids changing legacy SDK selection.
-- .github/workflows/synups.yml configures restore/build/headless tests on three OS runners. This is planned automation; no remote workflow results have been observed.
+- .github/workflows/synups.yml configures restore/build/headless tests on three OS runners. This was planned automation in Phase 1; actual Phase 4A run evidence is recorded below.
 
 ## Evidence matrix
 | Platform | Restore/build | Tests | Native UI / real monitoring |
@@ -89,3 +89,20 @@ Fresh local validation of the current storage-policy implementation: locked rest
 Packaging now requires the managed entry point, dependency/runtime manifests, the platform CoreCLR and native SQLite libraries, and original MIT licence. It includes the exact restored runtime pack's LICENSE.TXT and THIRD-PARTY-NOTICES.TXT under licenses/dotnet. An artifact manifest records RID, CI source SHA, runtime libraries and every published file hash; each archive is checked against those hashes. Unix mode and archive SHA-256 sidecars are retained. Application-specific third-party licensing audit remains a release gate; runtime notices are not claimed to cover every Avalonia/font/native dependency.
 
 At source-checkpoint preparation, no hosted pass is claimed. The new Synups workflow selects Synups.slnx on Windows x64, macOS arm64 and Linux x64, then separately runs tests, explicit loopback, native GUI harness and publishing/packaging. The original Windows-only WirePeep workflow is unchanged and only triggers for master/PRs to master. Published-executable startup and packaging/install/signing verification remain separate from the harness.
+
+
+### Actual hosted results — checkpoint 88e7ea5
+
+Pushed source: **88e7ea507d82a39238ba48ac97936a2d2fa23c28**, branch **feat/avalonia-migration**. [Run 38937720125, attempt 1](https://github.com/samscript18/Synups/actions/runs/38937720125) completed **success** on 2026-10-16. The authenticated API, completed job/step results and downloaded artifacts/logs were inspected. No failed job or compatibility-warning suppression was needed.
+
+| Actual runner image | Locked restore / Release | Deterministic/headless | Real IPv4 loopback | Native production-composition harness | Self-contained publish/package | Published apphost launch |
+|---|---|---|---|---|---|---|
+| [Windows Server 2025 10.0.26100 x64](https://github.com/samscript18/Synups/actions/runs/38937720125/job/117097307554) | Pass, 0 warnings/errors | 94 passed; 1 opt-in skip | 1 passed separately | Two real native processes passed UI/ICMP/minimize-hide/restore/Stop/Close/reload | win-x64 passed | Not performed |
+| [macOS 15.7.9 arm64](https://github.com/samscript18/Synups/actions/runs/38937720125/job/117097307387) | Pass, 0 warnings/errors | 94 passed; 1 opt-in skip | 1 passed separately | Two real native processes passed equivalent flow | osx-arm64 passed | Not performed |
+| [Ubuntu 24.04.5 x64](https://github.com/samscript18/Synups/actions/runs/38937720125/job/117097307598) | Pass, 0 warnings/errors | 94 passed; 1 opt-in skip | 1 passed separately | Two native X11 processes passed under Xvfb; window remained visible with no established tray restoration | linux-x64 passed | Not performed |
+
+Each OS exercised all 95 unique cases across the deterministic and opt-in invocations. These are genuine OS runs; the Avalonia headless tests and native harness are separate. Harnesses reference production App/VM/engine/probe but are separate verification entry points, not execution of Synups.Desktop's published apphost. SQLite native binding, real loopback and clean session reload were observed on every OS. Windows/macOS tray exporter initialization and hide/restore handlers worked; physical menu clicks, OS notifications, real permission-denial scenarios, external outages, pending native-ping cancellation and installed-desktop/accessibility/endurance behavior remain outstanding. Xvfb does not certify Wayland or a physical Linux desktop.
+
+Downloaded all three artifact ZIPs and the complete workflow log ZIP into ignored `artifacts/phase4a-local/downloads/`; safely extracted platform evidence into `artifacts/phase4a-ci/`. ZIP digests match the GitHub API; inner archive sidecars, source revision, every published-file hash, original licence text, runtime licence/notices and Unix executable mode 0755 were verified. There are 236 verified published files for Windows and 233 each for macOS/Linux. Overview client captures from all three native runners were visually inspected. Metadata and hashes: [CI evidence manifest](../evidence/verification/2026-10-16-ci-checkpoint.json). Raw artifacts expire after 30 days on GitHub; local copies remain ignored and are not a public release.
+
+The first inspection's byte-equality licence assertion exposed Windows checkout's CRLF conversion, not altered licence text. Text matches the original after newline normalization; repository LICENSE and copyright remain unchanged. A focused `.gitattributes` rule now pins LICENSE to LF so subsequent packages can be compared byte-for-byte across runners. The follow-up commit changes documentation/evidence and licence checkout policy only, without changing application/test source. Verify the follow-up run independently; the evidence matrix above refers specifically to 88e7ea5.

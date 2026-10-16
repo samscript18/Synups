@@ -1,6 +1,6 @@
 # Next release milestone checklist
 
-Assessment: local Phase 3 foundation plus locally verified configurable storage policy, **6.5/10 product readiness**. The 10/10 submission target remains aspirational; storage improvements do not close the platform/release gates. Not production-ready or a completed competition entry. Cross-OS runtime gates prevent declaring Phase 3 fully complete.
+Assessment: local Phase 3 foundation plus locally verified configurable storage policy, **7/10 product readiness**. The 10/10 submission target remains aspirational; storage improvements do not close the platform/release gates. Not production-ready or a completed competition entry. Phase 4A now provides three-OS CI/native-harness evidence; published-apphost, installed-desktop and other release gates remain open.
 
 ## Passed locally on macOS arm64
 
@@ -30,9 +30,10 @@ Latest source/results: [storage-policy verification manifest](../evidence/verifi
 
 ## Required before release / supported-platform claims
 
-- [ ] Review, commit/push and obtain actual Windows/macOS/Linux workflow results. Download retained logs/TRX/captures; resolve failures.
+- [x] Reviewed checkpoint 88e7ea507d82a39238ba48ac97936a2d2fa23c28 pushed to feat/avalonia-migration. Run 38937720125 passed all three OS jobs; all logs/artifacts downloaded and inspected. [CI results](CROSS_PLATFORM.md#actual-hosted-results--checkpoint-88e7ea5).
 - [ ] Launch each **published executable** on its target OS. Current native harness references production App/VM but is not a published-apphost/package test.
-- [ ] Windows/Linux native ICMP, cancellation, SQLite native binding and file-path/permission validation.
+- [x] Windows/Linux native loopback ICMP, SQLite binding/storage tests, native UI/Stop/Close/restart and publishing passed in CI.
+- [ ] Real pending native-ICMP cancellation and genuine permission-denial/read-only/moved-path scenarios on each OS; deterministic error tests do not replace these.
 - [ ] Native tray menu click/exit and secondary-instance behavior. Linux tests must cover absent hosts without hiding the window.
 - [ ] OS notification request/delivery/denial tests; macOS app identity and Linux daemon availability. Windows native adapter remains missing.
 - [ ] External disconnect/reconnect, IPv6, VPN/firewall, sleep/resume, clocks, DPI and disconnected-screen tests.
@@ -54,7 +55,7 @@ At a logical page-limit failure, monitoring stops with unsaved batches retained.
 
 Retention is off by default; positive days require confirmation. Manual cleanup confirms scope and creates a verified full SQLite backup before deletion; unresolved/interrupted sessions and derived copies are kept. Freed pages are reused without shrinking the database, so 80%/95% allocation warnings can remain. Each capacity emits at most one warning and one critical escalation per process; restarting can warn again. Backups/logs need manual archival and can consume the disk independently of the database limit. [Backup/restore instructions and storage design](ARCHITECTURE.md#capacity-policy-backup-and-recovery) describe the recovery file set and remaining limits.
 
-The configured upper bound is tested without filling a 10 GiB database. Large-history load/export/retention still materializes records in memory; no bounded-memory, full-size endurance or physical-power-loss claim is made. Existing published artifacts predate this storage change and were not regenerated. Unresolved incidents remain unresolved unless a real recovery was observed in that session; a later session does not manufacture recovery.
+The configured upper bound is tested without filling a 10 GiB database. Large-history load/export/retention still materializes records in memory; no bounded-memory, full-size endurance or physical-power-loss claim is made. Phase 4A regenerated and downloaded archives for the current storage-policy checkpoint on each matching runner; direct apphost execution remains unverified. Unresolved incidents remain unresolved unless a real recovery was observed in that session; a later session does not manufacture recovery.
 
 ## Phase 3 Git/CI instructions — historical
 
@@ -77,3 +78,10 @@ Do not add ignored artifacts or caches. Push triggers the prepared workflow; man
 The current request explicitly authorizes a reviewed source commit and push to the verified Synups remote. Local gates have passed again for the current storage-policy source: 94 deterministic/headless cases plus one explicit real-network case, zero Release build warnings/errors and two native macOS runs. Fresh three-RID archives passed verification with runtime notices, full content hashes, original licence and Unix executable permissions. Build outputs, TRX and caches stay ignored. No public release or competition submission is authorized.
 
 Hosted results and checkpoint SHA will be recorded after the push attempt. Existing Windows/Linux and published-apphost checkboxes remain open until the corresponding evidence exists. Readiness remains 6.5/10 pending that evidence.
+
+
+### Recorded checkpoint evidence
+
+The previous pending note above is historical. Source commit **88e7ea507d82a39238ba48ac97936a2d2fa23c28** was committed and pushed without force or history rewrite. [Actual run 38937720125](https://github.com/samscript18/Synups/actions/runs/38937720125) passed Windows Server 2025 x64, macOS 15.7.9 arm64 and Ubuntu 24.04.5 x64. On each: 94 deterministic/headless passed, the separately enabled loopback case passed, two native verification processes passed, and self-contained publishing/packaging passed. Downloaded log/TRX/native-capture/archive evidence was checked; details/hashes are in the [CI manifest](../evidence/verification/2026-10-16-ci-checkpoint.json).
+
+Readiness is now **7/10** based on genuine OS evidence. Published-apphost execution is **not tested on any OS**, native adapters/menu interactions and installed desktop environments need further checks, and signing/notarization/complete dependency notices, endurance, accessibility and remaining legacy gaps still block a production release. The default branch remains original master; review/merge and release remain separate actions. No public release or competition submission occurred. A focused licence LF policy and these evidence updates are the only follow-up source-control changes; inspect their subsequent run separately from the recorded source checkpoint.
