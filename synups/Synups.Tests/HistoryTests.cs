@@ -6,6 +6,7 @@ using static Synups.Tests.TestConfig;
 
 namespace Synups.Tests;
 
+[Collection(StorageCollection.Name)]
 public class HistoryTests
 {
     [Fact]
@@ -37,6 +38,39 @@ public class HistoryTests
             Assert.Equal(id, restored.Id); Assert.Contains("Persistent", restored.Comment); Assert.NotNull(restored.RecoveredUtc);
             Assert.Equal(eventIds, restarted.Capture().Events.Select(e => e.Id));
             Assert.Equal(SessionState.Stopped, restarted.Capture().State);
+        }
+        finally { Directory.Delete(directory, true); }
+    }
+
+    [Fact]
+    public async Task ConcurrentGroupsCommitOutagesToRealSqliteAndStopWithoutFalseRecovery()
+    {
+        var directory = Temp(); var path = Path.Combine(directory, "history.db");
+        try
+        {
+            var clock = new ManualClock(); var groups = Enumerable.Range(0, 4).Select(_ => Group()).ToArray();
+            Guid[] ids;
+            await using (var engine = new MonitoringService(new ScriptedProbe(Enumerable.Repeat(Fail, 8).ToArray()), clock,
+                maxConcurrency: 4, history: new SqliteHistoryStore(path)))
+            {
+                await engine.StartAsync(Config(groups));
+                await UntilAsync(() => clock.PendingDelays == 4);
+                clock.Advance(1000);
+                await UntilAsync(() => clock.PendingDelays == 4);
+                Assert.Equal(4, engine.Capture().Outages.Count);
+                Assert.All(engine.Capture().Groups, g => Assert.True(g.ConfirmedOutage));
+                await engine.StopAsync();
+                ids = engine.Capture().Outages.Select(o => o.Id).ToArray();
+                Assert.Equal(4, ids.Distinct().Count());
+                Assert.False(engine.HasUnsavedEvidence);
+            }
+            await using var reopened = new SqliteHistoryStore(path);
+            var archive = await reopened.LoadAsync(includeAllEvents: true);
+            Assert.Equal(ids, archive.Outages.Select(o => o.Id));
+            Assert.All(archive.Outages, o => { Assert.Null(o.RecoveredUtc); Assert.NotNull(o.ObservationEndedUtc); });
+            Assert.Equal(4, archive.Events.Count(e => e.Kind == MonitorEventKind.OutageStarted));
+            Assert.DoesNotContain(archive.Events, e => e.Kind == MonitorEventKind.Recovery);
+            Assert.NotNull(Assert.Single(archive.Sessions).EndedUtc);
         }
         finally { Directory.Delete(directory, true); }
     }

@@ -10,6 +10,7 @@ using static Synups.Tests.TestConfig;
 
 namespace Synups.Tests;
 
+[Collection(StorageCollection.Name)]
 public class DesktopPreferencesTests
 {
     [Fact]

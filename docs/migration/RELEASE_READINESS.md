@@ -6,7 +6,7 @@ Assessment: local Phase 3 foundation plus locally verified configurable storage 
 
 - [x] Existing monitoring engine preserved; failure/recovery/rotation/freshness/lifecycle regressions pass.
 - [x] Locked restore with NuGet audit enabled; Release build zero warnings/errors.
-- [x] 94 deterministic/headless tests passed; separately enabled loopback case passed (95 unique exercised cases). Includes 24 new storage-policy/Settings cases; logs/TRX are in `artifacts/storage-verified/`.
+- [x] 95 deterministic/headless tests passed locally after storage-test isolation; the separately enabled case passed on the unchanged production source. The earlier hosted checkpoint exercised 95 unique cases per OS; the new suite has 96. Includes 24 new storage-policy/Settings cases; logs/TRX are in `artifacts/storage-verified/`.
 - [x] Durable sessions/incidents/comments and stable IDs reload through new store/service instances.
 - [x] Two native process launches reload clean session records; no recovery is inferred at restart or stop.
 - [x] Corrupt history fails closed and preserves bytes. Pending write failures retain memory and block clean disposal until retry.
@@ -85,3 +85,6 @@ Hosted results and checkpoint SHA will be recorded after the push attempt. Exist
 The previous pending note above is historical. Source commit **88e7ea507d82a39238ba48ac97936a2d2fa23c28** was committed and pushed without force or history rewrite. [Actual run 38937720125](https://github.com/samscript18/Synups/actions/runs/38937720125) passed Windows Server 2025 x64, macOS 15.7.9 arm64 and Ubuntu 24.04.5 x64. On each: 94 deterministic/headless passed, the separately enabled loopback case passed, two native verification processes passed, and self-contained publishing/packaging passed. Downloaded log/TRX/native-capture/archive evidence was checked; details/hashes are in the [CI manifest](../evidence/verification/2026-10-16-ci-checkpoint.json).
 
 Readiness is now **7/10** based on genuine OS evidence. Published-apphost execution is **not tested on any OS**, native adapters/menu interactions and installed desktop environments need further checks, and signing/notarization/complete dependency notices, endurance, accessibility and remaining legacy gaps still block a production release. The default branch remains original master; review/merge and release remain separate actions. No public release or competition submission occurred. A focused licence LF policy and these evidence updates are the only follow-up source-control changes; inspect their subsequent run separately from the recorded source checkpoint.
+
+
+The documentation/licence follow-up run38939047265 passed macOS/Linux but exposed a Windows storage-integration timeout (93 passed/1 failed/1 opt-in skip); it is not counted as a full pass. The corrective collection isolates real disk fixtures while preserving production seven-second shutdown behavior and explicit concurrency/deadline coverage; a new concurrent-groups SQLite case passes locally. See CROSS_PLATFORM.md for the exact failed SHA and evidence. Follow-up hosted verification remains required before calling the latest branch green.

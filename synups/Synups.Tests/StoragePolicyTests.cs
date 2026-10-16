@@ -6,6 +6,7 @@ using static Synups.Tests.TestConfig;
 
 namespace Synups.Tests;
 
+[Collection(StorageCollection.Name)]
 public sealed class StoragePolicyTests : IDisposable
 {
     private readonly string root = Path.Combine(Path.GetTempPath(), "Synups-storage-" + Guid.NewGuid());
