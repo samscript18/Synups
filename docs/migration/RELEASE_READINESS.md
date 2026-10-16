@@ -1,12 +1,12 @@
 # Next release milestone checklist
 
-Assessment: local Phase 3 foundation plus locally verified configurable storage policy, **7/10 product readiness**. The 10/10 submission target remains aspirational; storage improvements do not close the platform/release gates. Not production-ready or a completed competition entry. Phase 4A now provides three-OS CI/native-harness evidence; published-apphost, installed-desktop and other release gates remain open.
+Assessment: reviewed Phase 4A checkpoint with three-OS CI/native-harness evidence and configurable storage policy, **7/10 product readiness**. The 10/10 submission target remains aspirational; storage improvements do not close the platform/release gates. Not production-ready or a completed competition entry. Phase 4A now provides three-OS CI/native-harness evidence; published-apphost, installed-desktop and other release gates remain open.
 
 ## Passed locally on macOS arm64
 
 - [x] Existing monitoring engine preserved; failure/recovery/rotation/freshness/lifecycle regressions pass.
 - [x] Locked restore with NuGet audit enabled; Release build zero warnings/errors.
-- [x] 95 deterministic/headless tests passed locally after storage-test isolation; the separately enabled case passed on the unchanged production source. The earlier hosted checkpoint exercised 95 unique cases per OS; the new suite has 96. Includes 24 new storage-policy/Settings cases; logs/TRX are in `artifacts/storage-verified/`.
+- [x] 95 deterministic/headless tests passed locally after storage-test isolation; corrected CI also passed all 96 unique cases per OS across default and opt-in loopback invocations. Includes 24 storage-policy/Settings cases and concurrent SQLite coverage; local correction logs/TRX are in `artifacts/phase4a-correction/`.
 - [x] Durable sessions/incidents/comments and stable IDs reload through new store/service instances.
 - [x] Two native process launches reload clean session records; no recovery is inferred at restart or stop.
 - [x] Corrupt history fails closed and preserves bytes. Pending write failures retain memory and block clean disposal until retry.
@@ -26,7 +26,7 @@ Assessment: local Phase 3 foundation plus locally verified configurable storage 
 - [x] Authentic native client-area captures and attributed upstream before illustration recorded.
 - [x] MIT licence and original source/build history preserved; no production mock probes or generated metrics.
 
-Latest source/results: [storage-policy verification manifest](../evidence/verification/2026-10-16-storage-policy-macos-arm64.json). The earlier Phase 3 manifest and published archives describe their original source snapshot.
+Latest completed checkpoint results: [corrected three-OS CI manifest](../evidence/verification/2026-10-16-ci-corrected.json). The storage-policy and earlier Phase 3 manifests describe their original source snapshots; subsequent UI source needs separate validation.
 
 ## Required before release / supported-platform claims
 
@@ -88,3 +88,13 @@ Readiness is now **7/10** based on genuine OS evidence. Published-apphost execut
 
 
 The documentation/licence follow-up run38939047265 passed macOS/Linux but exposed a Windows storage-integration timeout (93 passed/1 failed/1 opt-in skip); it is not counted as a full pass. The corrective collection isolates real disk fixtures while preserving production seven-second shutdown behavior and explicit concurrency/deadline coverage; a new concurrent-groups SQLite case passes locally. See CROSS_PLATFORM.md for the exact failed SHA and evidence. Follow-up hosted verification remains required before calling the latest branch green.
+
+
+### Corrected checkpoint passed
+
+The pending correction above is now verified: **7b75296f97ea62d986e7d16b152dedaabcf999d6**, branch **feat/avalonia-migration**, [run 38940757093](https://github.com/samscript18/Synups/actions/runs/38940757093), passed all three OS jobs. Each passed 95 deterministic/headless plus one separate real-loopback case (96 unique), zero-warning/error Release, native Start/measure/Stop/Close/restart and publishing. All downloaded package hashes/runtime notices/exact licence bytes/Unix executable modes and actual native logs/captures passed inspection. The failed previous run remains documented. Readiness stays **7/10**; published-apphost execution and remaining release gates are open. The following UI refinement is a separate reviewed checkpoint and must not inherit this run's pass automatically.
+
+
+### User-requested UI refinement
+
+Shared ink/teal tokens, typography, semantic badges, real-state overview tiles, compact navigation and grouped configuration/history/preferences panels are implemented without changing the engine or adding dependencies. Final local Release/headless suite passed95 cases plus the intentional networking skip; explicit real loopback and two native macOS restart runs passed. Native normal/minimum820×560 client captures were inspected and retained with [source hashes](../evidence/verification/2026-10-16-ui-macos-arm64.json). Exact new UI source must pass its own three-OS CI run before its platform claims are updated. Native accessibility/keyboard review and published-apphost execution remain open; cosmetic refinement does not raise the7/10 readiness score.

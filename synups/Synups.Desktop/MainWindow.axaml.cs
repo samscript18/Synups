@@ -41,7 +41,7 @@ public partial class MainWindow : Window
                 ViewModel is { } vm && DesktopPolicy.HideOnMinimize(vm.SavedPreferences, tray?.Restorable == true)) Hide();
         };
         PositionChanged += (_, _) => RememberNormalPlacement();
-        SizeChanged += (_, _) => RememberNormalPlacement();
+        SizeChanged += (_, _) => { Classes.Set("compact", Bounds.Width < 1060); RememberNormalPlacement(); };
         refreshTimer.Tick += (_, _) => { ViewModel?.Refresh(); if (ViewModel?.IsRunning != true) refreshTimer.Stop(); };
         Closed += (_, _) => { refreshTimer.Stop(); tray?.Dispose(); };
     }
@@ -109,6 +109,10 @@ public partial class MainWindow : Window
     private async void RetryHistoryClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.RetryHistoryAsync() ?? Task.CompletedTask);
     private async void StartClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.StartAsync() ?? Task.CompletedTask);
     private async void StopClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.StopAsync() ?? Task.CompletedTask);
+    private void NavigationChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (this.FindControl<ScrollViewer>("PageScroll") is { } page) page.Offset = default;
+    }
     private void ConfigureClicked(object? sender, RoutedEventArgs e) { if (ViewModel is { } vm) vm.SelectedPage = 1; }
     private void NewGroupClicked(object? sender, RoutedEventArgs e) => ViewModel?.NewGroup();
     private void NewTargetClicked(object? sender, RoutedEventArgs e) => ViewModel?.NewTarget();

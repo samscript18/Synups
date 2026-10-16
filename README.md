@@ -2,7 +2,7 @@
 
 Synups is a migration of [WirePeep](https://github.com/menees/WirePeep) into a modern cross-platform network reliability monitor using **real Avalonia, C# and XAML**. Primary competition category: Best IT Pro Tool.
 
-**Current status: Phase 3 local functionality delivered; platform/release gates remain open.** Synups performs real ICMP monitoring, edits profiles, retains incidents/comments across restarts, writes automatic session logs/statistics and provides configurable alerts and desktop preferences. Windows/Linux runtime validation, legacy import and several OS integrations remain incomplete. No production measurements or statistics are fabricated. No backend, cloud service, paid component or WebView is used.
+**Current status: reviewed source checkpoint with passing Windows/macOS/Linux CI; release gates remain open.** Synups performs real ICMP monitoring, edits profiles, retains incidents/comments across restarts, writes automatic session logs/statistics and provides configurable alerts and desktop preferences. Native verification harnesses passed on all three OSes; published-executable testing, legacy import and several OS integrations remain incomplete. No production measurements or statistics are fabricated. No backend, cloud service, paid component or WebView is used.
 
 ## Build and run
 
@@ -18,7 +18,7 @@ dotnet run --project Synups.Desktop -c Release --no-build
 
 Verified on macOS 26.3.1 arm64: 95 deterministic/headless cases, one separately enabled real-network case, native loopback monitoring, durable process restart, minimize/restore and graceful close. Release build has zero warnings/errors. Genuine native client-area captures are included below. See the migration log for scope and failed attempts.
 
-The SDK pin is scoped to synups/ so original WirePeep builds keep their existing SDK selection. Native desktop prerequisites vary by OS; see [platform evidence and risks](docs/migration/CROSS_PLATFORM.md). Windows Server 2025 x64, macOS 15 arm64 and Ubuntu 24.04 x64 have passed the [checkpoint CI run](https://github.com/samscript18/Synups/actions/runs/38937720125): locked restore, zero-warning Release build, 94 deterministic/headless cases plus one explicit loopback case per OS, native production-composition harness and publishing. Linux native UI used Xvfb. Published apphost launches and installed-desktop behavior remain unverified. Self-contained win-x64, osx-arm64 and linux-x64 directories were published locally into ignored `artifacts/publish/`. Verification archives/checksums are prepared under `artifacts/packages/` (Windows ZIP, Unix tar.gz preserving executable mode). Cross-publishing does not verify another OS; these are unsigned build outputs, not downloadable releases.
+The SDK pin is scoped to synups/ so original WirePeep builds keep their existing SDK selection. Native desktop prerequisites vary by OS; see [platform evidence and risks](docs/migration/CROSS_PLATFORM.md). Windows Server 2025 x64, macOS 15.7.9 arm64 and Ubuntu 24.04.5 x64 passed the [corrected checkpoint CI run](https://github.com/samscript18/Synups/actions/runs/38940757093): locked restore, zero-warning Release build, 95 deterministic/headless cases plus one explicit loopback case per OS, native production-composition harness and self-contained publishing. Linux native UI used Xvfb. Published apphost launches and installed-desktop behavior remain unverified. The run's retained verification artifacts contain Windows ZIP/Unix tar.gz packages, checksums, logs, TRX and client captures; these expire after 30 days and are unsigned verification builds, not a public release. Downloaded packages were checked for exact MIT licence bytes, runtime notices, every file hash and Unix executable mode.
 
 ## Use Synups
 
@@ -52,9 +52,11 @@ The normal test suite does not require a public IP or run real ICMP. From `synup
 SYNUPS_REAL_NETWORK_TESTS=1 dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~RealLoopback
 ```
 
-From the repository root, `python3 eng/native-smoke.py --dotnet /path/to/dotnet --screenshots artifacts/screenshots` verifies the native application, real loopback, two separate process launches with durable sessions, minimize/restore and clean close using temporary configuration/history. Add `--seconds 60` for a one-minute observation per launch. This harness is not compiled into production. The CI matrix prepares locked restore, tests, explicit loopback, self-contained publishing, native smoke (Linux under Xvfb), captures and retained command/TRX artifacts. The [recorded checkpoint run](https://github.com/samscript18/Synups/actions/runs/38937720125) passed all three jobs for source commit `88e7ea507d82a39238ba48ac97936a2d2fa23c28`; downloaded logs/TRX/captures and archive contents were inspected. This does not establish published-apphost startup.
+From the repository root, `python3 eng/native-smoke.py --dotnet /path/to/dotnet --screenshots artifacts/screenshots` verifies native production components, real loopback, two separate process launches with durable sessions, minimize/restore and clean close using temporary configuration/history. Add `--seconds 60` for a one-minute observation per launch. This harness is not compiled into production. The CI matrix runs locked restore, tests, explicit loopback, self-contained publishing, native smoke (Linux under Xvfb), captures and retained command/TRX artifacts. The [corrected run](https://github.com/samscript18/Synups/actions/runs/38940757093) passed all three jobs for source commit `7b75296f97ea62d986e7d16b152dedaabcf999d6`; downloaded logs/TRX/captures and archive contents were inspected. This does not establish published-apphost startup.
 
-Latest storage-change verification on macOS arm64: locked restore with audit enabled and Release build passed (zero warnings/errors); 94 deterministic/headless tests passed, plus one separately enabled loopback case (95 unique cases). See [release readiness](docs/migration/RELEASE_READINESS.md) for native evidence and remaining release gates. No artifacts were published for this change.
+Latest local correction verification on macOS arm64: Release build passed with zero warnings/errors; 95 deterministic/headless tests passed. Hosted verification exercised all 96 unique cases per OS across the default suite and separate loopback invocation. One earlier Windows storage-integration deadline failure and its test-isolation correction remain recorded in the [migration log](docs/migration/MIGRATION_LOG.md). See [release readiness](docs/migration/RELEASE_READINESS.md) for remaining gates.
+
+The shared native UI uses a restrained ink/teal theme, compact sidebar navigation, text-labelled connectivity badges and a responsive overview. Configuration, history and preferences use consistent panels; unknown measurements stay unknown. Native OS window controls are retained.
 
 ## Migration write-up — work completed so far
 
@@ -84,9 +86,9 @@ Engineering issues and actual verification results, including failed attempts an
 
 | Before — upstream WirePeep illustration, Bill Menees | After — Synups, macOS arm64, real loopback |
 |---|---|
-| ![Original upstream WirePeep illustration](docs/evidence/before/wirepeep-upstream.png) | ![Native Synups overview with real loopback](docs/evidence/after/macos-arm64/synups-overview.png) |
+| ![Original upstream WirePeep illustration](docs/evidence/before/wirepeep-upstream.png) | ![Native Synups overview with real loopback](docs/evidence/after/2026-10-16-ui/macos-arm64/synups-overview.png) |
 
-These are different measurement environments and times, not a comparative connectivity benchmark. The Synups capture renders the actual visible native client tree via Avalonia, without OS chrome. Windows/Linux runtime proof, published executable launch validation, signing/packaging and remaining checklist gates are required before a release.
+These are different measurement environments and times, not a comparative connectivity benchmark. The Synups capture renders the actual visible native client tree via Avalonia, without OS chrome. Additional native client captures from Windows/macOS/Linux are retained in the verified CI artifacts. Published executable launch validation, installed-desktop testing, signing/packaging and remaining checklist gates are required before a release.
 
 The [Avalonia Port Challenge](https://avaloniaui.net/blog/avalonia-port-challenge) closes October 23, 2026 at 23:59 UTC. Synups is not a finished competition entry. No submission or publication was performed.
 

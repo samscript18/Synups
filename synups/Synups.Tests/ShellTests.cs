@@ -37,6 +37,10 @@ public class ShellTests
             await UntilAsync(() => vm.CanStart);
             Assert.Empty(probe.Addresses);
             Assert.Equal("Not checked", vm.Groups[0].Targets[0].Status);
+            Assert.Equal("—", vm.ConnectedGroupCount);
+            Assert.Equal("—", window.FindControl<TextBlock>("ConnectedMetric")!.Text);
+            Assert.False(vm.IsCurrentlyConnected);
+            Assert.False(vm.HasAlertBanner);
             Assert.Equal("Synups — Network reliability", window.Title);
             var navigation = window.FindControl<ListBox>("Navigation")!;
             navigation.SelectedIndex = 1; Assert.True(vm.IsTargets);
@@ -53,6 +57,8 @@ public class ShellTests
             await UntilAsync(() => engine.Capture().Outages.Count == 1);
             vm.Refresh();
             Assert.Single(vm.Outages);
+            Assert.Equal("1", vm.ConfirmedOutageCount);
+            Assert.True(vm.HasCurrentOutage);
             Assert.Contains("Confirmed", window.FindControl<TextBlock>("ConnectivityAssessment")!.Text);
             vm.SelectedOutage = vm.Outages[0]; vm.OutageComment = "Actual test comment"; await vm.SaveCommentAsync();
             Assert.Equal("Actual test comment", engine.Capture().Outages[0].Comment);
@@ -60,6 +66,9 @@ public class ShellTests
             await UntilAsync(() => engine.Capture().Outages[0].RecoveredUtc.HasValue);
             vm.Refresh();
             Assert.Contains("Responded", originalTarget.Status);
+            Assert.Equal("1", vm.ConnectedGroupCount);
+            Assert.True(vm.IsCurrentlyConnected);
+            Assert.True(originalRow.IsConnected);
             Assert.Same(originalRow, vm.Groups[0]); Assert.Same(originalTarget, vm.Groups[0].Targets[0]);
             Assert.Contains("1 connected", window.FindControl<TextBlock>("MonitoringSummary")!.Text);
             await using var csv = new MemoryStream(); await vm.ExportAsync(csv); Assert.True(csv.Length > 0);
@@ -67,6 +76,9 @@ public class ShellTests
             await UntilAsync(() => !vm.IsRunning);
             Assert.True(vm.CanEdit);
             Assert.Contains("historical", vm.ConnectivityAssessment);
+            Assert.False(vm.IsCurrentlyConnected);
+            Assert.False(originalRow.IsConnected);
+            Assert.Contains("Last session", vm.MetricContext);
             vm.SelectedGroup = vm.Groups[0]; vm.SelectedTarget = vm.Groups[0].Targets[0];
             var editedId = vm.SelectedTarget.Id;
             vm.TargetAddress = "127.0.0.2";
@@ -74,6 +86,7 @@ public class ShellTests
             Assert.Equal(editedId, vm.SelectedTarget!.Id);
             Assert.Equal("Not checked", vm.SelectedTarget.Status);
             Assert.Equal("Not observed", vm.LastMeasurement);
+            Assert.Equal("—", vm.ConnectedGroupCount);
             Assert.Single(vm.Outages);
         }
         finally

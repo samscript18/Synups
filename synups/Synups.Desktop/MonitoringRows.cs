@@ -3,20 +3,38 @@ using Synups.Core.Monitoring;
 
 namespace Synups.Desktop;
 
+public sealed record WorkspacePage(string Title, string Description, string IconData)
+{
+    public override string ToString() => Title;
+}
+
 public sealed class GroupRow(GroupConfiguration configuration) : ObservableObject
 {
     public GroupConfiguration Configuration { get; } = configuration;
     public Guid Id => Configuration.Id;
     public string Name => Configuration.Name;
     public string TimingDescription => $"Poll {Configuration.PollMilliseconds / 1000d:g}s · timeout {Configuration.TimeoutMilliseconds}ms · fail after {Configuration.FailMilliseconds / 1000d:g}s";
+    public string TargetDescription => $"{Targets.Count} {(Targets.Count == 1 ? "target" : "targets")} · one responding peer establishes group connectivity";
     public ObservableCollection<TargetRow> Targets { get; } = new(configuration.Targets.Select(t => new TargetRow(t)));
     private string status = configuration.Enabled ? "Not checked" : "Disabled";
     public string Status { get => status; private set => Set(ref status, value); }
+    private GroupConnectivity connectivity = configuration.Enabled ? GroupConnectivity.NotChecked : GroupConnectivity.Disabled;
+    private bool running, outage;
+    public bool IsConnected => running && connectivity == GroupConnectivity.Connected && !outage;
+    public bool HasOutage => outage;
+    public bool IsUncertain => running && !outage && connectivity is GroupConnectivity.Unavailable or GroupConnectivity.Disconnected;
     public override string ToString() => Name;
     public void Apply(GroupSnapshot? snapshot, bool running)
     {
+        var nextConnectivity = snapshot?.Connectivity ?? (Configuration.Enabled ? GroupConnectivity.NotChecked : GroupConnectivity.Disabled);
+        var nextOutage = snapshot?.ConfirmedOutage == true;
+        if (connectivity != nextConnectivity || this.running != running || outage != nextOutage)
+        {
+            connectivity = nextConnectivity; this.running = running; outage = nextOutage;
+            Changed(nameof(IsConnected)); Changed(nameof(HasOutage)); Changed(nameof(IsUncertain));
+        }
         Status = snapshot is null ? Configuration.Enabled ? "Not checked" : "Disabled" :
-            $"{(!running && snapshot.Connectivity != GroupConnectivity.Disabled ? "Last: " : "")}{snapshot.Connectivity}" +
+            $"{(!running && snapshot.Connectivity != GroupConnectivity.Disabled ? "Last: " : "")}{(snapshot.Connectivity == GroupConnectivity.NotChecked ? "Not checked" : snapshot.Connectivity)}" +
             (snapshot.ConfirmedOutage ? " · outage unresolved" : snapshot.Connectivity == GroupConnectivity.Disconnected ? " · failure grace period" : "");
         foreach (var target in Targets) target.Apply(snapshot?.Targets.FirstOrDefault(t => t.Id == target.Id), running);
     }

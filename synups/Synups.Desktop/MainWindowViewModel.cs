@@ -41,9 +41,11 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     public string StorageWarning => storageUsage is { } u && u.WarningLevel > 0
         ? $"{(u.WarningLevel == 95 ? "Critical storage warning" : "Storage warning")}: database allocation is at least {u.WarningLevel}% of configured capacity. Increase capacity or back up and clean eligible history. Other files and temporary work require additional disk space."
         : "";
+    public bool HasStorageWarning => !string.IsNullOrWhiteSpace(StorageWarning);
     private readonly AlertDelivery alertDelivery = new();
     private string alertBanner = "", lastStorageAlert = "";
-    public string AlertBanner { get => alertBanner; private set => Set(ref alertBanner, value); }
+    public string AlertBanner { get => alertBanner; private set { if (Set(ref alertBanner, value)) Changed(nameof(HasAlertBanner)); } }
+    public bool HasAlertBanner => !string.IsNullOrWhiteSpace(AlertBanner);
     public string NativeAlertStatus => NativeAlertSink.Capability + " " + alertDelivery.Status;
     public bool CanPreferences => !busy && !IsRunning;
     private bool prefConfirmExit, prefTopmost, prefTray, prefMinimized, prefAutoStart, prefOutage = true, prefRecovery = true, prefErrors = true, prefNative, prefLogs = true;
@@ -82,7 +84,14 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
         this.preferencesStore = preferencesStore ?? new PreferencesStore(store.FileName + ".preferences.json", store.FileName + ".logs");
         snapshot = service.Capture();
     }
-    public IReadOnlyList<string> NavigationItems { get; } = new[] { "Overview", "Targets and groups", "Activity and outages", "Preferences" };
+    public IReadOnlyList<WorkspacePage> NavigationItems { get; } =
+    [
+        new("Overview", "Network health", "M3,3 L9,3 L9,9 L3,9 Z M15,3 L21,3 L21,9 L15,9 Z M3,15 L9,15 L9,21 L3,21 Z M15,15 L21,15 L21,21 L15,21 Z"),
+        new("Targets and groups", "Your monitoring profile", "M9,3 L15,3 L15,9 L9,9 Z M3,15 L9,15 L9,21 L3,21 Z M15,15 L21,15 L21,21 L15,21 Z M12,9 L12,12 M6,15 L6,12 L18,12 L18,15"),
+        new("Activity and outages", "Evidence and comments", "M3,4 L21,4 M3,12 L7,12 L10,7 L14,17 L17,12 L21,12 M3,20 L21,20"),
+        new("Preferences", "Make Synups yours", "M4,6 L8,6 M12,6 L20,6 M4,12 L14,12 M18,12 L20,12 M4,18 L6,18 M10,18 L20,18 M8,3 L12,3 L12,9 L8,9 Z M14,9 L18,9 L18,15 L14,15 Z M6,15 L10,15 L10,21 L6,21 Z"),
+    ];
+    public string PageTitle => NavigationItems[SelectedPage].Title;
     public ObservableCollection<GroupRow> Groups { get; } = new();
     public ObservableCollection<OutageRow> Outages { get; } = new();
     public ObservableCollection<MonitorEvent> Activity { get; } = new();
@@ -94,12 +103,23 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     public bool CanRecover => recoveryRequired && !busy && !IsRunning;
     public bool CanReload => !busy && !IsRunning;
     public bool CanComment => selectedOutage is not null && !busy;
+    public bool HasSelectedOutage => selectedOutage is not null;
     public bool CanExport => Outages.Count > 0 && !busy;
     public bool HasNoGroups => Groups.Count == 0;
     public bool HasNoOutages => service.HistoryReady && Outages.Count == 0;
     public bool HasSelectedGroup => SelectedGroup is not null;
     public string Message { get => message; private set => Set(ref message, value); }
     public string MonitoringState => snapshot.State.ToString();
+    public string OverviewEyebrow => IsRunning ? "LIVE MONITORING" : snapshot.LastMeasurementUtc.HasValue ? "LAST SESSION" : "READY WHEN YOU ARE";
+    public string MetricContext => snapshot.LastMeasurementUtc is null ? "Awaiting real measurements" : IsRunning ? "Current session · group-level results" : "Last session · monitoring is stopped";
+    public string EnabledGroupCount => configuration.Groups.Count(g => g.Enabled).ToString(CultureInfo.CurrentCulture);
+    private string MeasuredCount(Func<GroupSnapshot, bool> predicate) => snapshot.LastMeasurementUtc is null ? "—" : snapshot.Groups.Count(predicate).ToString(CultureInfo.CurrentCulture);
+    public string ConnectedGroupCount => MeasuredCount(g => g.Connectivity == GroupConnectivity.Connected);
+    public string ConfirmedOutageCount => MeasuredCount(g => g.ConfirmedOutage);
+    public string UnavailableGroupCount => MeasuredCount(g => g.Connectivity == GroupConnectivity.Unavailable);
+    public bool HasCurrentOutage => snapshot.Groups.Any(g => g.ConfirmedOutage);
+    public bool HasCurrentUncertainty => IsRunning && snapshot.Groups.Any(g => g.Connectivity is GroupConnectivity.NotChecked or GroupConnectivity.Unavailable or GroupConnectivity.Disconnected);
+    public bool IsCurrentlyConnected => snapshot.State == SessionState.Running && snapshot.Groups.Any(g => g.Connectivity == GroupConnectivity.Connected) && !HasCurrentOutage && !HasCurrentUncertainty;
     public string LastMeasurement => TargetRow.DisplayTime(snapshot.LastMeasurementUtc);
     public string OverviewSummary
     {
@@ -119,12 +139,12 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
         snapshot.Groups.Any(g => g.ConfirmedOutage) ? "Confirmed ICMP outage in one or more configured groups." :
         snapshot.Groups.Any(g => g.Connectivity is GroupConnectivity.NotChecked or GroupConnectivity.Unavailable) ? "Indeterminate — awaiting observations or resolving probe errors." :
         snapshot.Groups.Any(g => g.Connectivity == GroupConnectivity.Disconnected) ? "Disconnected observations — failure grace period in progress." :
-        "Configured groups responding. A group needs only one responding peer.";
+        "Configured groups are responding.";
 
     public int SelectedPage
     {
         get => selectedPage;
-        set { if (value is < 0 or > 3 || !Set(ref selectedPage, value)) return; Changed(nameof(IsOverview)); Changed(nameof(IsTargets)); Changed(nameof(IsHistory)); Changed(nameof(IsPreferences)); }
+        set { if (value is < 0 or > 3 || !Set(ref selectedPage, value)) return; Changed(nameof(IsOverview)); Changed(nameof(IsTargets)); Changed(nameof(IsHistory)); Changed(nameof(IsPreferences)); Changed(nameof(PageTitle)); }
     }
     public bool IsOverview => SelectedPage == 0;
     public bool IsTargets => SelectedPage == 1;
@@ -153,7 +173,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     public OutageRow? SelectedOutage
     {
         get => selectedOutage;
-        set { if (!Set(ref selectedOutage, value)) return; OutageComment = value?.Comment ?? ""; Changed(nameof(CanComment)); }
+        set { if (!Set(ref selectedOutage, value)) return; OutageComment = value?.Comment ?? ""; Changed(nameof(CanComment)); Changed(nameof(HasSelectedOutage)); }
     }
     public string GroupName { get => groupName; set => Set(ref groupName, value ?? ""); }
     public string PollSeconds { get => pollSeconds; set => Set(ref pollSeconds, value ?? ""); }
@@ -342,7 +362,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
             }
         }
         catch (Exception ex) { storageReadError = $"Storage measurement failed: {ex.Message}"; storageUsage = null; }
-        Changed(nameof(StorageUsage)); Changed(nameof(StorageSummary)); Changed(nameof(StorageDetails)); Changed(nameof(StorageWarning));
+        Changed(nameof(StorageUsage)); Changed(nameof(StorageSummary)); Changed(nameof(StorageDetails)); Changed(nameof(StorageWarning)); Changed(nameof(HasStorageWarning));
     }
     private Task WriteAutomaticLogsAsync() => SavedPreferences.AutomaticLogs && service.HistoryReady ? ExportAutomaticAsync() : Task.CompletedTask;
     private async Task ExportAutomaticAsync() => await AutomaticLogExporter.WriteAsync(SavedPreferences.LogDirectory, await service.ReadArchiveAsync());
@@ -427,6 +447,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
         else if (previousState == SessionState.Stopping && snapshot.State == SessionState.Stopped)
             Message = "Monitoring has finished stopping. Restart and editing are available.";
         Changed(nameof(MonitoringState)); Changed(nameof(OverviewSummary)); Changed(nameof(ConnectivityAssessment)); Changed(nameof(LastMeasurement));
+        foreach (var name in new[] { nameof(OverviewEyebrow), nameof(MetricContext), nameof(EnabledGroupCount), nameof(ConnectedGroupCount), nameof(ConfirmedOutageCount), nameof(UnavailableGroupCount), nameof(HasCurrentOutage), nameof(HasCurrentUncertainty), nameof(IsCurrentlyConnected) }) Changed(name);
         Changed(nameof(HasNoOutages)); Changed(nameof(HistoryStatus)); NotifyControls();
     }
     private void NotifyControls()

@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-16",
+  "platform": "macOS 26.3.1 arm64",
+  "sdk": "10.0.402",
+  "runtime": "10.0.13",
+  "avalonia": "12.1.4",
+  "baseline_commit": "7b75296f97ea62d986e7d16b152dedaabcf999d6",
+  "source_description": "User-requested desktop UI refinement; exact reviewed source hashes below. Subsequent commit includes these files unchanged.",
+  "source_sha256": {
+    "synups/Synups.Desktop/MainWindow.axaml": "7da50595f5d96419b0a126a699791d99b05057b4ac67861db8d0cc3a93035699",
+    "synups/Synups.Desktop/MainWindow.axaml.cs": "f06443e0c9fb2e3879831704bc1da296839a8b24fc18484e18633df8cb73ace4",
+    "synups/Synups.Desktop/MainWindowViewModel.cs": "c1a1e45bece940d86a8a45574184a29814af6fd2b94573708ec6c7caf16d9bbb",
+    "synups/Synups.Desktop/MonitoringRows.cs": "9ee844d0ea0469326ee07748bc673a7c73b294c11f828fd48730534c5f0dd639",
+    "synups/Synups.Desktop/Styles/Theme.axaml": "1bf7d54eb7e7d90f7611ec03856a5b7308a91513f1321baeccdaceac88134786",
+    "eng/native-smoke.cs": "fd679ea4a200f239d249d27e9b2322a705a04c1f0bf7d1aa022685f66f346be2"
+  },
+  "captures_sha256": {
+    "docs/evidence/after/2026-10-16-ui/macos-arm64/synups-overview-compact.png": "4843b2011e7f72fb5b2cec6b2ce69fc1bf38e86ea48b8753e35258bc034b1842",
+    "docs/evidence/after/2026-10-16-ui/macos-arm64/synups-overview.png": "4b20b903af499a0dd395fec78c90ed7814c5a1c4990fb3e56a0206b37c083b1b",
+    "docs/evidence/after/2026-10-16-ui/macos-arm64/synups-storage.png": "271e28f76f76c7efabefd41a7b54ff6aafdef151e847b5b33d0a35727a8608ee",
+    "docs/evidence/after/2026-10-16-ui/macos-arm64/synups-targets.png": "8df87a6dd22c80500bd826ad7f08383cd9843698a2b0d7bc867d713b9a7a385b"
+  },
+  "tests": {
+    "deterministic_headless_passed": 95,
+    "failed": 0,
+    "intentional_real_network_skip": 1,
+    "separate_real_loopback_passed": 1
+  },
+  "native_evidence": [
+    "NATIVE_VISIBLE=True",
+    "UI_MEASUREMENT=2026-10-16 19:05:38 +01:00",
+    "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 19:05:38 +01:00 \u00b7 last success 2026-10-16 19:05:38 +01:00 \u00b7 response 2 ms",
+    "MINIMIZED_VISIBLE=False",
+    "NATIVE_START_MEASURE_STOP=PASS",
+    "DURABLE_CLEAN_SESSIONS=1; EVENTS=2",
+    "LAST_SESSION_OBSERVED_SECONDS=1.590",
+    "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+    "PROCESS_RESTART_PASS=1",
+    "NATIVE_VISIBLE=True",
+    "UI_MEASUREMENT=2026-10-16 19:05:42 +01:00",
+    "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 19:05:42 +01:00 \u00b7 last success 2026-10-16 19:05:42 +01:00 \u00b7 response 0 ms",
+    "MINIMIZED_VISIBLE=False",
+    "NATIVE_START_MEASURE_STOP=PASS",
+    "DURABLE_CLEAN_SESSIONS=2; EVENTS=4",
+    "LAST_SESSION_OBSERVED_SECONDS=1.558",
+    "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+    "PROCESS_RESTART_PASS=2"
+  ],
+  "capture_method": "Avalonia RenderTargetBitmap of actual visible native control tree; client area only; no image generation or alteration. Targets page intentionally scrolled to real target details.",
+  "limits": [
+    "Explicit 127.0.0.1 only; no external outage induced.",
+    "Normal window and minimum 820x560 layout checked; scrolling is expected for content beyond viewport.",
+    "These are native verifier launches, not published executable launches.",
+    "Windows/Linux visual/runtime verification of this UI change still pending at capture time.",
+    "No native accessibility or full keyboard audit claimed."
+  ]
+}

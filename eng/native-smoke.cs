@@ -30,6 +30,7 @@ internal static class NativeSmoke
         async Task VerifyAsync()
         {
             MainWindow? window = null;
+            Size initialSize = default;
             try
             {
                 await WaitForAsync(() =>
@@ -53,6 +54,17 @@ internal static class NativeSmoke
                     {
                         Directory.CreateDirectory(captureDirectory);
                         Capture(window, Path.Combine(captureDirectory, "synups-overview.png"));
+                        initialSize = window.ClientSize;
+                        window.Width = 820; window.Height = 560;
+                    }
+                });
+                await Task.Delay(150);
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    if (Environment.GetEnvironmentVariable("SYNUPS_SCREENSHOT_DIR") is { Length: > 0 } captureDirectory)
+                    {
+                        Capture(window!, Path.Combine(captureDirectory, "synups-overview-compact.png"));
+                        window!.Width = initialSize.Width; window.Height = initialSize.Height;
                         vm.SelectedPage = 1;
                     }
                 });
