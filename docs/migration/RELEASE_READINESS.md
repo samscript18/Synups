@@ -26,7 +26,7 @@ Assessment: reviewed Phase 4A checkpoint with three-OS CI/native-harness evidenc
 - [x] Authentic native client-area captures and attributed upstream before illustration recorded.
 - [x] MIT licence and original source/build history preserved; no production mock probes or generated metrics.
 
-Latest completed checkpoint results: [corrected three-OS CI manifest](../evidence/verification/2026-10-16-ci-corrected.json). The storage-policy and earlier Phase 3 manifests describe their original source snapshots; subsequent UI source needs separate validation.
+Latest verified application checkpoint: [shared UI three-OS CI manifest](../evidence/verification/2026-10-16-ci-ui.json), source a368d83dbb5494e283efa02b7e8036a9ce9664c4. Historical manifests retain their original source snapshots.
 
 ## Required before release / supported-platform claims
 
@@ -98,3 +98,8 @@ The pending correction above is now verified: **7b75296f97ea62d986e7d16b152dedaa
 ### User-requested UI refinement
 
 Shared ink/teal tokens, typography, semantic badges, real-state overview tiles, compact navigation and grouped configuration/history/preferences panels are implemented without changing the engine or adding dependencies. Final local Release/headless suite passed95 cases plus the intentional networking skip; explicit real loopback and two native macOS restart runs passed. Native normal/minimum820×560 client captures were inspected and retained with [source hashes](../evidence/verification/2026-10-16-ui-macos-arm64.json). Exact new UI source must pass its own three-OS CI run before its platform claims are updated. Native accessibility/keyboard review and published-apphost execution remain open; cosmetic refinement does not raise the7/10 readiness score.
+
+
+### UI checkpoint verified on all targets
+
+The pending UI gate above is now passed for **a368d83dbb5494e283efa02b7e8036a9ce9664c4**: [run38944933816](https://github.com/samscript18/Synups/actions/runs/38944933816) passed all three OS jobs. Each exercised95 deterministic/headless plus1 separate real-loopback case, Release0 warnings/errors, two native process/Stop/Close/restart checks and verified self-contained publishing. Downloaded complete packages/logs/TRX and normal/minimum-size client captures were checked; exact source/licence/notices/hashes/Unix modes passed. Selected genuine OS captures and sanitized [evidence](../evidence/verification/2026-10-16-ci-ui.json) are retained in Git. The final evidence commit does not change that application source. All unchecked release gates above remain open; readiness stays **7/10**, and published executables remain **not launched on any OS**.

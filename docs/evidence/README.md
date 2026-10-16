@@ -27,3 +27,14 @@ Storage-capacity follow-up (same date): the original captures/manifest above are
 ## Desktop UI refinement captures
 
 The user-requested shared UI refinement is captured separately; the older Phase 3 images above remain unchanged. macOS 26.3.1 arm64, Release/.NET10.0.13/Avalonia12.1.4, final local loopback capture **2026-10-16 19:05:42 +01:00**. [Overview](after/2026-10-16-ui/macos-arm64/synups-overview.png), [minimum 820×560 layout](after/2026-10-16-ui/macos-arm64/synups-overview-compact.png), [targets, scrolled to actual sample](after/2026-10-16-ui/macos-arm64/synups-targets.png) and [Preferences/storage](after/2026-10-16-ui/macos-arm64/synups-storage.png) were rendered from the visible native client tree and inspected. All measurements are actual explicit loopback; there are no invented outages. Native window chrome is excluded. Exact source/capture hashes, test counts and two clean monitoring/restart runs: [UI verification manifest](verification/2026-10-16-ui-macos-arm64.json). These local captures do not certify Windows/Linux or published apphosts; the new pushed source needs separate CI results.
+
+
+The refreshed UI subsequently passed its own [three-OS run38944933816](https://github.com/samscript18/Synups/actions/runs/38944933816) at **a368d83dbb5494e283efa02b7e8036a9ce9664c4**. Downloaded complete logs/packages/TRX and viewed actual native overview captures at both sizes. Selected captures are retained without editing:
+
+| Actual native runner | Normal overview | Minimum820×560 |
+|---|---|---|
+| Windows Server2025 x64 | [Overview](after/2026-10-16-ui/ci/win-x64/synups-overview.png) | [Compact](after/2026-10-16-ui/ci/win-x64/synups-overview-compact.png) |
+| macOS15.7.9 arm64 | [Overview](after/2026-10-16-ui/ci/osx-arm64/synups-overview.png) | [Compact](after/2026-10-16-ui/ci/osx-arm64/synups-overview-compact.png) |
+| Ubuntu24.04.5 x64 / X11 Xvfb | [Overview](after/2026-10-16-ui/ci/linux-x64/synups-overview.png) | [Compact](after/2026-10-16-ui/ci/linux-x64/synups-overview-compact.png) |
+
+These are actual loopback observations at different times, not a benchmark. Below-viewport content scrolls; Windows/macOS runner work areas can constrain the normal window. Client-area rendering excludes OS chrome and does not establish native screen-reader/desktop behavior. [UI CI manifest](verification/2026-10-16-ci-ui.json) records exact source, job/artifact IDs and original PNG hashes. Published apphosts were not launched; the separate native verifier references production composition.
