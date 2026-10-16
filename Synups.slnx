@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="synups/Synups.Core/Synups.Core.csproj" />
+  <Project Path="synups/Synups.Desktop/Synups.Desktop.csproj" />
+  <Project Path="synups/Synups.Tests/Synups.Tests.csproj" />
+</Solution>

@@ -1,0 +1,159 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:Synups.Desktop" xmlns:monitor="using:Synups.Core.Monitoring"
+        x:Class="Synups.Desktop.MainWindow" x:DataType="local:MainWindowViewModel"
+        Title="Synups — Network reliability" Width="1180" Height="840" MinWidth="820" MinHeight="560">
+  <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+    <Border Padding="24,16" Background="{DynamicResource SurfaceBrush}">
+      <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+        <StackPanel Orientation="Horizontal" Spacing="16">
+          <TextBlock Text="Synups" FontSize="22" FontWeight="Bold" />
+          <TextBlock Text="NETWORK RELIABILITY" Classes="muted" VerticalAlignment="Center" FontSize="11" />
+        </StackPanel>
+        <TextBlock Grid.Column="1" Name="SessionState" Text="{Binding MonitoringState}" VerticalAlignment="Center" Margin="12,0" />
+        <Button Grid.Column="2" Name="StartMonitoring" Content="Start monitoring" IsEnabled="{Binding CanStart}" Click="StartClicked" Margin="0,0,8,0" />
+        <Button Grid.Column="3" Name="StopMonitoring" Content="Stop" IsEnabled="{Binding CanStop}" Click="StopClicked" />
+      </Grid>
+    </Border>
+    <Border Grid.Row="1" Padding="24,10" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource MutedBrush}">
+      <TextBlock Name="Feedback" Text="{Binding Message}" Classes="muted" />
+    </Border>
+    <Border Grid.Row="2" Padding="24,8" Background="{DynamicResource SurfaceBrush}"><TextBlock Text="{Binding AlertBanner}" /></Border>
+    <Grid Grid.Row="3" ColumnDefinitions="180,*">
+      <StackPanel Margin="12,24" Spacing="14">
+        <TextBlock Text="WORKSPACE" Classes="muted" FontSize="11" Margin="12,0" />
+        <ListBox Name="Navigation" ItemsSource="{Binding NavigationItems}" SelectedIndex="{Binding SelectedPage, Mode=TwoWay}" AutomationProperties.Name="Workspace navigation" />
+      </StackPanel>
+      <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="{DynamicResource PageInset}">
+          <StackPanel IsVisible="{Binding IsOverview}" Spacing="20">
+            <TextBlock Text="Network overview" Classes="h1" />
+            <Border Classes="card">
+              <StackPanel Spacing="16">
+                <TextBlock Name="ConnectivityAssessment" Text="{Binding ConnectivityAssessment}" Classes="h2" />
+                <TextBlock Name="MonitoringSummary" Text="{Binding OverviewSummary}" />
+                <TextBlock Text="Last accepted measurement (local time)" Classes="muted" />
+                <TextBlock Name="LastMeasurement" Text="{Binding LastMeasurement}" />
+                <Button Name="ConfigureTargets" Content="Configure targets and groups" Click="ConfigureClicked" HorizontalAlignment="Left" />
+              </StackPanel>
+            </Border>
+            <TextBlock Text="A responding peer establishes ICMP connectivity for its group. It does not establish that every target is online or that all Internet services work. Unknown values are never filled with invented statistics." Classes="muted" />
+            <ItemsControl ItemsSource="{Binding Groups}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:GroupRow">
+                  <Border Classes="card" Margin="0,0,0,12">
+                    <StackPanel Spacing="8">
+                      <TextBlock Text="{Binding Name}" Classes="h2" />
+                      <TextBlock Text="{Binding Status}" />
+                      <TextBlock Text="{Binding TimingDescription}" Classes="muted" />
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsTargets}" Spacing="16">
+            <TextBlock Text="Targets and groups" Classes="h1" />
+            <TextBlock Text="Stop monitoring to edit. Apply saves immediately; IDs survive edits and moves. Removing the last target disables its group. No hostname resolution or automatic discovery is performed." Classes="muted" />
+            <WrapPanel Orientation="Horizontal">
+              <Button Content="Restore original defaults…" IsEnabled="{Binding CanEdit}" Click="RestoreClicked" Margin="0,0,8,8" />
+              <Button Content="Reload configuration" IsEnabled="{Binding CanReload}" Click="ReloadClicked" Margin="0,0,8,8" />
+              <Button Content="Recover with original defaults…" IsVisible="{Binding CanRecover}" Click="RecoverClicked" Margin="0,0,8,8" />
+            </WrapPanel>
+            <TextBlock Text="No groups configured. Add a group, then add targets and enable it, or restore the original literal defaults." IsVisible="{Binding HasNoGroups}" />
+            <ListBox Name="GroupList" ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup, Mode=TwoWay}" MaxHeight="200" AutomationProperties.Name="Monitoring groups">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="local:GroupRow">
+                  <StackPanel Spacing="4"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" /><TextBlock Text="{Binding Status}" Classes="muted" /></StackPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+            <Border Classes="card">
+              <StackPanel Spacing="10" IsEnabled="{Binding CanEdit}">
+                <TextBlock Text="Group configuration" Classes="h2" />
+                <Button Content="New group" Click="NewGroupClicked" HorizontalAlignment="Left" />
+                <TextBlock Text="Group name" /><TextBox Name="GroupNameEditor" Text="{Binding GroupName, Mode=TwoWay}" AutomationProperties.Name="Group name" />
+                <CheckBox Content="Enabled (requires at least one target)" IsChecked="{Binding GroupEnabled, Mode=TwoWay}" />
+                <Grid ColumnDefinitions="*,*,*">
+                  <StackPanel Spacing="6" Margin="0,0,10,0"><TextBlock Text="Poll interval (seconds)" /><TextBox Text="{Binding PollSeconds, Mode=TwoWay}" AutomationProperties.Name="Poll interval in seconds" /></StackPanel>
+                  <StackPanel Grid.Column="1" Spacing="6" Margin="0,0,10,0"><TextBlock Text="Failure threshold (seconds)" /><TextBox Text="{Binding FailSeconds, Mode=TwoWay}" AutomationProperties.Name="Failure threshold in seconds" /></StackPanel>
+                  <StackPanel Grid.Column="2" Spacing="6"><TextBlock Text="Timeout (milliseconds)" /><TextBox Text="{Binding TimeoutMilliseconds, Mode=TwoWay}" AutomationProperties.Name="Probe timeout in milliseconds" /></StackPanel>
+                </Grid>
+                <WrapPanel><Button Content="Apply group" Click="ApplyGroupClicked" Margin="0,0,8,0" /><Button Content="Remove group…" IsEnabled="{Binding HasSelectedGroup}" Click="RemoveGroupClicked" /></WrapPanel>
+              </StackPanel>
+            </Border>
+            <TextBlock Text="Selected group's targets" Classes="h2" />
+            <ListBox Name="TargetList" ItemsSource="{Binding SelectedGroup.Targets}" SelectedItem="{Binding SelectedTarget, Mode=TwoWay}" MaxHeight="360" AutomationProperties.Name="Monitoring targets">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="local:TargetRow">
+                  <StackPanel Spacing="5"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" /><TextBlock Text="{Binding Address}" /><TextBlock Text="{Binding Status}" /><TextBlock Text="{Binding Details}" Classes="muted" /></StackPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+            <Border Classes="card">
+              <StackPanel Spacing="10" IsEnabled="{Binding CanEdit}">
+                <TextBlock Text="Target configuration" Classes="h2" />
+                <Button Content="New target" Click="NewTargetClicked" HorizontalAlignment="Left" />
+                <TextBlock Text="Target name" /><TextBox Text="{Binding TargetName, Mode=TwoWay}" AutomationProperties.Name="Target name" />
+                <TextBlock Text="Literal IPv4 or IPv6 address" /><TextBox Text="{Binding TargetAddress, Mode=TwoWay}" AutomationProperties.Name="Target IP address" />
+                <TextBlock Text="Group membership" /><ComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding TargetGroup, Mode=TwoWay}" HorizontalAlignment="Stretch" AutomationProperties.Name="Target group" />
+                <WrapPanel><Button Content="Apply target" Click="ApplyTargetClicked" Margin="0,0,8,0" /><Button Content="Remove selected target…" Click="RemoveTargetClicked" /></WrapPanel>
+              </StackPanel>
+            </Border>
+            <TextBlock Text="Synups configuration file" Classes="muted" /><TextBlock Text="{Binding ConfigurationPath}" Classes="muted" />
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsHistory}" Spacing="16">
+            <TextBlock Text="Activity and outages" Classes="h1" />
+            <TextBlock Text="{Binding HistoryStatus}" />
+            <Button Content="Retry history storage" Click="RetryHistoryClicked" HorizontalAlignment="Left" />
+            <TextBlock Text="Outages and comments are retained in local SQLite history across application restarts. CSV export is available for sharing. Stopping observation never implies recovery. Durations begin at outage confirmation; marked gaps mean continuity was uncertain." Classes="muted" />
+            <Button Content="Export outages CSV…" Click="ExportClicked" IsEnabled="{Binding CanExport}" HorizontalAlignment="Left" />
+            <TextBlock Text="No confirmed outages in the loaded history." IsVisible="{Binding HasNoOutages}" />
+            <ListBox ItemsSource="{Binding Outages}" SelectedItem="{Binding SelectedOutage, Mode=TwoWay}" MaxHeight="320" AutomationProperties.Name="Outage history">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="local:OutageRow"><StackPanel Spacing="5"><TextBlock Text="{Binding GroupName}" FontWeight="SemiBold" /><TextBlock Text="{Binding Summary}" /><TextBlock Text="{Binding Comment}" Classes="muted" /><TextBlock Text="{Binding Session}" Classes="muted" FontSize="11" /></StackPanel></DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Spacing="8" IsEnabled="{Binding CanComment}"><TextBlock Text="Comment for selected outage" /><TextBox Text="{Binding OutageComment, Mode=TwoWay}" AcceptsReturn="True" MaxLength="4000" MinHeight="70" AutomationProperties.Name="Outage comment" /><Button Content="Save comment" Click="SaveCommentClicked" HorizontalAlignment="Left" /></StackPanel>
+            <TextBlock Text="Activity (latest 500 events, occurrence order; UTC timestamps)" Classes="h2" />
+            <ItemsControl ItemsSource="{Binding Activity}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="monitor:MonitorEvent"><Border Margin="0,0,0,8"><StackPanel Spacing="3"><TextBlock Text="{Binding Message}" /><TextBlock Text="{Binding Utc}" Classes="muted" FontSize="12" /></StackPanel></Border></DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsPreferences}" Spacing="12">
+            <TextBlock Text="Preferences" Classes="h1" />
+            <TextBlock Text="{Binding NativeAlertStatus}" Classes="muted" />
+            <TextBlock Name="TrayCapability" Text="Tray initializes when the native window opens." Classes="muted" />
+            <TextBlock Text="These preferences do not change OS login/startup registration. Launch-at-login is not implemented." Classes="muted" />
+            <StackPanel IsEnabled="{Binding CanPreferences}" Spacing="8">
+              <CheckBox Content="Confirm before exiting" IsChecked="{Binding PrefConfirmExit, Mode=TwoWay}" />
+              <CheckBox Content="Always on top" IsChecked="{Binding PrefTopmost, Mode=TwoWay}" />
+              <CheckBox Content="Minimize to tray only when reliable restoration is available" IsChecked="{Binding PrefTray, Mode=TwoWay}" />
+              <CheckBox Content="Launch minimized (keeps taskbar/dock fallback)" IsChecked="{Binding PrefMinimized, Mode=TwoWay}" />
+              <CheckBox Content="Start monitoring on launch (off by default; uses saved targets)" IsChecked="{Binding PrefAutoStart, Mode=TwoWay}" />
+              <TextBlock Text="Alert transitions" Classes="h2" />
+              <CheckBox Content="Confirmed ICMP outages" IsChecked="{Binding PrefOutage, Mode=TwoWay}" />
+              <CheckBox Content="Confirmed recovery" IsChecked="{Binding PrefRecovery, Mode=TwoWay}" />
+              <CheckBox Content="Monitoring errors (rate limited)" IsChecked="{Binding PrefErrors, Mode=TwoWay}" />
+              <CheckBox Content="Also request native OS notifications where supported" IsChecked="{Binding PrefNative, Mode=TwoWay}" />
+              <TextBlock Text="In-app alerts are shown inside Synups. OS notification requests can be denied; delivery is not guaranteed. Alert sounds are not implemented." Classes="muted" />
+              <TextBlock Text="Automatic logs" Classes="h2" />
+              <CheckBox Content="Export structured session logs and outage CSV automatically at session end" IsChecked="{Binding PrefLogs, Mode=TwoWay}" />
+              <TextBlock Text="Absolute log directory (history database remains in the Synups data directory)" />
+              <TextBox Text="{Binding PrefLogDirectory, Mode=TwoWay}" AutomationProperties.Name="Automatic log directory" />
+              <TextBlock Text="Retention days: 0 keeps all. A positive value deletes only old recovered incidents in fully ended sessions. Unresolved/interrupted sessions are retained. Logs have a separate 256MB cap and require manual archival." />
+              <TextBox Text="{Binding PrefRetentionDays, Mode=TwoWay}" AutomationProperties.Name="History retention days" />
+              <Button Content="Apply preferences…" Click="ApplyPreferencesClicked" HorizontalAlignment="Left" />
+              <Button Content="Recover unreadable preferences…" Click="RecoverPreferencesClicked" HorizontalAlignment="Left" />
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+      </ScrollViewer>
+    </Grid>
+    <Border Grid.Row="4" Background="{DynamicResource SurfaceBrush}" Padding="24,10">
+      <TextBlock Text="Local-first · Real ICMP measurements · Based on WirePeep by Bill Menees · MIT licence" Classes="muted" FontSize="12" />
+    </Border>
+  </Grid>
+</Window>

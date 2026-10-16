@@ -1,0 +1,1 @@
+LegacyWirePeep.ico is the unchanged WirePeep icon from src/WirePeep/Images/WirePeep.ico, copyright Bill Menees, used under the repository MIT licence. Used for tray restoration during migration; it is not a newly commissioned Synups brand asset.
