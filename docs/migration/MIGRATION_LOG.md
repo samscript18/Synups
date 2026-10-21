@@ -350,3 +350,8 @@ The first two-process five-minute GUI observation completed the exercise process
 
 
 Final bundle follow-up local gates: the repaired package is now also checked after extraction during packaging itself, using the same safe archive extractor. Both six-stage runtime checks and strict extracted validation pass. The initial SDK apphost-task prototype reported required IntermediateAssembly missing (MSB4044); passing the actual published entry assembly fixed it without a new dependency. Human notices now live beside their retained licence paths under Resources and are also available outside the app bundle. The reusable Mac observer passed its two-process short regression. Full test regression after the initial foreground correction passed105 cases plus the intentional network skip; final current diagnostic/build is verified by the native run and next CI.
+
+
+### macOS15 restoration regression
+
+Source3cf272037a913bdc7a696d3414e3dbd9c7bf23a9 passed Linux and the repaired Mac package's pre/post-archive strict signature validation. Mac native execution then timed out at secondary-instance restoration, after actual CRUD, ICMP, focus, stop, CSV and preferences had passed. Local macOS26 had passed the same six-stage flow, so no general Mac pass is inferred. Changed the real restoration order to normalize WindowState before Show/Activate, avoiding showing a hidden minimized NSWindow. Added actual activation-count/visibility/state details to diagnostic timeout evidence. The next CI run must verify this correction; the failed run and reports remain preserved.

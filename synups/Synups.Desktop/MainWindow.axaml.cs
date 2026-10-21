@@ -48,7 +48,9 @@ public partial class MainWindow : Window
     }
     public void RestoreFromTray()
     {
-        Show(); WindowState = WindowState.Normal; Activate();
+        // Showing a still-minimized hidden NSWindow can enqueue another minimize
+        // callback after restoration. Normalize first, then show and activate.
+        WindowState = WindowState.Normal; Show(); Activate();
     }
     private void RememberNormalPlacement()
     {

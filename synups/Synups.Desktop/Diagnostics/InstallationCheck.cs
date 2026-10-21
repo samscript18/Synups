@@ -152,7 +152,9 @@ public sealed class InstallationCheck(DesktopOptions options)
                 await second.WaitForExitAsync(timeout.Token); await Task.WhenAll(stdout, stderr);
                 Require(second.ExitCode == 0, "Secondary apphost failed: " + await stderr);
             }
-            await UntilAsync(() => instance.ActivationCount > previousActivations && window.IsVisible && window.WindowState == WindowState.Normal);
+            Passed("secondary_apphost_request_completed", new { previousActivations, current_activations = instance.ActivationCount, window.IsVisible, window.WindowState });
+            await UntilAsync(() => instance.ActivationCount > previousActivations && window.IsVisible && window.WindowState == WindowState.Normal,
+                () => $"Activation {instance.ActivationCount} (previous {previousActivations}), visible={window.IsVisible}, state={window.WindowState}, closing={window.IsClosingPending}.");
             Passed("second_actual_apphost_restores_existing_instance", new { minimized_visible = wasVisible, activation_count = instance.ActivationCount, window.IsVisible, window.WindowState });
             // This checks the real confirmation buttons; it does not replace the confirmation delegate.
             if (vm.SavedPreferences.ConfirmExit)
@@ -233,12 +235,12 @@ public sealed class InstallationCheck(DesktopOptions options)
         var dialog = desktop.Windows.First(w => FindButton(w, content == "Continue" ? "ConfirmContinue" : "ConfirmCancel") is not null);
         await ClickAsync(dialog, content == "Continue" ? "ConfirmContinue" : "ConfirmCancel");
     }
-    private static async Task UntilAsync(Func<bool> condition)
+    private static async Task UntilAsync(Func<bool> condition, Func<string>? detail = null)
     {
         var time = Stopwatch.StartNew();
         while (!condition())
         {
-            if (time.Elapsed > TimeSpan.FromSeconds(20)) throw new TimeoutException("An actual desktop interaction did not reach its expected state.");
+            if (time.Elapsed > TimeSpan.FromSeconds(20)) throw new TimeoutException("An actual desktop interaction did not reach its expected state. " + detail?.Invoke());
             await Task.Delay(50);
         }
     }
