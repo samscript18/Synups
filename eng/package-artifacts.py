@@ -5,7 +5,7 @@ from pathlib import Path
 
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--source',type=Path,required=True);parser.add_argument('--rid',choices=['win-x64','osx-arm64','linux-x64'],required=True)
-parser.add_argument('--output',type=Path,required=True);parser.add_argument('--revision',required=True)
+parser.add_argument('--dotnet',default='dotnet');parser.add_argument('--output',type=Path,required=True);parser.add_argument('--revision',required=True)
 parser.add_argument('--nuget-cache',type=Path,default=Path(os.environ.get('NUGET_PACKAGES',str(Path.home()/'.nuget/packages'))))
 args=parser.parse_args();source=args.source.resolve();output=args.output.resolve();output.mkdir(parents=True,exist_ok=True)
 repo=Path(__file__).resolve().parent.parent
@@ -38,13 +38,23 @@ with tempfile.TemporaryDirectory(prefix='synups-package-') as temporary:
  signing='No publisher signature; not an installer.'
  if args.rid=='osx-arm64':
   if os.uname().sysname!='Darwin':parser.error('macOS bundles must be assembled/ad-hoc signed and verified on macOS')
-  app=Path(temporary)/'Synups.app';macos=app/'Contents/MacOS';resources=app/'Contents/Resources';resources.mkdir(parents=True)
-  root.rename(macos);root.mkdir()
-  for copy in ['LICENSE','README.md','THIRD_PARTY_NOTICES.md','DEPENDENCY_NOTICES.json']:
-   if (macos/copy).exists():shutil.copyfile(macos/copy,root/copy)
-  shutil.move(str(macos/'licenses'),str(resources/'licenses'))
+  app=Path(temporary)/'Synups.app';macos=app/'Contents/MacOS';resources=app/'Contents/Resources';resources.mkdir(parents=True);macos.mkdir()
+  runtime_files=resources/'runtime';root.rename(runtime_files);root.mkdir()
+  for copy in ['LICENSE','README.md','THIRD_PARTY_NOTICES.md','DEPENDENCY_NOTICES.json','Synups.png']:
+   if (runtime_files/copy).exists():
+    shutil.copyfile(runtime_files/copy,root/copy)
+    shutil.move(str(runtime_files/copy),str(resources/copy))
+  shutil.move(str(runtime_files/'licenses'),str(resources/'licenses'))
   shutil.copytree(resources/'licenses',root/'licenses')
   shutil.copyfile(repo/'eng/packaging/Synups.icns',resources/'Synups.icns')
+  # Keep managed PE assemblies as sealed resources. Deep-signing PE files in
+  # MacOS creates xattr signatures that ordinary portable archives cannot retain.
+  (runtime_files/executable).unlink() # Replaced by the SDK-bound distribution apphost below.
+  for managed in runtime_files.glob('*.dll'):managed.chmod(0o644)
+  subprocess.run([args.dotnet,'msbuild',str(repo/'eng/packaging/BundleHost.proj'),'-t:Build','-nologo',
+      '-p:BundleHost='+str(macos/executable),'-p:BundleAssembly='+str(runtime_files/'Synups.Desktop.dll')],check=True,cwd=repo/'synups')
+  for native in runtime_files.glob('*.dylib'):
+   subprocess.run(['codesign','--force','--sign','-','--timestamp=none',str(native)],check=True)
   info=dict(CFBundleName='Synups',CFBundleDisplayName='Synups',CFBundleIdentifier='io.github.samscript18.synups',CFBundleExecutable='Synups',CFBundleIconFile='Synups.icns',CFBundlePackageType='APPL',CFBundleShortVersionString='0.1.0',CFBundleVersion='1',NSHighResolutionCapable=True,NSSupportsAutomaticGraphicsSwitching=True)
   (app/'Contents/Info.plist').write_bytes(plistlib.dumps(info))
   subprocess.run(['codesign','--force','--deep','--sign','-','--timestamp=none',str(app)],check=True)
@@ -63,7 +73,8 @@ with tempfile.TemporaryDirectory(prefix='synups-package-') as temporary:
  if (repo/'docs/release/RELEASE_NOTES.md').exists():shutil.copyfile(repo/'docs/release/RELEASE_NOTES.md',root/'RELEASE_NOTES.md')
  (root/'RUNNING.txt').write_text(f'Synups0.1.0 candidate — {args.rid}\nSource: {args.revision}\n\n'+instructions+'\nThe .NET runtime is included. Keep every extracted runtime/native/SQLite file together.\nMonitoring is stopped by default; configure targets and explicitly start, unless you enable the saved launch preference.\nSettings/history use per-user LocalApplicationData/Synups. --data-directory selects a separate local workspace.\nUse --help for an explicit isolated real-loopback installation check. This is not physical OS input/accessibility certification.\n'+signing+'\nNo release or competition submission is implied by this verification artifact.\nhttps://github.com/samscript18/Synups\n')
  files={p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob('*')) if p.is_file()}
- manifest=dict(rid=args.rid,source_revision=args.revision,apphost_relative_path=apphost,installation_check_protocol=1,signing=signing,runtime_libraries=list(dependencies['libraries']),runtime_package_notice_count=notice_count,files_sha256=files)
+ runtime_relative='Synups.app/Contents/Resources/runtime' if args.rid=='osx-arm64' else '.'
+ manifest=dict(rid=args.rid,source_revision=args.revision,apphost_relative_path=apphost,runtime_relative_path=runtime_relative,installation_check_protocol=1,signing=signing,runtime_libraries=list(dependencies['libraries']),runtime_package_notice_count=notice_count,files_sha256=files)
  (root/'ARTIFACT_MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
  archive=output/(name+('.zip' if args.rid=='win-x64' else '.tar.gz'))
  if args.rid=='win-x64':
@@ -81,6 +92,11 @@ with tempfile.TemporaryDirectory(prefix='synups-package-') as temporary:
    for relative,expected in files.items():
     with package.extractfile(name+'/'+relative) as data:
      if hashlib.sha256(data.read()).hexdigest()!=expected:raise RuntimeError('Archive content mismatch: '+relative)
+ if args.rid=='osx-arm64':
+  extracted=Path(temporary)/'post-archive-check'
+  check_module=importlib.util.spec_from_file_location('synups_archive_check',repo/'eng/published-smoke.py');archive_check=importlib.util.module_from_spec(check_module);check_module.loader.exec_module(archive_check)
+  archive_check.unpack(archive,extracted)
+  subprocess.run(['codesign','--verify','--deep','--strict',str(extracted/name/'Synups.app')],check=True)
  with archive.open('rb') as data:
   sha=hashlib.sha256()
   for block in iter(lambda:data.read(1024*1024),b''):sha.update(block)

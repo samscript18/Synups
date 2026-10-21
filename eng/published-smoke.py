@@ -95,9 +95,11 @@ def main():
     executable=root/manifest['apphost_relative_path']
     expected_machine={'win-x64':'0x8664','osx-arm64':'0x100000c','linux-x64':'0x3e'}[args.rid]
     if expected_machine not in machine_types(executable):raise ValueError('Wrong apphost architecture')
-    sqlite=executable.parent/{'win-x64':'e_sqlite3.dll','osx-arm64':'libe_sqlite3.dylib','linux-x64':'libe_sqlite3.so'}[args.rid]
+    runtime_root=root/manifest.get('runtime_relative_path',str(Path(manifest['apphost_relative_path']).parent))
+    sqlite=runtime_root/{'win-x64':'e_sqlite3.dll','osx-arm64':'libe_sqlite3.dylib','linux-x64':'libe_sqlite3.so'}[args.rid]
     if expected_machine not in machine_types(sqlite):raise ValueError('Wrong native SQLite architecture')
     if args.rid!='win-x64' and executable.stat().st_mode&0o111==0:raise ValueError('Executable permission missing')
+    if args.rid=='osx-arm64':subprocess.run(['codesign','--verify','--deep','--strict',str(root/'Synups.app')],check=True)
     environment=os.environ.copy()
     for key in list(environment):
         if key=='DOTNET_ROOT' or key.startswith('DOTNET_ROOT_'):environment.pop(key)
@@ -134,7 +136,7 @@ def main():
         report=json.loads(report_path.read_text())
         if report['process_id']!=process.pid or Path(report['executable']).resolve()!=executable.resolve():raise RuntimeError('Report was not emitted by the launched packaged apphost')
         if report['apphost_sha256']!=manifest['files_sha256'][manifest['apphost_relative_path']]:raise RuntimeError('Executed apphost hash mismatch')
-        if Path(report['core_library_path']).resolve().parent!=executable.parent.resolve():raise RuntimeError('Apphost did not use its packaged .NET runtime')
+        if Path(report['core_library_path']).resolve().parent!=runtime_root.resolve():raise RuntimeError('Apphost did not use its packaged .NET runtime')
         if stage!='interruption' and (code!=0 or report['status']!='passed'):raise RuntimeError('Actual apphost verification failed; inspect '+str(report_path))
         configuration=json.loads((data/'configuration.v1.json').read_text())
         groups=configuration['Groups']

@@ -107,7 +107,11 @@ public sealed class InstallationCheck(DesktopOptions options)
                 targets = measured.Groups.SelectMany(g => g.Targets).Select(t => new { t.Id, t.CheckedAtUtc, t.LastSuccessUtc, t.Result.Outcome, t.Result.LatencyMilliseconds }), diagnostics = vm.CaptureDiagnostics() });
             await CaptureAsync(window, "overview");
             var size = window.ClientSize; window.Width = 820; window.Height = 560; await Task.Delay(200); await CaptureAsync(window, "compact");
-            Require(window.FindControl<Button>("StopMonitoring")!.Focus(NavigationMethod.Tab), "Stop control could not receive keyboard-style focus.");
+            window.Activate();
+            var stopControl = window.FindControl<Button>("StopMonitoring")!;
+            await UntilAsync(() => stopControl.IsEffectivelyEnabled &&
+                (ReferenceEquals(window.FocusManager?.GetFocusedElement(), stopControl) || stopControl.Focus(NavigationMethod.Tab)));
+            Require(ReferenceEquals(window.FocusManager?.GetFocusedElement(), stopControl), "Stop control could not receive keyboard-style focus.");
             await Task.Delay(100); // Let the real focus visual reach a rendered frame before capture.
             Passed("programmatic_tab_focus_and_minimum_layout", new { focused = window.FocusManager?.GetFocusedElement()?.GetType().Name, width = window.ClientSize.Width, height = window.ClientSize.Height });
             await CaptureAsync(window, "focus"); window.Width = size.Width; window.Height = size.Height;
