@@ -31,3 +31,6 @@ Actual extracted apphosts now pass on Windows/macOS/Linux at292b847 (run 3967899
 Next work prioritizes the remaining mandatory delivery gates over optional legacy expansion: trusted Mac signing/notarization or a reviewed verified distribution policy; ordinary downloaded-desktop acceptance on consumer Windows/real Linux and Mac quarantine; physical tray/save-picker/notification/keyboard/accessibility checks; representative GUI/large-history/endurance and external-network/IPv6/VPN/suspend/storage experiments. Then preserve approved immutable artifacts beyond CI expiration, finish source/material review and obtain explicit authorization before public Release/competition submission.
 
 Legacy parity remains72.2%; discovery/import/login/sound/taskbar/focus and menu details stay separately tracked. Do not claim ordinary-user distribution or production readiness from the successful scoped apphost checks.
+
+
+The scoped two-hour real-Core observation and two five-minute actual GUI processes now have retained resource evidence. These close the short healthy-loopback observation milestone, not representative multi-day GUI/large-history or physical-failure testing. Keep the broader acceptance work ahead of optional cosmetic/analytics features.

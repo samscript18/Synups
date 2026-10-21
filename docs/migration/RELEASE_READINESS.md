@@ -22,7 +22,7 @@ Verified application source: **292b847bffa96d2a23d771c3ba0ce4648c06844b**, `feat
 - [x] Honest README/migration write-up, candidate release notes, per-OS launch instructions and [manual acceptance protocol](../release/DESKTOP_VALIDATION.md) prepared.
 - [x] Requested public landing update applied: default branch is `feat/avalonia-migration`; API confirms its README begins with Synups. Original master/history remain intact.
 
-The separate two-hour Core-engine observation is still running at this documentation checkpoint; its final result will be appended only after stop/restart/reopen pass. It does not replace GUI endurance.
+The separate **two-hour Core-engine test passed**: 7,201.54s total including restart, 28,792 real loopback probes, no failures/errors, four workers while running and zero after drain, 12.4ms stop, two clean durable sessions/reopen. Mean CPU1.07% of one core; RSS70.55→55.06MiB (peak85.48MiB); descriptors101→104 (peak105); database40,960bytes with no sampled growth. [Full summary/source qualification](../evidence/verification/2026-10-21-engine-endurance-macos-arm64.json) and [720 samples](../evidence/verification/2026-10-21-engine-endurance-samples.jsonl) are retained. This working-tree Core-console build is not a published apphost or multi-hour GUI certification.
 
 ## Mandatory open gates
 
