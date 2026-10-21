@@ -24,7 +24,9 @@ Actual verification uses the exact Windows runner/image documented in CROSS_PLAT
 
 Extract `Synups-osx-arm64.tar.gz` with Archive Utility or `tar -xzf Synups-osx-arm64.tar.gz`. Move **Synups.app** to a local folder, such as your user Applications folder, and open it. Terminal launch from the extracted folder is `./Synups.app/Contents/MacOS/Synups`.
 
-The bundle has Synups identity/icon and is **ad-hoc signed for local integrity only**. It has no Developer ID publisher identity and is **not notarized**. This does not establish Gatekeeper trust for Internet downloads; macOS or organization policy may block it. Do not disable system security to run this candidate. Developer ID signing/notarization and real downloaded-bundle approval remain release gates. Intel Mac builds are not provided.
+The bundle has Synups identity/icon and is **ad-hoc signed for local integrity only**. It has no Developer ID publisher identity and is **not notarized**. This does not establish Gatekeeper trust for Internet downloads; macOS or organization policy may block it. Do not disable system security to run this candidate. A read-only keychain check found **zero valid code-signing identities** on 2026-10-21. Signing/notarization cannot be completed here without legitimate credentials. Real browser-downloaded-bundle approval remains unverified. Intel Mac builds are not provided.
+
+If macOS blocks an unidentified/unnotarized app, first verify its source and checksum and review [Apple’s official guidance](https://support.apple.com/en-us/102445). Apple documents an individual **System Settings → Privacy & Security → Open Anyway** approval after an attempted launch, where policy permits and the user independently decides to trust that particular app. This is not automatic trust, notarization or a step performed by this project. Managed Macs may prohibit it. A malware, damaged or revoked-app warning requires investigation rather than an override. Do not remove quarantine attributes, disable Gatekeeper or change global security policy to obtain a passing result. No browser/quarantine approval has been tested in this environment.
 
 ## Linux x64
 

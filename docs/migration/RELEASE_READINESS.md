@@ -1,8 +1,8 @@
-# Release readiness — Phase 4B
+# Release readiness — Phase 5
 
 Assessment date: **2026-10-21**. **8/10 submission readiness; not production-ready and not 10/10.** Mandatory ordinary-user delivery and desktop acceptance gates remain open. No GitHub Release or competition entry has been published. Historical assessments remain in Git and [MIGRATION_LOG.md](MIGRATION_LOG.md); this checklist supersedes their current-state wording.
 
-Verified application source: **292b847bffa96d2a23d771c3ba0ce4648c06844b**, `feat/avalonia-migration`, [successful three-OS run 39678991269](https://github.com/samscript18/Synups/actions/runs/39678991269). [Exact downloaded evidence](../evidence/verification/2026-10-21-published-apphosts.json), [platform limits](CROSS_PLATFORM.md#final-phase4b-published-executable-evidence--292b847), [launch instructions](../release/INSTALLATION.md) and [candidate notes](../release/RELEASE_NOTES.md).
+Frozen release application source: **2973d3349fcb5af5639597920842288e6549bbd0**, `feat/avalonia-migration`, [successful three-OS run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118). [Exact Phase 5 downloaded evidence](../evidence/verification/2026-10-21-release-candidate.json), [platform limits](CROSS_PLATFORM.md#phase-5-frozen-release-candidate--2973d33), [launch instructions](../release/INSTALLATION.md) and [candidate notes](../release/RELEASE_NOTES.md).
 
 ## Verified gates
 
@@ -66,3 +66,16 @@ Large-history loading/export/retention still materializes records in memory. No 
 ## Source-control handoff
 
 Draft [PR #1](https://github.com/samscript18/Synups/pull/1) prepares a history-preserving migration review against original master. Source checkpoint commits/pushes are authorized; no force-push/history rewrite/Release/submission occurred. Repository metadata now identifies Synups. The requested default-branch change was applied and verified through the API on 2026-10-21: `feat/avalonia-migration`, README `# Synups`. Original master remains intact; this is a reversible presentation change, not a PR merge or Release.
+
+
+## Phase 5 release preparation
+
+All three **2973d3349fcb5af5639597920842288e6549bbd0** CI artifact containers and inner archives are independently downloaded/audited; the earlier 292b847 evidence remains historical. Production source is unchanged between those revisions, but source metadata/bundled documents differ and archive hashes are different. [The candidate index](../release/VERIFIED_ARTIFACTS.md) now pins the exact 2973d33 packages. Later documentation/tool commits do not replace the frozen application bytes.
+
+Local repeated gates: locked restore/audit passed; Release zero warnings/errors;105 deterministic/headless passed with1 intentional network skip; separate real-loopback case passed;4 Python archive/licence checks passed. The exact downloaded Mac bundle passed all six real apphost stages and LaunchServices exercise again with normal exit0. Fresh strict extracted integrity passes; Gatekeeper still rejects (exit3). A read-only keychain query confirms0 valid code-signing identities, so legitimate Developer ID/notarization is blocked by unavailable credentials. Existing security settings remain unchanged. Apple’s user-controlled per-app guidance is linked in INSTALLATION.md; no approval/quarantine acceptance is claimed.
+
+Accessibility automation is disabled on the local Mac. No permission was enabled, and physical keyboard/tray/native save-dialog or OS notification delivery was not certified. Three actual compact client renders were inspected; scrolling preserves below-viewport content and no release-blocking clipping defect was observed. No optional feature, monitoring-engine or UI redesign was introduced.
+
+[Publication handoff](../release/PUBLICATION.md), [prepared release text](../release/RELEASE_BODY.md) and [submission fields](../release/SUBMISSION.md) are concrete and reviewable. The assembly tool validates reviewed input hashes/source/runtime stages, preserves archive bytes, excludes temporary databases/settings and prepares consolidated checksums plus retained CI logs/TRX/captures. Successful assembly/checksum verification and rejection of failed-workflow/existing-output inputs were exercised. No permanent public download, Release/tag or form submission is created. Planned download URLs must not be submitted before separately authorized publication and anonymous verification.
+
+**Readiness stays8/10 under the same rubric**, rather than earning extra credit for preparing documents. Permanent public downloads, trusted/accepted ordinary Mac delivery and remaining desktop/accessibility acceptance are still real blockers. Conservative legacy parity stays72.2%=(9+8×0.5)/18.

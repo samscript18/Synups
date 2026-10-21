@@ -34,3 +34,8 @@ Legacy parity remains72.2%; discovery/import/login/sound/taskbar/focus and menu 
 
 
 The scoped two-hour real-Core observation and two five-minute actual GUI processes now have retained resource evidence. These close the short healthy-loopback observation milestone, not representative multi-day GUI/large-history or physical-failure testing. Keep the broader acceptance work ahead of optional cosmetic/analytics features.
+
+
+## Phase 5 handoff
+
+Freeze app binaries at2973d3349fcb5af5639597920842288e6549bbd0/run39682197118; exact downloaded hashes and real apphost results are retained. [Publication instructions](../release/PUBLICATION.md) assemble original CI bytes and prepared notes/evidence without rebuilding. [Submission information](../release/SUBMISSION.md) lists the actual report/screenshots and explicitly non-live planned download URLs. Prioritize legitimate Mac trust/ordinary-desktop acceptance and user-authorized permanent Release delivery before optional legacy features. Publication and form submission remain separate user decisions; no automatic release or entry occurs.

@@ -1,21 +1,21 @@
-# Verified candidate artifacts
+# Verified candidate artifacts — Phase 5
 
-Source: **292b847bffa96d2a23d771c3ba0ce4648c06844b**. [Successful run 39678991269](https://github.com/samscript18/Synups/actions/runs/39678991269). These hashes identify that exact reviewed candidate, not every later documentation build.
+Frozen application source: **2973d3349fcb5af5639597920842288e6549bbd0**. [Successful run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118). All three complete downloads independently audited on 2026-10-21. [Exact verification record](../evidence/verification/2026-10-21-release-candidate.json).
 
-Each outer GitHub artifact includes reports/logs and a packages/ directory. Download the matching artifact, then use the inner archive and adjacent sidecar. A GitHub login may be needed; CI artifacts expire after 30 days. No public Release has been created.
+This supersedes the earlier 292b847 candidate index. Production code is unchanged between those revisions, but source metadata and bundled documents differ, so old archive hashes must not be reused. Later Phase 5 documentation commits do not replace these frozen application bytes.
 
-| RID | GitHub artifact | Inner archive SHA-256 |
+Each outer GitHub artifact includes CI reports/logs and a packages/ directory. Use the inner archive and adjacent sidecar. Login may be required; these artifacts expire after 30 days. **No permanent public Release download exists yet.** Publication and competition submission need separate user authorization.
+
+| RID | Exact GitHub artifact | Inner archive SHA-256 |
 |---|---|---|
-| win-x64 | [Artifact 12383576376](https://github.com/samscript18/Synups/actions/runs/39678991269/artifacts/12383576376) | `ef67c71cf06506f86a753db6ea38913fccb4077c6606c5637b54a2f1f2a0ee0a` |
-| osx-arm64 | [Artifact 12381229816](https://github.com/samscript18/Synups/actions/runs/39678991269/artifacts/12381229816) | `bb213fef3bf9ee86d8e386bc88ca987c188f2075a12eb6f8e77bee2a877b10b9` |
-| linux-x64 | [Artifact 12382769304](https://github.com/samscript18/Synups/actions/runs/39678991269/artifacts/12382769304) | `da5be6b28320031e570ac18bf7eedc23b12cf4a89b12a8d9cfd2a947299c9097` |
-
-Inner checksums (run in a folder containing these exact archives):
+| win-x64 | [Artifact 12384417723](https://github.com/samscript18/Synups/actions/runs/39682197118/artifacts/12384417723) | `94d39f3320ead8cd1b1620c2f29ab7887faca7920f352d0f3b470712a03ee2d6` |
+| osx-arm64 | [Artifact 12385635027](https://github.com/samscript18/Synups/actions/runs/39682197118/artifacts/12385635027) | `40cc8ccdcc8cfde7bea19e6c9759b0502313182e9c1b8d74f1b198a4e9cc3bcc` |
+| linux-x64 | [Artifact 12384062843](https://github.com/samscript18/Synups/actions/runs/39682197118/artifacts/12384062843) | `cf072e7b31c55e16ee39e544882453c926204338a86cfe6df7553b62b1477222` |
 
 ```text
-ef67c71cf06506f86a753db6ea38913fccb4077c6606c5637b54a2f1f2a0ee0a  Synups-win-x64.zip
-bb213fef3bf9ee86d8e386bc88ca987c188f2075a12eb6f8e77bee2a877b10b9  Synups-osx-arm64.tar.gz
-da5be6b28320031e570ac18bf7eedc23b12cf4a89b12a8d9cfd2a947299c9097  Synups-linux-x64.tar.gz
+94d39f3320ead8cd1b1620c2f29ab7887faca7920f352d0f3b470712a03ee2d6  Synups-win-x64.zip
+40cc8ccdcc8cfde7bea19e6c9759b0502313182e9c1b8d74f1b198a4e9cc3bcc  Synups-osx-arm64.tar.gz
+cf072e7b31c55e16ee39e544882453c926204338a86cfe6df7553b62b1477222  Synups-linux-x64.tar.gz
 ```
 
-Windows is unsigned; macOS has an ad-hoc integrity signature only and Gatekeeper rejects trusted delivery; Linux needs native graphical libraries. See [installation](INSTALLATION.md), [candidate notes](RELEASE_NOTES.md) and [release gates](../migration/RELEASE_READINESS.md). Native signatures/checksums do not certify ordinary desktop interactions or override OS policy.
+Windows is unsigned. macOS passes extracted deep/strict integrity verification but Gatekeeper rejects trust (exit 3); no Developer ID/notarization identity was available. Linux requires graphical/native libraries. See [installation](INSTALLATION.md), [publication handoff](PUBLICATION.md), [prepared release text](RELEASE_BODY.md) and [submission information](SUBMISSION.md). The assembler preserves these exact archives and creates consolidated checksums and retained CI verification assets.
