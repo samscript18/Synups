@@ -38,3 +38,18 @@ The refreshed UI subsequently passed its own [three-OS run38944933816](https://g
 | Ubuntu24.04.5 x64 / X11 Xvfb | [Overview](after/2026-10-16-ui/ci/linux-x64/synups-overview.png) | [Compact](after/2026-10-16-ui/ci/linux-x64/synups-overview-compact.png) |
 
 These are actual loopback observations at different times, not a benchmark. Below-viewport content scrolls; Windows/macOS runner work areas can constrain the normal window. Client-area rendering excludes OS chrome and does not establish native screen-reader/desktop behavior. [UI CI manifest](verification/2026-10-16-ci-ui.json) records exact source, job/artifact IDs and original PNG hashes. Published apphosts were not launched; the separate native verifier references production composition.
+
+
+## Phase 4B — actual published apphosts (2026-10-21)
+
+The earlier verifier captures remain historical. New captures below come from the **real extracted self-contained executables** at source **292b847bffa96d2a23d771c3ba0ce4648c06844b**, [run 39678991269](https://github.com/samscript18/Synups/actions/runs/39678991269). All three complete artifact ZIPs and workflow logs were downloaded; API digests, inner checksums, every file hash, licences/notices, native architecture, actual PID/apphost/runtime paths, reports and SQLite records were independently checked. These are actual visible-window client renders, not physical desktop/compositor screenshots. No image generation/editing or fabricated measurements were used.
+
+| Actual OS | Overview | Minimum layout with real programmatic focus | Actual read-only error |
+|---|---|---|---|
+| Windows Server 2025 x64 | [Overview](after/2026-10-21-apphost/win-x64/exercise-overview.png) | [Focus](after/2026-10-21-apphost/win-x64/exercise-focus.png) | [Error](after/2026-10-21-apphost/win-x64/storage-error-read-only.png) |
+| macOS 15.7.9 arm64 | [Overview](after/2026-10-21-apphost/osx-arm64/exercise-overview.png) | [Focus](after/2026-10-21-apphost/osx-arm64/exercise-focus.png) | [Error](after/2026-10-21-apphost/osx-arm64/storage-error-read-only.png) |
+| Ubuntu 24.04.5 x64 / X11 Xvfb | [Overview](after/2026-10-21-apphost/linux-x64/exercise-overview.png) | [Focus](after/2026-10-21-apphost/linux-x64/exercise-focus.png) | [Error](after/2026-10-21-apphost/linux-x64/storage-error-read-only.png) |
+
+[Exact artifact/apphost/capture/test hashes, timestamps, job links and limitations](verification/2026-10-21-published-apphosts.json). Each suite used explicit 127.0.0.1; all normal exits were0, and only the deliberate interruption was nonzero. The final downloaded Mac bundle passes strict/deep signature validation and a local LaunchServices/real-monitor/close check on macOS 26.3.1. Gatekeeper assessment rejects it (exit3): ad-hoc integrity is not Developer ID/notarization or browser-download trust.
+
+[GUI resource observations](verification/2026-10-21-gui-resources-macos-arm64.json) retain two separate five-minute apphost processes at the preceding 3cf2720 checkpoint, including exact package/apphost hashes and5s samples. This is not multi-hour GUI endurance or proof of no leak. The earlier overlapping GUI observation failed focus and remains documented; it is not counted as a pass. [Static token contrast](verification/2026-10-21-theme-contrast.json) and visible focus captures are narrow checks, not a keyboard/screen-reader/high-contrast certification. Physical tray/save-picker/notification delivery and original fresh WPF Windows capture still need review.

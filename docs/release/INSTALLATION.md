@@ -1,10 +1,10 @@
 # Run the Synups candidate
 
-This is a portable, local-first Avalonia/.NET10 application. The .NET runtime and native SQLite are included. A cloud account, server and separate .NET installation are not required. Native OS/display libraries are still required. Verification is tied to an exact commit in the artifact manifest and migration evidence, not to every version of an OS.
+This is a portable, local-first Avalonia/.NET 10 application. The .NET runtime and native SQLite are included. A cloud account, server and separate .NET installation are not required. Native OS/display libraries are still required. Verification is tied to an exact commit in the artifact manifest and migration evidence, not to every version of an OS.
 
 ## Download and integrity
 
-Until a separately authorized GitHub Release is published, use the [Synups workflow](https://github.com/samscript18/Synups/actions/workflows/synups.yml), select a successful run for the reviewed source SHA, and download its matching platform artifact. GitHub login may be required. These CI artifacts expire after30 days. Inside the download, use `packages/Synups-<rid>.zip` or `.tar.gz` and its adjacent `.sha256` file. Do not run executables from the outer CI ZIP or mix runtime files from different versions. Release candidates are not installers.
+Until a separately authorized GitHub Release is published, use the [Synups workflow](https://github.com/samscript18/Synups/actions/workflows/synups.yml), select a successful run for the reviewed source SHA, and download its matching platform artifact. GitHub login may be required. These CI artifacts expire after 30 days. Inside the download, use `packages/Synups-<rid>.zip` or `.tar.gz` and its adjacent `.sha256` file. Do not run executables from the outer CI ZIP or mix runtime files from different versions. Release candidates are not installers.
 
 Compare the archive SHA-256 with its sidecar before extraction:
 
@@ -18,7 +18,7 @@ The inner `ARTIFACT_MANIFEST.json` records source SHA, RID, all published file h
 
 Extract the complete `Synups-win-x64.zip` to a local user-writable folder. Open **Synups.exe**. Do not move just the EXE: it needs its adjacent managed and native files. This portable build has no trusted publisher certificate; SmartScreen or organization policies can warn or block execution. No registry login/startup entry is created. An MSI/MSIX installer and publisher signing are not delivered.
 
-Actual verification uses the exact Windows runner/image documented in CROSS_PLATFORM.md. A server runner is not proof of every ordinary Windows10/11 desktop environment. Native OS notification delivery is unavailable in this portable Windows build; clearly labelled in-app alerts remain available.
+Actual verification uses the exact Windows runner/image documented in CROSS_PLATFORM.md. A server runner is not proof of every ordinary Windows 10/11 desktop environment. Native OS notification delivery is unavailable in this portable Windows build; clearly labelled in-app alerts remain available.
 
 ## macOS arm64 (Apple silicon)
 
@@ -28,7 +28,7 @@ The bundle has Synups identity/icon and is **ad-hoc signed for local integrity o
 
 ## Linux x64
 
-Extract with `tar -xzf Synups-linux-x64.tar.gz`, enter `Synups-linux-x64`, then run `./Synups`. Tar preserves executable bits. Use a graphical user session; do not run as root. Ubuntu24.04/X11 verification uses `libx11-6`, `libice6`, `libsm6`, `libfontconfig1`, `libgl1` and `libegl1`; CI additionally supplies Xvfb. Other distributions, Wayland sessions and sandboxed installers need their own checks. A `.desktop.example` is provided; it is not installed automatically. If you use it, replace both absolute paths before installing it through your desktop's normal user workflow.
+Extract with `tar -xzf Synups-linux-x64.tar.gz`, enter `Synups-linux-x64`, then run `./Synups`. Tar preserves executable bits. Use a graphical user session; do not run as root. Ubuntu 24.04/X11 verification uses `libx11-6`, `libice6`, `libsm6`, `libfontconfig1`, `libgl1` and `libegl1`; CI additionally supplies Xvfb. Other distributions, Wayland sessions and sandboxed installers need their own checks. A `.desktop.example` is provided; it is not installed automatically. If you use it, replace both absolute paths before installing it through your desktop's normal user workflow.
 
 A missing tray host must leave the window available through the taskbar. Optional Linux notification requests require `notify-send` and a running notification daemon; a request is not guaranteed delivery. There is no distro package or Flatpak/AppImage installer in this candidate.
 

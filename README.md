@@ -1,14 +1,57 @@
 # Synups
 
-Synups is a migration of [WirePeep](https://github.com/menees/WirePeep) into a modern cross-platform network reliability monitor using **real Avalonia, C# and XAML**. Primary competition category: Best IT Pro Tool.
+A local-first network reliability monitor for Windows, macOS and Linux, built with **Avalonia, C# and XAML**. Synups is a migration of [Bill Menees’ WirePeep](https://github.com/menees/WirePeep), preserving its Git history, MIT licence and peer-group monitoring intent.
 
-**Current status: Phase 4B release hardening in progress; release gates remain open.** Synups performs real ICMP monitoring, edits profiles, retains incidents/comments across restarts, writes automatic session logs/statistics and provides configurable alerts and desktop preferences. Native verification harnesses passed on all three OSes; published-executable testing, legacy import and several OS integrations remain incomplete. No production measurements or statistics are fabricated. No backend, cloud service, paid component or WebView is used.
+**Release candidate, not a production-readiness claim.** Actual self-contained executables are exercised on native Windows/macOS runners and Linux under Xvfb. Signing, everyday desktop/accessibility coverage and final distribution still have explicit limits. There is no WebView, backend, account or cloud service, and no fabricated monitoring data.
 
-Portable candidate launch instructions and signature limits: [Windows, macOS and Linux installation](docs/release/INSTALLATION.md). [Candidate release notes](docs/release/RELEASE_NOTES.md) and [release checklist](docs/migration/RELEASE_READINESS.md) distinguish actual evidence from remaining gates. Phase 4A results below are historical; new apphost checks require their own source revision and CI results.
+## Download and run
 
-## Build and run
+Use a successful exact-SHA [Synups verification run](https://github.com/samscript18/Synups/actions/workflows/synups.yml), then download the matching artifact and extract the inner archive under `packages/`. Its adjacent `.sha256` and `ARTIFACT_MANIFEST.json` identify the exact files/source. **GitHub login may be required; CI downloads expire after 30 days.** No public GitHub Release has been published by this migration task. The [verified candidate artifact index](docs/release/VERIFIED_ARTIFACTS.md) pins download links/hashes. See [release materials](docs/release/RELEASE_NOTES.md) and [installation instructions](docs/release/INSTALLATION.md).
 
-Install the .NET SDK specified in [synups/global.json](synups/global.json) (10.0.402). Avalonia packages are pinned to 12.1.4. From the repository root:
+| Candidate | Start the extracted application | Actual verification scope |
+|---|---|---|
+| Windows x64 ZIP | `Synups.exe` | Windows Server 2025 CI; ordinary Windows desktops need further acceptance review. Unsigned publisher. |
+| macOS arm64 tar.gz | `Synups.app`, or `./Synups.app/Contents/MacOS/Synups` | macOS 15 CI and local macOS 26.3.1. Ad-hoc integrity signature only; no Developer ID/notarization or Gatekeeper trust. |
+| Linux x64 tar.gz | `./Synups` | Ubuntu 24.04/X11 under Xvfb; real desktops and Wayland need separate checks. Native display/font/graphics libraries required. |
+
+The .NET runtime, Avalonia native assets and SQLite are included. Keep the entire extracted folder/bundle together. An SDK is unnecessary for these packages. Installers, Intel Mac/ARM Windows/Linux builds and trusted publisher signatures are not provided. Do not disable OS security to run a candidate.
+
+## What it does
+
+- Real ICMP checks with finite timeouts, actual response latency and typed errors.
+- Editable literal-IP targets, peer groups, intervals, failure grace and enablement; atomically saved profiles.
+- Live status that distinguishes connected, disconnected, unavailable, stale and not checked.
+- Confirmed incidents, observed recoveries, comments and sessions retained in local SQLite; quoted UTC CSV export.
+- Automatic JSON/CSV session logs and observed-duration summaries, configurable log location, database capacity, backups and conservative retention.
+- Desktop preferences, transition alerts, tray policy and per-workspace single-instance restoration. Windows uses a clearly labelled in-app notification fallback; optional macOS/Linux native requests do not guarantee OS delivery.
+
+Opening the app stays stopped unless you explicitly save monitoring-on-launch. Add a group and a named literal IP, enable/apply it, then Start. Stop before editing. Restoring WirePeep defaults reuses the original XML addresses/timings; discovery-only groups remain disabled. No discovery or subnet scanning runs.
+
+A group stops probing after its first responding peer. Other peers can be stale/not checked; one response does not prove every target or Internet service is online. Probe errors reduce confidence and cannot recover an outage. Stop/close ends observation without inventing recovery; a new session never retroactively recovers an older incident.
+
+Data stays under the per-user `.NET LocalApplicationData/Synups` folder; paths are shown in-app. `--data-directory ABSOLUTE_PATH` selects an independent local workspace. Original WirePeep settings are not modified. Pending write failures retain unsaved evidence in memory and require repair/Retry. A forced quit can lose uncommitted batches. Use the full SQLite backup action; outage CSV is not a database backup. Storage/retention and recovery details: [architecture](docs/migration/ARCHITECTURE.md).
+
+## Genuine application captures
+
+These are actual published-apphost client-area renders from explicit real loopback observations, not mock dashboards or OS desktop screenshots. The measurements are not an Internet benchmark. Exact source, hashes and limits are in the [evidence records](docs/evidence/README.md).
+
+| Windows | macOS | Linux / Xvfb |
+|---|---|---|
+| ![Synups Windows](docs/evidence/after/2026-10-21-apphost/win-x64/exercise-overview.png) | ![Synups macOS](docs/evidence/after/2026-10-21-apphost/osx-arm64/exercise-overview.png) | ![Synups Linux](docs/evidence/after/2026-10-21-apphost/linux-x64/exercise-overview.png) |
+
+[Before: original WirePeep illustration](docs/evidence/before/wirepeep-upstream.png), published by Bill Menees and retained with attribution. It is an upstream illustration, not a freshly captured Windows baseline run. [Before/after provenance](docs/evidence/README.md) preserves that distinction.
+
+## Verification and remaining gates
+
+[Cross-platform evidence](docs/migration/CROSS_PLATFORM.md) records exact commits, actual run/job links and downloaded artifact hashes. The workflow separately performs locked restore/audit, zero-warning Synups Release build, 105 deterministic/headless cases, the separately enabled real-loopback case, four archive/licence checks, self-contained packaging, **extracted apphost execution**, and the older component-native harness. The default suite intentionally skips its one opt-in network case; all 106 unique .NET cases are exercised across the two invocations.
+
+The actual apphost check drives the normal app’s controls and real services in isolated data: configuration CRUD/validation, real loopback, Stop, preferences, second-process restoration, clean restart, explicit forced termination, interrupted-history reload without recovery, real read-only SQLite error and repair. It checks the executing PID/path/hash, bundled runtime location, native window handle, SQLite integrity and exit codes. Test harness assemblies are excluded from packages. This is programmatic control automation, not physical keyboard/mouse, native save-picker, tray-menu, screen-reader or notification-delivery certification.
+
+The [release checklist](docs/migration/RELEASE_READINESS.md) is authoritative for current readiness. The [desktop acceptance protocol](docs/release/DESKTOP_VALIDATION.md) lists remaining human checks. Known gaps include trusted macOS delivery, physical tray/notification/accessibility review, broader IPv6/VPN/suspend/permissions coverage, representative large-history/long-running GUI workloads, validated legacy settings import, bounded discovery, login registration, sound/taskbar/focus parity and legacy clipboard/help details. Windows native notifications use the documented fallback. No multi-platform production-support or full legacy-parity claim is made.
+
+## Build from source
+
+Pinned SDK: .NET 10.0.402; Avalonia 12.1.4. From the repository root:
 
 ```sh
 cd synups
@@ -18,82 +61,22 @@ dotnet test ../Synups.slnx -c Release --no-build
 dotnet run --project Synups.Desktop -c Release --no-build
 ```
 
-Verified on macOS 26.3.1 arm64: 95 deterministic/headless cases, one separately enabled real-network case, native loopback monitoring, durable process restart, minimize/restore and graceful close. Release build has zero warnings/errors. Genuine native client-area captures are included below. See the migration log for scope and failed attempts.
+The SDK pin is scoped to `synups/`; the original `WirePeep.sln` remains separate. The test suite does not depend on a public IP. Explicit opt-in networking: set `SYNUPS_REAL_NETWORK_TESTS=1` and filter `FullyQualifiedName~RealLoopback`. Reproducible package/apphost/resource checks are in `eng/`; platform prerequisites and usage are documented with the evidence.
 
-The SDK pin is scoped to synups/ so original WirePeep builds keep their existing SDK selection. Native desktop prerequisites vary by OS; see [platform evidence and risks](docs/migration/CROSS_PLATFORM.md). Windows Server 2025 x64, macOS 15.7.9 arm64 and Ubuntu 24.04.5 x64 passed the [refreshed UI CI run](https://github.com/samscript18/Synups/actions/runs/38944933816): locked restore, zero-warning Release build, 95 deterministic/headless cases plus one explicit loopback case per OS, native production-composition harness and self-contained publishing. Linux native UI used Xvfb. Published apphost launches and installed-desktop behavior remain unverified. The run's retained verification artifacts contain Windows ZIP/Unix tar.gz packages, checksums, logs, TRX and client captures; these expire after 30 days and are unsigned verification builds, not a public release. Downloaded packages were checked for exact MIT licence bytes, runtime notices, every file hash and Unix executable mode.
+## Migration write-up
 
-## Use Synups
+Original baseline: [61ae14391151ca9f209223e62c98fae3df5482b8](https://github.com/menees/WirePeep/commit/61ae14391151ca9f209223e62c98fae3df5482b8), June 2024, before this challenge. Original source, WPF solution/build scripts, assets, licence and commit ancestry remain. [Original README](https://github.com/menees/WirePeep/blob/61ae14391151ca9f209223e62c98fae3df5482b8/README.md).
 
-Monitoring stays stopped when the application opens unless you explicitly save the monitoring-on-launch preference (disabled by default). In **Targets and groups**, add a disabled group, add named literal IPv4/IPv6 targets, then enable the group. Alternatively restore the original WirePeep defaults. Its 15 literal Internet targets and timing values come from the actual upstream XML; three discovery-only local-device groups remain disabled until you add targets. No discovery or network scanning runs.
+WirePeep.Common separated useful monitoring logic, but inherited Windows frameworks and coupled configuration to Menees settings/discovery. The WPF window also owned scheduling, logging, outages and alerts. Reusing Common unchanged would not produce an independent cross-platform engine. The migration therefore reuses its default XML and characterized algorithms, ports monitoring intent, and rewrites presentation/lifetime and platform boundaries.
 
-**Apply group/target** saves each edit immediately. Configuration uses versioned JSON under the OS per-user LocalApplicationData directory in `Synups/configuration.v1.json`; the exact path is shown in the app. Names, IDs, addresses and timing limits are validated. Corrupt files are preserved: retry after fixing them or explicitly recover with defaults, which creates a backup. Original WirePeep settings are never modified. Stop monitoring before editing; moving targets preserves their IDs. Removing the last target disables its group.
+The solution has three projects: **Core** for configuration, monitoring and persistence; **Desktop** for Avalonia MVVM and OS integrations; **Tests** for linked-original characterization, deterministic regressions and headless UI. Manual composition suffices; no DI framework, backend or extra production project was introduced. Independent async groups preserve sorted round-robin selection and stop-on-success with bounded concurrency. Monotonic timing governs intervals/durations, with UTC evidence and explicit uncertainty/freshness.
 
-Select **Start monitoring**. Overview shows actual group counts, uncertainty and the latest measurement time. A group stops checking peers after the first response; other targets may be stale or not checked. Target rows show last check, last success, real RTT where available and useful errors. ICMP reachability does not establish that all network services work.
+Intentional corrections are tested and documented: unavailable/error results cannot falsely recover a confirmed outage, mixed failure/error groups become indeterminate, large observation gaps reset unconfirmed failure grace, and ordinary shutdown cannot manufacture recovery. Durable SQLite reload, interrupted-session records, backups/capacity safeguards and group enablement are Synups enhancements. [Exact legacy semantics](docs/migration/LEGACY_SEMANTICS.md) and [parity inventory](docs/migration/FEATURE_PARITY.md) distinguish them from retained functionality; conservative inventory parity remains **72.2%**, not an effort estimate.
 
-**Activity and outages** records confirmed outages, recoveries and probe errors. A probe error makes confidence indeterminate and cannot recover a confirmed outage; only a successful probe does that. Outage duration begins at confirmation, with earlier failed observation recorded separately. Large observation gaps are marked. Stop ends observation without fabricating recovery. History/comments now survive application restart in a separate `history.v1.db` SQLite file. Clean shutdown ends observation without recovery; unclean shutdown is marked interrupted at the last committed observation. A new session never retroactively recovers an older unresolved incident. CSV remains available for sharing.
+Actual difficulties include Windows-only baseline execution, first-time SDK/NuGet restrictions, xUnit version compatibility, real storage/deadline contention, truthful unavailable-state migration, safe pending-write shutdown, failed screenshot capture, an action-readiness race, Windows licence newline conversion, macOS archive signature loss and native minimize/restoration behavior. These failures and tested corrections remain in the [migration log](docs/migration/MIGRATION_LOG.md). Native component execution was explicitly kept separate from later published-executable proof. Code-authored icons and a macOS bundle now establish identity without claiming publisher trust.
 
-**Preferences** persist always-on-top, exit confirmation, launch minimized, opt-in monitoring on launch, transition alerts and automatic log options. In-app alerts are labelled as such. Optional native requests use osascript on macOS or notify-send on Linux where available; Windows uses the in-app fallback in this unpackaged build. OS delivery is not guaranteed or verified. The tray offers Show/Exit where available; Linux keeps taskbar access even when a tray host is absent. Closing means save/stop/quit, optionally confirmed. OS login/startup registration and alert sounds are not implemented.
-
-Automatic JSON session logs and outage CSV are derived from committed evidence on Stop/Close and comment changes. They contain actual events, comments and observed-duration summaries, without inferred Internet uptime percentages. Choose an absolute log folder in Preferences. Automatic copies retain their separate **256 MiB cap**; archive them manually or choose another folder when full.
-
-**Preferences → History storage** defaults to **1 GiB**. Stop monitoring and enter **256–10240 MiB** (up to 10 GiB), then **Apply database capacity**. The setting is committed atomically in SQLite and reapplied to its existing page size at each open. Existing Phase 3 databases migrate in place with their records/IDs intact. Lowering below allocated database size is refused; an already oversized legacy database is preserved and shown with its actual effective limit. No capacity change resets history.
-
-Storage information measures main database, WAL, SHM, rollback journal, managed backups and automatic logs in the selected folder. It shows allocated/reusable pages, available database capacity, growth headroom, shared volume free space and 80%/95% warning thresholds. The page limit applies to the **main database**, not total disk consumption or reserved space. External copies and previous log folders are not tracked. Warnings use allocated pages, with at most one warning and one critical escalation per capacity per process; reopening can warn once again. Manual Refresh is available while stopped.
-
-History retention defaults to **0: preserve all**. A positive 1–3650 day period requires confirmation and enables cleanup immediately, at launch and once daily during monitoring. Only fully ended sessions older than the cutoff with no unresolved incidents are eligible; interrupted sessions are kept. **Back up and clean eligible history…** is a separate confirmed manual action that first creates a verified full SQLite backup; backup failure cancels deletion. Deletion frees reusable pages without shrinking the file, so allocation warnings can remain. Derived logs/backups are retained separately.
-
-**Create full history backup…** uses SQLite's backup API and publishes a verified, closed snapshot under `history.v1.db.backups`, without overwriting existing snapshots. It contains sessions, events, outages and comments, including committed WAL state. Preferences/configuration/logs remain separate. CSV export contains outage rows only and is not a database backup. Restore instructions and recovery limits are in the [durability design](docs/migration/ARCHITECTURE.md#capacity-policy-backup-and-recovery).
-
-Capacity/file errors stop monitoring and retain unsaved evidence in memory for Retry; successful persistence is reported only after commit. At the configured page limit, stop, increase capacity, then **Retry history storage**. Increasing capacity is allowed while stopped even with pending writes. Physical disk exhaustion/permissions still require repair; backups/cleanup cannot bypass pending evidence. Keep Synups open until retry succeeds. A log-copy error can be resolved by fixing the directory or explicitly disabling automatic copies.
-
-## Verification
-
-The normal test suite does not require a public IP or run real ICMP. From `synups/`, explicitly run the real loopback probe/engine test:
-
-```sh
-SYNUPS_REAL_NETWORK_TESTS=1 dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~RealLoopback
-```
-
-From the repository root, `python3 eng/native-smoke.py --dotnet /path/to/dotnet --screenshots artifacts/screenshots` verifies native production components, real loopback, two separate process launches with durable sessions, minimize/restore and clean close using temporary configuration/history. Add `--seconds 60` for a one-minute observation per launch. This harness is not compiled into production. The CI matrix runs locked restore, tests, explicit loopback, self-contained publishing, native smoke (Linux under Xvfb), captures and retained command/TRX artifacts. The [UI run](https://github.com/samscript18/Synups/actions/runs/38944933816) passed all three jobs for source commit `a368d83dbb5494e283efa02b7e8036a9ce9664c4`; downloaded logs/TRX/captures and archive contents were inspected. This does not establish published-apphost startup.
-
-Latest local correction verification on macOS arm64: Release build passed with zero warnings/errors; 95 deterministic/headless tests passed. Hosted verification exercised all 96 unique cases per OS across the default suite and separate loopback invocation. One earlier Windows storage-integration deadline failure and its test-isolation correction remain recorded in the [migration log](docs/migration/MIGRATION_LOG.md). See [release readiness](docs/migration/RELEASE_READINESS.md) for remaining gates.
-
-The shared native UI uses a restrained ink/teal theme, compact sidebar navigation, text-labelled connectivity badges and a responsive overview. Configuration, history and preferences use consistent panels; unknown measurements stay unknown. Native OS window controls are retained.
-
-## Migration write-up — work completed so far
-
-Original baseline: [`61ae14391151ca9f209223e62c98fae3df5482b8`](https://github.com/menees/WirePeep/commit/61ae14391151ca9f209223e62c98fae3df5482b8), authored by Bill Menees in June 2024, before the challenge. This repository retains that Git history and the original WPF implementation, solution, build scripts, assets and MIT licence. The original project description is available [at the baseline commit](https://github.com/menees/WirePeep/blob/61ae14391151ca9f209223e62c98fae3df5482b8/README.md).
-
-WirePeep already separates its synchronous ICMP engine into WirePeep.Common. That separation helps, but Common inherits Windows framework targets and couples configuration to Menees settings APIs. Its Profile constructor can perform device discovery. The WPF MainWindow also owns scheduling, outage history, logging and alert orchestration. This migration therefore requires service extraction as well as a presentation rewrite.
-
-Phase 1 kept legacy sources unchanged and created a separate solution with Core, Desktop and Tests. It reuses the original default XML directly as an embedded resource and preserves its address naming and timing values. A new side-effect-free reader replaces Profile construction for configuration inspection. An observable presentation model drives a native resizable Avalonia window with Fluent controls, shared dark-theme tokens, keyboard-selectable navigation and an explicit setup/error state. There is no DI container because manual composition is sufficient for the current scope. Core now contains separate monitoring and persistence services; Desktop contains only orchestration and presentation.
-
-Phase 2 ports name-sorted round-robin polling, stop-on-success, stale samples, fail thresholds, recovery, outage comments, CSV export and profile persistence. Deterministic tests also link original state machines directly. Deliberate changes use monotonic elapsed time, retain outages across probe errors, make mixed-error groups order-independent and drain background work on shutdown. The UI pulls snapshots without a dispatcher backlog. No production simulated measurements are present. Phase 3 keeps the engine and adds SQLite transaction durability, session interruption handling, automatic derived logs, transition alert deduplication, native adapter fallbacks, tray policy and persisted desktop preferences. Durability is a Synups enhancement over WirePeep’s session-only UI. Rollback transactions replace the need to implement a custom torn-write journal. SQLite I/O is serialized off-thread; storage failures retain unsaved batches and block a misleading clean exit. The coarse legacy inventory parity is **72.2%**, calculated as (9 complete + 8 partial × 0.5)/18. Sound, login launch, Windows native alerts, complete single-instance activation, import, discovery and several menu details remain missing. Its rubric is in FEATURE_PARITY.md.
-
-Engineering issues and actual verification results, including failed attempts and fixes, are recorded in the log below. Effort is described through performed work and measured command timings; no development-hour estimate is invented.
-
-- [Original baseline and build evidence](docs/migration/BASELINE.md)
-- [Feature implementation inventory and parity](docs/migration/FEATURE_PARITY.md)
-- [Legacy state-transition characterization](docs/migration/LEGACY_SEMANTICS.md)
-- [Architecture and design decisions](docs/migration/ARCHITECTURE.md)
-- [Actual migration log and verification](docs/migration/MIGRATION_LOG.md)
-- [Cross-platform evidence and risks](docs/migration/CROSS_PLATFORM.md)
-- [Roadmap and remaining submission gates](docs/migration/ROADMAP.md)
-- [Release readiness checklist](docs/migration/RELEASE_READINESS.md)
-- [Discovery and legacy import investigation](docs/migration/LEGACY_INTEGRATIONS.md)
-
-## Screenshots and challenge readiness
-
-[Evidence provenance and reproduction](docs/evidence/README.md) distinguishes the author’s original published illustration from our live native client-area captures. No screenshot values were fabricated. A fresh WPF capture requires Windows; OS window-chrome/desktop capture remains unavailable in this session.
-
-| Before — upstream WirePeep illustration, Bill Menees | After — Synups, macOS arm64, real loopback |
-|---|---|
-| ![Original upstream WirePeep illustration](docs/evidence/before/wirepeep-upstream.png) | ![Native Synups overview with real loopback](docs/evidence/after/2026-10-16-ui/macos-arm64/synups-overview.png) |
-
-These are different measurement environments and times, not a comparative connectivity benchmark. The Synups capture renders the actual visible native client tree via Avalonia, without OS chrome. Additional native client captures from Windows/macOS/Linux are retained in the verified CI artifacts. Published executable launch validation, installed-desktop testing, signing/packaging and remaining checklist gates are required before a release.
-
-The [Avalonia Port Challenge](https://avaloniaui.net/blog/avalonia-port-challenge) closes October 23, 2026 at 23:59 UTC. Synups is not a finished competition entry. No submission or publication was performed.
+This is AI-assisted repository work across interrupted sessions. No total development hours were instrumented or invented. Command timings and measured observations are evidence, not labor hours. The [baseline](docs/migration/BASELINE.md), [architecture](docs/migration/ARCHITECTURE.md), [platform matrix](docs/migration/CROSS_PLATFORM.md), [migration log](docs/migration/MIGRATION_LOG.md), [roadmap](docs/migration/ROADMAP.md) and [release checklist](docs/migration/RELEASE_READINESS.md) retain actual scope and outstanding work. No public release or competition entry is submitted automatically.
 
 ## Licence and attribution
 
-[MIT](LICENSE). Original WirePeep copyright (c) 2020 Bill Menees; the original licence remains verbatim. Original source/resource notices remain intact. Synups is a derivative migration and does not claim authorship of WirePeep. Avalonia and bundled font dependencies retain their respective package licences.
+The original [MIT licence](LICENSE), Bill Menees’ copyright/attribution and upstream Git history are preserved. Distributed candidates include runtime/native/font dependency notices and their publisher texts. Synups targets the Avalonia Port Challenge’s Best IT Pro Tool category, with Cross-Platform Port and Legacy Revival as secondary aims. It does not imply endorsement by WirePeep’s author or Avalonia.

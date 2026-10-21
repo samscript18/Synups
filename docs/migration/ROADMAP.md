@@ -22,3 +22,12 @@ Primary Best IT Pro Tool; secondary Best Cross-Platform Port / Best Legacy Reviv
 ## Phase 4B execution
 
 Actual apphost protocol, single-instance activation, own icons, dependency notices, Mac bundle and candidate launch/release notes are implemented. Obtain and inspect exact-revision three-OS CI results; finish the recorded two-hour engine observation; retain evidence and prepare a reviewed default-branch merge. Do not equate programmatic control checks with physical desktop/accessibility certification or ad-hoc signatures with trusted publishing. Public Release and competition submission still require explicit authorization.
+
+
+## Phase 4B verified checkpoint and next release gates
+
+Actual extracted apphosts now pass on Windows/macOS/Linux at292b847 (run 39678991269); the default public landing identifies Synups. Prepared archives retain runtime/native/font notices, icons, checksums and real native evidence; the Mac resource layout passes strict validation after extraction. Candidate notes and per-OS launch/manual acceptance instructions are in docs/release. No public Release/submission was performed.
+
+Next work prioritizes the remaining mandatory delivery gates over optional legacy expansion: trusted Mac signing/notarization or a reviewed verified distribution policy; ordinary downloaded-desktop acceptance on consumer Windows/real Linux and Mac quarantine; physical tray/save-picker/notification/keyboard/accessibility checks; representative GUI/large-history/endurance and external-network/IPv6/VPN/suspend/storage experiments. Then preserve approved immutable artifacts beyond CI expiration, finish source/material review and obtain explicit authorization before public Release/competition submission.
+
+Legacy parity remains72.2%; discovery/import/login/sound/taskbar/focus and menu details stay separately tracked. Do not claim ordinary-user distribution or production readiness from the successful scoped apphost checks.

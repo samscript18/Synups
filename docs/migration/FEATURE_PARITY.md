@@ -94,4 +94,7 @@ Durable history reload, interruption records, corruption/retention/capacity cont
 
 ## Phase 4B scope
 
-Per-workspace activation forwarding and restoration now exist; legacy command-line/minimized details and physical tray interactions remain incomplete. Conservative inventory score remains72.2% (9 complete +8 partial×0.5 over18); packaging, native executable validation and new diagnostic tools do not earn extra legacy rows. Prior statements that native verification is macOS-only refer to Phase3; actual Phase4A hosted evidence is recorded in CROSS_PLATFORM.md. New Phase4B apphost evidence is tracked separately.
+Per-workspace activation forwarding and restoration now exist; legacy command-line/minimized details and physical tray interactions remain incomplete. Conservative inventory score remains72.2% (9 complete +8 partial×0.5 over18); packaging, native executable validation and new diagnostic tools do not earn extra legacy rows. Prior statements that native verification is macOS-only refer to Phase3; actual Phase4A hosted evidence is recorded in CROSS_PLATFORM.md. New Phase 4B apphost evidence is tracked separately.
+
+
+Final Phase 4B evidence: source 292b847 passed actual apphosts on all three native runners; each verifies saved configuration, native SQLite reload, loopback, stop/restart, real read-only error/repair and same-workspace restoration. Windows/Linux/Mac apphost state is distinct from the earlier component harness. Physical tray/notifications/accessibility and installed desktop claims remain limited. Public default branch now displays Synups; own identity, bundle/notices and release materials are delivered enhancements, not additional legacy inventory rows. **Parity remains (9 +8×0.5)/18 =72.2%.**

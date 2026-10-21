@@ -1,6 +1,6 @@
-# Synups0.1.0 candidate — unreleased
+# Synups 0.1.0 candidate — unreleased
 
-Synups ports Bill Menees' WirePeep network downtime monitor to real Avalonia/C#/XAML on .NET10. It retains the original Git history, MIT licence and source attribution. This candidate is prepared for review; no GitHub Release or competition submission has been authorized or performed.
+Synups ports Bill Menees' WirePeep network downtime monitor to real Avalonia/C#/XAML on .NET 10. It retains the original Git history, MIT licence and source attribution. This candidate is prepared for review; no GitHub Release or competition submission has been authorized or performed.
 
 Delivered: real cancellable ICMP, characterized peer-group rotation/stop-on-success/freshness, explicit failure grace and observed recovery, editable persistent literal-IP profiles, honest live status, durable SQLite incidents/comments/sessions, automatic session logs, CSV export, storage policy/backups/retention, in-app alerts, desktop preferences and a consistent native desktop UI. Probe errors never invent recovery; ordinary shutdown never marks an unresolved incident recovered.
 
