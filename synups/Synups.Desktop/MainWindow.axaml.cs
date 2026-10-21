@@ -17,6 +17,7 @@ public partial class MainWindow : Window
     private bool closing, closedCleanly, initialized;
     private TrayController? tray;
     private WindowPlacement? normalPlacement;
+    internal bool IsClosingPending => closing;
     public Func<Task<bool>>? ExitConfirmation { get; set; }
     private MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;
 
@@ -97,8 +98,10 @@ public partial class MainWindow : Window
     private async Task RunAsync(Func<Task> operation)
     {
         if (closing || !pendingAction.IsCompleted) return;
-        pendingAction = ExecuteSafelyAsync(operation);
-        await pendingAction;
+        var workspace = this.FindControl<Grid>("Workspace")!;
+        workspace.IsEnabled = false;
+        try { pendingAction = ExecuteSafelyAsync(operation); await pendingAction; }
+        finally { workspace.IsEnabled = true; }
         if (ViewModel?.IsRunning == true) refreshTimer.Start();
     }
     private async Task ExecuteSafelyAsync(Func<Task> operation)
@@ -185,8 +188,8 @@ public partial class MainWindow : Window
     private async Task<bool> ConfirmAsync(string title, string text)
     {
         var dialog = new Window { Title = title, Width = 480, SizeToContent = SizeToContent.Height, CanResize = false, WindowStartupLocation = WindowStartupLocation.CenterOwner };
-        var accept = new Button { Content = "Continue" };
-        var cancel = new Button { Content = "Cancel", IsCancel = true, IsDefault = true };
+        var accept = new Button { Name = "ConfirmContinue", Content = "Continue" };
+        var cancel = new Button { Name = "ConfirmCancel", Content = "Cancel", IsCancel = true, IsDefault = true };
         accept.Click += (_, _) => dialog.Close(true); cancel.Click += (_, _) => dialog.Close(false);
         dialog.Content = new StackPanel { Margin = new Thickness(24), Spacing = 20, Children =
         {

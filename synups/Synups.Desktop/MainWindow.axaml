@@ -2,8 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="using:Synups.Desktop" xmlns:monitor="using:Synups.Core.Monitoring"
         x:Class="Synups.Desktop.MainWindow" x:DataType="local:MainWindowViewModel"
-        Title="Synups — Network reliability" Width="1180" Height="840" MinWidth="820" MinHeight="560">
-  <Grid ColumnDefinitions="Auto,*">
+        Title="Synups — Network reliability" Icon="/Assets/Synups.ico" Width="1180" Height="840" MinWidth="820" MinHeight="560">
+  <Grid Name="Workspace" ColumnDefinitions="Auto,*">
     <Border Classes="sidebar">
       <Grid RowDefinitions="Auto,*,Auto" Margin="12,28,12,20">
         <StackPanel Spacing="28">
@@ -115,7 +115,7 @@ No cloud account required." Classes="caption sidebarCaption" />
             <WrapPanel><Button Classes="secondary" Content="Restore original defaults…" IsEnabled="{Binding CanEdit}" Click="RestoreClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Reload configuration" IsEnabled="{Binding CanReload}" Click="ReloadClicked" Margin="0,0,8,8" /><Button Classes="secondary" Content="Recover with original defaults…" IsVisible="{Binding CanRecover}" Click="RecoverClicked" Margin="0,0,8,8" /></WrapPanel>
             <Border Classes="card">
               <StackPanel Spacing="14">
-                <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Peer groups" Classes="h2" VerticalAlignment="Center" /><Button Grid.Column="1" Classes="secondary" Content="+ New group" IsEnabled="{Binding CanEdit}" Click="NewGroupClicked" /></Grid>
+                <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Peer groups" Classes="h2" VerticalAlignment="Center" /><Button Name="NewGroup" Grid.Column="1" Classes="secondary" Content="+ New group" IsEnabled="{Binding CanEdit}" Click="NewGroupClicked" /></Grid>
                 <TextBlock Text="Add a group, then add targets and enable it, or restore the original literal defaults." IsVisible="{Binding HasNoGroups}" Classes="muted" />
                 <ListBox Name="GroupList" ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup, Mode=TwoWay}" MaxHeight="200" AutomationProperties.Name="Monitoring groups">
                   <ListBox.ItemTemplate><DataTemplate x:DataType="local:GroupRow"><Grid ColumnDefinitions="*,Auto"><StackPanel Spacing="5"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" /><TextBlock Text="{Binding TimingDescription}" Classes="caption" /></StackPanel><Border Grid.Column="1" Classes="badge" Classes.connected="{Binding IsConnected}" Classes.outage="{Binding HasOutage}" Classes.warning="{Binding IsUncertain}" Margin="12,0,0,0" VerticalAlignment="Center"><TextBlock Text="{Binding Status}" /></Border></Grid></DataTemplate></ListBox.ItemTemplate>
@@ -126,19 +126,19 @@ No cloud account required." Classes="caption sidebarCaption" />
               <Expander Header="Group configuration" IsExpanded="{Binding CanEdit}">
               <StackPanel Spacing="16" Margin="16" IsEnabled="{Binding CanEdit}">
                 <StackPanel Spacing="7"><TextBlock Text="Group name" Classes="caption" /><TextBox Name="GroupNameEditor" Text="{Binding GroupName, Mode=TwoWay}" PlaceholderText="e.g. Internet providers" AutomationProperties.Name="Group name" /></StackPanel>
-                <CheckBox Content="Enable this group (requires a target)" IsChecked="{Binding GroupEnabled, Mode=TwoWay}" />
+                <CheckBox Name="GroupEnabledEditor" Content="Enable this group (requires a target)" IsChecked="{Binding GroupEnabled, Mode=TwoWay}" />
                 <Grid ColumnDefinitions="*,*,*">
-                  <StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Poll interval · seconds" Classes="caption" /><TextBox Text="{Binding PollSeconds, Mode=TwoWay}" AutomationProperties.Name="Poll interval in seconds" /></StackPanel>
-                  <StackPanel Grid.Column="1" Spacing="7" Margin="0,0,12,0"><TextBlock Text="Failure threshold · seconds" Classes="caption" /><TextBox Text="{Binding FailSeconds, Mode=TwoWay}" AutomationProperties.Name="Failure threshold in seconds" /></StackPanel>
-                  <StackPanel Grid.Column="2" Spacing="7"><TextBlock Text="Probe timeout · ms" Classes="caption" /><TextBox Text="{Binding TimeoutMilliseconds, Mode=TwoWay}" AutomationProperties.Name="Probe timeout in milliseconds" /></StackPanel>
+                  <StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Poll interval · seconds" Classes="caption" /><TextBox Name="PollSecondsEditor" Text="{Binding PollSeconds, Mode=TwoWay}" AutomationProperties.Name="Poll interval in seconds" /></StackPanel>
+                  <StackPanel Grid.Column="1" Spacing="7" Margin="0,0,12,0"><TextBlock Text="Failure threshold · seconds" Classes="caption" /><TextBox Name="FailSecondsEditor" Text="{Binding FailSeconds, Mode=TwoWay}" AutomationProperties.Name="Failure threshold in seconds" /></StackPanel>
+                  <StackPanel Grid.Column="2" Spacing="7"><TextBlock Text="Probe timeout · ms" Classes="caption" /><TextBox Name="TimeoutEditor" Text="{Binding TimeoutMilliseconds, Mode=TwoWay}" AutomationProperties.Name="Probe timeout in milliseconds" /></StackPanel>
                 </Grid>
-                <WrapPanel><Button Classes="primary" Content="Apply group" Click="ApplyGroupClicked" Margin="0,0,8,8" /><Button Classes="danger" Content="Remove group…" IsEnabled="{Binding HasSelectedGroup}" Click="RemoveGroupClicked" Margin="0,0,0,8" /></WrapPanel>
+                <WrapPanel><Button Name="ApplyGroup" Classes="primary" Content="Apply group" Click="ApplyGroupClicked" Margin="0,0,8,8" /><Button Name="RemoveGroup" Classes="danger" Content="Remove group…" IsEnabled="{Binding HasSelectedGroup}" Click="RemoveGroupClicked" Margin="0,0,0,8" /></WrapPanel>
               </StackPanel>
               </Expander>
             </Border>
             <Border Classes="card">
               <StackPanel Spacing="14">
-                <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Targets in selected group" Classes="h2" VerticalAlignment="Center" /><Button Grid.Column="1" Classes="secondary" Content="+ New target" IsEnabled="{Binding CanEdit}" Click="NewTargetClicked" /></Grid>
+                <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Targets in selected group" Classes="h2" VerticalAlignment="Center" /><Button Name="NewTarget" Grid.Column="1" Classes="secondary" Content="+ New target" IsEnabled="{Binding CanEdit}" Click="NewTargetClicked" /></Grid>
                 <ListBox Name="TargetList" ItemsSource="{Binding SelectedGroup.Targets}" SelectedItem="{Binding SelectedTarget, Mode=TwoWay}" MaxHeight="360" AutomationProperties.Name="Monitoring targets">
                   <ListBox.ItemTemplate><DataTemplate x:DataType="local:TargetRow"><StackPanel Spacing="8"><Grid ColumnDefinitions="*,Auto"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" /><TextBlock Grid.Column="1" Text="{Binding Address}" Classes="muted" Margin="12,0,0,0" /></Grid><TextBlock Text="{Binding Status}" FontSize="13" /><TextBlock Text="{Binding Details}" Classes="caption" /></StackPanel></DataTemplate></ListBox.ItemTemplate>
                 </ListBox>
@@ -148,9 +148,9 @@ No cloud account required." Classes="caption sidebarCaption" />
             <Border Classes="card">
               <Expander Header="Target configuration" IsExpanded="{Binding CanEdit}">
               <StackPanel Spacing="16" Margin="16" IsEnabled="{Binding CanEdit}">
-                <Grid ColumnDefinitions="*,*"><StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Target name" Classes="caption" /><TextBox Text="{Binding TargetName, Mode=TwoWay}" PlaceholderText="e.g. Primary resolver" AutomationProperties.Name="Target name" /></StackPanel><StackPanel Grid.Column="1" Spacing="7"><TextBlock Text="Literal IPv4 or IPv6 address" Classes="caption" /><TextBox Text="{Binding TargetAddress, Mode=TwoWay}" PlaceholderText="Enter an IP address" AutomationProperties.Name="Target IP address" /></StackPanel></Grid>
+                <Grid ColumnDefinitions="*,*"><StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Target name" Classes="caption" /><TextBox Name="TargetNameEditor" Text="{Binding TargetName, Mode=TwoWay}" PlaceholderText="e.g. Primary resolver" AutomationProperties.Name="Target name" /></StackPanel><StackPanel Grid.Column="1" Spacing="7"><TextBlock Text="Literal IPv4 or IPv6 address" Classes="caption" /><TextBox Name="TargetAddressEditor" Text="{Binding TargetAddress, Mode=TwoWay}" PlaceholderText="Enter an IP address" AutomationProperties.Name="Target IP address" /></StackPanel></Grid>
                 <StackPanel Spacing="7"><TextBlock Text="Group membership" Classes="caption" /><ComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding TargetGroup, Mode=TwoWay}" HorizontalAlignment="Stretch" AutomationProperties.Name="Target group" /></StackPanel>
-                <WrapPanel><Button Classes="primary" Content="Apply target" Click="ApplyTargetClicked" Margin="0,0,8,8" /><Button Classes="danger" Content="Remove selected target…" Click="RemoveTargetClicked" Margin="0,0,0,8" /></WrapPanel>
+                <WrapPanel><Button Name="ApplyTarget" Classes="primary" Content="Apply target" Click="ApplyTargetClicked" Margin="0,0,8,8" /><Button Name="RemoveTarget" Classes="danger" Content="Remove selected target…" Click="RemoveTargetClicked" Margin="0,0,0,8" /></WrapPanel>
               </StackPanel>
               </Expander>
             </Border>
@@ -191,19 +191,19 @@ No cloud account required." Classes="caption sidebarCaption" />
             </Border>
             <Border Classes="card"><StackPanel Spacing="12" IsEnabled="{Binding CanPreferences}">
               <TextBlock Text="Desktop and startup" Classes="h2" />
-              <CheckBox Content="Confirm before exiting" IsChecked="{Binding PrefConfirmExit, Mode=TwoWay}" />
-              <CheckBox Content="Always on top" IsChecked="{Binding PrefTopmost, Mode=TwoWay}" />
-              <CheckBox IsChecked="{Binding PrefTray, Mode=TwoWay}"><TextBlock Text="Minimize to tray when reliable restoration is available" /></CheckBox>
+              <CheckBox Name="PrefConfirmExit" Content="Confirm before exiting" IsChecked="{Binding PrefConfirmExit, Mode=TwoWay}" />
+              <CheckBox Name="PrefTopmost" Content="Always on top" IsChecked="{Binding PrefTopmost, Mode=TwoWay}" />
+              <CheckBox Name="PrefTray" IsChecked="{Binding PrefTray, Mode=TwoWay}"><TextBlock Text="Minimize to tray when reliable restoration is available" /></CheckBox>
               <CheckBox Content="Launch minimized" IsChecked="{Binding PrefMinimized, Mode=TwoWay}" />
-              <CheckBox IsChecked="{Binding PrefAutoStart, Mode=TwoWay}"><TextBlock Text="Start monitoring on launch (off by default; uses saved targets)" /></CheckBox>
+              <CheckBox Name="PrefAutoStart" IsChecked="{Binding PrefAutoStart, Mode=TwoWay}"><TextBlock Text="Start monitoring on launch (off by default; uses saved targets)" /></CheckBox>
               <TextBlock Name="TrayCapability" Text="Tray initializes when the native window opens." Classes="caption" />
               <TextBlock Text="A taskbar/dock fallback stays available when tray restoration is uncertain. These options apply when Synups starts. OS login/startup registration is not implemented." Classes="caption" />
             </StackPanel></Border>
             <Border Classes="card"><StackPanel Spacing="12" IsEnabled="{Binding CanPreferences}">
               <TextBlock Text="Notifications" Classes="h2" />
-              <CheckBox Content="Confirmed ICMP outages" IsChecked="{Binding PrefOutage, Mode=TwoWay}" />
-              <CheckBox Content="Confirmed recovery" IsChecked="{Binding PrefRecovery, Mode=TwoWay}" />
-              <CheckBox Content="Monitoring errors (rate limited)" IsChecked="{Binding PrefErrors, Mode=TwoWay}" />
+              <CheckBox Name="PrefOutage" Content="Confirmed ICMP outages" IsChecked="{Binding PrefOutage, Mode=TwoWay}" />
+              <CheckBox Name="PrefRecovery" Content="Confirmed recovery" IsChecked="{Binding PrefRecovery, Mode=TwoWay}" />
+              <CheckBox Name="PrefErrors" Content="Monitoring errors (rate limited)" IsChecked="{Binding PrefErrors, Mode=TwoWay}" />
               <CheckBox IsChecked="{Binding PrefNative, Mode=TwoWay}"><TextBlock Text="Also request native OS notifications where supported" /></CheckBox>
               <TextBlock Text="{Binding NativeAlertStatus}" Classes="caption" /><TextBlock Text="In-app alerts appear inside Synups. OS requests can be denied; delivery is not guaranteed. Alert sounds are not implemented." Classes="caption" />
             </StackPanel></Border>
@@ -215,7 +215,7 @@ No cloud account required." Classes="caption sidebarCaption" />
               <TextBlock Text="Automatic history cleanup · days" Classes="caption" /><TextBox Text="{Binding PrefRetentionDays, Mode=TwoWay}" AutomationProperties.Name="History retention days" />
               <TextBlock Text="0 keeps all history (default). A positive value, 1–3650 days, requires confirmation and deletes only eligible fully ended sessions now, at launch and daily during monitoring. Entire unresolved/interrupted sessions stay. Freed pages are reused." Classes="caption" />
             </StackPanel></Border>
-            <WrapPanel IsEnabled="{Binding CanPreferences}"><Button Classes="primary" Content="Apply preferences…" Click="ApplyPreferencesClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Recover unreadable preferences…" Click="RecoverPreferencesClicked" Margin="0,0,0,8" /></WrapPanel>
+            <WrapPanel IsEnabled="{Binding CanPreferences}"><Button Name="ApplyPreferences" Classes="primary" Content="Apply preferences…" Click="ApplyPreferencesClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Recover unreadable preferences…" Click="RecoverPreferencesClicked" Margin="0,0,0,8" /></WrapPanel>
           </StackPanel>
         </Grid>
       </ScrollViewer>

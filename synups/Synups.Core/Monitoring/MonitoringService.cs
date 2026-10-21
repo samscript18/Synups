@@ -28,6 +28,13 @@ public sealed class MonitoringService : IAsyncDisposable
     private bool disposed, historyLoaded;
     private int retentionDays;
     private DateTimeOffset nextRetentionUtc;
+    private int activeGroupWorkers;
+    private long completedPolls;
+    /// <summary>Read-only operational counts; no synthetic measurements or scheduling influence.</summary>
+    public MonitoringDiagnostics Diagnostics
+    {
+        get { lock (gate) return new(Volatile.Read(ref activeGroupWorkers), Interlocked.Read(ref completedPolls), pending.Count); }
+    }
     public bool HasDurableHistory => history is not null;
     public bool HistoryReady { get { lock (gate) return history is null || historyLoaded; } }
     public bool HasUnsavedEvidence { get { lock (gate) return pending.Count > 0; } }
@@ -153,6 +160,7 @@ public sealed class MonitoringService : IAsyncDisposable
     }
     private async Task RunGroupAsync(GroupMonitor monitor, SemaphoreSlim slots, CancellationToken token)
     {
+        Interlocked.Increment(ref activeGroupWorkers);
         try
         {
             while (true)
@@ -182,12 +190,14 @@ public sealed class MonitoringService : IAsyncDisposable
                         if (result.ObservationGap) AddEvent(result.Snapshot.Id, MonitorEventKind.ObservationGap, $"{result.Snapshot.Name}: observation gap; failure grace period reset.");
                         foreach (var message in result.Errors) AddEvent(result.Snapshot.Id, MonitorEventKind.ProbeError, message);
                     }, result.ChangedOutage is { } changedOutage ? [changedOutage.Id] : []).ConfigureAwait(false);
+                    Interlocked.Increment(ref completedPolls);
                 }
                 finally { slots.Release(); }
             }
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested) { }
         catch { cancellation!.Cancel(); throw; }
+        finally { Interlocked.Decrement(ref activeGroupWorkers); }
     }
     public Task UpdateCommentAsync(Guid outageId, string comment)
     {

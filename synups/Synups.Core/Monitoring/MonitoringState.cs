@@ -1,5 +1,7 @@
 namespace Synups.Core.Monitoring;
 
+public sealed record MonitoringDiagnostics(int ActiveGroupWorkers, long CompletedPolls, int PendingEvidenceBatches);
+
 public enum GroupConnectivity { NotChecked, Connected, Disconnected, Unavailable, Disabled }
 public enum SessionState { Stopped, Running, Stopping, Faulted }
 public enum MonitorEventKind { SessionStarted, SessionStopped, OutageStarted, Recovery, ProbeError, ObservationGap, Comment, Interrupted }

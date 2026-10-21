@@ -17,7 +17,7 @@ public sealed class TrayController : IDisposable
         {
             var app = Application.Current;
             if (app is null) { Status = "Tray unavailable: application not initialized."; return; }
-            using var icon = AssetLoader.Open(new Uri("avares://Synups.Desktop/Assets/LegacyWirePeep.ico"));
+            using var icon = AssetLoader.Open(new Uri("avares://Synups.Desktop/Assets/Synups.ico"));
             tray = new TrayIcon { Icon = new WindowIcon(icon), ToolTipText = "Synups", IsVisible = true };
             var show = new NativeMenuItem("Show Synups"); show.Click += (_, _) => restore();
             var exit = new NativeMenuItem("Exit Synups"); exit.Click += (_, _) => quit();

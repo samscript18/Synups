@@ -90,3 +90,8 @@ Same 18-item rubric and weights as Phase 2; new durable reload is an enhancement
 **(9 complete × 1 + 8 partial × 0.5 + 1 pending × 0) / 18 = 13/18 = 72.2%.** Previous Phase 2: 61.1%, improvement 11.1 percentage points. This coarse inventory score excludes engineering effort, simulation and platform certification. Native verification remains macOS only.
 
 Durable history reload, interruption records, corruption/retention/capacity controls and group enablement are Synups enhancements. Original MIT resources/attribution and monitoring intent are retained. [Discovery and import investigation](LEGACY_INTEGRATIONS.md) records what remains unimplemented rather than labelling a hypothetical importer as compatible.
+
+
+## Phase 4B scope
+
+Per-workspace activation forwarding and restoration now exist; legacy command-line/minimized details and physical tray interactions remain incomplete. Conservative inventory score remains72.2% (9 complete +8 partial×0.5 over18); packaging, native executable validation and new diagnostic tools do not earn extra legacy rows. Prior statements that native verification is macOS-only refer to Phase3; actual Phase4A hosted evidence is recorded in CROSS_PLATFORM.md. New Phase4B apphost evidence is tracked separately.

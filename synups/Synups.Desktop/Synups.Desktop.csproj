@@ -2,12 +2,15 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets/Synups.ico</ApplicationIcon>
+    <AssemblyTitle>Synups</AssemblyTitle>
+    <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Description>Local network reliability monitor with real ICMP group monitoring</Description>
     <RuntimeIdentifiers>win-x64;osx-arm64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
-    <AvaloniaResource Include="Assets/**" />
+    <AvaloniaResource Include="Assets/Synups.ico;Assets/Synups.png" />
     <ProjectReference Include="../Synups.Core/Synups.Core.csproj" />
     <PackageReference Include="Avalonia" Version="12.1.4" />
     <PackageReference Include="Avalonia.Desktop" Version="12.1.4" />

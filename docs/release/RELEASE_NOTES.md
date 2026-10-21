@@ -1,0 +1,13 @@
+# Synups0.1.0 candidate — unreleased
+
+Synups ports Bill Menees' WirePeep network downtime monitor to real Avalonia/C#/XAML on .NET10. It retains the original Git history, MIT licence and source attribution. This candidate is prepared for review; no GitHub Release or competition submission has been authorized or performed.
+
+Delivered: real cancellable ICMP, characterized peer-group rotation/stop-on-success/freshness, explicit failure grace and observed recovery, editable persistent literal-IP profiles, honest live status, durable SQLite incidents/comments/sessions, automatic session logs, CSV export, storage policy/backups/retention, in-app alerts, desktop preferences and a consistent native desktop UI. Probe errors never invent recovery; ordinary shutdown never marks an unresolved incident recovered.
+
+Release hardening adds explicit portable-data and installation checks in the shipped apphost, per-workspace single-instance restoration, a Synups-specific icon/identity, complete dependency notice inventory and a macOS app bundle. The monitoring evaluator/probe semantics remain intact. The installation-check driver uses the real packaged application with loopback-only isolated data; test/engineering harness assemblies are not included in distribution archives.
+
+Candidate targets: Windows x64 portable ZIP, Apple-silicon macOS app bundle in tar.gz, Linux x64 tar.gz. Exact OS/runtime/test and apphost results belong to the source-SHA evidence and CROSS_PLATFORM.md. Publishing and signature verification alone do not establish ordinary downloaded-desktop usability. macOS uses ad-hoc integrity signing only, with no Developer ID/notarization. Windows is unsigned; Linux is a portable directory, not a distro package.
+
+Still missing or limited: validated legacy settings import, explicit gateway/modem discovery, login registration, sound/taskbar/focus parity, native Windows notifications, complete legacy menu/clipboard/help parity, installers/trusted signing, broad installed-desktop/accessibility/permission/IPv6/VPN/sleep-resume/endurance proof. Linux native CI uses Xvfb and does not certify Wayland or tray-host behavior on every desktop. In-app alerts are distinct from OS notifications. No analytics/cloud/account features or production fake metrics are added.
+
+Before distribution, review INSTALLATION.md, the exact manifest/checksums, licences and the release readiness checklist. CI evidence expires; preserve the approved release materials and reports separately when publishing is authorized.

@@ -17,3 +17,8 @@ No cloud, accounts, advanced analytics or major visual redesign is planned befor
 
 ## Competition
 Primary Best IT Pro Tool; secondary Best Cross-Platform Port / Best Legacy Revival. Recorded challenge deadline: October 23, 2026 at 23:59 UTC, per the [challenge announcement](https://avaloniaui.net/blog/avalonia-port-challenge). Retained upstream Git ancestry and MIT attribution remain prerequisites. This task did not submit an entry.
+
+
+## Phase 4B execution
+
+Actual apphost protocol, single-instance activation, own icons, dependency notices, Mac bundle and candidate launch/release notes are implemented. Obtain and inspect exact-revision three-OS CI results; finish the recorded two-hour engine observation; retain evidence and prepare a reviewed default-branch merge. Do not equate programmatic control checks with physical desktop/accessibility certification or ad-hoc signatures with trusted publishing. Public Release and competition submission still require explicit authorization.

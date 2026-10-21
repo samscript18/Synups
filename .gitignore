@@ -342,3 +342,7 @@ healthchecksdb
 
 # Ignore large whiteboard images and other trial items
 /src/WirePeep/Images/Scrap/*
+
+# Human-authored release documentation (not build output).
+!/docs/release/
+!/docs/release/*.md

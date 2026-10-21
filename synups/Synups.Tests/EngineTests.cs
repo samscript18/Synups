@@ -144,6 +144,7 @@ public class EngineTests
         await using var service = new MonitoringService(new ScriptedProbe(Fail, Fail, Fail, Ok), clock);
         await service.StartAsync(Config(group));
         await UntilAsync(() => clock.PendingDelays == 1);
+        Assert.Equal(1, service.Diagnostics.ActiveGroupWorkers);
         await Assert.ThrowsAsync<InvalidOperationException>(() => service.StartAsync(Config(group)));
         clock.Advance(1000);
         await UntilAsync(() => service.Capture().Outages.Count == 1);
@@ -154,6 +155,9 @@ public class EngineTests
         Assert.Contains("ticket", service.Capture().Outages[0].Comment);
         await service.StopAsync();
         Assert.Equal(SessionState.Stopped, service.Capture().State);
+        Assert.Equal(0, service.Diagnostics.ActiveGroupWorkers);
+        Assert.True(service.Diagnostics.CompletedPolls > 0);
+        Assert.Equal(0, service.Diagnostics.PendingEvidenceBatches);
         Assert.Null(service.Capture().Outages[0].RecoveredUtc);
         Assert.NotNull(service.Capture().Outages[0].ObservationEndedUtc);
         Assert.Single(service.Capture().Events, e => e.Kind == MonitorEventKind.OutageStarted);

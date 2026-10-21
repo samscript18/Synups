@@ -38,6 +38,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1
+      - name: Archive tool safety tests
+        run: python -m unittest discover -s ../eng/tests -v
       - name: Locked dependency restore
         run: |
           set -o pipefail
@@ -45,7 +47,7 @@ jobs:
       - name: Release build
         run: |
           set -o pipefail
-          dotnet build ../Synups.slnx -c Release --no-restore 2>&1 | tee ../artifacts/logs/build.txt
+          dotnet build ../Synups.slnx -c Release --no-restore -p:SourceRevisionId=${{ github.sha }} 2>&1 | tee ../artifacts/logs/build.txt
       - name: Deterministic and Avalonia headless tests
         run: |
           set -o pipefail
@@ -59,11 +61,21 @@ jobs:
       - name: Publish self-contained platform directory
         run: |
           set -o pipefail
-          dotnet publish Synups.Desktop -c Release -r ${{ matrix.rid }} --self-contained true --no-restore -o ../artifacts/publish/${{ matrix.rid }} 2>&1 | tee ../artifacts/logs/publish.txt
+          dotnet publish Synups.Desktop -c Release -r ${{ matrix.rid }} --self-contained true --no-restore -p:SourceRevisionId=${{ github.sha }} -o ../artifacts/publish/${{ matrix.rid }} 2>&1 | tee ../artifacts/logs/publish.txt
           cp ../LICENSE ../artifacts/publish/${{ matrix.rid }}/LICENSE
           cp ../README.md ../artifacts/publish/${{ matrix.rid }}/README.md
       - name: Archive runnable files with Unix permissions and checksums
         run: python ../eng/package-artifacts.py --source ../artifacts/publish/${{ matrix.rid }} --rid ${{ matrix.rid }} --output ../artifacts/packages --revision ${{ github.sha }}
+      - name: Extract and execute the actual published application
+        if: runner.os != 'Linux'
+        run: |
+          set -o pipefail
+          python ../eng/published-smoke.py --package ../artifacts/packages/Synups-${{ matrix.rid }}.${{ runner.os == 'Windows' && 'zip' || 'tar.gz' }} --rid ${{ matrix.rid }} --expected-revision ${{ github.sha }} --output ../artifacts/published-apphost --seconds 10 2>&1 | tee ../artifacts/logs/published-apphost.txt
+      - name: Extract and execute actual Linux apphost under Xvfb
+        if: runner.os == 'Linux'
+        run: |
+          set -o pipefail
+          xvfb-run -a -s '-screen 0 1440x1000x24' python ../eng/published-smoke.py --package ../artifacts/packages/Synups-linux-x64.tar.gz --rid linux-x64 --expected-revision ${{ github.sha }} --output ../artifacts/published-apphost --seconds 10 2>&1 | tee ../artifacts/logs/published-apphost.txt
       - name: Native UI, real loopback, graceful close and process restart
         if: runner.os != 'Linux'
         run: |
@@ -85,4 +97,7 @@ jobs:
             artifacts/real-network/
             artifacts/screenshots/
             artifacts/packages/
+            artifacts/published-apphost/reports/
+            artifacts/published-apphost/launch-summary.json
+            artifacts/published-apphost/isolated-data/
           retention-days: 30

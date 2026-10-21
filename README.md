@@ -2,7 +2,9 @@
 
 Synups is a migration of [WirePeep](https://github.com/menees/WirePeep) into a modern cross-platform network reliability monitor using **real Avalonia, C# and XAML**. Primary competition category: Best IT Pro Tool.
 
-**Current status: reviewed source checkpoint with passing Windows/macOS/Linux CI; release gates remain open.** Synups performs real ICMP monitoring, edits profiles, retains incidents/comments across restarts, writes automatic session logs/statistics and provides configurable alerts and desktop preferences. Native verification harnesses passed on all three OSes; published-executable testing, legacy import and several OS integrations remain incomplete. No production measurements or statistics are fabricated. No backend, cloud service, paid component or WebView is used.
+**Current status: Phase 4B release hardening in progress; release gates remain open.** Synups performs real ICMP monitoring, edits profiles, retains incidents/comments across restarts, writes automatic session logs/statistics and provides configurable alerts and desktop preferences. Native verification harnesses passed on all three OSes; published-executable testing, legacy import and several OS integrations remain incomplete. No production measurements or statistics are fabricated. No backend, cloud service, paid component or WebView is used.
+
+Portable candidate launch instructions and signature limits: [Windows, macOS and Linux installation](docs/release/INSTALLATION.md). [Candidate release notes](docs/release/RELEASE_NOTES.md) and [release checklist](docs/migration/RELEASE_READINESS.md) distinguish actual evidence from remaining gates. Phase 4A results below are historical; new apphost checks require their own source revision and CI results.
 
 ## Build and run
 

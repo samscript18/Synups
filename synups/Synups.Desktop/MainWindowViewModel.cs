@@ -76,8 +76,13 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     private string targetName = "", targetAddress = "", outageComment = "";
     private bool disposed, resultsMatchConfiguration;
 
-    public MainWindowViewModel() : this(new MonitoringService(history: new SqliteHistoryStore(SynupsPaths.HistoryFile)),
-        new ConfigurationStore(SynupsPaths.ConfigurationFile), new PreferencesStore(SynupsPaths.PreferencesFile)) { }
+    public MainWindowViewModel() : this(SynupsPaths.DataDirectory) { }
+    public MainWindowViewModel(string dataDirectory) : this(new MonitoringService(history: new SqliteHistoryStore(Path.Combine(dataDirectory, "history.v1.db"))),
+        new ConfigurationStore(Path.Combine(dataDirectory, "configuration.v1.json")),
+        new PreferencesStore(Path.Combine(dataDirectory, "preferences.v1.json"), Path.Combine(dataDirectory, "logs"))) { }
+    internal MonitoringSnapshot CaptureMonitoring() => service.Capture();
+    internal MonitoringDiagnostics CaptureDiagnostics() => service.Diagnostics;
+    internal Task<HistoryState> ReadHistoryAsync() => service.ReadArchiveAsync();
     public MainWindowViewModel(MonitoringService service, ConfigurationStore store, PreferencesStore? preferencesStore = null)
     {
         this.service = service; this.store = store;
@@ -402,7 +407,11 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
         busy = true; NotifyControls();
         try { await action(); }
         catch (Exception ex) { Message = ex.Message; }
-        finally { busy = false; Refresh(); await RefreshStorageAsync(force: true); }
+        finally
+        {
+            try { await RefreshStorageAsync(force: true); }
+            finally { busy = false; Refresh(); }
+        }
     }
     public void Refresh()
     {

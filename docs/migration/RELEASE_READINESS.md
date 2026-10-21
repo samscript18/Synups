@@ -1,5 +1,7 @@
 # Next release milestone checklist
 
+**Phase 4B is in progress (2026-10-21).** Published-apphost automation, single-instance restoration, identity/bundling and dependency notices are implemented; final exact-source three-OS outcomes and two-hour measurements are pending. Historical assessments below are retained and will be superseded by the final evidence section. No10/10 or production-readiness claim.
+
 Assessment: reviewed Phase 4A checkpoint with three-OS CI/native-harness evidence and configurable storage policy, **7/10 product readiness**. The 10/10 submission target remains aspirational; storage improvements do not close the platform/release gates. Not production-ready or a completed competition entry. Phase 4A now provides three-OS CI/native-harness evidence; published-apphost, installed-desktop and other release gates remain open.
 
 ## Passed locally on macOS arm64

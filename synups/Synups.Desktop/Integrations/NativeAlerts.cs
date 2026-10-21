@@ -10,7 +10,7 @@ public sealed class NativeAlertSink : INativeAlertSink
 {
     public static string Capability => OperatingSystem.IsMacOS() ? "macOS: optional osascript notification requests; OS delivery/permission is not guaranteed." :
         OperatingSystem.IsLinux() ? "Linux: optional notify-send when installed and a notification daemon is available." :
-        "Windows: native notification adapter unavailable in this unpackaged build; in-app alerts remain available.";
+        "Windows: native notification adapter unavailable in this portable build; in-app alerts remain available.";
     public async Task<NativeAlertResult> SendAsync(AlertMessage message, CancellationToken token)
     {
         ProcessStartInfo start;

@@ -1,0 +1,55 @@
+{
+  "retrieved_date": "2026-10-21",
+  "files": {
+    "Avalonia-MIT.txt": {
+      "url": "https://raw.githubusercontent.com/AvaloniaUI/Avalonia/2d79ba55fae1b1e71c69f93a668080c9029e6a31/licence.md",
+      "sha256": "213814d306090074d234d760239ff0f67eb9b8d20eefb4d5631bb39dbe0b769b"
+    },
+    "MicroCom-MIT.txt": {
+      "url": "https://raw.githubusercontent.com/kekekeks/MicroCom/76785efcafd91b5902fd19dd11145f6dd655b7b4/LICENSE",
+      "sha256": "6ee769c9ac4dac9abb16b98b1341e9528ff9f4ab685481410d3376d14148f3a9"
+    },
+    "Tmds-DBus-MIT.txt": {
+      "url": "https://raw.githubusercontent.com/tmds/Tmds.DBus/b4a7fed0b878f74cb54f7cca84d2889af4e596ba/COPYING",
+      "sha256": "aca3b49277abcc7886ccb2f115603a9f5b15fc3f96019a10c00f2974098b210c"
+    },
+    "Microsoft-Data-Sqlite-MIT.txt": {
+      "url": "https://raw.githubusercontent.com/dotnet/dotnet/4099f83977f4d29604a9aeb971fb0a7bc1d5f699/src/efcore/LICENSE.txt",
+      "sha256": "ae48df11a335dc1a615f4f938b69cba73bcf4485c4f97af49b38efb0f216353b"
+    },
+    "Inter-OFL.txt": {
+      "url": "https://raw.githubusercontent.com/rsms/inter/v3.19/LICENSE.txt",
+      "sha256": "4d7d9c95e7d7f2f0ebf76d5e0b344826b74e903a34028ee18ab54bb639e45906"
+    },
+    "Apache-2.0.txt": {
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "SQLite-public-domain.txt": {
+      "url": "https://www.sqlite.org/copyright.html",
+      "sha256": "a8e933d8203dd13d4a0679dcbc4203c4c342370259e9670dfed9ca797b6c22b6"
+    }
+  },
+  "bundled_inter_font": {
+    "font_sha256": "41ab0f707a2bfab8133ccdfcdab52282f5f79e5751f43a264805451c7bb95fb8",
+    "names": [
+      {
+        "name_id": 0,
+        "text": "Copyright 2020 The Inter Project Authors (https://github.com/rsms/inter)"
+      },
+      {
+        "name_id": 5,
+        "text": "Version 3.019;git-0a5106e0b"
+      },
+      {
+        "name_id": 13,
+        "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL"
+      },
+      {
+        "name_id": 14,
+        "text": "http://scripts.sil.org/OFL"
+      }
+    ],
+    "source_url": "https://raw.githubusercontent.com/AvaloniaUI/Avalonia/2d79ba55fae1b1e71c69f93a668080c9029e6a31/src/Avalonia.Fonts.Inter/Assets/Inter-Regular.ttf"
+  }
+}
