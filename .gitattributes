@@ -5,6 +5,7 @@
 
 # Preserve the original licence bytes in published archives on every runner.
 LICENSE text eol=lf
+eng/licenses/*.txt text eol=lf
 
 ###############################################################################
 # Set default behavior for command prompt diff.
