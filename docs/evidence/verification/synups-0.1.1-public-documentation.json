@@ -1,0 +1,171 @@
+{
+  "documentation_revision": "d725fb932c4da6b2a0f512500310296d13a252f4",
+  "application_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "tag_type": "lightweight commit reference",
+  "release_url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+  "public": true,
+  "draft": false,
+  "prerelease": false,
+  "release_body_verbatim": true,
+  "asset_count": 15,
+  "latest_redirect": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+  "default_readme_matches": true,
+  "authentication_used": false,
+  "files": [
+    {
+      "path": "README.md",
+      "status": 200,
+      "bytes": 16099,
+      "sha256": "a1f198fd157afdfd715e7e2a12b461d3f8064cdd8d26962aa6f009f24d7c5b3b",
+      "matches_local": true
+    },
+    {
+      "path": "docs/competition/JUDGES_GUIDE.md",
+      "status": 200,
+      "bytes": 8519,
+      "sha256": "aae2cb1796d61999e51d9bb00f408135079d1a96e70af273474d975d7e8fc4b6",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/synups-0.1.1-documentation-check.json",
+      "status": 200,
+      "bytes": 1934,
+      "sha256": "0739dce88d62362629fef8a6dac021e2ee3a9b633b6f05f02143f317a9779bae",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/synups-0.1.1-publication.json",
+      "status": 200,
+      "bytes": 24389,
+      "sha256": "4f9df51894e5443916c8a1a36026c2a22469948300716c906f02e153f9e42292",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/CROSS_PLATFORM.md",
+      "status": 200,
+      "bytes": 55357,
+      "sha256": "116a927a23bb6ade982bb5da40c967d64554aeb9385a24783160eef058fa1174",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/FEATURE_PARITY.md",
+      "status": 200,
+      "bytes": 24469,
+      "sha256": "d9594ce48b4cab3ffc59020be6088ccfce6054f3cac97d774c94a2b977dae2cb",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/LEGACY_INTEGRATIONS.md",
+      "status": 200,
+      "bytes": 8469,
+      "sha256": "5bc06662b2d20fe6fe3cf20245e3031b2cf89563eeddcc50610a08b43bceb1cf",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/MIGRATION_LOG.md",
+      "status": 200,
+      "bytes": 142192,
+      "sha256": "44bfc379002a8a7dd858fab76dee7444288fd6976af68cd3cd06b2fb4b764298",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/RELEASE_READINESS.md",
+      "status": 200,
+      "bytes": 26955,
+      "sha256": "d748caba65271a125ff1acc54a60646278138883ebdec15ab053eb567a3aec5f",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/ROADMAP.md",
+      "status": 200,
+      "bytes": 10875,
+      "sha256": "a5ee9d8b25f8d2cf81967bbef58692c07a5ba5afe8d027d6c63d01a45b31a100",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/DESKTOP_COMPLETION_CANDIDATE.md",
+      "status": 200,
+      "bytes": 7762,
+      "sha256": "90adf4811b4ce9ec7da545099e386a049a1568d8fdda4ae61dbede4f424e34d0",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/INSTALLATION.md",
+      "status": 200,
+      "bytes": 9186,
+      "sha256": "a484ad89470c1dd915666ea8ce2de2855c62196756685c4d2a0dcc87154a2162",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/PUBLICATION.md",
+      "status": 200,
+      "bytes": 5207,
+      "sha256": "4244af346eacdc797f6491b1a3649e195cbc384ae1f7195865a6b503fb8191d4",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/RELEASE_NOTES.md",
+      "status": 200,
+      "bytes": 3527,
+      "sha256": "9cbfd64d3a0f599394697ebe9ff45885a196752bd79db1e37d2ece3e5f2f9201",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/SUBMISSION.md",
+      "status": 200,
+      "bytes": 7799,
+      "sha256": "43e0998ab557381b3ccb854af548da726a819cb053ee5e68798f2a2546ab2828",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/v0.1.1/ASSET_MANIFEST.json",
+      "status": 200,
+      "bytes": 9382,
+      "sha256": "95bc87b8553fc8cf59172f9b4f052edf1fa60afb8db71f63eb2aabd02ff4bc02",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/v0.1.1/PUBLICATION.md",
+      "status": 200,
+      "bytes": 5484,
+      "sha256": "3f491a9da2deba4633539d37790ea6d9e98ec6b45097e85c801389ec2d7f8434",
+      "matches_local": true
+    },
+    {
+      "path": "LICENSE",
+      "status": 200,
+      "bytes": 1068,
+      "sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/before/2026-10-22-wirepeep-windows.png",
+      "status": 200,
+      "bytes": 23238,
+      "sha256": "6af8dfc135aac260a2561b0f5f5a3b261e6e3adfae833328c51b96b2153060a2",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-overview.png",
+      "status": 200,
+      "bytes": 100669,
+      "sha256": "36d0e5d8c80f85bf45b739311f50c1e4f3d422b835d36922662a480fc5cdf1e8",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-overview.png",
+      "status": 200,
+      "bytes": 108725,
+      "sha256": "9fb22ffec6e5e52f840d00c8d28445b13d25fbcf77678527947d6ce307202c7b",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-overview.png",
+      "status": 200,
+      "bytes": 142886,
+      "sha256": "523c94aa073ef6d43f0e1a809c0f5295c5dde959960679a675a5f09e600cf291",
+      "matches_local": true
+    }
+  ],
+  "competition_submitted": false
+}
