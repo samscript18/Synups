@@ -92,6 +92,7 @@ jobs:
           dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~NativeSoundRequest --logger trx --results-directory ../artifacts/audio 2>&1 | tee ../artifacts/logs/audio.txt
         env:
           SYNUPS_SOUND_TESTS: '1'
+          SYNUPS_AUDIO_EVIDENCE: ${{ github.workspace }}/artifacts/audio
       - name: Independently observe native Windows notification delivery
         if: runner.os == 'Windows'
         run: |

@@ -72,7 +72,13 @@ public class AlertSoundTests
         {
             var result = await new AlertSoundSink().SendAsync(new(Guid.NewGuid(), "Explicit native audio test", path, MonitorEventKind.OutageStarted), TestContext.Current.CancellationToken);
             Assert.False(string.IsNullOrWhiteSpace(result.Status));
-            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(new { result.RequestAccepted, result.Status, audible_delivery_verified = false, os = Environment.OSVersion.ToString() }));
+            var report = System.Text.Json.JsonSerializer.Serialize(new { result.RequestAccepted, result.Status, audible_delivery_verified = false, os = Environment.OSVersion.ToString() });
+            TestContext.Current.TestOutputHelper?.WriteLine(report);
+            if (Environment.GetEnvironmentVariable("SYNUPS_AUDIO_EVIDENCE") is { Length: > 0 } evidence)
+            {
+                Directory.CreateDirectory(evidence);
+                await File.WriteAllTextAsync(Path.Combine(evidence, "native-audio.json"), report, TestContext.Current.CancellationToken);
+            }
             if (result.RequestAccepted) Assert.Contains("Audible delivery is not verified", result.Status);
             else Assert.Contains("In-app", result.Status);
         }
