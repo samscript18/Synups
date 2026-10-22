@@ -91,6 +91,19 @@ public class DiagnosticDnsTests
     }
 
     [Fact]
+    public async Task OversizedDatagramIsRejectedBeforeParsingOnEveryPlatform()
+    {
+        await using var server = new DnsServer(q =>
+        {
+            var prefix = Answer(q, 1, [192, 0, 2, 1]);
+            var excessive = new byte[9000]; prefix.CopyTo(excessive, 0); return excessive;
+        });
+        var result = await new DnsDiagnosticTest(server.Endpoint).ExecuteAsync(Request(), null, TestContext.Current.CancellationToken);
+        Assert.Equal(DiagnosticOutcome.MalformedResponse, result.Outcome);
+        Assert.Empty(result.Dns!.Answers); Assert.Contains("4096", result.Error);
+    }
+
+    [Fact]
     public async Task CnameAnswersFollowOnlyTheRequestedChain()
     {
         await using var server = new DnsServer(q =>

@@ -118,8 +118,13 @@ internal static class DnsWire
         using var socket = new Socket(resolver.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
         await socket.ConnectAsync(resolver, cancellation).ConfigureAwait(false);
         await socket.SendAsync(query, SocketFlags.None, cancellation).ConfigureAwait(false);
-        var buffer = new byte[4096];
-        var size = await socket.ReceiveAsync(buffer, SocketFlags.None, cancellation).ConfigureAwait(false);
+        // One extra byte detects a datagram larger than the parser bound even if a valid prefix fits exactly.
+        var buffer = new byte[4097];
+        int size;
+        try { size = await socket.ReceiveAsync(buffer, SocketFlags.None, cancellation).ConfigureAwait(false); }
+        catch (SocketException ex) when (ex.SocketErrorCode == SocketError.MessageSize)
+        { throw new InvalidDataException("DNS datagram exceeds the 4096-byte response bound.", ex); }
+        if (size > 4096) throw new InvalidDataException("DNS datagram exceeds the 4096-byte response bound.");
         return Parse(buffer.AsSpan(0, size), canonical, type, id);
     }
 
