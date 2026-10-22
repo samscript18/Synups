@@ -55,8 +55,9 @@ try {
  if(-not $process.WaitForExit(15000)){throw 'Original app did not close cleanly; fixture not certified.'}
  $record.process_exit_code=$process.ExitCode
  if($process.ExitCode -ne 0){throw "Original app exit $($process.ExitCode)"}
- $roots=@([IO.Path]::GetDirectoryName($exe),(Join-Path $env:LOCALAPPDATA 'Menees'),(Join-Path $env:TEMP 'Menees'))
- $fixtures=@(foreach($directory in $roots){if(Test-Path $directory){Get-ChildItem $directory -Filter '*.stgx' -Recurse -File | Where-Object {$_.LastWriteTimeUtc -ge [DateTime]::Parse($record.started_utc).AddSeconds(-2)}}})
+ $roots=@([IO.Path]::GetDirectoryName($exe),$env:USERPROFILE,$env:ProgramData,$env:TEMP)
+ # Search only disposable runner roots. Exact-version store location is observed, not inferred from newer library source.
+ $fixtures=@(foreach($directory in $roots){if(Test-Path $directory){Get-ChildItem $directory -Filter '*.stg*' -Recurse -File -Force -ErrorAction SilentlyContinue | Where-Object {$_.LastWriteTimeUtc -ge [DateTime]::Parse($record.started_utc).AddSeconds(-2)}}})
  if($fixtures.Count -eq 0){throw 'Original app produced no genuine settings fixture at the documented store locations.'}
  New-Item -ItemType Directory -Force "$out/settings" | Out-Null
  $record.settings=@($fixtures | ForEach-Object { $destination=Join-Path "$out/settings" $_.Name;Copy-Item -LiteralPath $_.FullName -Destination $destination;@{name=$_.Name;bytes=$_.Length;sha256=(Get-FileHash $destination -Algorithm SHA256).Hash.ToLowerInvariant()} })
