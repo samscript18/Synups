@@ -1,6 +1,6 @@
 # Feature inventory and parity
 
-All legacy paths below are relative to `src/`. The legacy baseline was source-audited; original WPF runtime has not been exercised on this Mac. The original inventory below records Phase 1; Phase 2 scoring is retained historically; Phase 3 scoring below is current.
+All legacy paths below are relative to `src/`. The legacy baseline was source-audited; original WPF runtime has not been exercised on this Mac. The original inventory below records Phase 1; Phase 2 scoring is retained historically; Phase 3 scoring below is historical; the final hardening assessment at the end is current.
 
 | Feature | Actual implementation and dependencies | Limitation / migration work | Synups Phase 1 |
 |---|---|---|---|
@@ -62,7 +62,7 @@ Engineering gates: linked-original characterization tests, deterministic engine/
 [LEGACY_SEMANTICS.md](LEGACY_SEMANTICS.md) records exact original transitions and deviations. Probe errors now reduce confidence instead of falsely recovering outages. Groups with mixed failure/error and no success are indeterminate. UTC is stored as evidence; monotonic intervals handle elapsed time. Stop never reports recovery. Configuration editing requires stop and applies only after successful save. Original user settings remain untouched; no importer is implied.
 
 
-## Phase 3 parity — current
+## Phase 3 parity — historical
 
 Same 18-item rubric and weights as Phase 2; new durable reload is an enhancement and earns no additional inventory row. Platform certification is assessed separately. Complete means the inventoried functional intent is implemented, not that every legacy UI detail or target OS is certified.
 
@@ -103,3 +103,12 @@ Final Phase 4B evidence: source 292b847 passed actual apphosts on all three nati
 ## Competitive candidate — unchanged inventory score
 
 Guided first-target creation/start guidance and richer judging evidence improve quality, not the count of original features. Before/after inventory stays72.2%=(9+8×0.5)/18. Core selection/failure/recovery algorithms and original resources are unchanged. The separate 0.1.1-rc.1 candidate has source-specific three-OS packaged verification recorded in CROSS_PLATFORM.md; it does not replace verified public 0.1.0. Discovery/import/login/sound/menu gaps are not claimed complete. Physical Mac desktop acceptance remains permission-blocked despite genuine normal-launch/window/OS-quit evidence.
+
+
+## Final hardening candidate — current application inventory
+
+The unchanged 18-row rubric now scores **(9 complete + 9 partial×0.5 + 0 pending)/18 = 13.5/18 =75.0%**, versus72.2% at rc.1. Only the Discovery row changes from pending0 to partial0.5: explicit read-only native gateway candidates, preview/confirmation, duplicate protection, bounded cancellation and three-OS native tests are implemented. Original modem/transceiver candidate/TTL behavior is not migrated and startup probing is intentionally absent. Default-profile discovery is still manual, so its row stays partial.
+
+All nine complete rows retain their scores. The eight previously partial rows remain partial: startup/CLI details, main status details, defaults, alerts (focus now present; sounds/taskbar/native delivery incomplete), preferences (login absent), legacy settings import, placement/tray physical acceptance and menus/dialogs. IP/incident clipboard and native Help/About improve the last row, but arbitrary legacy cell/row context actions are not claimed complete. No scoring rule, denominator or simulation exclusion changed. Paginated durable history and engineering/security evidence earn no artificial extra legacy rows.
+
+Exact source, tests, package hashes and limitations: [reviewed rc.2](../release/FINAL_HARDENING_CANDIDATE.md). Public0.1.0 and frozen rc.1 remain72.2% binaries. Native CI query/packaged tests cover Windows/macOS/Linux; physical Mac acceptance remains blocked by disabled Accessibility/event-post permission. This is not 75% effort or universal platform certification.

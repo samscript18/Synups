@@ -29,3 +29,8 @@ Installation limitations must accompany the entry: Mac ad-hoc integrity passes b
 The [official announcement](https://avaloniaui.net/blog/avalonia-port-challenge) was rechecked on 2026-10-21: deadline **2026-10-23 23:59 UTC**, submission through its linked [official form](https://forms.gle/bgvQLAmJpTCNcqwR9). The browser-fetch tool could not retrieve the redirected Google form; no fields were filled and no entry was submitted. Entrant identity/contact/team eligibility must be supplied and reviewed by the user, not invented.
 
 Publication/anonymous download checks are complete and [recorded](../evidence/verification/synups-0.1.0-publication.json). Before any entry, obtain separate submission authorization, review entrant identity/contact/team eligibility and all stated limitations, recheck public links and record the actual submission receipt. Prepared information is not an accepted entry.
+
+
+## Optional newer candidate — do not silently substitute
+
+Separately verified unpublished [0.1.1-rc.2](FINAL_HARDENING_CANDIDATE.md) adds explicit gateway discovery, bounded incident timeline, clipboard/help/shortcuts and opt-in event restoration. Its source,128 unique .NET cases exercised per OS,8 Python cases, exact packages/hashes, CodeQL/coverage and genuine images are recorded separately. Public judge downloads above remain0.1.0 until a separately authorized Release is published and anonymously checked. No new candidate URL or accepted competition entry is implied. Physical Mac acceptance/trusted signing remain explicit limitations.

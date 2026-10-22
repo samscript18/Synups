@@ -1,0 +1,1524 @@
+{
+  "verified_utc": "2026-10-22T14:40:17.691359+00:00",
+  "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+  "candidate": {
+    "version": "0.1.1-rc.2",
+    "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+    "branch": "feat/avalonia-migration",
+    "run_url": "https://github.com/samscript18/Synups/actions/runs/39782799326",
+    "codeql_url": "https://github.com/samscript18/Synups/actions/runs/39782799390",
+    "published": false,
+    "archives": {
+      "Synups-linux-x64.tar.gz": "a459275ffd2dc9e4bacb19d989e42659e441d7e11477b39bc58199a2546845ad",
+      "Synups-osx-arm64.tar.gz": "11bec41ef9634f6eef9fb9114fa854afdb8a67c09c72b200859de306d8e39281",
+      "Synups-win-x64.zip": "057690b16b6824221bb0cf1f81acd045cd8366da4280aedb095a1463e1266098"
+    },
+    "limitations": [
+      "Windows unsigned",
+      "macOS ad-hoc integrity passes; Gatekeeper rejects (3), no notarization",
+      "Linux runtime scope Ubuntu/X11/Xvfb",
+      "Physical desktop acceptance remains incomplete"
+    ]
+  },
+  "independent_artifact_audit": [
+    {
+      "rid": "win-x64",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "artifact_id": 12426654138,
+      "artifact_name": "synups-win-x64-6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "artifact_sha256": "525b1e7381b67c202ee9f8d7243f32a3e7def483d5c7902ae2c46898f99ae16a",
+      "package_sha256": "057690b16b6824221bb0cf1f81acd045cd8366da4280aedb095a1463e1266098",
+      "apphost_sha256": "66348ed172c4b946d4d5755895548d654b892d489a759b9e9bc2ec3886d5b72a",
+      "file_count": 277,
+      "notice_packages": 25,
+      "signing": "No publisher signature; not an installer.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "128",
+            "executed": "126",
+            "passed": "126",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "96fee5c0a85078b88bdec901ec5fce05a0991dc7007706de30ae0e10bef9534e"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "2",
+            "executed": "2",
+            "passed": "2",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "3ebd6c60d589a17c3562a8009463f0aac43fa155db61941f4dff7dfc3b974c8a"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+        "package_sha256": "057690b16b6824221bb0cf1f81acd045cd8366da4280aedb095a1463e1266098",
+        "apphost_sha256": "66348ed172c4b946d4d5755895548d654b892d489a759b9e9bc2ec3886d5b72a",
+        "rid": "win-x64",
+        "platform": "Windows-2025Server-10.0.26100-SP0",
+        "verified_utc": "2026-10-22T13:02:08.797003+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 3512,
+            "started_utc": "2026-10-22T13:00:55.660420+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 8280,
+            "started_utc": "2026-10-22T13:01:12.416359+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 8792,
+            "started_utc": "2026-10-22T13:01:26.092853+00:00",
+            "exit_code": 1,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 1936,
+            "started_utc": "2026-10-22T13:01:39.161180+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 7428,
+            "started_utc": "2026-10-22T13:01:52.913104+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 7124,
+            "started_utc": "2026-10-22T13:01:55.124860+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "exercise-compact.png": "47aec6b46451b8d2ea87005ac94e937b64582323f49093ebef56cbaa54419224",
+          "exercise-first-run.png": "43d8b850633862d13019fa0685dd455c684b6922a03301ea07a24ea0779e69e5",
+          "exercise-focus.png": "a0101330b8a599fb00b8e42560498921dd6db97d1b2e360e4146dbe85808a1f4",
+          "exercise-gateway-preview.png": "6e63c0dcf180813859f656103e2d531e2418482af09b78db2dec432780e6a8ca",
+          "exercise-help-about.png": "1f132cfc7b0c77b00d5972070013b448d75934a2715cff7dcff97057265c2d61",
+          "exercise-overview.png": "80996fbc33e54457fbb0c4b61e4f2fbd5b5216445a934277e4e87547f34e4f99",
+          "exercise-preferences.png": "be298ec6667e06c955f21caf169c8f8cc389c3266e736e62923681fac4833637",
+          "interruption-compact.png": "84224d97eb6fcb8be2bc717ab38232b20b5c1bd1558a2bb913972616e8f05890",
+          "interruption-focus.png": "76ff38542d87ef5897a3a63164e639ea2276e53221ead26c5b0a80ea96bd6f5a",
+          "interruption-overview.png": "f255d624b0c79bc72c82ac2090026c97eb7254545ec971c8dd01d4e03b35ab3a",
+          "recover-compact.png": "af63553598685617e7f5a78c04825311d196e5b19242c91aa6c647bfa431dc92",
+          "recover-focus.png": "feeca6610c4c2b32f8d55cb3b44f1002d1fc34b7b74700afbb695341dc2b5f9d",
+          "recover-overview.png": "e97d0f9ab9360bc96d9c20a838e89cdccc48bdce3d6c0e50d2a243d92e5258ba",
+          "restart-compact.png": "c490f294d7ab5d0593562a9ba11860b973de5c30df95100d44e0de8f49b43e1c",
+          "restart-focus.png": "9855f703f3d68649b72667a02513d034abbc827e345b525768b1d4d9d383cdb7",
+          "restart-overview.png": "71aec6f7672543c75e5b16f30f49600cfcd60010141fb16fb1b9abdc27ec3055",
+          "storage-error-read-only.png": "e881e8548c93e96304433f369ae379fd7c02caa38ced004f8cc3a148c81a73b1",
+          "storage-recovered-compact.png": "dc4b611cff00def8683644a09ddd3ba1e21376320b81f703080ab35260f4527a",
+          "storage-recovered-focus.png": "905d6b9af73ad67bd46b2962372b6d7b97e31e143ebc5cf334e51b4e022ca0cf",
+          "storage-recovered-overview.png": "2dc7ffb6759bb624258103fc95703f84f8febadde540a345187f85cc4e2228f1"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0
+    },
+    {
+      "rid": "osx-arm64",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "artifact_id": 12427423728,
+      "artifact_name": "synups-osx-arm64-6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "artifact_sha256": "170e3a45e1bb7efb639fbe1325031c98f64cff90b02d47da99204f80eb3d3e4a",
+      "package_sha256": "11bec41ef9634f6eef9fb9114fa854afdb8a67c09c72b200859de306d8e39281",
+      "apphost_sha256": "bf69743391411bc951738eeae971e807fc7d85d65cde07ee527cc611e1973c57",
+      "file_count": 322,
+      "notice_packages": 24,
+      "signing": "Ad-hoc signed for bundle integrity only; no Developer ID identity, no notarization, no trusted publisher claim.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "128",
+            "executed": "126",
+            "passed": "126",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "b245265022961feb839c85e293c011f586c462f4bead50da1c28e38823c51bf1"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "2",
+            "executed": "2",
+            "passed": "2",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "dbd3da5e0d6c75b91e120d1e10a5894f520f0bcd11562c4dcd3c82da32558d4d"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+        "package_sha256": "11bec41ef9634f6eef9fb9114fa854afdb8a67c09c72b200859de306d8e39281",
+        "apphost_sha256": "bf69743391411bc951738eeae971e807fc7d85d65cde07ee527cc611e1973c57",
+        "rid": "osx-arm64",
+        "platform": "macOS-15.7.9-arm64-arm-64bit",
+        "verified_utc": "2026-10-22T13:01:15.642951+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 2218,
+            "started_utc": "2026-10-22T12:59:55.156650+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 2530,
+            "started_utc": "2026-10-22T13:00:14.393464+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 2853,
+            "started_utc": "2026-10-22T13:00:29.568244+00:00",
+            "exit_code": -9,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 3106,
+            "started_utc": "2026-10-22T13:00:43.820400+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 3417,
+            "started_utc": "2026-10-22T13:00:58.594390+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 3427,
+            "started_utc": "2026-10-22T13:01:00.891531+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "exercise-overview.png": "53aefca5e7e1b345d09d9473af103263f98c85e7dc2369fa662926104f68df41",
+          "exercise-focus.png": "02bb102d32fdcb6080d8f5647b823f23f86cb61d0765971d87e882460ddae70c",
+          "interruption-overview.png": "5e0d48f0e4788b73e361812304e8c27a18cae5556bf6558e7e75ce6ca4405d7b",
+          "storage-recovered-focus.png": "e15a545bb39eed64a07a2bbc8af5e8f8ca0a7ccc9615b8d603eae1b5d8d038d7",
+          "exercise-gateway-preview.png": "81a6fce6b29c055a791aa79f5afb8f98de4e733e7d02140192976cf7e56c8bf5",
+          "restart-compact.png": "b15bd1ec6da5ffb90c7d4c5a94621770da8d05d005c11aa2d995f24dc564068a",
+          "storage-recovered-compact.png": "42933d234d7d9febc44b5cd9f8323cb88097befdabb2160f37d9cff64e03f1f1",
+          "exercise-preferences.png": "e6f939ff427926c22196d83229015be665abc58c3b5d4c42c108638b9b0aae60",
+          "recover-compact.png": "f4aae903460a42ec3defca2583802607ff48210066998efb7f71eaa0dbaa554e",
+          "storage-error-read-only.png": "fb60497a7b23e5c3eaa4dcae5840e798b701b6828991de4fe9f1dfe1a55aedcf",
+          "interruption-compact.png": "b0fc754bc20f2a1f7a813cfdbb4a1788e7715319f3ad0ee0f24d33f3816f19aa",
+          "storage-recovered-overview.png": "2a108ea335ca69eee3d595abab9aa67a99da50bf597c42c9559b358e6fbde67f",
+          "restart-overview.png": "124747877d9d1acaad55ecd2ebd86c1ecec70ffc6498ad313c30eccd546f31b5",
+          "recover-focus.png": "689a12e2e75df04970ff63924bab3b3afb558696ebb8670237fbd9c369ab46a6",
+          "recover-overview.png": "2dd2d6d624adf1183f00fee56ea16d0c3b19996f717a8f4fefc45d2682b94740",
+          "restart-focus.png": "95f44d6bd0cf3cb94982cc3e0c24e6c255116fd530a83ee0f90124fa33801e38",
+          "exercise-compact.png": "ee426cba7c7aff11b1d33dfacf8ee333c681ea8e17455d53eadeea562041fcba",
+          "exercise-first-run.png": "e6c57030bfe64ab9fab9d1ce8c6b617c39a293538d1c5202a8dcaf308ca7675a",
+          "exercise-help-about.png": "a81a2492e2535535d30649e406355647e0bb3c18b42c7c589c955a5611186134",
+          "interruption-focus.png": "ec83b8f5dc6fdc80383359d924eed96f94568a80738265a5edc87bed638b90ad"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0
+    },
+    {
+      "rid": "linux-x64",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "artifact_id": 12427204339,
+      "artifact_name": "synups-linux-x64-6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "artifact_sha256": "7025c83b731a21f3334f92078af41fc4f72872611a6b976fdf19f1152d078cbc",
+      "package_sha256": "a459275ffd2dc9e4bacb19d989e42659e441d7e11477b39bc58199a2546845ad",
+      "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+      "file_count": 275,
+      "notice_packages": 24,
+      "signing": "No publisher signature; not an installer.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "128",
+            "executed": "126",
+            "passed": "126",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "6738ad9b87f778003083d8214ae3e5fdcbbbed36dc43cabbd9acb48395035706"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "2",
+            "executed": "2",
+            "passed": "2",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "aaf85a0c703d8cec1d45cf462874f2867dbac6d5fc2eb7164f82857ec1f028d1"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+        "package_sha256": "a459275ffd2dc9e4bacb19d989e42659e441d7e11477b39bc58199a2546845ad",
+        "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+        "rid": "linux-x64",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "verified_utc": "2026-10-22T13:00:59.568906+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 3852,
+            "started_utc": "2026-10-22T12:59:50.313532+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 3928,
+            "started_utc": "2026-10-22T13:00:06.766932+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 3997,
+            "started_utc": "2026-10-22T13:00:19.812932+00:00",
+            "exit_code": -9,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 4058,
+            "started_utc": "2026-10-22T13:00:32.257753+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 4123,
+            "started_utc": "2026-10-22T13:00:45.052935+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 4151,
+            "started_utc": "2026-10-22T13:00:46.771919+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "interruption-compact.png": "b95d6e16fd8fd0594a0cbdd32484e61ffeee9b8760eaea0710d2ce8d49d654d0",
+          "storage-error-read-only.png": "f41e8fc0ebdb625c4227d33d95ea6888b69ee43e16bebb4b2d8225a4965e01ad",
+          "storage-recovered-compact.png": "68a866008c7629c65c3ce6d31019dc5e1f55cde63531e2101990b935cf2ca989",
+          "exercise-focus.png": "a249ad196a9ef7fad07946a17d8f437401b2fb74989125c39afcbfecb86abc46",
+          "restart-compact.png": "c8f3eefef8b0723957871da7d179d8cf051c291f52a13e67b034b649b18b295f",
+          "recover-focus.png": "809a761f3c5965639e5606a74209289a0f0e9ac7ffb0c1c511350039fe3dff28",
+          "recover-compact.png": "6262299ef20b1f9c2f74e63cf4f853bd36461a6f516fed5f503ec2b5779ddcf4",
+          "restart-focus.png": "7bd80b21ae374eadcc4f8df7127993a5abbae246ad238fd8eb7a63ab6c8b58fc",
+          "storage-recovered-overview.png": "d83f31ca1703c1903e1ee4c57a72578c15096af827d33e2a0c32213cd92190e1",
+          "exercise-compact.png": "a67350b7aa9998377fdc4a1f197f3a6613438f19b1a9e9e7c64fc79c136eacaf",
+          "exercise-help-about.png": "2e5519a4a090a01cfadfb1b4228a4c2902bb1c3bcf9bbc4a0f3fc872ac5caebd",
+          "exercise-first-run.png": "04dd1a2b1553e0e1040dd0eba8875d0dd3cc2e1d5e72d0a11fc4eedef8d7f4b4",
+          "recover-overview.png": "520e3faa80a95d72adc772fd9556494b4db3ad89014b9a8c709ecae87314b9c9",
+          "storage-recovered-focus.png": "7a11e85d92fc53c25c5ddb6e359babeedb18c0da1896087f75c3e1bd07732628",
+          "exercise-preferences.png": "ab40bd81114d17b97595186ae753b8bdd8a25c8b1d74cae691b68abe9137bf79",
+          "restart-overview.png": "1fbf5419006ab3f086beea709a020c5ad07dca875bd14d396dcf5f217edea464",
+          "exercise-overview.png": "4a9495994e06cf00b2818e22fe39a0e2eddcd2b42afca3052f0540084171a818",
+          "interruption-focus.png": "efb9de1a0845dad15efb6e470a994c49e15bfd5ec100927e1c97e1f0ec5cfa72",
+          "interruption-overview.png": "6e7c788349f31ab80f0ba2d21c12565ab0f1c9a39a986f851ef8bd1994c1e950",
+          "exercise-gateway-preview.png": "d6254cb1cd0c94a312eaa682b8d24ec0b6fd8fcc0352b9efba7413005892e34b"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0
+    }
+  ],
+  "jobs": [
+    {
+      "id": 119838092248,
+      "run_id": 39782799326,
+      "workflow_name": "Synups verification and artifacts",
+      "head_branch": "feat/avalonia-migration",
+      "run_url": "https://api.github.com/repos/samscript18/Synups/actions/runs/39782799326",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVL_Uqs8AAAAb5ugr2A",
+      "head_sha": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "url": "https://api.github.com/repos/samscript18/Synups/actions/jobs/119838092248",
+      "html_url": "https://github.com/samscript18/Synups/actions/runs/39782799326/job/119838092248",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-22T12:58:27Z",
+      "started_at": "2026-10-22T12:58:31Z",
+      "completed_at": "2026-10-22T12:59:23Z",
+      "name": "coverage",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-22T12:58:31Z",
+          "completed_at": "2026-10-22T12:58:33Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-22T12:58:33Z",
+          "completed_at": "2026-10-22T12:58:34Z"
+        },
+        {
+          "name": "Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-22T12:58:34Z",
+          "completed_at": "2026-10-22T12:58:44Z"
+        },
+        {
+          "name": "Headless font prerequisites",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-22T12:58:44Z",
+          "completed_at": "2026-10-22T12:58:50Z"
+        },
+        {
+          "name": "Isolated optimized Release coverage build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-22T12:58:50Z",
+          "completed_at": "2026-10-22T12:59:19Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-22T12:59:19Z",
+          "completed_at": "2026-10-22T12:59:21Z"
+        },
+        {
+          "name": "Post Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-22T12:59:21Z",
+          "completed_at": "2026-10-22T12:59:21Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-22T12:59:21Z",
+          "completed_at": "2026-10-22T12:59:21Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-22T12:59:21Z",
+          "completed_at": "2026-10-22T12:59:21Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/samscript18/Synups/check-runs/119838092248",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000001491,
+      "runner_name": "GitHub Actions 1000001491",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 119838092833,
+      "run_id": 39782799326,
+      "workflow_name": "Synups verification and artifacts",
+      "head_branch": "feat/avalonia-migration",
+      "run_url": "https://api.github.com/repos/samscript18/Synups/actions/runs/39782799326",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVL_Uqs8AAAAb5uguIQ",
+      "head_sha": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "url": "https://api.github.com/repos/samscript18/Synups/actions/jobs/119838092833",
+      "html_url": "https://github.com/samscript18/Synups/actions/runs/39782799326/job/119838092833",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-22T12:58:27Z",
+      "started_at": "2026-10-22T12:58:31Z",
+      "completed_at": "2026-10-22T13:01:50Z",
+      "name": "build-test-publish (macos-15, osx-arm64)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-22T12:58:32Z",
+          "completed_at": "2026-10-22T12:58:34Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-22T12:58:34Z",
+          "completed_at": "2026-10-22T12:58:36Z"
+        },
+        {
+          "name": "Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-22T12:58:36Z",
+          "completed_at": "2026-10-22T12:58:48Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-22T12:58:48Z",
+          "completed_at": "2026-10-22T12:58:48Z"
+        },
+        {
+          "name": "Evidence directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-22T12:58:48Z",
+          "completed_at": "2026-10-22T12:58:49Z"
+        },
+        {
+          "name": "Linux native display prerequisites",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-22T12:58:49Z",
+          "completed_at": "2026-10-22T12:58:49Z"
+        },
+        {
+          "name": "Archive tool safety tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-22T12:58:49Z",
+          "completed_at": "2026-10-22T12:58:50Z"
+        },
+        {
+          "name": "Locked dependency restore",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-22T12:58:50Z",
+          "completed_at": "2026-10-22T12:59:10Z"
+        },
+        {
+          "name": "Release build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-22T12:59:10Z",
+          "completed_at": "2026-10-22T12:59:21Z"
+        },
+        {
+          "name": "Deterministic and Avalonia headless tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-22T12:59:21Z",
+          "completed_at": "2026-10-22T12:59:29Z"
+        },
+        {
+          "name": "Explicit real loopback ICMP integration",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-22T12:59:29Z",
+          "completed_at": "2026-10-22T12:59:33Z"
+        },
+        {
+          "name": "Publish self-contained platform directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-22T12:59:33Z",
+          "completed_at": "2026-10-22T12:59:37Z"
+        },
+        {
+          "name": "Archive runnable files with Unix permissions and checksums",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-22T12:59:37Z",
+          "completed_at": "2026-10-22T12:59:54Z"
+        },
+        {
+          "name": "Extract and execute the actual published application",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-22T12:59:54Z",
+          "completed_at": "2026-10-22T13:01:15Z"
+        },
+        {
+          "name": "Extract and execute actual Linux apphost under Xvfb",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 15,
+          "started_at": "2026-10-22T13:01:15Z",
+          "completed_at": "2026-10-22T13:01:15Z"
+        },
+        {
+          "name": "Native UI, real loopback, graceful close and process restart",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-22T13:01:15Z",
+          "completed_at": "2026-10-22T13:01:32Z"
+        },
+        {
+          "name": "Real ICMP incident in disposable Linux network namespace",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 17,
+          "started_at": "2026-10-22T13:01:32Z",
+          "completed_at": "2026-10-22T13:01:32Z"
+        },
+        {
+          "name": "Linux X11 native smoke under Xvfb",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 18,
+          "started_at": "2026-10-22T13:01:32Z",
+          "completed_at": "2026-10-22T13:01:32Z"
+        },
+        {
+          "name": "Preserve verification evidence (including failures)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-22T13:01:32Z",
+          "completed_at": "2026-10-22T13:01:45Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-10-22T13:01:45Z",
+          "completed_at": "2026-10-22T13:01:45Z"
+        },
+        {
+          "name": "Post Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-10-22T13:01:45Z",
+          "completed_at": "2026-10-22T13:01:45Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 38,
+          "started_at": "2026-10-22T13:01:45Z",
+          "completed_at": "2026-10-22T13:01:46Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 39,
+          "started_at": "2026-10-22T13:01:46Z",
+          "completed_at": "2026-10-22T13:01:48Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/samscript18/Synups/check-runs/119838092833",
+      "labels": [
+        "macos-15"
+      ],
+      "runner_id": 1000001490,
+      "runner_name": "GitHub Actions 1000001490",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 119838092881,
+      "run_id": 39782799326,
+      "workflow_name": "Synups verification and artifacts",
+      "head_branch": "feat/avalonia-migration",
+      "run_url": "https://api.github.com/repos/samscript18/Synups/actions/runs/39782799326",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVL_Uqs8AAAAb5uguUQ",
+      "head_sha": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "url": "https://api.github.com/repos/samscript18/Synups/actions/jobs/119838092881",
+      "html_url": "https://github.com/samscript18/Synups/actions/runs/39782799326/job/119838092881",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-22T12:58:27Z",
+      "started_at": "2026-10-22T12:58:31Z",
+      "completed_at": "2026-10-22T13:02:31Z",
+      "name": "build-test-publish (windows-latest, win-x64)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-22T12:58:31Z",
+          "completed_at": "2026-10-22T12:58:33Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-22T12:58:33Z",
+          "completed_at": "2026-10-22T12:58:38Z"
+        },
+        {
+          "name": "Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-22T12:58:38Z",
+          "completed_at": "2026-10-22T12:59:08Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-22T12:59:08Z",
+          "completed_at": "2026-10-22T12:59:08Z"
+        },
+        {
+          "name": "Evidence directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-22T12:59:08Z",
+          "completed_at": "2026-10-22T12:59:08Z"
+        },
+        {
+          "name": "Linux native display prerequisites",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-22T12:59:08Z",
+          "completed_at": "2026-10-22T12:59:08Z"
+        },
+        {
+          "name": "Archive tool safety tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-22T12:59:08Z",
+          "completed_at": "2026-10-22T12:59:22Z"
+        },
+        {
+          "name": "Locked dependency restore",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-22T12:59:22Z",
+          "completed_at": "2026-10-22T13:00:03Z"
+        },
+        {
+          "name": "Release build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-22T13:00:03Z",
+          "completed_at": "2026-10-22T13:00:15Z"
+        },
+        {
+          "name": "Deterministic and Avalonia headless tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-22T13:00:15Z",
+          "completed_at": "2026-10-22T13:00:32Z"
+        },
+        {
+          "name": "Explicit real loopback ICMP integration",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-22T13:00:32Z",
+          "completed_at": "2026-10-22T13:00:40Z"
+        },
+        {
+          "name": "Publish self-contained platform directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-22T13:00:40Z",
+          "completed_at": "2026-10-22T13:00:45Z"
+        },
+        {
+          "name": "Archive runnable files with Unix permissions and checksums",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-22T13:00:45Z",
+          "completed_at": "2026-10-22T13:00:54Z"
+        },
+        {
+          "name": "Extract and execute the actual published application",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-22T13:00:54Z",
+          "completed_at": "2026-10-22T13:02:08Z"
+        },
+        {
+          "name": "Extract and execute actual Linux apphost under Xvfb",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 15,
+          "started_at": "2026-10-22T13:02:08Z",
+          "completed_at": "2026-10-22T13:02:08Z"
+        },
+        {
+          "name": "Native UI, real loopback, graceful close and process restart",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-22T13:02:08Z",
+          "completed_at": "2026-10-22T13:02:24Z"
+        },
+        {
+          "name": "Real ICMP incident in disposable Linux network namespace",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 17,
+          "started_at": "2026-10-22T13:02:24Z",
+          "completed_at": "2026-10-22T13:02:24Z"
+        },
+        {
+          "name": "Linux X11 native smoke under Xvfb",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 18,
+          "started_at": "2026-10-22T13:02:24Z",
+          "completed_at": "2026-10-22T13:02:24Z"
+        },
+        {
+          "name": "Preserve verification evidence (including failures)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-22T13:02:24Z",
+          "completed_at": "2026-10-22T13:02:27Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-10-22T13:02:27Z",
+          "completed_at": "2026-10-22T13:02:27Z"
+        },
+        {
+          "name": "Post Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-10-22T13:02:27Z",
+          "completed_at": "2026-10-22T13:02:28Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 38,
+          "started_at": "2026-10-22T13:02:28Z",
+          "completed_at": "2026-10-22T13:02:30Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 39,
+          "started_at": "2026-10-22T13:02:30Z",
+          "completed_at": "2026-10-22T13:02:30Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/samscript18/Synups/check-runs/119838092881",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000001493,
+      "runner_name": "GitHub Actions 1000001493",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 119838092898,
+      "run_id": 39782799326,
+      "workflow_name": "Synups verification and artifacts",
+      "head_branch": "feat/avalonia-migration",
+      "run_url": "https://api.github.com/repos/samscript18/Synups/actions/runs/39782799326",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVL_Uqs8AAAAb5uguYg",
+      "head_sha": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "url": "https://api.github.com/repos/samscript18/Synups/actions/jobs/119838092898",
+      "html_url": "https://github.com/samscript18/Synups/actions/runs/39782799326/job/119838092898",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-22T12:58:27Z",
+      "started_at": "2026-10-22T12:58:31Z",
+      "completed_at": "2026-10-22T13:01:32Z",
+      "name": "build-test-publish (ubuntu-24.04, linux-x64)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-22T12:58:32Z",
+          "completed_at": "2026-10-22T12:58:33Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-22T12:58:33Z",
+          "completed_at": "2026-10-22T12:58:34Z"
+        },
+        {
+          "name": "Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-22T12:58:34Z",
+          "completed_at": "2026-10-22T12:58:43Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-22T12:58:43Z",
+          "completed_at": "2026-10-22T12:58:43Z"
+        },
+        {
+          "name": "Evidence directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-22T12:58:43Z",
+          "completed_at": "2026-10-22T12:58:43Z"
+        },
+        {
+          "name": "Linux native display prerequisites",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-22T12:58:43Z",
+          "completed_at": "2026-10-22T12:58:51Z"
+        },
+        {
+          "name": "Archive tool safety tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-22T12:58:51Z",
+          "completed_at": "2026-10-22T12:58:52Z"
+        },
+        {
+          "name": "Locked dependency restore",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-22T12:58:52Z",
+          "completed_at": "2026-10-22T12:59:07Z"
+        },
+        {
+          "name": "Release build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-22T12:59:07Z",
+          "completed_at": "2026-10-22T12:59:19Z"
+        },
+        {
+          "name": "Deterministic and Avalonia headless tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-22T12:59:19Z",
+          "completed_at": "2026-10-22T12:59:26Z"
+        },
+        {
+          "name": "Explicit real loopback ICMP integration",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-22T12:59:26Z",
+          "completed_at": "2026-10-22T12:59:30Z"
+        },
+        {
+          "name": "Publish self-contained platform directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-22T12:59:30Z",
+          "completed_at": "2026-10-22T12:59:33Z"
+        },
+        {
+          "name": "Archive runnable files with Unix permissions and checksums",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-22T12:59:33Z",
+          "completed_at": "2026-10-22T12:59:46Z"
+        },
+        {
+          "name": "Extract and execute the actual published application",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 14,
+          "started_at": "2026-10-22T12:59:46Z",
+          "completed_at": "2026-10-22T12:59:46Z"
+        },
+        {
+          "name": "Extract and execute actual Linux apphost under Xvfb",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-22T12:59:46Z",
+          "completed_at": "2026-10-22T13:00:59Z"
+        },
+        {
+          "name": "Native UI, real loopback, graceful close and process restart",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 16,
+          "started_at": "2026-10-22T13:00:59Z",
+          "completed_at": "2026-10-22T13:00:59Z"
+        },
+        {
+          "name": "Real ICMP incident in disposable Linux network namespace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-22T13:00:59Z",
+          "completed_at": "2026-10-22T13:01:13Z"
+        },
+        {
+          "name": "Linux X11 native smoke under Xvfb",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-22T13:01:13Z",
+          "completed_at": "2026-10-22T13:01:27Z"
+        },
+        {
+          "name": "Preserve verification evidence (including failures)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-22T13:01:27Z",
+          "completed_at": "2026-10-22T13:01:29Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-10-22T13:01:29Z",
+          "completed_at": "2026-10-22T13:01:30Z"
+        },
+        {
+          "name": "Post Run actions/setup-dotnet@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-10-22T13:01:30Z",
+          "completed_at": "2026-10-22T13:01:30Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 38,
+          "started_at": "2026-10-22T13:01:30Z",
+          "completed_at": "2026-10-22T13:01:30Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 39,
+          "started_at": "2026-10-22T13:01:30Z",
+          "completed_at": "2026-10-22T13:01:30Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/samscript18/Synups/check-runs/119838092898",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000001494,
+      "runner_name": "GitHub Actions 1000001494",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "local_macos_apphost": {
+    "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+    "package_sha256": "11bec41ef9634f6eef9fb9114fa854afdb8a67c09c72b200859de306d8e39281",
+    "apphost_sha256": "bf69743391411bc951738eeae971e807fc7d85d65cde07ee527cc611e1973c57",
+    "rid": "osx-arm64",
+    "platform": "macOS-26.3.1-arm64-arm-64bit",
+    "verified_utc": "2026-10-22T14:36:44.464506+00:00",
+    "actual_published_apphost": true,
+    "launches": [
+      {
+        "stage": "exercise",
+        "pid": 81150,
+        "started_utc": "2026-10-22T14:36:07.642900+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 1,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "restart",
+        "pid": 81176,
+        "started_utc": "2026-10-22T14:36:17.547891+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 2,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "interruption",
+        "pid": 81192,
+        "started_utc": "2026-10-22T14:36:23.816996+00:00",
+        "exit_code": -9,
+        "expected_external_termination": true,
+        "durable_sessions": 3,
+        "actual_outages": 0,
+        "status": "ready-for-termination"
+      },
+      {
+        "stage": "recover",
+        "pid": 81214,
+        "started_utc": "2026-10-22T14:36:29.760406+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 4,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "storage-error",
+        "pid": 81264,
+        "started_utc": "2026-10-22T14:36:36.343073+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 4,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "storage-recovered",
+        "pid": 81280,
+        "started_utc": "2026-10-22T14:36:38.328943+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 5,
+        "actual_outages": 0,
+        "status": "passed"
+      }
+    ],
+    "captures_sha256": {
+      "exercise-overview.png": "87e36d27b83cf5932ab9299d86a3703bb7d4dbf7f1e09f5d18d7ca9712927dfa",
+      "exercise-focus.png": "a91146c94558551f3b428b60b94ed911bcd51cf31b9b0a4e272c48971843a482",
+      "interruption-overview.png": "3d6ca9c47ba312e02f811bd1cea0c04da34554176e8378850afc9c439a138a9c",
+      "storage-recovered-focus.png": "89a7539400b0baebf9beef96de4db28c12bb611b197125c936c7435390be0d13",
+      "exercise-gateway-preview.png": "ea0adad759d92d547c61661a957a4fcf8d1998dd39d805ef5116fdd6f6bca083",
+      "restart-compact.png": "348fef29cd464f3a17f8117f54eb911762d00c8fb582382680d21cdeb1e5d457",
+      "storage-recovered-compact.png": "c192ae96d13734fb5cf26bf5f9516154062251ed6ae032c4fab36417f8eb4d7a",
+      "exercise-preferences.png": "8a162edb98bde077688bd71d73dc35b7359af0dcd34406c5ff1bfab07811537c",
+      "recover-compact.png": "357e7910c4d07666e1db7efa0fdd885ef8b46144a081bd5800a19046fc714c3e",
+      "storage-error-read-only.png": "4859c7192c48cba53361def0ea1049d44ab5720a4df38c47dcfe4e3ac752c435",
+      "interruption-compact.png": "894fe24ce3a1e2b3a790730f20f70d39c2ca21a8467c9beda0d2664f05ddfafe",
+      "storage-recovered-overview.png": "4b61021a077fe33f1a43807392ec99ad72d30b20fd93e16047bebe2d8f62d98a",
+      "restart-overview.png": "affb8598536f874f617874d3741c9f88614b65cb0d7d7dcebb4c2703deff2681",
+      "recover-focus.png": "40dd861aa93b05751d58343ce5415ae6c7c53de5aff131f4acea595f8b2f47c5",
+      "recover-overview.png": "ab97fdefd78a265d5f7651c13ae4d0c47b4d0531db5bd41927e8ea4b70cbf85d",
+      "restart-focus.png": "e9b30be75a90435edf594a53745c9c28b6e8ecdd13622c489ecb4a0c0d80ea11",
+      "exercise-compact.png": "4291376b4d35566ced5eb14faa67529df72b0ba0a0271f5859fde8ceaf226710",
+      "exercise-first-run.png": "106f9264f2dbb3463763dc8df4ef29e2c13c8b8753ce345e761b658dd2a7eb1f",
+      "exercise-help-about.png": "c88fef25433c0191c24c8775ebed9bb033c0e4a952f9500b2d42ebc389dbaba8",
+      "interruption-focus.png": "15f4c825f2f07997ad32dbd523ef704eb30debe990dc9b335613ad1182af2e9a"
+    },
+    "full_manifest_verified": true,
+    "limits": [
+      "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+      "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+      "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+    ]
+  },
+  "macos_normal_launch": {
+    "started_utc": "2026-10-22T14:37:22.957427+00:00",
+    "candidate": "0.1.1-rc.2",
+    "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+    "apphost_sha256": "bf69743391411bc951738eeae971e807fc7d85d65cde07ee527cc611e1973c57",
+    "normal_launch_without_installation_check": true,
+    "physical_interaction_verified": false,
+    "launchservices_exit_code": 0,
+    "process_id": 81305,
+    "owned_on_screen_windows": [
+      {
+        "kCGWindowAlpha": 1,
+        "kCGWindowBounds": {
+          "Height": 779,
+          "Width": 1180,
+          "X": 130,
+          "Y": 30
+        },
+        "kCGWindowIsOnscreen": true,
+        "kCGWindowLayer": 0,
+        "kCGWindowMemoryUsage": 2368,
+        "kCGWindowName": "Synups \u2014 Network reliability",
+        "kCGWindowNumber": 26531,
+        "kCGWindowOwnerName": "Synups",
+        "kCGWindowOwnerPID": 81305,
+        "kCGWindowSharingState": 1,
+        "kCGWindowStoreType": 1
+      }
+    ],
+    "accessibility_permission": "false",
+    "blocked_interactions": [
+      "physical tray Show/Exit",
+      "keyboard Tab/Shift+Tab/Enter/Space/Escape",
+      "native CSV save dialog",
+      "physical minimize/restore",
+      "physical close while monitoring/pending storage",
+      "physical resize/readability review"
+    ],
+    "os_window_capture_exit_code": 0,
+    "os_window_capture_error": "",
+    "native_quit_request": "true",
+    "owned_process_exited_after_native_quit": true,
+    "application_exit_code": "Not observable through LaunchServices; not claimed as0",
+    "sessions_on_passive_normal_launch": 0,
+    "finished_utc": "2026-10-22T14:37:27.889793+00:00"
+  },
+  "macos_integrity_exit": 0,
+  "macos_gatekeeper_exit": 3,
+  "coverage": {
+    "lines_covered": 2127,
+    "lines_valid": 2638,
+    "branches_covered": 1435,
+    "branches_valid": 2116,
+    "core_line_rate": 0.9653233364573571,
+    "desktop_line_rate": 0.6982813494589434
+  },
+  "codeql_sarif_results": 0,
+  "incident": {
+    "id": "7cdbd394-7c5a-4cce-b9d0-5775055765d5",
+    "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+    "same_after_restart": true,
+    "sqlite_quick_check": "ok",
+    "confirmed_focus_requests": 2,
+    "native_clipboard_verified": true,
+    "namespace_file_hashes_checked": 16
+  },
+  "screenshots": [
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/win-x64/first-run.png",
+      "sha256": "43d8b850633862d13019fa0685dd455c684b6922a03301ea07a24ea0779e69e5",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/win-x64/help-about.png",
+      "sha256": "1f132cfc7b0c77b00d5972070013b448d75934a2715cff7dcff97057265c2d61",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/win-x64/focus.png",
+      "sha256": "a0101330b8a599fb00b8e42560498921dd6db97d1b2e360e4146dbe85808a1f4",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/osx-arm64/first-run.png",
+      "sha256": "e6c57030bfe64ab9fab9d1ce8c6b617c39a293538d1c5202a8dcaf308ca7675a",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/osx-arm64/help-about.png",
+      "sha256": "a81a2492e2535535d30649e406355647e0bb3c18b42c7c589c955a5611186134",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/osx-arm64/focus.png",
+      "sha256": "02bb102d32fdcb6080d8f5647b823f23f86cb61d0765971d87e882460ddae70c",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-x64/first-run.png",
+      "sha256": "04dd1a2b1553e0e1040dd0eba8875d0dd3cc2e1d5e72d0a11fc4eedef8d7f4b4",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-x64/help-about.png",
+      "sha256": "2e5519a4a090a01cfadfb1b4228a4c2902bb1c3bcf9bbc4a0f3fc872ac5caebd",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-x64/focus.png",
+      "sha256": "a249ad196a9ef7fad07946a17d8f437401b2fb74989125c39afcbfecb86abc46",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual packaged apphost native client-tree render; programmatic controls"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-incident/healthy.png",
+      "sha256": "56ad30ee1218deaacefa79894f98fe26f30bfb338cd374e4dd48311439427252",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "production-source native component incident verifier; not packaged apphost or physical interaction"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-incident/failure-grace.png",
+      "sha256": "b222a6249548684f997dd5fd468182e8c29f5b6b2325183db6e1271fa02015b3",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "production-source native component incident verifier; not packaged apphost or physical interaction"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-incident/confirmed-outage.png",
+      "sha256": "5c8c288c7334231629f109d51304f23db27190678a08f72d57715f273a0dbeb1",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "production-source native component incident verifier; not packaged apphost or physical interaction"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-incident/recovered-history.png",
+      "sha256": "c28a1dfba8345d8dacc112f7c0c30f5f13b3f641b34027196ff8484f4897f7a1",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "production-source native component incident verifier; not packaged apphost or physical interaction"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-incident/restart-history.png",
+      "sha256": "9b80813615c87ae1fa0ff0713ec92be75899db7d4e9ad2d64fb7e45f3acb0963",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "production-source native component incident verifier; not packaged apphost or physical interaction"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/macos-normal-launch.png",
+      "sha256": "8b0df7dce7be6b11bdcf2a6a6f4baf6a3d3d4069c215cca032c5f77253f73751",
+      "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+      "kind": "actual normal LaunchServices packaged apphost; owned OS-window capture; fresh stopped profile"
+    }
+  ],
+  "retained_files_sha256": {
+    "docs/evidence/verification/2026-10-22-hardening-history-scale.json": "c5025af93e950ff7757efbd7c37a1cc85ecd40b1b941bb0d9517267d600ccbea",
+    "docs/evidence/verification/2026-10-22-hardening-reports.zip": "2cb631e717691d9f99e2da3d391e55825a46a9482f8b66ffdde81e5c45530104",
+    "docs/evidence/verification/2026-10-22-hardening-failed-ci-logs.zip": "c440ac3d5c7ae560cb72592c42d5d2aeb3098a9f289e0a870280eddf92c1e36f",
+    "docs/evidence/verification/2026-10-22-hardening-macos-desktop.json": "6b39efc70da71ca74304af8146264153c115ee2e37f6f26ee1c9c94aff6d311a",
+    "docs/evidence/verification/2026-10-22-hardening-ci-logs.zip": "be8e0d6fc5b95134cb5134d9823f93563b213e435f1878a686c3f1c18ddfb325"
+  },
+  "limits": [
+    "No physical keyboard/tray/save-panel interaction claimed",
+    "No fabricated measurements; synthetic scale fixtures only in external test experiment",
+    "No new Release/tag/submission; both rollback archive sets preserved"
+  ],
+  "history_scale_loaded_core_sha256": "6ccaeb851b3dfac8c04a7a2aa0aaa2166fffeccb25bf8d955d08e9d4bcad48e9",
+  "history_scale_source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+  "local_validation": {
+    "locked_restore_audit": "passed",
+    "release_warnings": 0,
+    "release_errors": 0,
+    "release_seconds": 6.92,
+    "deterministic_passed": 126,
+    "default_opt_in_skips": 2,
+    "separate_native_network_passed": 2,
+    "python_passed": 8
+  }
+}

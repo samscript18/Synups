@@ -1,0 +1,32 @@
+[
+  {
+    "synthetic_fixture": true,
+    "source_revision": "6446990",
+    "fixture_rows": 2000,
+    "cached_incidents": 200,
+    "page_size": 50,
+    "streamed_rows": 2000,
+    "database_bytes": 1503232,
+    "startup_milliseconds": 82.487,
+    "retained_managed_bytes_after_initial_load": 534552,
+    "total_allocated_bytes_all_pages": 4309248,
+    "total_milliseconds": 102.1223,
+    "working_set_bytes": 66502656,
+    "note": "Separate fresh reader process after fixture seeding; no endurance or production outage claim"
+  },
+  {
+    "synthetic_fixture": true,
+    "source_revision": "6446990",
+    "fixture_rows": 20000,
+    "cached_incidents": 200,
+    "page_size": 50,
+    "streamed_rows": 20000,
+    "database_bytes": 14729216,
+    "startup_milliseconds": 104.6117,
+    "retained_managed_bytes_after_initial_load": 534472,
+    "total_allocated_bytes_all_pages": 36100264,
+    "total_milliseconds": 647.7723,
+    "working_set_bytes": 71368704,
+    "note": "Separate fresh reader process after fixture seeding; no endurance or production outage claim"
+  }
+]

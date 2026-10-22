@@ -101,3 +101,21 @@ Readiness stays **8.5/10 under the existing rubric**: stronger evidence and onbo
 
 
 Final candidate `65d917ac645139836cf97e48c48c137a09825942` passed [run 39761184906](https://github.com/samscript18/Synups/actions/runs/39761184906) on all three native runners, including viewport assertions and six extracted-apphost stages. Downloaded image review confirms the actual Windows fresh-window clipping fix; failed 375e2f7 evidence is retained. Final namespace incident/restart/CSV repeats successfully. Local exact downloaded Mac six-stage rerun passes; strict integrity passes, Gatekeeper rejects (3). [Frozen candidate package hashes](../release/COMPETITIVE_CANDIDATE.md), [final machine-readable evidence](../evidence/verification/2026-10-22-competitive-candidate-final.json). The candidate is prepared locally, not released; human Mac interactions/trusted signing remain blocked. Readiness and parity stay 8.5/10 and 72.2%.
+
+
+## Final competitive hardening checkpoint
+
+Reviewed unpublished [0.1.1-rc.2](../release/FINAL_HARDENING_CANDIDATE.md) now passes native three-OS packaged gates,126 deterministic/headless +2 opt-in cases per OS,8 Python cases, CodeQL and isolated Release coverage. Partial explicit gateway discovery, bounded incident timeline/startup cache/streamed CSV, clipboard/help/shortcuts and opt-in confirmed-event focus are implemented. Stable0.1.0 and rc.1 archive sets are unchanged. Inventory75.0%, unchanged18-item rubric.
+
+- [x] Exact-source native route queries and no-mutation/no-probe preview on all three CI systems.
+- [x] Bounded timeline queries, older comments, interrupted incident preservation, complete CSV and malformed-page errors tested.
+- [x] Native Linux real ICMP outage/recovery, persisted timeline/comment/export and focus/clipboard independently verified.
+- [x] Separate local exact Mac downloaded-apphost repeat and fresh normal LaunchServices/window/OS capture/native quit.
+- [x] Per-file/archive integrity, licences/notices/native SQLite/CPU/Unix permissions reviewed; separate rc.2 locally prepared.
+- [x] Retained CodeQL SARIF, Cobertura/TRX, actual process/action reports, images and CI logs.
+- [ ] Physical Mac tray Show/Exit, native Save-panel completion, keyboard traversal/focus/Escape, resize/minimize and close with pending writes: Accessibility/event-post denied; [exact manual checklist](../release/MACOS_ACCEPTANCE.md).
+- [ ] Trusted macOS Developer ID/notarization; candidate Gatekeeper still rejects3. Windows remains unsigned.
+- [ ] Broad physical desktop/notification/accessibility/VPN/IPv6/suspend and new-source long-running GUI acceptance.
+- [ ] Review/explicit authorization for a separate candidate Release and separate competition submission. Actions downloads are not permanent public candidate links.
+
+Readiness remains **8.5/10 under the existing rubric**. More functionality/tests do not resolve distribution trust or physical acceptance, so neither10/10 nor Phase-wide completion is claimed. The new candidate is functionally stronger with source-specific regressions, while rc.1 remains the smaller rollback baseline. Full-archive logging/retention still warrants large-history testing; the bounded2k/20k synthetic experiment is not endurance certification. No production mock measurements or historical latency/uptime invention exists.

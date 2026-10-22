@@ -17,3 +17,8 @@ The restored Menees.Common 5.1.2 package documentation describes a hierarchical 
 No actual Windows WirePeep user .stgx fixture or Windows runtime is available here. Therefore exact-version serialization, locale-sensitive TimeSpan values, missing/default nodes, window options and compatibility have not been validated. There is no hypothetical XML importer and no import UI that claims success. Original settings are never opened or modified by Synups.
 
 Before implementing: capture a real fixture with the baseline Windows app and package version, redact only user-private values, preserve schema/IDs, test exact parsing and limits/DTD rejection, preview a diff, back up the Synups destination, and import profiles only after explicit confirmation. Reject duplicate/missing group references and unsupported timing values rather than silently dropping targets. Do not alter the original source file. This is a release parity blocker, not a completed feature.
+
+
+## Final hardening follow-up
+
+The earlier unimplemented-discovery assessment describes the previous release. Unpublished rc.2 now reimplements only useful default-gateway intent with explicit read-only OS route queries, candidate/interface preview and confirmed addition, not TTL probing or modem/transceiver candidates. All three native CI route queries pass; permissions/no routes/VPN/multiple routes/cancellation are typed and fixture-tested. No actual-fixture legacy importer, startup-registration integration or sound adapter was invented. See [exact reviewed scope](../release/FINAL_HARDENING_CANDIDATE.md).

@@ -51,3 +51,10 @@ The user authorized [Synups 0.1.0](https://github.com/samscript18/Synups/release
 Guided first-target setup, near-top README comparison and judges’ guide are implemented. Controlled real ICMP loss/recovery in a disposable Linux namespace now has actual native UI, CSV and separate-process persistence evidence; no host network was altered. Source-specific three-OS packaged verification is retained in CROSS_PLATFORM.md. Public 0.1.0 is untouched; new UI belongs to a separate unpublished 0.1.1-rc.1.
 
 Next prioritize legitimate signing/trusted distribution and a human-operated desktop acceptance pass (especially Mac tray, keyboard and native Save dialog). Accessibility currently blocks those local automation tests. Discovery/import/native notification expansion remains deferred; do not trade a verified submission for speculative parity. Release/submission requires separate authorization.
+
+
+## Current handoff after final hardening
+
+Completed in separately verified rc.2: explicit read-only default-gateway preview/confirmation on all three runners; paginated persisted incident timeline/streamed CSV; IP/incident clipboard, Help/About, shortcuts and opt-in transition focus; CodeQL/security policy/coverage. [Exact candidate and limits](../release/FINAL_HARDENING_CANDIDATE.md). Earlier deferred-discovery/focus notes describe earlier checkpoints, not current rc.2. Original modem/transceiver discovery remains absent.
+
+Prioritize a person completing the Mac acceptance checklist, trusted distribution where legitimate credentials exist, review of candidate release versus stable public0.1.0, and separately authorized competition submission before the deadline. Do not start latency-history architecture, speculative import/login/sound features or a redesign. Sparkline remains conditional on a valid persisted sample contract; no such history exists. Native notification delivery and broad physical desktop/suspend/IPv6 remain follow-up gates. Source-only tests are not substitutes for them.
