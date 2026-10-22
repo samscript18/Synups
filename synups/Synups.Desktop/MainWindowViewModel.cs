@@ -43,6 +43,19 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         : "";
     public bool HasStorageWarning => !string.IsNullOrWhiteSpace(StorageWarning);
     private readonly AlertDelivery alertDelivery = new();
+    private readonly AlertDelivery soundDelivery;
+    public string SoundStatus => AlertSoundSink.Capability + " " + soundDelivery.Status;
+    private bool prefOutageSound, prefRecoverySound;
+    private string prefSoundFile = "";
+    public bool PrefOutageSound { get => prefOutageSound; set => Set(ref prefOutageSound, value); }
+    public bool PrefRecoverySound { get => prefRecoverySound; set => Set(ref prefRecoverySound, value); }
+    public string PrefSoundFile { get => prefSoundFile; set => Set(ref prefSoundFile, value ?? ""); }
+    public void TestAlertSound()
+    {
+        if (!CanPreferences) return;
+        soundDelivery.Enqueue(new(Guid.NewGuid(), "Explicit user-requested sound test", PrefSoundFile, MonitorEventKind.ProbeError));
+        Message = "Sound test queued; see playback status. This does not create a monitoring event or confirm audible delivery.";
+    }
     private string alertBanner = "", lastStorageAlert = "";
     public string AlertBanner { get => alertBanner; private set { if (Set(ref alertBanner, value)) Changed(nameof(HasAlertBanner)); } }
     public bool HasAlertBanner => !string.IsNullOrWhiteSpace(AlertBanner);
@@ -91,8 +104,9 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     internal MonitoringSnapshot CaptureMonitoring() => service.Capture();
     internal MonitoringDiagnostics CaptureDiagnostics() => service.Diagnostics;
     internal Task<HistoryState> ReadHistoryAsync() => service.ReadArchiveAsync();
-    public MainWindowViewModel(MonitoringService service, ConfigurationStore store, PreferencesStore? preferencesStore = null)
+    public MainWindowViewModel(MonitoringService service, ConfigurationStore store, PreferencesStore? preferencesStore = null, INativeAlertSink? soundSink = null)
     {
+        soundDelivery = new(soundSink ?? new AlertSoundSink(), "Optional sound is off until explicitly configured.");
         this.service = service; this.store = store;
         this.preferencesStore = preferencesStore ?? new PreferencesStore(store.FileName + ".preferences.json", store.FileName + ".logs");
         snapshot = service.Capture();
@@ -218,7 +232,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public Task InitializeAsync() => ExecuteAsync(async () =>
     {
         var preferences = await preferencesStore.LoadAsync();
-        SavedPreferences = preferences.Preferences; PreferencesError = preferences.Error; LoadPreferencesDraft();
+        SavedPreferences = preferences.Preferences; PreferencesError = preferences.Error; LoadPreferencesDraft(); Changed(nameof(SavedPreferences));
         try { await service.InitializeHistoryAsync(); }
         catch (Exception ex) { Message = $"History unavailable. Existing evidence is preserved: {ex.Message}"; }
         alertPolicy.IgnoreExisting(service.Capture().Events);
@@ -328,6 +342,9 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         PrefAutoStart = SavedPreferences.MonitorOnLaunch; PrefOutage = SavedPreferences.NotifyOutages;
         PrefRecovery = SavedPreferences.NotifyRecovery; PrefErrors = SavedPreferences.NotifyErrors;
         PrefNative = SavedPreferences.NativeNotifications; PrefLogs = SavedPreferences.AutomaticLogs;
+        PrefOutageSound = SavedPreferences.PlayOutageSound; PrefRecoverySound = SavedPreferences.PlayRecoverySound; PrefSoundFile = SavedPreferences.AlertSoundFile;
+        PrefLogName = LogNameChoices.Single(c => c.Style == (SavedPreferences.LogNaming ?? (SavedPreferences.DateLogFilenames ? LogFilenameStyle.UtcSessionStart : LogFilenameStyle.StableSessionId)));
+        PrefGroupHeight = SavedPreferences.GroupPaneHeight; PrefTargetHeight = SavedPreferences.TargetPaneHeight; PrefIncidentHeight = SavedPreferences.IncidentPaneHeight;
         PrefFocus = SavedPreferences.FocusOnConfirmedEvents; PrefDatedLogs = SavedPreferences.DateLogFilenames;
         PrefLogDirectory = SavedPreferences.LogDirectory; PrefRetentionDays = SavedPreferences.RetentionDays.ToString(CultureInfo.InvariantCulture);
     }
@@ -339,7 +356,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         var next = SavedPreferences with { ConfirmExit = PrefConfirmExit, AlwaysOnTop = PrefTopmost, MinimizeToTray = PrefTray,
             LaunchMinimized = PrefMinimized, MonitorOnLaunch = PrefAutoStart, NotifyOutages = PrefOutage, NotifyRecovery = PrefRecovery,
             NotifyErrors = PrefErrors, NativeNotifications = PrefNative, AutomaticLogs = PrefLogs, LogDirectory = PrefLogDirectory.Trim(), RetentionDays = days,
-            FocusOnConfirmedEvents = PrefFocus, DateLogFilenames = PrefDatedLogs };
+            FocusOnConfirmedEvents = PrefFocus, DateLogFilenames = PrefLogName?.Style is LogFilenameStyle.UtcSessionStart or LogFilenameStyle.LocalSessionStart, PlayOutageSound = PrefOutageSound, PlayRecoverySound = PrefRecoverySound, AlertSoundFile = PrefSoundFile, LogNaming = PrefLogName?.Style, GroupPaneHeight = PrefGroupHeight, TargetPaneHeight = PrefTargetHeight, IncidentPaneHeight = PrefIncidentHeight };
         next.Validate(); await preferencesStore.SaveAsync(next, recover); SavedPreferences = next; PreferencesError = null;
         await service.SetAutomaticRetentionAsync(days);
         await RefreshStorageAsync(force: true);
@@ -409,7 +426,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         Changed(nameof(StorageUsage)); Changed(nameof(StorageSummary)); Changed(nameof(StorageDetails)); Changed(nameof(StorageWarning)); Changed(nameof(HasStorageWarning));
     }
     private Task WriteAutomaticLogsAsync() => SavedPreferences.AutomaticLogs && service.HistoryReady ? ExportAutomaticAsync() : Task.CompletedTask;
-    private async Task ExportAutomaticAsync() => await AutomaticLogExporter.WriteAsync(SavedPreferences.LogDirectory, await service.ReadArchiveAsync(), SavedPreferences.DateLogFilenames);
+    private async Task ExportAutomaticAsync() => await AutomaticLogExporter.WriteAsync(SavedPreferences.LogDirectory, await service.ReadArchiveAsync(), SavedPreferences.LogNaming ?? (SavedPreferences.DateLogFilenames ? LogFilenameStyle.UtcSessionStart : LogFilenameStyle.StableSessionId));
     public Task ExportAsync(Stream destination) => ExecuteAsync(async () =>
     {
         try { await service.ExportIncidentsAsync(destination); }
@@ -467,6 +484,8 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         foreach (var notification in alertPolicy.Select(snapshot.Events, SavedPreferences))
         {
             AlertBanner = $"In-app alert — {notification.Title}: {notification.Body}";
+            if (SoundAlertPolicy.ShouldPlay(notification, SavedPreferences))
+                soundDelivery.Enqueue(notification with { Body = SavedPreferences.AlertSoundFile });
             if (SavedPreferences.NativeNotifications) alertDelivery.Enqueue(notification);
         }
         if (alertPolicy.ShouldFocus(snapshot.Events, SavedPreferences.FocusOnConfirmedEvents)) FocusRequested?.Invoke(this, EventArgs.Empty);
@@ -476,7 +495,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
             if (SavedPreferences.NativeNotifications) alertDelivery.Enqueue(new(Guid.NewGuid(), "Synups: evidence storage error", storageError, MonitorEventKind.ProbeError));
         }
         if (service.PersistenceError is null) lastStorageAlert = "";
-        Changed(nameof(NativeAlertStatus)); Changed(nameof(CanPreferences));
+        Changed(nameof(SoundStatus)); Changed(nameof(NativeAlertStatus)); Changed(nameof(CanPreferences));
         foreach (var g in Groups) g.Apply(snapshot.Groups.FirstOrDefault(s => s.Id == g.Id), IsRunning);
         if (seenHistory != snapshot.HistoryRevision)
         {
@@ -517,7 +536,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         {
             await timelineRead;
             await storageRefresh;
-            await service.DisposeAsync(); await alertDelivery.DisposeAsync(); disposed = true; Refresh();
+            await service.DisposeAsync(); await alertDelivery.DisposeAsync(); await soundDelivery.DisposeAsync(); disposed = true; Refresh();
         }
         finally { if (!disposed) { storageClosing = false; timelineClosing = false; } }
     }

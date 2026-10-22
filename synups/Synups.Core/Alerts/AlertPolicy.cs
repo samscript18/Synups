@@ -66,3 +66,13 @@ public static class DesktopPolicy
             Y = Math.Clamp(placement.Y, screen.Y, screen.Y + screen.Height - (int)(height * screen.Scale)) };
     }
 }
+
+public static class SoundAlertPolicy
+{
+    public static bool ShouldPlay(AlertMessage message, AppPreferences preferences) => message.Kind switch
+    {
+        MonitorEventKind.OutageStarted => preferences.PlayOutageSound,
+        MonitorEventKind.Recovery => preferences.PlayRecoverySound,
+        _ => false,
+    };
+}

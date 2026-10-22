@@ -10,7 +10,7 @@ public sealed class NativeAlertSink : INativeAlertSink
 {
     public static string Capability => OperatingSystem.IsMacOS() ? "macOS: optional osascript notification requests; OS delivery/permission is not guaranteed." :
         OperatingSystem.IsLinux() ? "Linux: optional notify-send when installed and a notification daemon is available." :
-        "Windows: native notification adapter unavailable in this portable build; in-app alerts remain available.";
+        OperatingSystem.IsWindows() ? "Windows: opt-in native tray notification requests via the built-in Windows desktop APIs; OS delivery remains policy-controlled." : "Native notification requests unsupported; in-app alerts remain.";
     public async Task<NativeAlertResult> SendAsync(AlertMessage message, CancellationToken token)
     {
         ProcessStartInfo start;
@@ -25,9 +25,18 @@ public sealed class NativeAlertSink : INativeAlertSink
             start = new("notify-send"); start.ArgumentList.Add("--app-name=Synups"); start.ArgumentList.Add("--");
             start.ArgumentList.Add(message.Title); start.ArgumentList.Add(message.Body);
         }
+        else if (OperatingSystem.IsWindows())
+        {
+            start = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "WindowsPowerShell", "v1.0", "powershell.exe"));
+            start.ArgumentList.Add("-NoProfile"); start.ArgumentList.Add("-NonInteractive"); start.ArgumentList.Add("-STA"); start.ArgumentList.Add("-Command");
+            start.ArgumentList.Add("$ErrorActionPreference='Stop';Add-Type -AssemblyName System.Windows.Forms;Add-Type -AssemblyName System.Drawing;$n=New-Object System.Windows.Forms.NotifyIcon;$icon=$null;try{$icon=[System.Drawing.Icon]::ExtractAssociatedIcon([Environment]::GetEnvironmentVariable('SYNUPS_NOTIFY_EXE'));$n.Icon=$icon;$n.Text='Synups';$n.Visible=$true;$n.ShowBalloonTip(3000,[Environment]::GetEnvironmentVariable('SYNUPS_NOTIFY_TITLE'),[Environment]::GetEnvironmentVariable('SYNUPS_NOTIFY_BODY'),[System.Windows.Forms.ToolTipIcon]::Info);$w=[Diagnostics.Stopwatch]::StartNew();while($w.ElapsedMilliseconds -lt 3000){[System.Windows.Forms.Application]::DoEvents();Start-Sleep -Milliseconds 50}}finally{$n.Visible=$false;$n.Dispose();if($icon){$icon.Dispose()}}");
+            start.Environment["SYNUPS_NOTIFY_EXE"] = Environment.ProcessPath ?? throw new IOException("Application executable unavailable.");
+            start.Environment["SYNUPS_NOTIFY_TITLE"] = message.Title;
+            start.Environment["SYNUPS_NOTIFY_BODY"] = message.Body;
+        }
         else return new(false, Capability);
         start.UseShellExecute = false; start.RedirectStandardError = true; start.RedirectStandardOutput = true; start.CreateNoWindow = true;
-        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(token); timeout.CancelAfter(TimeSpan.FromSeconds(3));
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(token); timeout.CancelAfter(TimeSpan.FromSeconds(OperatingSystem.IsWindows() ? 15 : 3));
         using var process = new Process { StartInfo = start };
         Task<string>? stderr = null, stdout = null;
         try
@@ -62,8 +71,9 @@ public sealed class AlertDelivery : IAsyncDisposable
     private readonly Task worker;
     private string status = "Native notifications are opt-in. In-app alerts are separate.";
     public string Status => Volatile.Read(ref status);
-    public AlertDelivery(INativeAlertSink? sink = null)
+    public AlertDelivery(INativeAlertSink? sink = null, string? initialStatus = null)
     {
+        if (initialStatus is not null) status = initialStatus;
         sink ??= new NativeAlertSink();
         worker = Task.Run(async () =>
         {

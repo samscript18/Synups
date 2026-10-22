@@ -130,6 +130,12 @@ public partial class MainWindow : Window
         try { await operation(); }
         catch (Exception ex) { ViewModel?.ReportError(ex.Message); }
     }
+    private void TestSoundClicked(object? sender, RoutedEventArgs e) => ViewModel?.TestAlertSound();
+    private async void ChooseSoundClicked(object? sender, RoutedEventArgs e) => await RunAsync(async () =>
+    {
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions { Title = "Choose optional local alert WAV", AllowMultiple = false, FileTypeFilter = [new FilePickerFileType("WAV sound") { Patterns = ["*.wav"] }] });
+        if (files.Count == 1 && ViewModel is { } vm) vm.PrefSoundFile = files[0].TryGetLocalPath() ?? throw new IOException("Choose a local WAV file.");
+    });
     private async void PreviewLegacyImportClicked(object? sender, RoutedEventArgs e) => await RunAsync(async () =>
     {
         var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions

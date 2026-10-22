@@ -86,6 +86,20 @@ jobs:
           dotnet test ../Synups.slnx -c Release --no-build --filter 'FullyQualifiedName~RealLoopback|FullyQualifiedName~RealDefaultGateway' --logger trx --results-directory ../artifacts/real-network 2>&1 | tee ../artifacts/logs/icmp.txt
         env:
           SYNUPS_REAL_NETWORK_TESTS: '1'
+      - name: Explicit native audio request or safe unsupported fallback
+        run: |
+          set -o pipefail
+          dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~NativeSoundRequest --logger trx --results-directory ../artifacts/audio 2>&1 | tee ../artifacts/logs/audio.txt
+        env:
+          SYNUPS_SOUND_TESTS: '1'
+      - name: Independently observe native Windows notification delivery
+        if: runner.os == 'Windows'
+        run: |
+          set -o pipefail
+          dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~NativeWindowsNotificationDelivery --logger trx --results-directory ../artifacts/notifications 2>&1 | tee ../artifacts/logs/notifications.txt
+        env:
+          SYNUPS_DESKTOP_DELIVERY_TESTS: '1'
+          SYNUPS_NOTIFICATION_EVIDENCE: ${{ github.workspace }}/artifacts/notifications
       - name: Publish self-contained platform directory
         run: |
           set -o pipefail
@@ -129,6 +143,8 @@ jobs:
             artifacts/logs/
             artifacts/tests/
             artifacts/real-network/
+            artifacts/audio/
+            artifacts/notifications/
             artifacts/screenshots/
             artifacts/packages/
             artifacts/published-apphost/reports/

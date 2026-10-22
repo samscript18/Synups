@@ -16,6 +16,13 @@ public sealed record AppPreferences
     public bool NotifyErrors { get; init; } = true;
     public bool NativeNotifications { get; init; }
     public bool FocusOnConfirmedEvents { get; init; } // Explicit opt-in; independent of notification delivery.
+    public bool PlayOutageSound { get; init; }
+    public bool PlayRecoverySound { get; init; }
+    public string AlertSoundFile { get; init; } = "";
+    public LogFilenameStyle? LogNaming { get; init; } // Null preserves the older DateLogFilenames preference.
+    public double GroupPaneHeight { get; init; } = 200;
+    public double TargetPaneHeight { get; init; } = 360;
+    public double IncidentPaneHeight { get; init; } = 440;
     public bool DateLogFilenames { get; init; } // Stable UTC session-start prefix; the session GUID always remains.
     public bool AutomaticLogs { get; init; } = true;
     public string LogDirectory { get; init; } = Path.Combine(SynupsPaths.DataDirectory, "logs");
@@ -26,6 +33,11 @@ public sealed record AppPreferences
         if (Version != 1) throw new ArgumentException("Unsupported preferences version.");
         if (RetentionDays is < 0 or > 3650) throw new ArgumentException("Retention: 0 (keep all) or 1–3650 days.");
         if (string.IsNullOrWhiteSpace(LogDirectory) || !Path.IsPathFullyQualified(LogDirectory)) throw new ArgumentException("Choose an absolute log directory.");
+        if ((PlayOutageSound || PlayRecoverySound) && (string.IsNullOrWhiteSpace(AlertSoundFile) || !Path.IsPathFullyQualified(AlertSoundFile) || !Path.GetExtension(AlertSoundFile).Equals(".wav", StringComparison.OrdinalIgnoreCase)))
+            throw new ArgumentException("Alert sounds require an absolute local WAV file; playback is optional and OS-controlled.");
+        if (LogNaming is { } naming && !Enum.IsDefined(naming)) throw new ArgumentException("Unsupported log filename style.");
+        if (new[] { GroupPaneHeight, TargetPaneHeight, IncidentPaneHeight }.Any(h => !double.IsFinite(h) || h < 80 || h > 2000))
+            throw new ArgumentException("Pane heights must be 80–2000 logical pixels.");
         if (Placement is { } p && (!double.IsFinite(p.Width) || !double.IsFinite(p.Height) || p.Width < 300 || p.Height < 200 || p.Width > 20000 || p.Height > 20000))
             throw new ArgumentException("Invalid saved window dimensions.");
         return this;

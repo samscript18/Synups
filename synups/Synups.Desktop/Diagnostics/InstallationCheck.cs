@@ -107,6 +107,7 @@ public sealed class InstallationCheck(DesktopOptions options)
                 else if (options.VerificationStage == "restart")
                     Require(archive.Sessions.Where(s => s.Id != vm.CaptureMonitoring().SessionId).All(s => s.EndedUtc.HasValue && !s.Interrupted), "Clean prior session was not preserved.");
                 Passed("saved_configuration_and_opt_in_monitoring_on_launch", new { groups = vm.Groups.Select(g => new { g.Id, g.Name, targets = g.Targets.Select(t => new { t.Id, t.Address }) }), durable_sessions = archive.Sessions.Count });
+                Require(vm.SavedPreferences.LogNaming == LogFilenameStyle.FixedArchiveSnapshot && vm.SavedPreferences.GroupPaneHeight == 180, "Saved log/pane preferences did not reload.");
                 Passed("sqlite_native_history_reload", new { interrupted = archive.Sessions.Count(s => s.Interrupted), recovery_events = archive.Events.Count(e => e.Kind == MonitorEventKind.Recovery) });
             }
             await Task.Delay(TimeSpan.FromSeconds(options.ObserveSeconds));
@@ -142,9 +143,13 @@ public sealed class InstallationCheck(DesktopOptions options)
                 Passed("csv_export_service_empty_header", new { outage_rows = vm.Outages.Count, native_file_picker = "not automated" });
                 vm.SelectedPage = 3;
                 Check(window, "PrefTopmost", true); Check(window, "PrefConfirmExit", true); Check(window, "PrefTray", true);
+                window.FindControl<NumericUpDown>("PrefGroupHeight")!.Value = 180; window.FindControl<NumericUpDown>("PrefTargetHeight")!.Value = 320; window.FindControl<NumericUpDown>("PrefIncidentHeight")!.Value = 380;
+                window.FindControl<ComboBox>("LogFilenameStyle")!.SelectedItem = vm.LogNameChoices.Single(c => c.Style == LogFilenameStyle.FixedArchiveSnapshot);
                 Check(window, "PrefAutoStart", true); Check(window, "PrefOutage", false); Check(window, "PrefRecovery", false); Check(window, "PrefErrors", true);
                 await ClickAsync(window, "ApplyPreferences"); await UntilAsync(() => vm.CanPreferences && vm.SavedPreferences.MonitorOnLaunch && window.Topmost);
                 Require(!vm.SavedPreferences.NotifyOutages && !vm.SavedPreferences.NotifyRecovery && vm.SavedPreferences.NotifyErrors, "Alert preferences did not persist.");
+                Require(vm.SavedPreferences.LogNaming == LogFilenameStyle.FixedArchiveSnapshot && window.FindControl<ListBox>("GroupList")!.MaxHeight == 180, "Log naming or pane preferences did not apply.");
+                Passed("fixed_log_naming_and_pane_sizes_applied", new { vm.SavedPreferences.LogNaming, vm.SavedPreferences.GroupPaneHeight, vm.SavedPreferences.TargetPaneHeight, vm.SavedPreferences.IncidentPaneHeight });
                 Passed("preferences_topmost_alerts_and_explicit_autostart_saved", new { window.Topmost, vm.SavedPreferences.MonitorOnLaunch, vm.SavedPreferences.ConfirmExit, vm.NativeAlertStatus });
                 await CaptureAsync(window, "preferences");
             }
