@@ -22,7 +22,7 @@ public sealed class GatewayDiscovery(IRouteCommandRunner? runner = null, RoutePl
 {
     private readonly IRouteCommandRunner runner = runner ?? new RouteCommandRunner();
     private readonly RoutePlatform platform = platform ?? CurrentPlatform;
-    private readonly TimeSpan timeout = timeout ?? TimeSpan.FromSeconds(8);
+    private readonly TimeSpan timeout = timeout ?? TimeSpan.FromSeconds(CurrentPlatform == RoutePlatform.Windows ? 15 : 8);
     public static RoutePlatform CurrentPlatform => OperatingSystem.IsWindows() ? RoutePlatform.Windows :
         OperatingSystem.IsMacOS() ? RoutePlatform.MacOS : OperatingSystem.IsLinux() ? RoutePlatform.Linux : RoutePlatform.Unsupported;
     public async Task<GatewayDiscoveryResult> DiscoverAsync(CancellationToken cancellation)
