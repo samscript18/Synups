@@ -61,8 +61,13 @@ public partial class MainWindow : Window
     {
         if (ViewModel is not { } vm) return;
         Topmost = vm.SavedPreferences.AlwaysOnTop;
-        if (restorePlacement && vm.SavedPreferences.Placement is { } saved)
+        if (restorePlacement)
         {
+            // Windows can clamp the initial native client to the work area
+            // while Width/Height still contain the larger requested defaults.
+            // Normalize fresh windows too, so their first layout fits the client.
+            var saved = vm.SavedPreferences.Placement ?? new WindowPlacement(
+                ClientSize.Width, ClientSize.Height, Position.X, Position.Y, false);
             var areas = Screens.All.Select(s => new WorkArea(s.WorkingArea.X, s.WorkingArea.Y, s.WorkingArea.Width, s.WorkingArea.Height, s.Scaling)).ToArray();
             var safe = DesktopPolicy.Clamp(saved, areas);
             MinWidth = Math.Min(MinWidth, safe.Width); MinHeight = Math.Min(MinHeight, safe.Height);

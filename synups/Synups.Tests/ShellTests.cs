@@ -33,6 +33,14 @@ public class ShellTests
         try
         {
             window.Show(); await UntilAsync(() => vm.CanEdit);
+            window.UpdateLayout();
+            foreach (var name in new[] { "FirstTargetAddress", "CreateFirstTarget", "StopMonitoring" })
+            {
+                var control = window.FindControl<Control>(name)!;
+                var edge = control.TranslatePoint(new Point(control.Bounds.Width, control.Bounds.Height), window)!.Value;
+                Assert.InRange(edge.X, 0, window.Bounds.Width);
+                Assert.InRange(edge.Y, 0, window.Bounds.Height);
+            }
             Assert.False(vm.CanStart); Assert.Contains("Add your first IP", vm.StartGuidance);
             Assert.Empty(probe.Addresses);
             window.FindControl<TextBox>("FirstTargetAddress")!.Text = "127.0.0.1";
