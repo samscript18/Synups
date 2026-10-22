@@ -21,6 +21,8 @@ public sealed class GroupMonitor
         ? TimeSpan.FromMilliseconds(config.PollMilliseconds) - clock.Elapsed(lastStarted.Value) : TimeSpan.Zero;
     private long? failedSince, confirmedAt, previousRecovery, lastCompleted;
     private DateTimeOffset? firstFailureUtc;
+    private DateTimeOffset? confirmedStateChangedUtc;
+    private long? confirmedStateChangedAt;
     private OutageRecord? active;
     public GroupSnapshot Snapshot { get; private set; }
 
@@ -110,11 +112,13 @@ public sealed class GroupMonitor
             }
             lastCompleted = clock.Timestamp;
         }
+        if (started || recovered) { confirmedStateChangedUtc = utc; confirmedStateChangedAt = clock.Timestamp; }
         Snapshot = CreateSnapshot(state, measured);
         return new(Snapshot, changed, started, recovered, errors.AsReadOnly(), gap);
     }
 
     private GroupSnapshot CreateSnapshot(GroupConnectivity connectivity, DateTimeOffset? measured) =>
         new(config.Id, config.Name, connectivity, active is not null, measured,
-            Array.AsReadOnly(targets.Select(t => samples[t.Id]).ToArray()));
+            Array.AsReadOnly(targets.Select(t => samples[t.Id]).ToArray()), confirmedStateChangedUtc,
+            confirmedStateChangedAt.HasValue ? clock.Elapsed(confirmedStateChangedAt.Value) : null);
 }

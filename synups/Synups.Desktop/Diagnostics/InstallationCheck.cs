@@ -71,6 +71,13 @@ public sealed class InstallationCheck(DesktopOptions options)
         {
             var vm = (MainWindowViewModel)window.DataContext!;
             await UntilAsync(() => window.IsVisible && (vm.CanEdit || vm.IsRunning));
+            await UntilAsync(()=>window.FindControl<Grid>("Workspace")!.IsEnabled);
+            if(options.LaunchMinimized)
+            {
+                await UntilAsync(()=>window.WindowState==WindowState.Minimized || !window.IsVisible);
+                Passed("actual_apphost_launch_minimized_argument",new{window.WindowState,window.IsVisible,vm.IsRunning});
+                window.RestoreFromTray();await UntilAsync(()=>window.IsVisible && window.WindowState==WindowState.Normal);
+            }
             var native = window.TryGetPlatformHandle();
             Require(native is not null && native.Handle != IntPtr.Zero, "Native OS window handle is missing.");
             Require(window.Icon is not null, "Synups window icon did not load.");
@@ -145,7 +152,7 @@ public sealed class InstallationCheck(DesktopOptions options)
             var previousActivations = instance.ActivationCount;
             var executable = Environment.ProcessPath ?? throw new IOException("No process apphost path.");
             var start = new ProcessStartInfo(executable) { UseShellExecute = false, RedirectStandardError = true, RedirectStandardOutput = true };
-            start.ArgumentList.Add("--data-directory"); start.ArgumentList.Add(options.DataDirectory);
+            start.ArgumentList.Add("--data-directory"); start.ArgumentList.Add(options.DataDirectory); start.ArgumentList.Add("/Minimize");
             using (var second = Process.Start(start) ?? throw new IOException("Secondary apphost did not start."))
             {
                 using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(12));
@@ -231,6 +238,11 @@ public sealed class InstallationCheck(DesktopOptions options)
         await UntilAsync(() => vm.Message.Contains("Copied target IP", StringComparison.Ordinal));
         Require(await window.Clipboard!.TryGetTextAsync() == "127.0.0.1", "Actual native clipboard did not retain the selected target IP.");
         Passed("actual_native_clipboard_target_ip", new { address = "127.0.0.1", vm.SelectedTarget!.Id });
+        var clipboard=window.Clipboard!;vm.TargetCopyColumn="Response ms";await ClickAsync(window,"CopyTargetValue");
+        Require(await clipboard.TryGetTextAsync()=="Not available","Unknown latency was fabricated in clipboard value.");
+        await ClickAsync(window,"CopyTargetRow");var copiedRow=await clipboard.TryGetTextAsync();
+        Require(copiedRow is not null && copiedRow.Contains("127.0.0.1",StringComparison.Ordinal) && copiedRow.Contains("Not checked",StringComparison.Ordinal),"Native row copy failed.");
+        Passed("actual_native_clipboard_value_and_tsv_row_unknown_preserved");
         window.RaiseEvent(new KeyEventArgs { RoutedEvent = InputElement.KeyDownEvent, Key = Key.F1 });
         Require(vm.IsHelp, "F1 did not open Help/About."); await CaptureAsync(window, "help-about");
         Require(window.FindControl<TextBlock>("ApplicationVersion")!.Text == vm.VersionText, "About version does not match the real assembly.");

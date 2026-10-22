@@ -9,7 +9,8 @@ public enum MonitorEventKind { SessionStarted, SessionStopped, OutageStarted, Re
 public sealed record TargetSnapshot(Guid Id, ProbeResult Result, DateTimeOffset? CheckedAtUtc,
     DateTimeOffset? LastSuccessUtc, bool CheckedInLatestCycle);
 public sealed record GroupSnapshot(Guid Id, string Name, GroupConnectivity Connectivity, bool ConfirmedOutage,
-    DateTimeOffset? LastMeasurementUtc, IReadOnlyList<TargetSnapshot> Targets);
+    DateTimeOffset? LastMeasurementUtc, IReadOnlyList<TargetSnapshot> Targets,
+    DateTimeOffset? ConfirmedStateChangedUtc = null, TimeSpan? SinceConfirmedStateChange = null);
 public sealed record OutageRecord(Guid Id, Guid SessionId, Guid GroupId, string GroupName,
     DateTimeOffset StartedUtc, DateTimeOffset FirstFailureUtc, DateTimeOffset? RecoveredUtc,
     DateTimeOffset? ObservationEndedUtc, TimeSpan Elapsed, bool ContainsObservationGap,

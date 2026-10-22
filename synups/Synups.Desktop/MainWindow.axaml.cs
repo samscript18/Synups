@@ -18,6 +18,7 @@ public partial class MainWindow : Window
     private TrayController? tray;
     private WindowPlacement? normalPlacement;
     internal bool IsClosingPending => closing;
+    public bool StartMinimized { get; init; }
     public Func<Task<bool>>? ExitConfirmation { get; set; }
     private MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;
 
@@ -30,12 +31,13 @@ public partial class MainWindow : Window
             if (initialized) return;
             initialized = true;
             if (ViewModel is not { } vm) return;
+            await vm.RefreshLoginAsync();
             await vm.InitializeAsync();
             tray = new TrayController(RestoreFromTray, Close);
             this.FindControl<TextBlock>("TrayCapability")!.Text = tray.Status;
             ApplyDesktopPreferences(restorePlacement: true);
             if (DesktopPolicy.StartOnLaunch(vm.SavedPreferences, vm.CanStart && vm.PreferencesError is null)) await vm.StartAsync();
-            if (vm.SavedPreferences.LaunchMinimized) WindowState = WindowState.Minimized;
+            if (StartMinimized || vm.SavedPreferences.LaunchMinimized) WindowState = WindowState.Minimized;
         });
         PropertyChanged += (_, e) =>
         {
@@ -78,6 +80,16 @@ public partial class MainWindow : Window
         }
         RememberNormalPlacement();
     }
+    private async void EnableLoginClicked(object? sender, RoutedEventArgs e)
+    {
+        if(await ConfirmAsync("Enable launch at login", "Register this exact Synups executable and workspace for your next graphical login, minimized? No elevation or immediate launch. Monitoring only starts if its separate launch preference was explicitly enabled. Move/remove the app only after removing this registration."))
+            await RunAsync(()=>ViewModel?.ChangeLoginAsync(true,true)??Task.CompletedTask);
+    }
+    private async void RemoveLoginClicked(object? sender, RoutedEventArgs e)
+    {
+        if(await ConfirmAsync("Remove launch at login", "Remove only this workspace's exact Synups startup entry? Existing configuration/history and unrelated startup entries stay unchanged."))
+            await RunAsync(()=>ViewModel?.ChangeLoginAsync(false,true)??Task.CompletedTask);
+    }
     private async void ApplyPreferencesClicked(object? sender, RoutedEventArgs e)
     {
         if (ViewModel is { } vm && int.TryParse(vm.PrefRetentionDays, out var days) && days > 0 &&
@@ -107,9 +119,10 @@ public partial class MainWindow : Window
     {
         if (closing || !pendingAction.IsCompleted) return;
         var workspace = this.FindControl<Grid>("Workspace")!;
+        var priorFocus=FocusManager?.GetFocusedElement() as Control;
         workspace.IsEnabled = false;
         try { pendingAction = ExecuteSafelyAsync(operation); await pendingAction; }
-        finally { workspace.IsEnabled = true; }
+        finally { workspace.IsEnabled = true; if(priorFocus is { IsEffectivelyVisible:true, IsEffectivelyEnabled:true }) priorFocus.Focus(Avalonia.Input.NavigationMethod.Tab); }
         if (ViewModel?.IsRunning == true) refreshTimer.Start();
     }
     private async Task ExecuteSafelyAsync(Func<Task> operation)
@@ -139,6 +152,26 @@ public partial class MainWindow : Window
     {
         if (ViewModel is { SelectedGateway: { } gateway } vm && await ConfirmAsync("Add discovered gateway", $"Add {gateway.Address} on {gateway.InterfaceName} to your Synups profile? Existing targets stay unchanged. Monitoring will not start. This gateway is not proof of Internet availability."))
             await RunAsync(() => vm.AcceptGatewayAsync(confirmed: true));
+    }
+    private async void CheckLegacyCandidatesClicked(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel is { SelectedLegacyRule: { } rule } vm && await ConfirmAsync("Check explicit legacy candidates", $"Send ICMP to {string.Join(", ",rule.Addresses)} in order, stopping at the first response? Timeout {rule.TimeoutMilliseconds}ms per request, total deadline 10s. These are candidate addresses, not verified modem/transceiver identities. No target or monitoring session will be created."))
+            await vm.CheckLegacyCandidatesAsync(confirmed:true);
+    }
+    private async void AcceptLegacyCandidateClicked(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel is { SelectedLegacyRule: { } rule } vm && await ConfirmAsync("Add confirmed candidate", $"Add the responding address to {rule.GroupName} and enable that group? Existing targets/IDs are kept. A response does not establish device identity or Internet availability. Monitoring stays stopped."))
+            await RunAsync(()=>vm.AcceptLegacyCandidateAsync(confirmed:true));
+    }
+    private async void SetupOriginalRouterClicked(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel is { SelectedGateway: { } gateway } vm && await ConfirmAsync("Set up original router group", $"Add {gateway.Address} to Local Router and enable that group? Existing targets/IDs stay. Monitoring will not start."))
+            await RunAsync(()=>vm.AddGatewayToOriginalRouterAsync(confirmed:true));
+    }
+    private async void AddMissingDefaultsClicked(object? sender, RoutedEventArgs e)
+    {
+        if(await ConfirmAsync("Add missing original groups", "Add original groups whose names are missing, with their original literal IPs/timings? Existing groups/targets/IDs are preserved. Discovery-only groups stay disabled until confirmed setup; no probes or monitoring will start."))
+            await RunAsync(()=>ViewModel?.AddMissingDefaultsAsync(confirmed:true)??Task.CompletedTask);
     }
     private async void ApplyGroupClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.ApplyGroupAsync() ?? Task.CompletedTask);
     private async void ApplyTargetClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.ApplyTargetAsync() ?? Task.CompletedTask);
@@ -175,6 +208,7 @@ public partial class MainWindow : Window
         await using var stream = await file.OpenWriteAsync();
         if (stream.CanSeek) stream.SetLength(0);
         if (ViewModel is { } vm) await vm.ExportAsync(stream);
+        this.FindControl<Button>("ExportOutages")!.Focus(Avalonia.Input.NavigationMethod.Tab);
     });
 
     protected override async void OnClosing(WindowClosingEventArgs e)
@@ -217,7 +251,14 @@ public partial class MainWindow : Window
             new TextBlock { Text = text, TextWrapping = Avalonia.Media.TextWrapping.Wrap },
             new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Spacing = 10, Children = { cancel, accept } },
         } };
+        var priorFocus = FocusManager?.GetFocusedElement();
+        dialog.Opened += (_, _) => cancel.Focus(Avalonia.Input.NavigationMethod.Tab);
         try { return await dialog.ShowDialog<bool>(this); }
         catch (Exception ex) { ViewModel?.ReportError(ex.Message); return false; }
+        finally
+        {
+            if(priorFocus?.Focus(Avalonia.Input.NavigationMethod.Tab)!=true)
+                Dispatcher.UIThread.Post(()=>{ if(IsVisible && priorFocus is Control { IsEffectivelyVisible:true, IsEffectivelyEnabled:true }) priorFocus.Focus(Avalonia.Input.NavigationMethod.Tab); },DispatcherPriority.Input);
+        }
     }
 }

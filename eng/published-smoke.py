@@ -107,6 +107,7 @@ def main():
     launches=[];identity=None
     for stage in ['exercise','restart','interruption','recover','storage-error','storage-recovered']:
         command=[str(executable),'--data-directory',str(data),'--verify-installation',str(reports),'--verification-stage',stage,'--observe-seconds',str(args.seconds)]
+        if stage=='exercise':command.append('--minimized')
         started=datetime.now(timezone.utc).isoformat();report_path=reports/(stage+'.json')
         database=data/'history.v1.db';original_mode=None;readonly_hash=None
         if stage=='storage-error':

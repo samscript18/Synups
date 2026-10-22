@@ -57,6 +57,7 @@ public static class DesktopPolicy
     public static bool StartOnLaunch(AppPreferences preferences, bool validProfileAndHistory) => preferences.MonitorOnLaunch && validProfileAndHistory;
     public static WindowPlacement Clamp(WindowPlacement placement, IReadOnlyList<WorkArea> screens)
     {
+        screens=screens.Where(s=>s.Width>0 && s.Height>0 && double.IsFinite(s.Scale) && s.Scale>0).ToArray();
         if (screens.Count == 0) return placement with { X = 0, Y = 0, Width = 1000, Height = 720 };
         var screen = screens.FirstOrDefault(s => placement.X >= s.X && placement.Y >= s.Y && placement.X < s.X + s.Width && placement.Y < s.Y + s.Height) ?? screens[0];
         var width = Math.Clamp(placement.Width, Math.Min(820, screen.Width / screen.Scale), screen.Width / screen.Scale);

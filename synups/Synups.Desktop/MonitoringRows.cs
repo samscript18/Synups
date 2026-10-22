@@ -8,7 +8,7 @@ public sealed record WorkspacePage(string Title, string Description, string Icon
     public override string ToString() => Title;
 }
 
-public sealed class GroupRow(GroupConfiguration configuration) : ObservableObject
+public sealed partial class GroupRow(GroupConfiguration configuration) : ObservableObject
 {
     public GroupConfiguration Configuration { get; } = configuration;
     public Guid Id => Configuration.Id;
@@ -23,9 +23,14 @@ public sealed class GroupRow(GroupConfiguration configuration) : ObservableObjec
     public bool IsConnected => running && connectivity == GroupConnectivity.Connected && !outage;
     public bool HasOutage => outage;
     public bool IsUncertain => running && !outage && connectivity is GroupConnectivity.Unavailable or GroupConnectivity.Disconnected;
+    private string transitionDescription = "No confirmed failure/recovery observed in this session.";
+    public string TransitionDescription { get => transitionDescription; private set => Set(ref transitionDescription, value); }
     public override string ToString() => Name;
     public void Apply(GroupSnapshot? snapshot, bool running)
     {
+        TransitionDescription = snapshot?.ConfirmedStateChangedUtc is { } changed
+            ? $"Last confirmed change {TargetRow.DisplayTime(changed)} · observed time since change {snapshot.SinceConfirmedStateChange:g}"
+            : "No confirmed failure/recovery observed in this session.";
         var nextConnectivity = snapshot?.Connectivity ?? (Configuration.Enabled ? GroupConnectivity.NotChecked : GroupConnectivity.Disabled);
         var nextOutage = snapshot?.ConfirmedOutage == true;
         if (connectivity != nextConnectivity || this.running != running || outage != nextOutage)
@@ -40,7 +45,7 @@ public sealed class GroupRow(GroupConfiguration configuration) : ObservableObjec
     }
 }
 
-public sealed class TargetRow(TargetConfiguration configuration) : ObservableObject
+public sealed partial class TargetRow(TargetConfiguration configuration) : ObservableObject
 {
     public TargetConfiguration Configuration { get; } = configuration;
     public Guid Id => Configuration.Id;
@@ -51,8 +56,10 @@ public sealed class TargetRow(TargetConfiguration configuration) : ObservableObj
     public string Status { get => status; private set => Set(ref status, value); }
     public string Details { get => details; private set => Set(ref details, value); }
     public override string ToString() => $"{Name} · {Address}";
+    private TargetSnapshot? lastSample;
     public void Apply(TargetSnapshot? sample, bool running)
     {
+        lastSample = sample;
         if (sample?.CheckedAtUtc is null) { Status = "Not checked"; Details = "No measurements or successful responses yet."; return; }
         Status = sample.Result.Outcome switch
         {
@@ -68,7 +75,7 @@ public sealed class TargetRow(TargetConfiguration configuration) : ObservableObj
     public static string DisplayTime(DateTimeOffset? time) => time?.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss zzz") ?? "Not observed";
 }
 
-public sealed class OutageRow(OutageRecord record, bool interrupted = false) : ObservableObject
+public sealed partial class OutageRow(OutageRecord record, bool interrupted = false) : ObservableObject
 {
     private OutageRecord record = record;
     private bool interrupted = interrupted;

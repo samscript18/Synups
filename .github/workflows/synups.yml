@@ -19,7 +19,7 @@ jobs:
         with:
           global-json-file: synups/global.json
       - name: Headless font prerequisites
-        run: sudo apt-get update && sudo apt-get install -y libfontconfig1
+        run: sudo apt-get update && sudo apt-get install -y libfontconfig1 python3-gi desktop-file-utils
       - name: Isolated optimized Release coverage build
         run: |
           set -o pipefail
@@ -65,7 +65,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1 iproute2 iptables
+          sudo apt-get install -y xvfb libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1 iproute2 iptables python3-gi desktop-file-utils
       - name: Archive tool safety tests
         run: python -m unittest discover -s ../eng/tests -v
       - name: Locked dependency restore

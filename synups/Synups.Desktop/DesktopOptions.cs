@@ -4,16 +4,21 @@ namespace Synups.Desktop;
 
 /// <summary>Explicit portable-data and installation-diagnostic options. Ordinary startup remains passive.</summary>
 public sealed record DesktopOptions(string DataDirectory, string? VerificationDirectory = null,
-    string VerificationStage = "exercise", int ObserveSeconds = 2)
+    string VerificationStage = "exercise", int ObserveSeconds = 2, bool LaunchMinimized = false)
 {
     public static DesktopOptions Parse(string[] args)
     {
         string data = SynupsPaths.DataDirectory; string? report = null;
-        var stage = "exercise"; var seconds = 2;
+        var stage = "exercise"; var seconds = 2; var minimized = false;
         var seen = new HashSet<string>(StringComparer.Ordinal);
         for (var i = 0; i < args.Length; i++)
         {
-            var key = args[i];
+            var key = args[i].Equals("/Minimize", StringComparison.OrdinalIgnoreCase) ? "--minimized" : args[i];
+            if (key == "--minimized")
+            {
+                if (!seen.Add(key)) throw new ArgumentException("Launch-minimized may occur once.");
+                minimized = true; continue;
+            }
             if (!seen.Add(key) || i + 1 >= args.Length) throw new ArgumentException("Every option requires one value and may occur once.");
             var value = args[++i];
             switch (key)
@@ -31,7 +36,7 @@ public sealed record DesktopOptions(string DataDirectory, string? VerificationDi
         if (report is null && (seen.Contains("--verification-stage") || seen.Contains("--observe-seconds")))
             throw new ArgumentException("Verification options require --verify-installation.");
         if (report is not null && !seen.Contains("--data-directory")) throw new ArgumentException("Installation verification requires an explicit isolated --data-directory.");
-        return new(Absolute(data), report, stage, seconds);
+        return new(Absolute(data), report, stage, seconds, minimized);
     }
     private static string Absolute(string value)
     {
@@ -41,6 +46,7 @@ public sealed record DesktopOptions(string DataDirectory, string? VerificationDi
     public const string Help = """
         Synups — local network reliability monitor
         Open without arguments for normal desktop use. No probes run until Start or an explicitly saved launch preference.
+        --minimized (or /Minimize)           Minimize this new window; an existing workspace is always restored.
         --data-directory ABSOLUTE_PATH       Use a separate configuration/preferences/history directory.
         --verify-installation REPORT_FOLDER Run an explicit real-loopback installation check in an isolated data directory.
         --verification-stage STAGE          exercise | restart | interruption | recover | storage-error | storage-recovered.

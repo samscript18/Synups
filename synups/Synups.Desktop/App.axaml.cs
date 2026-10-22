@@ -14,11 +14,12 @@ public partial class App : Application
     private readonly InstanceCoordinator? instance;
     private readonly InstallationCheck? installationCheck;
     private int activationQueued;
+    private bool launchMinimized;
     public App() : this(() => new MainWindowViewModel()) { }
     public App(Func<MainWindowViewModel> createViewModel) => this.createViewModel = createViewModel;
     public App(DesktopOptions options, InstanceCoordinator instance, InstallationCheck? installationCheck)
         : this(() => new MainWindowViewModel(options.DataDirectory))
-    { this.instance = instance; this.installationCheck = installationCheck; }
+    { this.instance = instance; this.installationCheck = installationCheck; launchMinimized = options.LaunchMinimized; }
 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
@@ -27,7 +28,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.ShutdownMode = ShutdownMode.OnMainWindowClose;
-            var window = new MainWindow { DataContext = createViewModel() };
+            var window = new MainWindow { DataContext = createViewModel(), StartMinimized = launchMinimized };
             desktop.MainWindow = window;
             instance?.Listen(() =>
             {

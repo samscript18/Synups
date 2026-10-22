@@ -61,6 +61,8 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool PrefRecovery { get => prefRecovery; set => Set(ref prefRecovery, value); }
     public bool PrefErrors { get => prefErrors; set => Set(ref prefErrors, value); }
     public bool PrefNative { get => prefNative; set => Set(ref prefNative, value); }
+    private bool prefDatedLogs;
+    public bool PrefDatedLogs { get=>prefDatedLogs; set=>Set(ref prefDatedLogs,value); }
     public bool PrefLogs { get => prefLogs; set => Set(ref prefLogs, value); }
     public string PrefLogDirectory { get => prefLogDirectory; set => Set(ref prefLogDirectory, value ?? ""); }
     public string PrefRetentionDays { get => prefRetentionDays; set => Set(ref prefRetentionDays, value ?? ""); }
@@ -111,7 +113,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool IsRunning => snapshot.State is SessionState.Running or SessionState.Stopping;
     public bool CanEdit => loaded && !busy && !IsRunning && !disposed && !IsDiscovering;
     public bool CanStart => CanEdit && service.HistoryReady && !service.HasUnsavedEvidence && configuration.Groups.Any(g => g.Enabled);
-    public string StartGuidance => disposed ? "This window is closing." : IsDiscovering ? "Finish or cancel gateway discovery before starting monitoring." : busy ? "Finishing the current action…" :
+    public string StartGuidance => disposed ? "This window is closing." : IsDiscovering ? "Finish or cancel discovery before starting monitoring." : busy ? "Finishing the current action…" :
         IsRunning ? (snapshot.Groups.SelectMany(g => g.Targets).Any(t => t.Result.Error == ProbeError.PermissionDenied)
             ? "ICMP permission was denied. Check OS/firewall policy; this is indeterminate, not confirmed downtime. Synups never elevates itself automatically."
             : "Stop monitoring before editing. ICMP filtering can cause missed replies without a service outage.") :
@@ -141,6 +143,9 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool HasCurrentOutage => snapshot.Groups.Any(g => g.ConfirmedOutage);
     public bool HasCurrentUncertainty => IsRunning && snapshot.Groups.Any(g => g.Connectivity is GroupConnectivity.NotChecked or GroupConnectivity.Unavailable or GroupConnectivity.Disconnected);
     public bool IsCurrentlyConnected => snapshot.State == SessionState.Running && snapshot.Groups.Any(g => g.Connectivity == GroupConnectivity.Connected) && !HasCurrentOutage && !HasCurrentUncertainty;
+    public string MonitoredTime => snapshot.SessionId is { } id && snapshot.Sessions?.FirstOrDefault(s => s.Id == id) is { } session
+        ? $"Observed session time: {session.Elapsed:g}{(session.ContainsObservationGap ? " · includes observation gaps" : "")} · through last completed poll"
+        : "Observed session time: Not observed";
     public string LastMeasurement => TargetRow.DisplayTime(snapshot.LastMeasurementUtc);
     public string OverviewSummary
     {
@@ -174,7 +179,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool IsHelp => SelectedPage == 4;
     public string VersionText => typeof(MainWindowViewModel).Assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), false)
         .OfType<System.Reflection.AssemblyInformationalVersionAttribute>().Single().InformationalVersion;
-    public string KeyboardHelp => $"F1: Help · F5: Start · Shift+F5: Stop · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+1…5: screens · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+Shift+C: copy target IP · +Shift+I: copy incident. Escape cancels confirmation dialogs or active discovery. Tab/Shift+Tab move between controls; Enter/Space activate focused buttons.";
+    public string KeyboardHelp => $"F1: Help · F5: Start · Shift+F5: Stop · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+1…5: screens · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+Shift+C: copy target IP · +Shift+I: copy incident. In a selected target/incident list: Ctrl/Cmd+C copies the chosen value, +Shift+C copies the row, F4 edits and Escape clears selection. Delete removes a selected target after confirmation; Ctrl/Cmd+S exports incidents. Escape cancels confirmation dialogs or active discovery. Tab/Shift+Tab move between controls; Enter/Space activate focused buttons.";
     public bool HasSelectedTarget => SelectedTarget is not null;
     public GroupRow? SelectedGroup
     {
@@ -323,7 +328,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         PrefAutoStart = SavedPreferences.MonitorOnLaunch; PrefOutage = SavedPreferences.NotifyOutages;
         PrefRecovery = SavedPreferences.NotifyRecovery; PrefErrors = SavedPreferences.NotifyErrors;
         PrefNative = SavedPreferences.NativeNotifications; PrefLogs = SavedPreferences.AutomaticLogs;
-        PrefFocus = SavedPreferences.FocusOnConfirmedEvents;
+        PrefFocus = SavedPreferences.FocusOnConfirmedEvents; PrefDatedLogs = SavedPreferences.DateLogFilenames;
         PrefLogDirectory = SavedPreferences.LogDirectory; PrefRetentionDays = SavedPreferences.RetentionDays.ToString(CultureInfo.InvariantCulture);
     }
     public Task SavePreferencesAsync(bool recover = false, bool confirmRetention = false) => ExecuteAsync(async () =>
@@ -334,7 +339,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         var next = SavedPreferences with { ConfirmExit = PrefConfirmExit, AlwaysOnTop = PrefTopmost, MinimizeToTray = PrefTray,
             LaunchMinimized = PrefMinimized, MonitorOnLaunch = PrefAutoStart, NotifyOutages = PrefOutage, NotifyRecovery = PrefRecovery,
             NotifyErrors = PrefErrors, NativeNotifications = PrefNative, AutomaticLogs = PrefLogs, LogDirectory = PrefLogDirectory.Trim(), RetentionDays = days,
-            FocusOnConfirmedEvents = PrefFocus };
+            FocusOnConfirmedEvents = PrefFocus, DateLogFilenames = PrefDatedLogs };
         next.Validate(); await preferencesStore.SaveAsync(next, recover); SavedPreferences = next; PreferencesError = null;
         await service.SetAutomaticRetentionAsync(days);
         await RefreshStorageAsync(force: true);
@@ -404,7 +409,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         Changed(nameof(StorageUsage)); Changed(nameof(StorageSummary)); Changed(nameof(StorageDetails)); Changed(nameof(StorageWarning)); Changed(nameof(HasStorageWarning));
     }
     private Task WriteAutomaticLogsAsync() => SavedPreferences.AutomaticLogs && service.HistoryReady ? ExportAutomaticAsync() : Task.CompletedTask;
-    private async Task ExportAutomaticAsync() => await AutomaticLogExporter.WriteAsync(SavedPreferences.LogDirectory, await service.ReadArchiveAsync());
+    private async Task ExportAutomaticAsync() => await AutomaticLogExporter.WriteAsync(SavedPreferences.LogDirectory, await service.ReadArchiveAsync(), SavedPreferences.DateLogFilenames);
     public Task ExportAsync(Stream destination) => ExecuteAsync(async () =>
     {
         try { await service.ExportIncidentsAsync(destination); }
@@ -490,14 +495,14 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         if (snapshot.Error is { } error) Message = error;
         else if (previousState == SessionState.Stopping && snapshot.State == SessionState.Stopped)
             Message = "Monitoring has finished stopping. Restart and editing are available.";
-        Changed(nameof(MonitoringState)); Changed(nameof(OverviewSummary)); Changed(nameof(ConnectivityAssessment)); Changed(nameof(LastMeasurement));
+        Changed(nameof(MonitoredTime)); Changed(nameof(MonitoringState)); Changed(nameof(OverviewSummary)); Changed(nameof(ConnectivityAssessment)); Changed(nameof(LastMeasurement));
         foreach (var name in new[] { nameof(OverviewEyebrow), nameof(MetricContext), nameof(EnabledGroupCount), nameof(ConnectedGroupCount), nameof(ConfirmedOutageCount), nameof(UnavailableGroupCount), nameof(HasCurrentOutage), nameof(HasCurrentUncertainty), nameof(IsCurrentlyConnected) }) Changed(name);
         Changed(nameof(HasNoOutages)); Changed(nameof(HistoryStatus)); NotifyControls();
     }
     private void NotifyControls()
     {
         TimelineControlsChanged();
-        Changed(nameof(CanDiscover)); Changed(nameof(CanAcceptGateway));
+        Changed(nameof(CanDiscover)); Changed(nameof(CanAcceptGateway)); Changed(nameof(CanCheckLegacy)); Changed(nameof(CanAcceptLegacy));
         foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(StartGuidance), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences), nameof(CanManageStorage), nameof(CanCleanupHistory) }) Changed(name);
     }
     public async ValueTask DisposeAsync()

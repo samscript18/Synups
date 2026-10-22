@@ -14,7 +14,7 @@ public static class AutomaticLogExporter
             g.Sum(o => o.Elapsed.TotalSeconds), g.Min(o => o.Elapsed.TotalSeconds), g.Max(o => o.Elapsed.TotalSeconds),
             g.Average(o => o.Elapsed.TotalSeconds), g.Any(o => o.ContainsObservationGap))).ToArray();
 
-    public static Task WriteAsync(string directory, HistoryState archive) => Task.Run(async () =>
+    public static Task WriteAsync(string directory, HistoryState archive, bool dateFilenames = false) => Task.Run(async () =>
     {
         Directory.CreateDirectory(directory);
         const long limit = 256 * 1024 * 1024;
@@ -25,7 +25,7 @@ public static class AutomaticLogExporter
             var records = archive.Events.Where(e => e.SessionId == session.Id).OrderBy(e => e.Sequence).ToArray();
             var json = JsonSerializer.SerializeToUtf8Bytes(new { Version = 1, Session = session, Outages = rows, Events = records, Statistics = Statistics(rows),
                 DurationMeaning = "Elapsed since confirmation through last observation; marked gaps are uncertain. No Internet uptime percentage is inferred." });
-            var name = Path.Combine(directory, $"Synups-{session.Id}.json");
+            var name = Path.Combine(directory, $"Synups-{(dateFilenames ? session.StartedUtc.UtcDateTime.ToString("yyyyMMddTHHmmssZ", CultureInfo.InvariantCulture) + "-" : "")}{session.Id}.json");
             var csvName = Path.ChangeExtension(name, ".csv");
             if (File.Exists(name) && File.Exists(csvName) && (await File.ReadAllBytesAsync(name).ConfigureAwait(false)).AsSpan().SequenceEqual(json)) continue;
             var oldLength = File.Exists(name) ? new FileInfo(name).Length : 0;

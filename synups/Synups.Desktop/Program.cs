@@ -1,3 +1,4 @@
+using System.Reflection;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -12,7 +13,7 @@ internal static class Program
     public static int Main(string[] args)
     {
         if (args.SequenceEqual(new[] { "--help" })) { Console.WriteLine(DesktopOptions.Help); return 0; }
-        if (args.SequenceEqual(new[] { "--version" })) { Console.WriteLine($"Synups {typeof(Program).Assembly.GetName().Version}; {System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier}; .NET {Environment.Version}"); return 0; }
+        if (args.SequenceEqual(new[] { "--version" })) { Console.WriteLine($"Synups {typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion}; {System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier}; .NET {Environment.Version}"); return 0; }
         InstanceCoordinator? instance = null;
         InstallationCheck? check = null;
         var platformStarted = false;
