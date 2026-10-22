@@ -113,7 +113,7 @@ All nine complete rows retain their scores. The eight previously partial rows re
 
 Exact source, tests, package hashes and limitations: [reviewed rc.2](../release/FINAL_HARDENING_CANDIDATE.md). Public0.1.0 and frozen rc.1 remain72.2% binaries. Native CI query/packaged tests cover Windows/macOS/Linux; physical Mac acceptance remains blocked by disabled Accessibility/event-post permission. This is not 75% effort or universal platform certification.
 
-## Legacy completion rc.3 — current application inventory
+## Legacy completion rc.3 — frozen release-payload inventory
 
 Frozen application **7ca85cccce6e3609d08d64e4f23172fa14fffb25**, [actual three-OS packaged verification](https://github.com/samscript18/Synups/actions/runs/39821153798). Functional completeness uses the same 18 original rows and weights; certification of physical desktop behavior remains separate. No new enhancement earns an extra row.
 
@@ -141,3 +141,16 @@ Frozen application **7ca85cccce6e3609d08d64e4f23172fa14fffb25**, [actual three-O
 **(14 complete×1 +4 partial×0.5)/18 =16/18 =88.9%.** Before rc.3: 75.0%=(9+9×0.5)/18. The five changes are startup, main status, defaults, discovery and menus/dialogs. No denominator, weight or simulation exclusion changed. Complete reflects the recorded functional intent with documented safe substitutions, not every Windows-specific visual detail, physical interaction, actual hardware candidate or platform certification. Alerts/preferences/placement/import are conservatively partial for the explicit missing evidence above.
 
 [Reviewed candidate, hashes, tests, failures and limitations](../release/LEGACY_COMPLETION_CANDIDATE.md). Windows/macOS default suites 143 passed (4 intentional skips); Linux 144 (3 intentional skips), each plus 3 separately enabled native/network and 8 Python cases. All 147 cases execute across the suite invocations on Linux; the Gio-specific case is unsupported/skipped on Windows/macOS. Actual six-stage extracted apphosts pass on all three native runners. Physical macOS tray/Save-panel/keyboard acceptance remains blocked by denied Accessibility/event-post permission. Public 0.1.0/rc.1 remain 72.2%, rc.2 remains 75.0%; these immutable earlier binaries do not acquire rc.3 functionality.
+
+
+## Desktop completion rc.4 — current application inventory
+
+Source **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, [verified three-OS actual apphosts](https://github.com/samscript18/Synups/actions/runs/39850198899). All14 complete rc.3 rows retain their scores. **Settings persistence** changes from partial0.5 to complete1: a genuine Menees5.1.2 `.stgx` fixture was emitted by untouched upstream WirePeep on Windows; validated read-only profile preview, explicit replacement confirmation, original GUID/timing preservation, destination backup, corrupt-input refusal and subsequent reload are tested on all three OS apphosts. WirePeep source bytes, existing history and OS preferences are untouched. Unsupported schema/timing variants are rejected; wholesale import of Windows-specific preferences is deliberately excluded. This is the profile-only import intent recorded in LEGACY_INTEGRATIONS, not universal compatibility with every historical library version.
+
+| Remaining partial row | Implemented improvement | Exact missing verification |
+|---|---|---|
+| Alerts | Optional bounded WAV requests, existing deduplication/focus/fallback; Windows native attempt withdrawn after failed independent delivery observation | Actual OS notification delivery, audible output and platform attention/taskbar behavior |
+| Preferences | Stable/UTC/local/fixed derived log naming, validated pane sizes, existing explicit reversible startup registration | Actual next-login execution/removal; no arbitrary legacy filename-template claim |
+| Placement / tray | Persistent independent pane limits plus existing geometry/Show/Exit/hide safety | Physical tray clicks, native multiple-display restoration and full desktop acceptance |
+
+**Unchanged calculation: (15 complete×1+3 partial×0.5)/18=16.5/18=91.7%.** Frozen proposed rc.3 stays88.9%; public0.1.0 stays72.2%. No enhancement row or changed denominator is used. The owner explicitly cannot perform the remaining manual checks; permission blockers are retained, not silently passed. [Exact candidate, failures, hashes and164-case verification](../release/DESKTOP_COMPLETION_CANDIDATE.md). The mandatory public v0.1.1 preparation still uses rc.3 bytes pending a separate reviewed choice.

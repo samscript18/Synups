@@ -1,0 +1,10 @@
+{
+  "verified_utc": "2026-10-22T19:26:42.709672+00:00",
+  "query_exit_code": 0,
+  "developer_id_application_available": false,
+  "developer_id_installer_available": false,
+  "repository_actions_secrets_count": 0,
+  "private_keys_exported": false,
+  "credentials_modified": false,
+  "scope": "Local available keychain signing identities, environment variable names and repository Actions-secret metadata; external owner credentials not assessed."
+}

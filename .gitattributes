@@ -71,3 +71,6 @@ docs/evidence/verification/**/real-incident.csv binary
 
 # Genuine legacy serializer fixture: retain exact observed bytes.
 synups/Synups.Tests/Fixtures/*.stgx binary
+
+# Preserve byte-exact original Windows evidence; CRLF is part of the retained report.
+docs/evidence/verification/2026-10-22-original-windows/original-evidence.json binary

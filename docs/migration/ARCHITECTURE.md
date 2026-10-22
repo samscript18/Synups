@@ -156,3 +156,12 @@ The same three projects and existing monitoring/persistence ownership remain. Gr
 LoginRegistration is a desktop OS boundary: explicit confirmed enable/remove only, per-workspace identity, validated absolute process arguments, foreign-entry refusal and safe file writes. Reading/saving preferences is not permission to change OS registration. Platform adapters cover HKCU Run, LaunchAgents and XDG autostart; actual login execution is not certified. Linux rejects unsupported Exec path characters instead of writing an unusable entry. Optional UTC date prefixes leave default automatic-log names and historical files intact. Appended preferences remain version 1-compatible; closed genuine rc.2 history/configuration reloads with identical logical records.
 
 No new runtime dependency, cloud service, database schema replacement or monitoring rewrite was introduced. [Verified candidate/design limits](../release/LEGACY_COMPLETION_CANDIDATE.md) records the exact source, tests and package hashes.
+
+
+## rc.4 additive desktop integrations
+
+LegacySettingsReader reads only the actual captured Menees5.1.2 profile schema, capped2MB with DTD resolution prohibited. Preview is off the UI thread. ConfigurationStore serializes backup+atomic replacement under its existing write gate; corrupt destinations refuse import. Confirmation preserves original identities and leaves history/preferences/OS settings untouched. Existing session immutability and stop-before-edit semantics remain.
+
+AlertSoundSink uses the existing bounded AlertDelivery worker and transition policy; optional local WAV paths are header/size checked, passed as data rather than command source, with finite timeout/cancellation/disposal. Windows SoundPlayer, macOS afplay and optional Linux paplay are capability-dependent; no audible-delivery claim. Unverified Windows notification code was withdrawn after actual delivery failure; in-app fallback remains.
+
+LogFilenameStyle adds stable/UTC/local/fixed derived copies while retaining canonical per-session logs. Fixed JSON/CSV is limited16MiB and subject to the existing folder quota. Each file is safely replaced; the two-copy pair is not transactionally atomic and SQLite remains authoritative. Full-archive copy generation still warrants representative large-history work. Validated pane maximum heights are version1 additive preference fields with safe old-file defaults. Monitoring and SQLite schema remain unchanged. [Exact reviewed candidate](../release/DESKTOP_COMPLETION_CANDIDATE.md).

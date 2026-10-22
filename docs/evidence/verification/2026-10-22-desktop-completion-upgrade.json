@@ -1,0 +1,104 @@
+{
+  "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "baseline_revision": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+  "method": "Closed disposable copies read with current production Core; original databases not modified.",
+  "results": [
+    {
+      "kind": "rc3-closed-copy",
+      "exit_code": 0,
+      "logical_rows_preserved": true,
+      "sessions": 5,
+      "events": 10,
+      "outages": 0,
+      "output": [
+        {
+          "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+          "baseline_revision": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+          "sessions": 5,
+          "interrupted": 1,
+          "outages": 0,
+          "event_ids": [
+            "d850c2f6-4ba8-42d9-ad22-f7c8bd2d5d0d",
+            "9d2f53bc-9496-4fb6-8212-271a941a7dca",
+            "f3270b11-7307-438c-8d50-c34653118338",
+            "2ca86f2f-ba19-4966-bcbf-d83917f6ec09",
+            "c2156ca7-c960-423c-aaf7-152425afc2cc",
+            "6387d58a-0a1a-4013-a333-8c75ac0e99dd",
+            "085429af-a0ac-4d21-8349-2ca6240941e7",
+            "7a8a5c8e-1bdd-45ec-8bce-e57b35fa06e5",
+            "ead5d3a4-aeb8-4ba1-9882-93df0ef7e760",
+            "c2d19034-ad43-4e28-82db-5ea9bd6c9dd9"
+          ],
+          "group_ids": [
+            "e4e59f2d-127f-45e7-a97e-441b62d13790"
+          ],
+          "target_ids": [
+            "ea6f0b4b-bab6-48de-ab62-925f151a12b3"
+          ],
+          "old_preferences_loaded": true,
+          "date_filename_default": false
+        },
+        {
+          "configuration_and_preferences_byte_identical": true,
+          "database_header_may_change": true,
+          "before": {
+            "history.v1.db": "272e2bfda62523334adc14cd5d186a041b81c019c2dcd7f11dce67165f1ef8f8",
+            "configuration.v1.json": "10b69b599cfbda771321640a9a557d681239067ee702d63e9c7ffe289fc6c048",
+            "preferences.v1.json": "5ee54b9009b502c4f4239c4592b8ca93c5de9a015d11a1d3c5774321a9b8ccf7"
+          },
+          "after": {
+            "history.v1.db": "1bf9babc770fae46c7c16f1de1f5145038580fc83adfb2fa0f43f20cb7535957",
+            "configuration.v1.json": "10b69b599cfbda771321640a9a557d681239067ee702d63e9c7ffe289fc6c048",
+            "preferences.v1.json": "5ee54b9009b502c4f4239c4592b8ca93c5de9a015d11a1d3c5774321a9b8ccf7"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "rc3-incident-copy",
+      "exit_code": 0,
+      "logical_rows_preserved": true,
+      "sessions": 1,
+      "events": 5,
+      "outages": 1,
+      "output": [
+        {
+          "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+          "baseline_revision": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+          "sessions": 1,
+          "interrupted": 0,
+          "outages": 1,
+          "event_ids": [
+            "305b0d27-53c2-4eb1-bbf2-de05b9ae7e0a",
+            "cfb4857a-25cd-49b6-8695-2024cb8fa0fd",
+            "d51ffbe2-128c-441a-a638-f99d521a9575",
+            "448a2dfe-acd6-4969-8bb1-1cb3ef5b62de",
+            "3bda5386-e97c-4228-bb2b-934d51717788"
+          ],
+          "group_ids": [
+            "4520293c-4ca1-4479-bd68-d3a52fd7eaf2"
+          ],
+          "target_ids": [
+            "96d9875e-7476-4873-9e15-7587f585d0be"
+          ],
+          "old_preferences_loaded": true,
+          "date_filename_default": false
+        },
+        {
+          "configuration_and_preferences_byte_identical": true,
+          "database_header_may_change": true,
+          "before": {
+            "history.v1.db": "5d7579fa9c406ed481cbff8486efa08331a60e105bfa2262511083a27e63d64a",
+            "configuration.v1.json": "4338c76a65f42cd6a5f3231d1418a2c2f66c7964e02746eec7a1a1ae48b81fec",
+            "preferences.v1.json": "008690d7ce9ed48ae5d50379e1d0edb4b117ff506d0511e14656c225524fcda6"
+          },
+          "after": {
+            "history.v1.db": "c6690438afb9f4ec466fa59618b0cecbaa9ea19670a724ef737bb80799b30ba2",
+            "configuration.v1.json": "4338c76a65f42cd6a5f3231d1418a2c2f66c7964e02746eec7a1a1ae48b81fec",
+            "preferences.v1.json": "008690d7ce9ed48ae5d50379e1d0edb4b117ff506d0511e14656c225524fcda6"
+          }
+        }
+      ]
+    }
+  ]
+}

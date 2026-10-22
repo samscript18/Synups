@@ -1,92 +1,53 @@
-# Synups — judge’s guide
+# Synups — judge's guide
 
-Synups helps developers and IT professionals retain evidence of intermittent connectivity problems: real ICMP observations, confirmed incidents, observed recoveries and context in a local database. Primary category: **Best IT Pro Tool**. No cloud account, backend, WebView, production simulator or fabricated uptime.
+**Know when your network drops. Know how long it lasts. Keep the evidence.**
 
-## Exact runnable release
+Synups helps individuals, developers and IT professionals diagnose intermittent peer reachability and keep useful incident evidence locally. It probes explicitly configured literal-IP peers with real ICMP, applies failure grace, records confirmed incidents and observed recoveries, and preserves comments/history in SQLite. CSV exports support troubleshooting and ISP/IT conversations; they do not certify whole-Internet availability.
 
-**[Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0)** — source/tag `2973d3349fcb5af5639597920842288e6549bbd0`. [Windows x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip), [macOS arm64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz), [Linux x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz), [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS). The runtime and native SQLite are included; keep every extracted file together. All 15 Release assets were anonymously downloaded/hash-verified. [Publication evidence](../evidence/verification/synups-0.1.0-publication.json), [installation](../release/INSTALLATION.md).
+## Evaluate it quickly
 
-The later **0.1.1-rc.1 is an unpublished candidate**, not a replacement for those verified assets. It adds one-action first-target setup; only its separately recorded CI/source results apply to it. No new Release or competition entry is published automatically.
+1. Download the current public [Synups0.1.0 release](https://github.com/samscript18/Synups/releases/tag/v0.1.0). [Windows x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip), [macOS arm64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz), [Linux x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz), [checksums](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS). No account/SDK/backend is needed.
+2. Follow [platform installation guidance](../release/INSTALLATION.md). Windows is unsigned; Mac is ad-hoc only and Gatekeeper rejects trusted delivery. No security bypass is recommended.
+3. Configure a named literal IP and enabled peer group, then choose Start. Stop before editing. Opening the app does not automatically probe unless explicitly configured to do so.
+4. Inspect real target status, freshness and RTT, then Activity/outages and CSV if actual incidents exist. Unknown is not reported as zero latency or uptime.
+5. For observed failure/grace/recovery without disrupting your network, inspect the [genuine isolated incident sequence](INCIDENT_DEMO.md), its timestamps/CSV and reproduction protocol.
 
-## Original application and preserved behavior
+**Version distinction:** public0.1.0 is the permanent judge-accessible download above. The separately reviewed, unpublished **0.1.1-rc.3** adds first-run guidance, discovery, paginated incidents and desktop conveniences and reaches88.9% inventory parity. [Exact source, hashes and evidence](../release/LEGACY_COMPLETION_CANDIDATE.md). [Proposed v0.1.1 release materials](../release/v0.1.1/RELEASE_BODY.md) await publication authorization; do not treat proposed links as downloads. A later integration worktree is not part of the frozen candidate.
 
-Bill Menees’ MIT-licensed [WirePeep](https://github.com/menees/WirePeep) existed before the challenge: upstream `61ae14391151ca9f209223e62c98fae3df5482b8` (2024) remains an ancestor, with original WPF source/build files and licence retained. WirePeep checked named literal-IP peers in groups, rotated the first peer, stopped after a response, applied failure grace, and recorded session outages/comments/logs.
+## Original application and the migration
 
-Synups preserves that monitoring intent and the original literal default XML. Five linked-original characterization tests isolate its state/rotation code; migrated tests cover the documented corrections. One responding peer means group reachability, not that every peer is online. Unprobed targets remain not checked/stale.
+Original: [Bill Menees' WirePeep](https://github.com/menees/WirePeep), upstream **61ae14391151ca9f209223e62c98fae3df5482b8**,1June2024. Its WPF/.NET Framework and Windows-targeted .NET implementation used synchronous Ping, Menees settings/window helpers, WinForms tray/balloons, WPF taskbar/media and Registry startup preferences. The WPF window coordinated background monitoring, state rows, outage logs, alerts and lifetime.
 
-## What was rewritten and improved
-
-| Area | Original | Migration result |
+| Preserved | Rewritten | Improved |
 |---|---|---|
-| Presentation | WPF/Menees controls and window orchestration | Native Avalonia C#/XAML, observable rows and shared design tokens |
-| Monitoring | Blocking probes/timer, mutable UI coupling | UI-free snapshots, async bounded workers, cancellation/drain and immutable session configuration |
-| Time and uncertainty | UTC thresholds; unavailable could clear failure | Monotonic durations; errors never imply recovery; gaps explicitly marked |
-| Evidence | In-memory session list and text logs | Transactional SQLite incidents/sessions/comments, interruption reload, CSV/JSON logs, backups/capacity/retention |
-| Lifetime | Windows tray/settings/lifecycle APIs | Explicit OS adapters/fallbacks, owned shutdown and per-workspace activation |
+| Literal-IP targets, identities, groups and timings | Avalonia C#/XAML desktop, observable presentation and platform boundaries | Windows/macOS/Linux actual extracted-apphost execution |
+| Sorted round robin, stop on first success, failure grace | Cancellable asynchronous orchestration with bounded concurrency | Monotonic duration/scheduling and honest indeterminate states |
+| Outage/comment/session-log/export intent | Local settings, platform integration and lifetime | Durable SQLite history/comments, interrupted sessions, bounded pages/streaming CSV |
+| Original XML resources, MIT licence and ancestry | Safe explicit discovery instead of startup TTL/candidate probes | Guided setup, confirmation/duplicate guards, clipboard/help/shortcuts |
 
-Only three solution projects are needed: Core, Desktop and Tests. Reusing Common unchanged was blocked by inherited Windows targets, Menees serialization/discovery and synchronous probing. The WPF window combined scheduling/logging/alerts. Avalonia presentation/lifetime and storage were rewritten while selection/failure semantics were characterized first. [Architecture](../migration/ARCHITECTURE.md), [semantics](../migration/LEGACY_SEMANTICS.md).
+No monitoring generator, WebView, cloud/account or fabricated uptime was introduced. Probe errors do not recover an incident; stop ends observation without inventing recovery. [Exact deviations](../migration/LEGACY_SEMANTICS.md) · [Architecture](../migration/ARCHITECTURE.md).
 
-## Genuine before and after
+## Before and after
 
-| Original WirePeep illustration, Bill Menees | Actual 0.1.0 macOS client render, real loopback |
-|---|---|
-| ![WirePeep upstream illustration](../evidence/before/wirepeep-upstream.png) | ![Synups published apphost](../evidence/after/2026-10-21-apphost/osx-arm64/exercise-overview.png) |
+[Before](../evidence/before/2026-10-22-wirepeep-windows.png): actual untouched upstream WirePeep on Windows, [run39841203591](https://github.com/samscript18/Synups/actions/runs/39841203591). Disposable application-scoped outbound blocking caused the failed rows; this is not a real ISP outage. The credited upstream illustration remains available. [After Windows](../evidence/after/2026-10-22-legacy-completion/win-x64/overview.png), [Mac](../evidence/after/2026-10-22-legacy-completion/osx-arm64/overview.png), [Linux](../evidence/after/2026-10-22-legacy-completion/linux-x64/overview.png): genuine rc.3 actual packaged client-area captures using real loopback. [Normal Mac OS-window capture](../evidence/after/2026-10-22-legacy-completion/macos-normal-launch.png). [Provenance](../evidence/README.md) distinguishes component incident/UI renders/OS captures and actual source revisions.
 
-The original image is attributed upstream, not a fresh Windows run. The after image is a native client-tree render, not an OS desktop capture. [Genuine macOS normal-launch window capture including OS chrome](../evidence/after/2026-10-22-competitive/macos-stable-normal-launch.png) separately shows the unchanged public release with an empty profile and no measurements. [Complete image provenance](../evidence/README.md). No images were generated or repopulated with invented incidents.
+## Evidence against the judging dimensions
 
-## Verified platforms and tests
+- **Migration difficulty/completeness:** WPF scheduling/logging/lifetime and Windows-only dependencies required service/presentation separation. Frozen rc.3 reaches **(14 complete+4 partial×0.5)/18 =88.9%** using the unchanged inventory. Alerts/preferences/physical placement/tray and genuine original settings import stay partial. [Inventory](../migration/FEATURE_PARITY.md).
+- **Application quality:** clear first-run setup and unknown/stale/error states, usable real incident/comment/export workflow and durable evidence. [Real demonstration](INCIDENT_DEMO.md). No speculative analytics or inflated uptime.
+- **Cross-platform implementation:** [exact rc.3 three-OS CI](https://github.com/samscript18/Synups/actions/runs/39821153798), application **7ca85cccce6e3609d08d64e4f23172fa14fffb25**. Windows/Mac143 default tests, Linux144; each3 separate real/native+8 Python cases, zero-warning Release and six extracted executable stages. Actual scopes are Windows Server2025, macOS15, Ubuntu24.04/X11/Xvfb+Openbox; local macOS26.3.1 also passed. [Full matrix](../migration/CROSS_PLATFORM.md).
+- **Engineering quality:** linked-original characterization, deterministic clocks/fake probes only in tests, real opt-in ICMP, owned shutdown and storage error handling, exact artifact/file hashes, retained failure logs, [CodeQL](https://github.com/samscript18/Synups/actions/runs/39821182932) zero SARIF results and scoped coverage80.81% lines/67.34% branches. [Raw evidence](../evidence/verification/2026-10-22-legacy-completion-final.json).
+- **Migration write-up:** [README](../../README.md) answers effort/reuse/rethinking/surprises; [migration log](../migration/MIGRATION_LOG.md) preserves failures/fixes. Work dates16–22October2026 and reproducible29 commits after upstream are recorded for the frozen application. AI assistance is disclosed; no total labor hours were measured or invented.
 
-[Exact 0.1.0 run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118): Windows Server 2025 x64, macOS 15.7.9 arm64, Ubuntu 24.04.5 x64/X11/Xvfb. Each passed locked restore/audit, zero-warning Release, 105 deterministic/headless cases, 1 separately enabled real-loopback case, 4 Python safety cases and six extracted apphost stages. Default tests intentionally skip their opt-in network case. [Detailed source/job/asset evidence](../migration/CROSS_PLATFORM.md#phase-5-frozen-release-candidate--2973d33).
+## Limits and category fit
 
-Those are actual packaged executables, separately distinguished from the component-native harness. They exercise configuration/restart, real loopback, bounded stop, secondary-instance restoration, interrupted history without false recovery, actual read-only SQLite error and repair. Normal stages exit 0; deliberately killed disposable processes have documented nonzero status.
+Best IT Pro Tool is appropriate because this is practical network troubleshooting/evidence tooling, operated locally without cloud infrastructure. Best Cross-Platform Port/Legacy Revival are secondary strengths, not claimed awards or superiority to other entries.
 
-The unpublished candidate at `65d917ac645139836cf97e48c48c137a09825942` passed [three-OS run 39761184906](https://github.com/samscript18/Synups/actions/runs/39761184906): per OS **107 deterministic/headless + 1 separate real-loopback + 8 Python safety cases**, zero-warning Release and six actual extracted apphost stages. [Independent package/runtime audit](../evidence/verification/2026-10-22-competitive-candidate-final.json). This adds two first-run tests; it does not relabel stable-release binaries or counts.
+Signing/trusted Mac delivery, actual native notification delivery/login execution, physical tray/keyboard/native Save-panel/multiple-display acceptance and broader IPv6/VPN/suspend/Wayland/endurance remain explicitly limited. macOS Accessibility/event-post permission is denied; method calls are not substituted for physical acceptance. A genuine settings importer is not claimed without actual-version fixture validation. [Release checklist](../migration/RELEASE_READINESS.md), [physical Mac checklist](../release/MACOS_ACCEPTANCE.md), [signing findings](../release/DISTRIBUTION_TRUST.md).
 
-### Candidate first run
-
-![Actual Linux candidate first-run client](../evidence/after/2026-10-22-competitive/linux-x64/first-run.png)
-
-[Windows](../evidence/after/2026-10-22-competitive/win-x64/first-run.png) and [macOS](../evidence/after/2026-10-22-competitive/osx-arm64/first-run.png) are genuine renders from those exact extracted apphosts. An empty IP field means no measurement or target is invented. Add creates an enabled group and your target in one save; explicit Start is still required. Native viewport checks and downloaded image review pass. These screens are in the unpublished candidate, not public 0.1.0.
-
-## Try real monitoring
-
-1. Verify the downloaded archive checksum, extract completely and follow the platform/signing instructions.
-2. In published 0.1.0 choose Targets and groups → New group, name it and Apply. New groups are initially disabled.
-3. New target → name it, enter an IP you are authorized to monitor, choose the group and Apply. `127.0.0.1` tests this computer only; it does not test Internet connectivity.
-4. Select the group, enable it and Apply. Choose **Start monitoring**. Check real timestamps/RTT and target freshness. Stopped/unobserved metrics must not appear online.
-5. Stop before editing. Activity and outages holds actual confirmed incidents/comments; use its CSV export and Preferences’ full SQLite backup for their different purposes.
-
-The unpublished candidate’s initial overview can create an enabled group and first target in one save; it still requires explicit Start and never probes during setup. A human one-minute/keyboard-only completion time has not been certified.
-
-## Reproduce incident evidence safely
-
-See [controlled real-incident protocol](REAL_INCIDENT.md). A disposable Linux namespace drops/restores actual loopback ICMP while the production IcmpProbe/engine and visible Avalonia UI run. No user network is changed and no probe results are injected. [Actual successful Linux run](https://github.com/samscript18/Synups/actions/runs/39754244507/job/119742116397) and raw timestamps/CSV/restart records are retained in that protocol. Deterministic fake-probe tests are separate and test-only.
-
-## Challenges, effort and explicit limits
-
-The [README migration write-up](../../README.md#migration-write-up) and [migration log](../migration/MIGRATION_LOG.md) retain failures, fixes, actual timings and AI assistance. Total labor hours were not instrumented or invented. Real issues included unavailable falsely ending an outage, close/write ownership, Windows licence newline conversion, lost Mac archive signatures, a readiness race and macOS 15 minimize/restoration ordering.
-
-Public0.1.0 and rc.1 inventory parity is **72.2%=(9+8×0.5)/18**; unpublished rc.2 reaches **75.0%=(9+9×0.5)/18** through partial explicit gateway discovery. It is not percent effort or platform certification. Modem/transceiver discovery, validated settings import, login/sound/taskbar and some menu details remain incomplete. No speculative feature was added just to inflate this score.
-
-Windows is unsigned. Mac integrity is ad-hoc only, not Developer ID/notarization; Gatekeeper rejects trusted delivery. Do not disable OS security. Linux physical desktops/Wayland and native tray hosts are not certified by Xvfb. Native OS notification delivery is not proved by request acceptance; Windows has an in-app fallback. Local macOS Accessibility permission is disabled: physical tray clicks, native CSV save dialog and keyboard-only traversal remain blocked. A two-hour real-Core observation is scoped evidence, not multi-day GUI/large-history or physical power-loss certification. [Release checklist](../migration/RELEASE_READINESS.md), [desktop acceptance protocol](../release/DESKTOP_VALIDATION.md).
+Public0.1.0 and rc.1/rc.2/rc.3 are rollback baselines, not overwritten. Source changes after a frozen revision require independent verification. This guide prepares evaluation; **no official competition submission or acceptance is claimed**.
 
 
-## Final competitive candidate — independently verified, not released
+### Separate rc.4 integration evidence
 
-[0.1.1-rc.2 review, hashes and limitations](../release/FINAL_HARDENING_CANDIDATE.md), source **6446990571c285b5c2e2a4bb293cbd8e3af40171**, passed [native three-OS run](https://github.com/samscript18/Synups/actions/runs/39782799326). Each OS:126 deterministic/headless +2 separate opt-in loopback/native-route cases,8 Python safety cases, zero-warning Release and6 actual extracted-apphost stages. CodeQL reports no SARIF findings; scoped coverage80.63% lines/67.82% branches. This does not modify the published0.1.0 download links above.
-
-User-requested gateway discovery is now explicit/read-only/bounded and requires confirmation; no scan or startup probing. Activity shows real SQLite incidents in50-row pages, exact UTC/local dates, group, comments and confirmed/recovered/interrupted distinctions. CSV streams the full retained incident range. Clipboard IP/incident details, Help/About, shortcuts and opt-in confirmed-event restoration improve the desktop workflow without changing probe/group algorithms. No historical latency data is invented for a sparkline.
-
-| Genuine same-source incident, before recovery | Genuine same-source observed recovery |
-|---|---|
-| ![Confirmed incident timeline](../evidence/after/2026-10-22-hardening/linux-incident/confirmed-outage.png) | ![Recovered incident timeline](../evidence/after/2026-10-22-hardening/linux-incident/recovered-history.png) |
-
-[Actual incident/CSV/restart/focus proof](REAL_INCIDENT.md#final-hardening-timeline-and-focus-verification), [native Help/About](../evidence/after/2026-10-22-hardening/osx-arm64/help-about.png), [normal Mac OS-window capture](../evidence/after/2026-10-22-hardening/macos-normal-launch.png), [full source/image provenance](../evidence/verification/2026-10-22-hardening-final.json). The incident images are native source-component verifier renders; packaged captures and normal OS-window capture are separately identified. Physical tray/keyboard/native Save-panel acceptance remains blocked by local permissions, with [exact human checklist](../release/MACOS_ACCEPTANCE.md). Signing and platform limitations remain unchanged; built for the challenge, not yet an accepted entry.
-
-## Latest candidate — legacy completion rc.3 (unpublished)
-
-Source **7ca85cccce6e3609d08d64e4f23172fa14fffb25**, [review/checksums](../release/LEGACY_COMPLETION_CANDIDATE.md), [actual native three-OS run](https://github.com/samscript18/Synups/actions/runs/39821153798). Windows/Mac 143 deterministic/headless pass; Linux 144; each plus 3 separately enabled native/network and 8 Python cases. Six actual extracted-apphost stages pass perOS, including initial minimized state, second-instance restoration, native clipboard, loopback and durable SQLite error/restart handling. CodeQL zero SARIF results; scoped coverage 80.81% lines/67.34% branches. Raw reports and authentic images are retained with exact source/hash provenance.
-
-Parity rises75.0%→**88.9%=(14 complete+4 partial×0.5)/18** through launch-minimized/startup, complete status/context/row-value copy, explicit original candidate/guided-default setup and menus/focus. Gateway/default candidate checks are manual and confirmed, never a scan or startup surprise. Candidate response does not establish device identity or Internet health. The original monitoring algorithm, real evidence and MIT ancestry are retained. No runtime package was added.
-
-Alerts, actual login preferences, physical tray/placement and genuine legacy import remain partial. Accessibility/event posting prevents physical Mac keyboard/tray/Save-panel acceptance; normal OS launch/window/capture/quit and programmatic tests are recorded separately. Signing limits/public 0.1.0 download links above remain unchanged; no publicrc.3 release or accepted challenge entry is claimed. [Same-source genuine isolated ICMP incident/recovery](REAL_INCIDENT.md) persists across restart/CSV; this is real kernel-filtered loopback, not injected results or an Internet outage. This adds demonstrable desktop migration completeness without claiming every native integration is certified.
+[Reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md) (application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03) passes genuine settings-profile import/backup/reload on all three extracted apphosts, optional bounded WAV request/fallback and log/pane preferences. Inventory91.7%=(15+3×0.5)/18. [Exact native run39850198899](https://github.com/samscript18/Synups/actions/runs/39850198899):159 default cases Windows/Mac,160 Linux, each3 real/native+1 audio request/fallback+8 Python.164 unique .NET cases; physical desktop/login remains blocked. Windows native delivery was not observed and the adapter was withdrawn. This newer candidate is not the frozen rc.3 proposed v0.1.1 payload and has no public download/release. Do not copy its claims into rc.3 release notes.

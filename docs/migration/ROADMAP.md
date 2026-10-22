@@ -1,5 +1,7 @@
 # Migration roadmap
 
+Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. Proposed v0.1.1 payload remains frozen rc.3 at88.9%; public0.1.0 remains unchanged.
+
 Phase 3 local functional work and Phase 4A three-OS CI/native-harness checkpoint are implemented. Published-executable and installed-desktop/distribution gates remain open; Synups is not production-ready. See [release checklist](RELEASE_READINESS.md).
 
 ## Delivered
@@ -62,3 +64,8 @@ Prioritize a person completing the Mac acceptance checklist, trusted distributio
 ## After verified legacy completion rc.3
 
 Stop expanding scope: immutable7ca85cc now reaches88.9% inventory with verified three-OS packages. Review [candidate evidence](../release/LEGACY_COMPLETION_CANDIDATE.md), complete available [physical acceptance](../release/MACOS_ACCEPTANCE.md), then request separate publication/competition-submission authorization. Preserve public 0.1.0 and both older candidates. Trusted distribution and public judge access matter more than chasing94.4% through unverified login, OS notifications, physical tray or an invented importer. Keep those four rows partial until genuine evidence exists. No new release or submission is automatic.
+
+
+## Post-rc.4 handoff
+
+Genuine original-profile import is now verified; remove it from the current missing-feature list for rc.4 only. Public0.1.0/rc.3 do not acquire this functionality retroactively. Next action is review the prepared release choice: requested v0.1.1 payload is immutable rc.3; separately verified rc.4 needs an explicit choice before publication. Do not let optional features delay the deadline. Retain manual tray/Save/keyboard/multi-display/login and actual OS-delivery blockers; the owner is unavailable for those checks. Trusted signing remains credential-dependent. Publish only after authorization, anonymously verify every asset, then obtain separate submission authorization/receipt. [Current review](../release/DESKTOP_COMPLETION_CANDIDATE.md).

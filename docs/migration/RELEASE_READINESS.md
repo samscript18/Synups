@@ -1,5 +1,7 @@
 # Release readiness — Phase 5
 
+Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. Proposed v0.1.1 payload remains frozen rc.3 at88.9%; public0.1.0 remains unchanged.
+
 Assessment updated for user-authorized **[Synups 0.1.0 publication](https://github.com/samscript18/Synups/releases/tag/v0.1.0)**. **8.5/10 submission readiness; not production-ready and not 10/10.** All 15 public assets were downloaded anonymously and hash-checked. Mandatory signing/ordinary-desktop acceptance gates remain open. Competition entry has not been submitted. Historical assessments remain in Git and MIGRATION_LOG.md.
 
 Frozen release application source: **2973d3349fcb5af5639597920842288e6549bbd0**, `feat/avalonia-migration`, [successful three-OS run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118). [Exact Phase 5 downloaded evidence](../evidence/verification/2026-10-21-release-candidate.json), [platform limits](CROSS_PLATFORM.md#phase-5-frozen-release-candidate--2973d33), [launch instructions](../release/INSTALLATION.md) and [candidate notes](../release/RELEASE_NOTES.md).
@@ -138,3 +140,24 @@ Readiness remains **8.5/10 under the existing rubric**. More functionality/tests
 - [ ] Separate reviewed candidate Release authorization/public permanent download verification, then separately authorized competition submission. No new Release/submission performed.
 
 Prior passed results remain source-qualified historical evidence. Do not callrc.3 fully production-ready or replace stable0.1.0/rc.1/rc.2 archives. Optional parity work must not delay a reliable submission.
+
+
+## Desktop completion / presentation checkpoint —22 October2026
+
+Exact application **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, version0.1.1-rc.4. [Native Windows/macOS/Linux verification39850198899](https://github.com/samscript18/Synups/actions/runs/39850198899), [exact candidate/hashes/failures](../release/DESKTOP_COMPLETION_CANDIDATE.md), [retained independent evidence](../evidence/verification/2026-10-22-desktop-completion.json). This supersedes previous current-state limitations only for this separately frozen candidate. Public0.1.0 and rc.1/rc.2/rc.3 bytes are unchanged; the proposed v0.1.1 release still uses rc.3 at7ca85cccce6e3609d08d64e4f23172fa14fffb25, with its internal rc.3 version disclosed.
+
+Genuine original WirePeep now builds/runs on Windows: untouched upstream61ae143, .NET Framework4.8, original Menees5.1.2, populated native PrintWindow capture, clean WM_CLOSE exit0. The disposable runner blocks outbound traffic only for the original executable, so failed target rows are controlled results, not ISP outages. A real emitted .stgx fixture supports validated profile-only import with preview, explicit replacement confirmation, destination backup, preserved IDs/timings and no automatic probing. Unsupported formats fail safely. The fixture is test-only, not a production package resource. Windows-specific options/OS registrations are not blindly imported.
+
+rc.4 also adds optional bounded local WAV requests, log naming modes (stable/UTC/local/fixed snapshot) and validated persistent pane heights. No application dependency, monitoring algorithm or history schema changed. Closed copies of real rc.3 sessions and incident/comment evidence preserve all logical records and config/preferences bytes; SQLite header changes are not claimed byte-identical. Actual extracted apphosts verify import/backup and applied/reloaded pane/log preferences before restoring loopback configuration for monitoring.
+
+| Actual native platform | Default .NET | Separately enabled checks | Extracted executable |
+|---|---|---|---|
+|Windows Server2025 x64|159 passed,5 intentional skips|3 real/native+1 audio request passed;8 Python|Six stages passed;5 normal exits0, deliberate kill1|
+|macOS15 arm64|159 passed,5 intentional skips|3 real/native+1 audio request passed;8 Python|Six stages passed;5 normal exits0, deliberate kill-9|
+|Ubuntu24.04 x64 / Xvfb+Openbox|160 passed,4 intentional skips|3 real/native+1 audio fallback passed;8 Python|Six stages passed;5 normal exits0, deliberate kill-9|
+
+164 unique .NET cases across invocations/platforms; no public endpoint is required by default tests. Locked restore/auditing and Release builds pass with0 warnings/errors. Downloaded artifact/API hashes, every manifest member, RID/CPU/native SQLite/runtime, MIT/notices, Unix executable modes and absence of test/debug assets independently pass. Same downloaded Mac apphost repeated all six stages locally on26.3.1. [Local record](../evidence/verification/2026-10-22-desktop-completion-local-mac.json). CodeQL39851153694 retains0 SARIF results. Scoped coverage2593/3248 lines=79.83%,1881/2812 branches=66.89%, lower than rc.3 after added integration code; no suppression.
+
+Windows/macOS audio processes accepted the request, but audible delivery is unverified. Linux lacks paplay and reports a safe fallback. The attempted Windows native notification adapter failed independent on-screen Shell observation in run39848205141; it was withdrawn, not represented as delivered. Retained failure logs/reports are linked from the candidate review. Accessible in-app alerts remain. Physical tray/keyboard/native Save-panel/multiple-display and actual-login tests remain blocked: Accessibility/event posting denied and the owner explicitly unavailable. Programmatic real-control tests do not substitute for these. No real-user startup registration, host network or security setting was changed.
+
+Inventory **91.7%=(15 complete+3 partial×0.5)/18**: settings persistence/profile import closes; alerts/preferences/placement retain their precise verification gaps. Frozen rc.3 remains88.9%. Readiness stays **8.5/10**, not100% or10/10. Trusted Mac distribution remains blocked by unavailable Developer ID/notarization; Windows remains unsigned. Wider topology/suspend/accessibility/Wayland/endurance and public publication/submission review remain open.

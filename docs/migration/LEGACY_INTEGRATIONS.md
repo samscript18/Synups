@@ -1,5 +1,7 @@
 # Discovery and WirePeep settings investigation
 
+Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. Proposed v0.1.1 payload remains frozen rc.3 at88.9%; public0.1.0 remains unchanged.
+
 Work date: 2026-10-16. These P2 items were investigated after the durable-history and desktop work. No discovery feature or importer is shipped in Phase 3.
 
 ## Discovery
@@ -30,3 +32,10 @@ The rc.2 paragraph above is historical. Frozen source 7ca85cccce6e3609d08d64e4f2
 Explicit per-workspace login enable/remove exists for Windows HKCU Run, macOS LaunchAgents and Linux XDG autostart. Only confirmed user actions write registrations; normal opening/preferences save does not. Temporary fixtures and native Linux Gio.launch are tested; no actual login/Windows registry mutation is certified, so Preferences stays partial. Supported-path limits and frozen evidence: [rc.3 review](../release/LEGACY_COMPLETION_CANDIDATE.md).
 
 No genuine Menees settings-store fixture was supplied or found in the available repository/evidence. Original serialization depends on the external store; Windows CI access is not an actual user's historical fixture. No hypothetical importer was added and original WirePeep data remains untouched. Settings persistence stays partial until a genuine fixture and compatible read-only preview/import can be verified.
+
+
+## rc.4: actual original Windows fixture and validated profile import
+
+The earlier no-fixture statements are historical. The untouched original executable ran on Windows with Menees.Common5.1.2 and emitted a genuine `.stgx` file in [run39840176062](https://github.com/samscript18/Synups/actions/runs/39840176062). The unmodified test-only fixture SHA-256 is37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1. A later run39841203591 captures the populated original WPF window; each run's separately generated random IDs/fixture hash remain distinguished. Source files and upstream ancestry are unchanged.
+
+rc.4 supports only the actual captured hierarchical schema with validated literal addresses, stable GUIDs and positive invariant whole-millisecond timings. Read-only bounded XML parsing rejects DTDs/duplicates/missing references/unsupported timing. UI preview and explicit confirmation replace only the Synups profile after preserving destination bytes in a unique backup; corrupt destination/source failures refuse replacement. No probing or OS preference import occurs. Actual packaged apphosts on Windows/macOS/Linux verify preview, confirmation,15 targets, stable IDs, source hash and backup, then restore their loopback profile before starting. The fixture is not packaged in production. This closes the previously documented profile-import gap without assuming arbitrary historical format compatibility. [Reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md).
