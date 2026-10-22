@@ -216,6 +216,9 @@ public sealed class InstallationCheck(DesktopOptions options)
     }
     private async Task CaptureAsync(Window window, string name)
     {
+        // Native startup can clamp the window to a smaller work area before the
+        // queued layout pass. Render the current layout, not its previous size.
+        window.UpdateLayout();
         using var image = new RenderTargetBitmap(new PixelSize((int)window.Bounds.Width, (int)window.Bounds.Height), new Vector(96, 96));
         image.Render(window);
         using var encoded = new MemoryStream(); image.Save(encoded, PngBitmapEncoderOptions.Default);
