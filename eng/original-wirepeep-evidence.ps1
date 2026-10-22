@@ -32,8 +32,9 @@ try {
  $deadline=[DateTime]::UtcNow.AddSeconds(40)
  do { Start-Sleep -Milliseconds 250; $process.Refresh(); if($process.HasExited){throw "Original application exited before window creation: $($process.ExitCode)"} } while(($process.MainWindowHandle -eq [IntPtr]::Zero) -and [DateTime]::UtcNow -lt $deadline)
  if($process.MainWindowHandle -eq [IntPtr]::Zero){throw 'No original WPF native window appeared.'}
- Start-Sleep -Seconds 2
+ Start-Sleep -Seconds 12
  $process.Refresh();$hwnd=$process.MainWindowHandle
+ $record.capture_utc=[DateTime]::UtcNow.ToString('o')
  $record.window_title=$process.MainWindowTitle
  $record.process_id=$process.Id;$record.window_handle=$hwnd.ToInt64();$record.window_visible=[OriginalWindow]::IsWindowVisible($hwnd)
  $record.loaded_runtime=@($process.Modules | Where-Object { $_.ModuleName -in @('clr.dll','Menees.Common.dll','Menees.Windows.Presentation.dll') } | ForEach-Object { @{name=$_.ModuleName;version=$_.FileVersionInfo.FileVersion;sha256=(Get-FileHash $_.FileName -Algorithm SHA256).Hash.ToLowerInvariant()} })
