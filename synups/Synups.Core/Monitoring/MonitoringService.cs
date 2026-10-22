@@ -36,6 +36,7 @@ public sealed class MonitoringService : IAsyncDisposable
         get { lock (gate) return new(Volatile.Read(ref activeGroupWorkers), Interlocked.Read(ref completedPolls), pending.Count); }
     }
     public bool HasDurableHistory => history is not null;
+    public Synups.Core.Diagnostics.IDiagnosticRepository? DiagnosticRepository => history as Synups.Core.Diagnostics.IDiagnosticRepository;
     public bool HasPagedHistory => history is IIncidentHistoryReader;
     public long HistoryRevision { get { lock (gate) return historyRevision; } }
     public bool HistoryReady { get { lock (gate) return history is null || historyLoaded; } }
@@ -56,6 +57,8 @@ public sealed class MonitoringService : IAsyncDisposable
         lock (gate) return new(sessionId, state, groups.Values.ToArray(), outages.ToArray(), events.ToArray(), historyRevision,
             lastMeasurement, persistenceError ?? error, sessions.Values.ToArray());
     }
+    public Task<OutageRecord?> FindIncidentAsync(Guid id) => history is IIncidentHistoryReader reader
+        ? reader.FindIncidentAsync(id) : Task.FromResult(Capture().Outages.FirstOrDefault(o => o.Id == id));
     public async Task InitializeHistoryAsync()
     {
         await evidence.WaitAsync().ConfigureAwait(false);

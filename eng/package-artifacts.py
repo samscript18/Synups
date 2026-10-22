@@ -71,7 +71,8 @@ with tempfile.TemporaryDirectory(prefix='synups-package-') as temporary:
   if args.rid=='linux-x64':
    (root/'Synups.desktop.example').write_text('[Desktop Entry]\nType=Application\nName=Synups\nComment=Local network reliability monitor\nExec=/ABSOLUTE/PATH/TO/Synups\nIcon=/ABSOLUTE/PATH/TO/Synups.png\nTerminal=false\nCategories=Network;Monitor;\nStartupWMClass=Synups\n')
  if (repo/'docs/release/INSTALLATION.md').exists():shutil.copyfile(repo/'docs/release/INSTALLATION.md',root/'INSTALLATION.md')
- if (repo/'docs/release/RELEASE_NOTES.md').exists():shutil.copyfile(repo/'docs/release/RELEASE_NOTES.md',root/'RELEASE_NOTES.md')
+ notes=repo/('docs/diagnostics/CANDIDATE_NOTES.md' if app_version.startswith('0.2.') else 'docs/release/RELEASE_NOTES.md')
+ if notes.exists():shutil.copyfile(notes,root/'RELEASE_NOTES.md')
  (root/'RUNNING.txt').write_text(f'Synups {app_version} candidate — {args.rid}\nSource: {args.revision}\n\n'+instructions+'\nThe .NET runtime is included. Keep every extracted runtime/native/SQLite file together.\nMonitoring is stopped by default; configure targets and explicitly start, unless you enable the saved launch preference.\nSettings/history use per-user LocalApplicationData/Synups. --data-directory selects a separate local workspace.\nUse --help for an explicit isolated real-loopback installation check. This is not physical OS input/accessibility certification.\n'+signing+'\nNo release or competition submission is implied by this verification artifact.\nhttps://github.com/samscript18/Synups\n')
  files={p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob('*')) if p.is_file()}
  runtime_relative='Synups.app/Contents/Resources/runtime' if args.rid=='osx-arm64' else '.'

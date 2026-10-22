@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "source_state": "Pre-freeze working tree based on bbd92ef7395ae4cd20534920398b317353e41371; source-specific post-commit/package evidence follows separately",
+  "host": {
+    "os": "macOS26.3.1",
+    "rid": "osx-arm64",
+    "sdk": "10.0.402",
+    "runtime": "10.0.13"
+  },
+  "test_runs": [
+    {
+      "stage": "baseline",
+      "file": "baseline/_Jaydens-MacBook-Pro_2026-10-22_23_27_20_net10.0.trx",
+      "sha256": "f25ee53cf5dd735879ff63f221180f50ec89d2c185447063d75c7e7377227215",
+      "counters": {
+        "total": "164",
+        "executed": "159",
+        "passed": "159",
+        "failed": "0",
+        "error": "0",
+        "timeout": "0",
+        "aborted": "0",
+        "inconclusive": "0",
+        "passedButRunAborted": "0",
+        "notRunnable": "0",
+        "notExecuted": "0",
+        "disconnected": "0",
+        "warning": "0",
+        "completed": "0",
+        "inProgress": "0",
+        "pending": "0"
+      }
+    },
+    {
+      "stage": "integrated",
+      "file": "integrated/_Jaydens-MacBook-Pro_2026-10-22_23_38_00_net10.0.trx",
+      "sha256": "1d2cf6fabfcc4887c8697462c7289a60eb7f368b7e051c3e648dff1a61bd9dfd",
+      "counters": {
+        "total": "229",
+        "executed": "221",
+        "passed": "219",
+        "failed": "2",
+        "error": "0",
+        "timeout": "0",
+        "aborted": "0",
+        "inconclusive": "0",
+        "passedButRunAborted": "0",
+        "notRunnable": "0",
+        "notExecuted": "0",
+        "disconnected": "0",
+        "warning": "0",
+        "completed": "0",
+        "inProgress": "0",
+        "pending": "0"
+      }
+    },
+    {
+      "stage": "regression",
+      "file": "regression/_Jaydens-MacBook-Pro_2026-10-22_23_39_57_net10.0.trx",
+      "sha256": "323c6a82b7844047f8666b7fbe97f2956556e2612e78c5457516d184929756d3",
+      "counters": {
+        "total": "230",
+        "executed": "222",
+        "passed": "222",
+        "failed": "0",
+        "error": "0",
+        "timeout": "0",
+        "aborted": "0",
+        "inconclusive": "0",
+        "passedButRunAborted": "0",
+        "notRunnable": "0",
+        "notExecuted": "0",
+        "disconnected": "0",
+        "warning": "0",
+        "completed": "0",
+        "inProgress": "0",
+        "pending": "0"
+      }
+    },
+    {
+      "stage": "native",
+      "file": "native/_Jaydens-MacBook-Pro_2026-10-22_23_41_00_net10.0.trx",
+      "sha256": "54ac3d989f2d87faa5d6c4c5430f44817d6a7fac2aa7be4503f3f468a679b766",
+      "counters": {
+        "total": "6",
+        "executed": "6",
+        "passed": "6",
+        "failed": "0",
+        "error": "0",
+        "timeout": "0",
+        "aborted": "0",
+        "inconclusive": "0",
+        "passedButRunAborted": "0",
+        "notRunnable": "0",
+        "notExecuted": "0",
+        "disconnected": "0",
+        "warning": "0",
+        "completed": "0",
+        "inProgress": "0",
+        "pending": "0"
+      }
+    },
+    {
+      "stage": "coverage",
+      "file": "coverage/_Jaydens-MacBook-Pro_2026-10-22_23_40_33_net10.0.trx",
+      "sha256": "af5db04a9e64763658c8d076f214456219a7b34baca4ce39563aa2c476d30ab7",
+      "counters": {
+        "total": "230",
+        "executed": "222",
+        "passed": "222",
+        "failed": "0",
+        "error": "0",
+        "timeout": "0",
+        "aborted": "0",
+        "inconclusive": "0",
+        "passedButRunAborted": "0",
+        "notRunnable": "0",
+        "notExecuted": "0",
+        "disconnected": "0",
+        "warning": "0",
+        "completed": "0",
+        "inProgress": "0",
+        "pending": "0"
+      }
+    }
+  ],
+  "new_core_coverage": {
+    "DiagnosticStore.cs": {
+      "covered": 135,
+      "lines": 139
+    },
+    "DiagnosticEvidence.cs": {
+      "covered": 126,
+      "lines": 139
+    },
+    "DiagnosticModels.cs": {
+      "covered": 67,
+      "lines": 70
+    },
+    "DiagnosticRunner.cs": {
+      "covered": 67,
+      "lines": 73
+    },
+    "DnsDiagnosticTest.cs": {
+      "covered": 149,
+      "lines": 165
+    },
+    "IcmpDiagnosticTests.cs": {
+      "covered": 120,
+      "lines": 144
+    },
+    "NetworkConfigurationTest.cs": {
+      "covered": 22,
+      "lines": 66
+    },
+    "PathAnalysis.cs": {
+      "covered": 43,
+      "lines": 52
+    },
+    "ReverseDnsCache.cs": {
+      "covered": 66,
+      "lines": 75
+    },
+    "TcpConnectTest.cs": {
+      "covered": 28,
+      "lines": 35
+    }
+  },
+  "coverage_sha256": "77d2b9704bd931ccf65f12afe56f1934437e1c4d1c69bdd0e4846932fad0392a",
+  "dependency_audit": "Completed against NuGet feed; no vulnerable packages reported",
+  "python_safety_tests": {
+    "passed": 8,
+    "failed": 0
+  },
+  "protected_v011_asset_verification": {
+    "passed": true,
+    "assets": 15,
+    "winx64": "cc02117abc393cc0e6baf39e75aceebf529c8d695e5d61e93a18262b36a9d570",
+    "osxarm64": "fa00e6a06255b4cd116ecb985806a05a02fb4e93db6977e34420a63f0cc31200",
+    "linuxx64": "49387bf6358b8d06478a64091f8780a64f41861f820df8f0ee1b04e17117c757"
+  },
+  "physical_desktop_verified": false
+}

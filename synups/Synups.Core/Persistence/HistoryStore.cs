@@ -17,7 +17,7 @@ public interface IHistoryStore : IAsyncDisposable
 }
 
 /// <summary>Single owned connection, serialized off-thread I/O. SQLite async APIs are synchronous.</summary>
-public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryCapacity.DefaultBytes) : IHistoryStore, IHistoryStorageManagement, IIncidentHistoryReader
+public sealed partial class SqliteHistoryStore(string fileName, long maxBytes = HistoryCapacity.DefaultBytes) : IHistoryStore, IHistoryStorageManagement, IIncidentHistoryReader
 {
     private readonly SemaphoreSlim io = new(1, 1);
     private readonly string path = Path.GetFullPath(fileName);
@@ -46,10 +46,11 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryC
             connection = new(new SqliteConnectionStringBuilder { DataSource = path, Pooling = false, DefaultTimeout = 2 }.ToString());
             connection.Open();
             var version = Convert.ToInt32(Scalar("PRAGMA user_version"), CultureInfo.InvariantCulture);
-            if (version is not (0 or 1)) throw new InvalidDataException($"Unsupported history version {version}. No reset performed.");
+            if (version is not (0 or 1 or 2)) throw new InvalidDataException($"Unsupported history version {version}. No reset performed.");
             var integrity = Convert.ToString(Scalar("PRAGMA quick_check"), CultureInfo.InvariantCulture);
             if (integrity != "ok") throw new InvalidDataException($"History integrity check failed: {integrity}");
-            Execute("PRAGMA journal_mode=DELETE; PRAGMA synchronous=FULL; PRAGMA journal_size_limit=0;");
+            if (version == 1) BackupBeforeDiagnosticsMigration();
+            Execute("PRAGMA journal_mode=DELETE; PRAGMA synchronous=FULL; PRAGMA journal_size_limit=0; PRAGMA foreign_keys=ON;");
             var hasPolicy = Number("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='storage_policy'") == 1;
             configuredBytes = hasPolicy ? Number("SELECT max_bytes FROM storage_policy WHERE id=1") : initialBytes;
             // The optional constructor override also supports bounded host/test stores. UI changes use the stricter public range.
@@ -58,7 +59,7 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryC
             // An already oversized legacy database may need a few pages for additive policy metadata.
             // Permit only this migration overhead, then cap growth at its actual allocation; never truncate old pages.
             var allocation = checked(Number("PRAGMA page_count") * Number("PRAGMA page_size"));
-            var migrationLimit = !hasPolicy && allocation >= configuredBytes
+            var migrationLimit = (!hasPolicy || version < 2) && allocation >= configuredBytes
                 ? checked(allocation + 16 * Number("PRAGMA page_size")) : configuredBytes;
             ApplyPageLimit(migrationLimit, allowExistingLarger: true);
             using var migration = connection.BeginTransaction();
@@ -71,8 +72,9 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryC
                 CREATE TABLE IF NOT EXISTS sessions(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS metadata(id INTEGER PRIMARY KEY CHECK(id=1), sequence INTEGER NOT NULL);
                 INSERT OR IGNORE INTO metadata VALUES(1,0);
-                PRAGMA user_version=1;
+                PRAGMA user_version=2;
                 """;
+            schema.CommandText += DiagnosticSchema;
             schema.Parameters.AddWithValue("$bytes", configuredBytes);
             schema.ExecuteNonQuery();
             migration.Commit();
@@ -284,7 +286,7 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryC
         Open();
         if (days is < 1 or > 3650) throw new ArgumentException("Retention must be 1–3650 days.");
         var cutoff = utcNow.AddDays(-days);
-        var candidates = Read<SessionRecord>("SELECT payload FROM sessions").Where(s => s.EndedUtc < cutoff && !s.Interrupted).ToArray();
+        var candidates = Read<SessionRecord>("SELECT s.payload FROM sessions s WHERE NOT EXISTS(SELECT 1 FROM outages o JOIN diagnostic_sessions d ON d.incident_id=o.id WHERE o.session_id=s.id)").Where(s => s.EndedUtc < cutoff && !s.Interrupted).ToArray();
         var count = 0;
         using (var tx = connection!.BeginTransaction())
         {

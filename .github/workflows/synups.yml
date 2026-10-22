@@ -72,6 +72,8 @@ jobs:
         run: |
           set -o pipefail
           dotnet restore ../Synups.slnx --locked-mode --disable-parallel 2>&1 | tee ../artifacts/logs/restore.txt
+      - name: Dependency vulnerability audit
+        run: dotnet list ../Synups.slnx package --vulnerable --include-transitive --format json > ../artifacts/logs/dependency-audit.json
       - name: Release build
         run: |
           set -o pipefail
@@ -83,9 +85,11 @@ jobs:
       - name: Explicit real loopback ICMP integration
         run: |
           set -o pipefail
-          dotnet test ../Synups.slnx -c Release --no-build --filter 'FullyQualifiedName~RealLoopback|FullyQualifiedName~RealDefaultGateway' --logger trx --results-directory ../artifacts/real-network 2>&1 | tee ../artifacts/logs/icmp.txt
+          dotnet test ../Synups.slnx -c Release --no-build --filter 'FullyQualifiedName~RealLoopback|FullyQualifiedName~RealDefaultGateway|FullyQualifiedName~DiagnosticNetworkTests.Native|FullyQualifiedName~NativeConfiguredResolverQuery' --logger trx --results-directory ../artifacts/real-network 2>&1 | tee ../artifacts/logs/icmp.txt
         env:
           SYNUPS_REAL_NETWORK_TESTS: '1'
+      - name: Real diagnostic persistence, baseline, export and separate process restart
+        run: python ../eng/diagnostics-smoke.py --output ../artifacts/diagnostic-e2e
       - name: Explicit native audio request or safe unsupported fallback
         run: |
           set -o pipefail
@@ -144,4 +148,35 @@ jobs:
             artifacts/published-apphost/launch-summary.json
             artifacts/published-apphost/isolated-data/
             artifacts/incident/
+            artifacts/diagnostic-e2e/report.json
+            artifacts/diagnostic-e2e/reload-report.json
+            artifacts/diagnostic-e2e/source-preservation.json
+            artifacts/diagnostic-e2e/Synups-evidence-*/
           retention-days: 30
+  additional-builds:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        rid: [linux-arm64, osx-x64]
+    defaults:
+      run:
+        shell: bash
+        working-directory: synups
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: synups/global.json
+      - name: Locked restore for declared runtime assets
+        run: dotnet restore ../Synups.slnx --locked-mode --disable-parallel
+      - name: Build-only additional architecture (no runtime certification)
+        run: |
+          dotnet publish Synups.Desktop -c Release -r ${{ matrix.rid }} --self-contained true --no-restore -p:PublishTrimmed=false -p:PublishAot=false -p:SourceRevisionId=${{ github.sha }} -o ../artifacts/additional/${{ matrix.rid }}
+          python -c 'import hashlib,json,pathlib; p=pathlib.Path("../artifacts/additional/${{ matrix.rid }}"); (p/"BUILD_ONLY_MANIFEST.json").write_text(json.dumps({"source":"${{ github.sha }}","rid":"${{ matrix.rid }}","built":True,"runtime_executed":False,"native_ui_launched":False,"physically_tested":False,"sha256":{f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in p.iterdir() if f.is_file()}},indent=2))'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synups-build-only-${{ matrix.rid }}-${{ github.sha }}
+          path: artifacts/additional/${{ matrix.rid }}/
+          retention-days: 14

@@ -1,5 +1,8 @@
 using System.Diagnostics;
 using System.Reflection;
+using System.Net;
+using System.Net.Sockets;
+using Synups.Core.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -109,6 +112,7 @@ public sealed class InstallationCheck(DesktopOptions options)
                 Passed("saved_configuration_and_opt_in_monitoring_on_launch", new { groups = vm.Groups.Select(g => new { g.Id, g.Name, targets = g.Targets.Select(t => new { t.Id, t.Address }) }), durable_sessions = archive.Sessions.Count });
                 Require(vm.SavedPreferences.LogNaming == LogFilenameStyle.FixedArchiveSnapshot && vm.SavedPreferences.GroupPaneHeight == 180, "Saved log/pane preferences did not reload.");
                 Passed("sqlite_native_history_reload", new { interrupted = archive.Sessions.Count(s => s.Interrupted), recovery_events = archive.Events.Count(e => e.Kind == MonitorEventKind.Recovery) });
+                await ReopenDiagnosticAsync(window, vm);
             }
             await Task.Delay(TimeSpan.FromSeconds(options.ObserveSeconds));
             var measured = vm.CaptureMonitoring();
@@ -276,8 +280,76 @@ public sealed class InstallationCheck(DesktopOptions options)
             await configStore.SaveAsync(loopback); await vm.InitializeAsync();
             Require(vm.Groups.SelectMany(g => g.Targets).All(t => t.Address == "127.0.0.1") && !vm.IsRunning, "Loopback profile restore failed.");
         }
+        await ExerciseDiagnosticsAsync(window, desktop, vm);
         vm.SelectedPage = 0; await ClickAsync(window, "StartMonitoring");
         await UntilAsync(() => vm.IsRunning && vm.Groups[0].Targets[0].Status.StartsWith("Responded", StringComparison.Ordinal));
+    }
+    private async Task ExerciseDiagnosticsAsync(MainWindow window, IClassicDesktopStyleApplicationLifetime desktop, MainWindowViewModel vm)
+    {
+        var before=await vm.ReadHistoryAsync();
+        var listener=new TcpListener(IPAddress.Loopback,0); listener.Start(1);
+        using var acceptCancellation=new CancellationTokenSource();
+        var accepted=0;
+        async Task AcceptAsync()
+        {
+            try { while(!acceptCancellation.IsCancellationRequested) { using var client=await listener.AcceptTcpClientAsync(acceptCancellation.Token); Interlocked.Increment(ref accepted); } }
+            catch(OperationCanceledException) { }
+            catch(SocketException) when(acceptCancellation.IsCancellationRequested) { }
+        }
+        var accept=AcceptAsync();
+        try
+        {
+            vm.SelectedPage=5;
+            vm.SelectedDiagnosticProfile=DiagnosticProfile.BuiltIn.Single(p=>p.Id=="custom");
+            Text(window,"DiagnosticTarget","127.0.0.1");
+            vm.DiagnosticPort=((IPEndPoint)listener.LocalEndpoint).Port.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            vm.DiagnosticTcp=true; vm.DiagnosticPing=true; vm.DiagnosticNetwork=true; vm.DiagnosticTrace=true; vm.DiagnosticDns=false;
+            vm.DiagnosticSamples="3"; vm.DiagnosticInterval="100"; vm.DiagnosticTimeout="500"; vm.DiagnosticBudget="20"; vm.DiagnosticHops="4"; vm.DiagnosticPerHop="1"; vm.DiagnosticProbeCap="16";
+            Require(vm.PrepareDiagnosticRequest().Tests.All(k=>k!=DiagnosticKind.Dns),"Isolated check unexpectedly selected DNS.");
+            await CaptureAsync(window,"diagnostics-preview");
+            await ClickAsync(window,"RunDiagnostic"); await ConfirmAsync(desktop,"Continue");
+            await UntilAsync(()=>!vm.IsDiagnosticRunning && vm.CaptureDiagnosticSession() is not null,()=>vm.DiagnosticStatus+" / "+vm.DiagnosticPhase);
+            var session=vm.CaptureDiagnosticSession()!;
+            Require(session.Request.Target=="127.0.0.1" && session.Request.IncidentId is null,"Diagnostic target/link exceeded isolated consent.");
+            Require(session.Results.Count==4 && session.Results.Select(r=>r.Kind).Distinct().Count()==4,"Requested diagnostic results are missing.");
+            Require(session.Results.Single(r=>r.Kind==DiagnosticKind.TcpConnect).Outcome==DiagnosticOutcome.Success,"Real loopback TCP listener did not connect.");
+            await UntilAsync(()=>Volatile.Read(ref accepted)>0);
+            Require(session.Results.All(r=>r.Outcome is not (DiagnosticOutcome.Failed or DiagnosticOutcome.MalformedResponse or DiagnosticOutcome.Cancelled)),"Diagnostic execution failed: "+vm.DiagnosticStatus);
+            Require((await vm.ReadHistoryAsync()).Outages.Count==before.Outages.Count,"Diagnostic execution manufactured an incident.");
+            Passed("actual_diagnostics_workspace_confirmed_loopback_session",new {session.Request.Id,session.State,tcp_listener_port=session.Request.Parameters.Port,accepted_connections=accepted,results=session.Results.Select(r=>new{r.Kind,r.Outcome,r.Method,r.ElapsedMilliseconds,r.Error}),dns="Explicitly excluded: no public target or resolver queried",privilege_limited_outcomes=session.Results.Where(r=>r.Outcome is DiagnosticOutcome.Unsupported or DiagnosticOutcome.PermissionDenied).Select(r=>new{r.Kind,r.Outcome,r.Error})});
+            window.FindControl<TextBlock>("DiagnosticStatus")!.BringIntoView(); await CaptureAsync(window,"diagnostics-results");
+            vm.DiagnosticRedact=true; await vm.PreviewDiagnosticEvidenceAsync();
+            Require(vm.HasDiagnosticEvidencePreview && !vm.DiagnosticEvidencePreview.Contains("127.0.0.1",StringComparison.Ordinal),"Redaction preview failed or leaked loopback target.");
+            await vm.ExportDiagnosticEvidenceAsync(options.VerificationDirectory!);
+            var bundle=Directory.EnumerateDirectories(options.VerificationDirectory!,"Synups-evidence-"+session.Request.Id.ToString("N")+"-*").Single();
+            foreach(var file in new[]{"evidence.json","evidence.md","evidence.pdf","manifest.json"}) Require(new FileInfo(Path.Combine(bundle,file)).Length>0,"Evidence output missing/empty: "+file);
+            var json=await File.ReadAllTextAsync(Path.Combine(bundle,"evidence.json")); var evidence=JsonSerializer.Deserialize<EvidenceDocument>(json)!;
+            Require(evidence.Redacted && evidence.Session.Request.Id==session.Request.Id,"Reopened JSON evidence identity/redaction failed.");
+            Require(!json.Contains("127.0.0.1",StringComparison.Ordinal),"JSON redaction leaked the target.");
+            var markdown=await File.ReadAllTextAsync(Path.Combine(bundle,"evidence.md")); Require(markdown==vm.DiagnosticEvidencePreview,"Markdown differs from the approved redaction preview.");
+            var pdf=await File.ReadAllBytesAsync(Path.Combine(bundle,"evidence.pdf")); Require(System.Text.Encoding.ASCII.GetString(pdf,0,5)=="%PDF-","PDF signature missing.");
+            using var manifest=JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(bundle,"manifest.json")));
+            foreach(var file in manifest.RootElement.GetProperty("Files").EnumerateArray())
+            {
+                var name=file.GetProperty("File").GetString()!; var bytes=await File.ReadAllBytesAsync(Path.Combine(bundle,name));
+                Require(Convert.ToHexStringLower(SHA256.HashData(bytes))==file.GetProperty("Sha256").GetString(),"Evidence hash verification failed: "+name);
+            }
+            Passed("actual_diagnostic_json_markdown_pdf_export_redaction_and_hashes",new { session_id=session.Request.Id,bundle,artifact_names=Directory.GetFiles(bundle).Select(Path.GetFileName),pdf="Real generated artifact signature verified; independent visual QA remains separate",native_folder_picker="Not automated; direct VM export to isolated approved verification directory" });
+        }
+        finally { acceptCancellation.Cancel(); listener.Stop(); await accept; }
+    }
+    private async Task ReopenDiagnosticAsync(MainWindow window,MainWindowViewModel vm)
+    {
+        await vm.RefreshDiagnosticHistoryAsync();
+        Require(vm.DiagnosticHistory.Count>0,"Published diagnostic session did not reload after restart.");
+        vm.SelectedPage=5; vm.SelectedDiagnosticHistory=vm.DiagnosticHistory.First();
+        await ClickAsync(window,"OpenDiagnostic");
+        await UntilAsync(()=>vm.CaptureDiagnosticSession() is not null);
+        var session=vm.CaptureDiagnosticSession()!;
+        Require(session.Request.Target=="127.0.0.1" && session.Results.Count==4 && session.State is not (DiagnosticState.Pending or DiagnosticState.Running),"Saved diagnostic evidence differs after restart.");
+        Require((await vm.ReadHistoryAsync()).Outages.Count==0,"Loopback-only diagnostic acceptance unexpectedly contains an incident.");
+        Passed("actual_diagnostics_reopen_after_process_restart_without_new_probe",new { session.Request.Id,session.State,session.StartedUtc,session.CompletedUtc,results=session.Results.Select(r=>new{r.Kind,r.Outcome}),vm.DiagnosticStatus });
+        await CaptureAsync(window,"diagnostics-reopened"); vm.SelectedPage=0;
     }
     private async Task CaptureAsync(Window window, string name)
     {

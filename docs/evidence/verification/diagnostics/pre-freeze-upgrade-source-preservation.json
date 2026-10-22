@@ -1,0 +1,19 @@
+{
+  "source_files_unchanged": true,
+  "before_sha256": {
+    "history.v1.db": "244b8208c27d7e4e1a5f8fd85d801b1cc9b7096d4ed32aef4500dad50162c635",
+    "configuration.v1.json": "110236b4c1dc8f7bddcd40d1b22e4d9f9977c2976b701b1aa27dbbabb0374476",
+    "preferences.v1.json": "677a7cefada7b048def316e1e8f4c820b2b7f32834a1aba556c570e729c669e5"
+  },
+  "after_sha256": {
+    "history.v1.db": "244b8208c27d7e4e1a5f8fd85d801b1cc9b7096d4ed32aef4500dad50162c635",
+    "configuration.v1.json": "110236b4c1dc8f7bddcd40d1b22e4d9f9977c2976b701b1aa27dbbabb0374476",
+    "preferences.v1.json": "677a7cefada7b048def316e1e8f4c820b2b7f32834a1aba556c570e729c669e5"
+  },
+  "process_exit_codes": {
+    "restore": 0,
+    "build": 0,
+    "observe": 0,
+    "reload": 0
+  }
+}

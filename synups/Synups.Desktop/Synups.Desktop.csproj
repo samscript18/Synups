@@ -7,7 +7,7 @@
     <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Description>Local network reliability monitor with real ICMP group monitoring</Description>
-    <RuntimeIdentifiers>win-x64;osx-arm64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win-x64;osx-arm64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets/Synups.ico;Assets/Synups.png" />

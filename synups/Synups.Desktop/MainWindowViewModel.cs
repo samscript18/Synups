@@ -4,6 +4,7 @@ using Synups.Core.Monitoring;
 using Synups.Core.Alerts;
 using Synups.Desktop.Integrations;
 using Synups.Core.Persistence;
+using Synups.Core.Diagnostics;
 
 namespace Synups.Desktop;
 
@@ -104,12 +105,13 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     internal MonitoringSnapshot CaptureMonitoring() => service.Capture();
     internal MonitoringDiagnostics CaptureDiagnostics() => service.Diagnostics;
     internal Task<HistoryState> ReadHistoryAsync() => service.ReadArchiveAsync();
-    public MainWindowViewModel(MonitoringService service, ConfigurationStore store, PreferencesStore? preferencesStore = null, INativeAlertSink? soundSink = null)
+    public MainWindowViewModel(MonitoringService service, ConfigurationStore store, PreferencesStore? preferencesStore = null, INativeAlertSink? soundSink = null, IDiagnosticRunner? diagnosticRunner = null, IDiagnosticRepository? diagnosticRepository = null)
     {
         soundDelivery = new(soundSink ?? new AlertSoundSink(), "Optional sound is off until explicitly configured.");
         this.service = service; this.store = store;
         this.preferencesStore = preferencesStore ?? new PreferencesStore(store.FileName + ".preferences.json", store.FileName + ".logs");
         snapshot = service.Capture();
+        ConfigureDiagnostics(diagnosticRunner, diagnosticRepository);
     }
     public IReadOnlyList<WorkspacePage> NavigationItems { get; } =
     [
@@ -118,6 +120,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         new("Activity and outages", "Evidence and comments", "M3,4 L21,4 M3,12 L7,12 L10,7 L14,17 L17,12 L21,12 M3,20 L21,20"),
         new("Preferences", "Make Synups yours", "M4,6 L8,6 M12,6 L20,6 M4,12 L14,12 M18,12 L20,12 M4,18 L6,18 M10,18 L20,18 M8,3 L12,3 L12,9 L8,9 Z M14,9 L18,9 L18,15 L14,15 Z M6,15 L10,15 L10,21 L6,21 Z"),
         new("Help and About", "Use Synups confidently", "M12,3 A9,9 0 1 0 12,21 A9,9 0 1 0 12,3 M9,8 Q12,5 15,8 Q17,11 12,13 L12,15 M12,17 L12,18"),
+        new("Diagnostics", "Investigate one endpoint", "M3,12 L7,12 L10,4 L14,20 L17,12 L21,12"),
     ];
     public string PageTitle => NavigationItems[SelectedPage].Title;
     public ObservableCollection<GroupRow> Groups { get; } = new();
@@ -184,7 +187,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public int SelectedPage
     {
         get => selectedPage;
-        set { if (value is < 0 or > 4 || !Set(ref selectedPage, value)) return; Changed(nameof(IsOverview)); Changed(nameof(IsTargets)); Changed(nameof(IsHistory)); Changed(nameof(IsPreferences)); Changed(nameof(IsHelp)); Changed(nameof(PageTitle)); }
+        set { if (value is < 0 or > 5 || !Set(ref selectedPage, value)) return; Changed(nameof(IsOverview)); Changed(nameof(IsTargets)); Changed(nameof(IsHistory)); Changed(nameof(IsPreferences)); Changed(nameof(IsHelp)); Changed(nameof(PageTitle)); Changed(nameof(IsDiagnostics)); }
     }
     public bool IsOverview => SelectedPage == 0;
     public bool IsTargets => SelectedPage == 1;
@@ -193,7 +196,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool IsHelp => SelectedPage == 4;
     public string VersionText => typeof(MainWindowViewModel).Assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), false)
         .OfType<System.Reflection.AssemblyInformationalVersionAttribute>().Single().InformationalVersion;
-    public string KeyboardHelp => $"F1: Help · F5: Start · Shift+F5: Stop · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+1…5: screens · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+Shift+C: copy target IP · +Shift+I: copy incident. In a selected target/incident list: Ctrl/Cmd+C copies the chosen value, +Shift+C copies the row, F4 edits and Escape clears selection. Delete removes a selected target after confirmation; Ctrl/Cmd+S exports incidents. Escape cancels confirmation dialogs or active discovery. Tab/Shift+Tab move between controls; Enter/Space activate focused buttons.";
+    public string KeyboardHelp => $"F1: Help · F5: Start · Shift+F5: Stop · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+1…6: screens · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+Shift+C: copy target IP · +Shift+I: copy incident. In a selected target/incident list: Ctrl/Cmd+C copies the chosen value, +Shift+C copies the row, F4 edits and Escape clears selection. Delete removes a selected target after confirmation; Ctrl/Cmd+S exports incidents. Escape cancels confirmation dialogs or active diagnostics/discovery. Tab/Shift+Tab move between controls; Enter/Space activate focused buttons.";
     public bool HasSelectedTarget => SelectedTarget is not null;
     public GroupRow? SelectedGroup
     {
@@ -244,6 +247,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         if (result.Configuration is { } config) SetConfiguration(config);
         Message = result.Error ?? service.PersistenceError ?? PreferencesError ?? (Groups.Count == 0 ? "No groups configured. Add a group or restore original defaults. No probes run until Start." : "Configuration loaded. Monitoring stays stopped until Start.");
         await RequestTimelineRefresh();
+        await RefreshDiagnosticHistoryAsync();
     });
 
     public Task StartAsync() => ExecuteAsync(async () =>
@@ -527,6 +531,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public async ValueTask DisposeAsync()
     {
         if (disposed) return;
+        await DisposeDiagnosticsAsync();
         CancelDiscovery(); await discoveryTask; discoveryCancellation?.Dispose(); discoveryCancellation = null;
         // Preserve ownership if Stop times out: caller must keep window open and retry instead of abandoning workers.
         await service.StopAsync(); await WriteAutomaticLogsAsync();

@@ -9,6 +9,10 @@ using Avalonia.Input.Platform;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using Synups.Core.Monitoring;
+using Synups.Core.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using Synups.Core.Persistence;
 using Synups.Desktop;
 
@@ -53,6 +57,17 @@ internal static class IncidentSmoke
                     Require(!vm.IsRunning && vm.Outages.Count == 1 && persisted.Outages[0].Comment.Contains("namespace", StringComparison.Ordinal), "Reload lost comment/UI state or started monitoring.");
                     await Dispatcher.UIThread.InvokeAsync(() => vm.SelectedPage = 2);
                     await CaptureAsync(window!, Path.Combine(root, "restart-history.png"));
+                    var diagnostics = await engine.DiagnosticRepository!.ReadDiagnosticSessionsAsync(50, incidentId: persisted.Outages[0].Id);
+                    Require(diagnostics.Count >= 1, "Linked diagnostic sessions did not survive process restart.");
+                    await Dispatcher.UIThread.InvokeAsync(async () =>
+                    {
+                        await vm.RefreshDiagnosticHistoryAsync(); vm.SelectedPage = 5;
+                        vm.SelectedDiagnosticHistory = vm.DiagnosticHistory.First(d => d.Id == diagnostics[0].Id);
+                        await vm.OpenDiagnosticHistoryAsync(); await vm.PreviewDiagnosticEvidenceAsync();
+                        await vm.ExportDiagnosticEvidenceAsync(root);
+                        Require(vm.DiagnosticStatus.StartsWith("Evidence exported:", StringComparison.Ordinal), vm.DiagnosticStatus);
+                    });
+                    await CaptureAsync(window!, Path.Combine(root, "restart-diagnostics.png"));
                     await File.WriteAllTextAsync(Path.Combine(root, "restart.json"), JsonSerializer.Serialize(persisted, new JsonSerializerOptions { WriteIndented = true }));
                 }
                 else
@@ -83,6 +98,27 @@ internal static class IncidentSmoke
                     Require(copied?.Contains(outage.Id.ToString(), StringComparison.Ordinal) == true && copied.Contains("Confirmed UTC:", StringComparison.Ordinal), "Native clipboard lost real incident identity/UTC details.");
                     Require(vm.AlertBanner.Contains("outage confirmed", StringComparison.OrdinalIgnoreCase), "Actual in-app outage alert missing.");
                     await CaptureAsync(window!, Path.Combine(root, "confirmed-outage.png"));
+                    using (var listener = new TcpListener(IPAddress.Loopback, 0))
+                    {
+                        listener.Start();
+                        await Dispatcher.UIThread.InvokeAsync(async () =>
+                        {
+                            vm.DiagnoseSelectedIncident(); vm.DiagnosticTarget = "localhost";
+                            vm.DiagnosticPort = ((IPEndPoint)listener.LocalEndpoint).Port.ToString();
+                            vm.DiagnosticSamples = "3"; vm.DiagnosticTimeout = "200"; vm.DiagnosticInterval = "50";
+                            await vm.RunDiagnosticAsync(vm.PrepareDiagnosticRequest(), confirmed: true);
+                        });
+                        var rows = await engine.DiagnosticRepository!.ReadDiagnosticSessionsAsync(50, incidentId: outage.Id);
+                        Require(rows.Count == 1, "Incident diagnose did not save exactly one linked session.");
+                        var diagnostic = await engine.DiagnosticRepository.FindDiagnosticSessionAsync(rows[0].Id);
+                        Require(diagnostic is not null && diagnostic.Results.Any(r => r.Kind == DiagnosticKind.TcpConnect && r.Outcome == DiagnosticOutcome.Success), "Genuine TCP handshake missing.");
+                        Require(diagnostic!.Results.Any(r => r.Kind == DiagnosticKind.PingQuality && r.Statistics is { Completed: 3, Successful: 0 }), "Controlled ICMP nonresponse not preserved.");
+                        Require(diagnostic.Results.Any(r => r.Kind == DiagnosticKind.Dns), "Typed DNS result missing (resolver may be unavailable in isolated namespace).");
+                        Require(!engine.Capture().Outages.Single().RecoveredUtc.HasValue, "Diagnostics invented incident recovery.");
+                        await File.WriteAllTextAsync(Path.Combine(root, "linked-diagnostic.json"), JsonSerializer.Serialize(diagnostic, new JsonSerializerOptions { WriteIndented = true }));
+                        await Dispatcher.UIThread.InvokeAsync(async () => { await vm.PreviewDiagnosticEvidenceAsync(); await vm.ExportDiagnosticEvidenceAsync(root); Require(vm.DiagnosticStatus.StartsWith("Evidence exported:", StringComparison.Ordinal), vm.DiagnosticStatus); });
+                        await CaptureAsync(window!, Path.Combine(root, "incident-diagnostics.png"));
+                    }
                     await File.WriteAllTextAsync(Path.Combine(root, "outage.ready"), outage.Id.ToString());
                     await UntilAsync(() => engine.Capture().Outages.Single().RecoveredUtc.HasValue);
                     var recovered = engine.Capture().Outages.Single();

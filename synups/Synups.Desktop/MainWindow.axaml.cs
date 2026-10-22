@@ -33,7 +33,7 @@ public partial class MainWindow : Window
             if (ViewModel is not { } vm) return;
             await vm.RefreshLoginAsync();
             await vm.InitializeAsync();
-            tray = new TrayController(RestoreFromTray, Close);
+            tray = new TrayController(RestoreFromTray, Close, () => OpenDiagnosticsFromTray(false), () => OpenDiagnosticsFromTray(true), () => { RestoreFromTray(); if(ViewModel is { } model) model.SelectedPage=2; });
             this.FindControl<TextBlock>("TrayCapability")!.Text = tray.Status;
             ApplyDesktopPreferences(restorePlacement: true);
             if (DesktopPolicy.StartOnLaunch(vm.SavedPreferences, vm.CanStart && vm.PreferencesError is null)) await vm.StartAsync();
@@ -272,7 +272,7 @@ public partial class MainWindow : Window
         accept.Click += (_, _) => dialog.Close(true); cancel.Click += (_, _) => dialog.Close(false);
         dialog.Content = new StackPanel { Margin = new Thickness(24), Spacing = 20, Children =
         {
-            new TextBlock { Text = text, TextWrapping = Avalonia.Media.TextWrapping.Wrap },
+            new ScrollViewer { MaxHeight=400, HorizontalScrollBarVisibility=Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled, Content=new TextBlock { Text = text, TextWrapping = Avalonia.Media.TextWrapping.Wrap } },
             new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Spacing = 10, Children = { cancel, accept } },
         } };
         var priorFocus = FocusManager?.GetFocusedElement();

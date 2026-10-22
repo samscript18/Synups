@@ -1,5 +1,8 @@
 # Synups
 
+> **Diagnostics development branch:** `0.2.0-alpha.1` adds a separate Diagnostics workspace with real TCP, UDP DNS, ICMP quality/path tests, read-only configuration, durable sessions, baseline comparisons and redacted local evidence export. Public **v0.1.1 remains the protected release**. See the [31-feature status matrix](docs/diagnostics/FEATURE_MATRIX.md), [candidate notes](docs/diagnostics/CANDIDATE_NOTES.md), [test evidence](docs/diagnostics/TEST_REPORT.md), [upgrade/rollback instructions](docs/diagnostics/SQLITE_MIGRATION.md) and [release decision](docs/diagnostics/RELEASE_READINESS.md). Unfinished advanced features are unavailable; this branch does not imply publication or competition submission.
+
+
 **Know when your network drops. Know how long it lasts. Keep the evidence.**
 
 Synups is a local-first network reliability monitor for Windows, macOS and Linux. Monitor the peers you choose, record confirmed ICMP outages and observed recoveries, and keep incident timelines, comments and troubleshooting evidence in local SQLite.

@@ -67,13 +67,14 @@ public partial class MainWindow
         var list = focused as ListBox ?? focused?.FindAncestorOfType<ListBox>();
         var targetList = list?.Name == "TargetList";
         var incidentList = list?.Name == "IncidentTimeline";
-        var page = e.Key switch { Key.D1 => 0, Key.D2 => 1, Key.D3 => 2, Key.D4 => 3, Key.D5 => 4, _ => -1 };
+        var page = e.Key switch { Key.D1 => 0, Key.D2 => 1, Key.D3 => 2, Key.D4 => 3, Key.D5 => 4, Key.D6 => 5, _ => -1 };
         if (e.KeyModifiers == command && page >= 0) { vm.SelectedPage = page; e.Handled = true; }
         else if (e.Key == Key.F1 && e.KeyModifiers == KeyModifiers.None) { vm.SelectedPage = 4; e.Handled = true; }
         else if (e.Key == Key.F5 && e.KeyModifiers == KeyModifiers.None)
         { e.Handled = true; if (vm.CanStart) await RunAsync(vm.StartAsync); else vm.ReportInformation(vm.StartGuidance); }
         else if (e.Key == Key.F5 && e.KeyModifiers == KeyModifiers.Shift)
         { e.Handled = true; if (vm.CanStop) await RunAsync(vm.StopAsync); }
+        else if (e.Key == Key.Escape && vm.IsDiagnosticRunning) { vm.CancelDiagnostic(); e.Handled = true; }
         else if (e.Key == Key.Escape && vm.IsDiscovering) { vm.CancelDiscovery(); e.Handled = true; }
         else if (e.Key == Key.Escape && (targetList || incidentList))
         { if (targetList) vm.SelectedTarget = null; else vm.SelectedOutage = null; e.Handled = true; }
