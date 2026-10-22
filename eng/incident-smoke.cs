@@ -103,7 +103,8 @@ internal static class IncidentSmoke
                         listener.Start();
                         await Dispatcher.UIThread.InvokeAsync(async () =>
                         {
-                            vm.DiagnoseSelectedIncident(); vm.DiagnosticTarget = "localhost";
+                            // The isolated loss filter and listener are IPv4. Do not let localhost select ::1.
+                            vm.DiagnoseSelectedIncident(); vm.DiagnosticTarget = "127.0.0.1";
                             vm.DiagnosticPort = ((IPEndPoint)listener.LocalEndpoint).Port.ToString();
                             vm.DiagnosticSamples = "3"; vm.DiagnosticTimeout = "200"; vm.DiagnosticInterval = "50";
                             await vm.RunDiagnosticAsync(vm.PrepareDiagnosticRequest(), confirmed: true);

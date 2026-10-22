@@ -29,3 +29,5 @@ Numerical metrics, UTC timestamps, units, result kinds, state, version/provenanc
 An unredacted export explicitly includes sensitive network details. JSON, Markdown and PDF all derive from the selected preview. The manifest hashes the exact exported bytes; it does not encrypt data, establish authorship, or prevent someone from changing the evidence and regenerating hashes. No credentials or captured payloads are intentionally collected or embedded.
 
 For sensitive vulnerability reports, follow [SECURITY.md](../../SECURITY.md) rather than posting history, topology, comments, logs or screenshots publicly.
+
+System hostname lookups for TCP/ICMP are bounded by BoundedHostnameResolver (two native workers, no waiting queue). Caller cancellation can return promptly while the original OS lookup still owns its slot. Further lookups fail explicitly when those slots are occupied; literal IP requests avoid DNS. Shutdown also drains retained native tasks within the remaining seven-second target; a hung OS resolver keeps ownership and requires retry, rather than abandoning work. Direct DNS/PTR use owned cancellable UDP sockets.

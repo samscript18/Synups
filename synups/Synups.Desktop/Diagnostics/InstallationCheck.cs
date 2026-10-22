@@ -317,7 +317,7 @@ public sealed class InstallationCheck(DesktopOptions options)
             Require(session.Results.All(r=>r.Outcome is not (DiagnosticOutcome.Failed or DiagnosticOutcome.MalformedResponse or DiagnosticOutcome.Cancelled)),"Diagnostic execution failed: "+vm.DiagnosticStatus);
             Require((await vm.ReadHistoryAsync()).Outages.Count==before.Outages.Count,"Diagnostic execution manufactured an incident.");
             Passed("actual_diagnostics_workspace_confirmed_loopback_session",new {session.Request.Id,session.State,tcp_listener_port=session.Request.Parameters.Port,accepted_connections=accepted,results=session.Results.Select(r=>new{r.Kind,r.Outcome,r.Method,r.ElapsedMilliseconds,r.Error}),dns="Explicitly excluded: no public target or resolver queried",privilege_limited_outcomes=session.Results.Where(r=>r.Outcome is DiagnosticOutcome.Unsupported or DiagnosticOutcome.PermissionDenied).Select(r=>new{r.Kind,r.Outcome,r.Error})});
-            window.FindControl<TextBlock>("DiagnosticStatus")!.BringIntoView(); await CaptureAsync(window,"diagnostics-results");
+            window.FindControl<ItemsControl>("DiagnosticResults")!.BringIntoView(new Rect(0,0,400,200)); await CaptureAsync(window,"diagnostics-results");
             vm.DiagnosticRedact=true; await vm.PreviewDiagnosticEvidenceAsync();
             Require(vm.HasDiagnosticEvidencePreview && !vm.DiagnosticEvidencePreview.Contains("127.0.0.1",StringComparison.Ordinal),"Redaction preview failed or leaked loopback target.");
             await vm.ExportDiagnosticEvidenceAsync(options.VerificationDirectory!);

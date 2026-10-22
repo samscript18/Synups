@@ -18,7 +18,7 @@ public sealed class TcpConnectTest : IDiagnosticTest
         var resolving = !IPAddress.TryParse(request.Target, out _);
         try
         {
-            var addresses = resolving ? await Dns.GetHostAddressesAsync(request.Target, timeout.Token).ConfigureAwait(false) : [IPAddress.Parse(request.Target)];
+            var addresses = resolving ? await BoundedHostnameResolver.Shared.ResolveAsync(request.Target, timeout.Token).ConfigureAwait(false) : [IPAddress.Parse(request.Target)];
             if (addresses.Length == 0) throw new SocketException((int)SocketError.HostNotFound);
             // One explicit port/attempt. Record the exact resolved address used, rather than silently scanning addresses/ports.
             var address = addresses[0]; resolving = false;

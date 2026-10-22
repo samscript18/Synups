@@ -198,7 +198,7 @@ internal static class IcmpDiagnosticSupport
     {
         cancellation.ThrowIfCancellationRequested();
         if (IPAddress.TryParse(target, out var literal)) return literal;
-        var addresses = await Dns.GetHostAddressesAsync(target, cancellation).ConfigureAwait(false);
+        var addresses = await BoundedHostnameResolver.Shared.ResolveAsync(target, cancellation).ConfigureAwait(false);
         return addresses.FirstOrDefault(a => a.AddressFamily is AddressFamily.InterNetwork or AddressFamily.InterNetworkV6)
             ?? throw new SocketException((int)SocketError.HostNotFound);
     }

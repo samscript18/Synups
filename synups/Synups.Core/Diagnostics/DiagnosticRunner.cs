@@ -94,9 +94,11 @@ public sealed class DiagnosticRunner : IDiagnosticRunner
     {
         Task[] tasks;
         lock (gate) { if (disposed) return; stopping = true; shutdown.Cancel(); tasks = owned.ToArray(); }
+        var draining = System.Diagnostics.Stopwatch.StartNew();
         try { await Task.WhenAll(tasks).WaitAsync(TimeSpan.FromSeconds(7)).ConfigureAwait(false); }
         catch (TimeoutException) { throw new TimeoutException("A diagnostic worker remains owned while its OS call drains. Retry shutdown; it was not abandoned."); }
         catch (Exception) when (tasks.All(t => t.IsCompleted)) { /* Caller has already received each run's persistence error. */ }
+        await BoundedHostnameResolver.Shared.DrainAsync(TimeSpan.FromSeconds(7) - draining.Elapsed > TimeSpan.Zero ? TimeSpan.FromSeconds(7) - draining.Elapsed : TimeSpan.FromMilliseconds(1)).ConfigureAwait(false);
         lock (gate) { disposed = true; shutdown.Dispose(); slots.Dispose(); }
     }
 }

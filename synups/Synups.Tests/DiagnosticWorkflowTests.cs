@@ -35,7 +35,8 @@ public class DiagnosticWorkflowTests
     public async Task GenuineTcpListenerAndRefusalUseConnectWithoutApplicationPayload()
     {
         using var listener = new TcpListener(IPAddress.Loopback, 0); listener.Start(); var port = ((IPEndPoint)listener.LocalEndpoint).Port;
-        var r = Request() with { Parameters = new() { Port = port } };
+        // Windows can surface the closed-port RST after a stack retry; allow its real refusal within the supported deadline.
+        var r = Request() with { Parameters = new() { Port = port, ProbeTimeoutMilliseconds = 5000 } };
         var connected = await new TcpConnectTest().ExecuteAsync(r, null, TestContext.Current.CancellationToken);
         Assert.Equal(DiagnosticOutcome.Success, connected.Outcome); Assert.Contains("Socket.ConnectAsync", connected.Method);
         using var accepted = await listener.AcceptSocketAsync(TestContext.Current.CancellationToken);
@@ -219,6 +220,33 @@ public class DiagnosticWorkflowTests
             Assert.Equal(DiagnosticOutcome.Success, Assert.Single((await store.FindDiagnosticSessionAsync(request.Id))!.Results).Outcome);
         }
         finally { Directory.Delete(d, true); }
+    }
+    [Fact]
+    public async Task CancelledHostnameCallerDoesNotReleaseNativeLookupCapacityOrAccumulateWorkers()
+    {
+        var native = new TaskCompletionSource<IPAddress[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var resolver = new BoundedHostnameResolver(1, _ => { entered.TrySetResult(); return native.Task; });
+        using var cancel = new CancellationTokenSource();
+        var first = resolver.ResolveAsync("fixture.invalid", cancel.Token);
+        await entered.Task.WaitAsync(TestContext.Current.CancellationToken); cancel.Cancel();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => first);
+        Assert.Equal(1, resolver.ActiveLookups);
+        await Assert.ThrowsAsync<SocketException>(() => resolver.ResolveAsync("another.invalid", TestContext.Current.CancellationToken));
+        await Assert.ThrowsAsync<TimeoutException>(() => resolver.DrainAsync(TimeSpan.FromMilliseconds(10)));
+        native.SetResult([IPAddress.Loopback]); await resolver.DrainAsync(TimeSpan.FromSeconds(1));
+        Assert.Equal(0, resolver.ActiveLookups);
+        Assert.Equal(IPAddress.Loopback, Assert.Single(await resolver.ResolveAsync("127.0.0.1", TestContext.Current.CancellationToken)));
+    }
+    [Fact]
+    public async Task FailedNativeHostnameLookupReleasesItsBoundedSlot()
+    {
+        var calls = 0;
+        var resolver = new BoundedHostnameResolver(1, _ => Interlocked.Increment(ref calls) == 1
+            ? Task.FromException<IPAddress[]>(new SocketException((int)SocketError.HostNotFound)) : Task.FromResult(new[] { IPAddress.IPv6Loopback }));
+        await Assert.ThrowsAsync<SocketException>(() => resolver.ResolveAsync("missing.invalid", TestContext.Current.CancellationToken));
+        Assert.Equal(IPAddress.IPv6Loopback, Assert.Single(await resolver.ResolveAsync("fixture.invalid", TestContext.Current.CancellationToken)));
+        Assert.Equal(0, resolver.ActiveLookups);
     }
     private sealed class WaitingTest : IDiagnosticTest
     {
