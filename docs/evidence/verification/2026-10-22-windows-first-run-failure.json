@@ -1,0 +1,32 @@
+{
+  "source_revision": "375e2f76631151598969add7b6904721b97c00b9",
+  "run": "https://github.com/samscript18/Synups/actions/runs/39760180405",
+  "job": "https://github.com/samscript18/Synups/actions/runs/39760180405/job/119762119989",
+  "status": "failed",
+  "error": "System.InvalidOperationException: First-run control lies outside the native viewport: FirstTargetAddress\r\n   at Synups.Desktop.Diagnostics.InstallationCheck.Require(Boolean condition, String error)\r\n   at Synups.Desktop.Diagnostics.InstallationCheck.ExerciseAsync(MainWindow window, IClassicDesktopStyleApplicationLifetime desktop, MainWindowViewModel vm)\r\n   at Synups.Desktop.Diagnostics.InstallationCheck.RunAsync(MainWindow window, IClassicDesktopStyleApplicationLifetime desktop, InstanceCoordinator instance)",
+  "actual_ui_actions": [
+    {
+      "action": "actual_native_window_created",
+      "passed": true,
+      "utc": "2026-10-22T10:05:39.9808434+00:00",
+      "observed": {
+        "Title": "Synups \u2014 Network reliability",
+        "IsVisible": true,
+        "Width": 1028,
+        "Height": 749,
+        "RenderScaling": 1,
+        "native_descriptor": "HWND",
+        "native_handle_present": true,
+        "window_icon_loaded": true
+      }
+    },
+    {
+      "action": "passive_startup_without_network_configuration",
+      "passed": true,
+      "utc": "2026-10-22T10:05:39.9837113+00:00",
+      "observed": null
+    }
+  ],
+  "screenshot_sha256": "5d0fd9508e6f89ddd41443aa34fe7d19656a8bd9b24638cb8d833ccc33eeea80",
+  "limitation": "Failure retained. Native viewport assertion is intentionally not suppressed; fresh-window sizing is corrected in a later source."
+}

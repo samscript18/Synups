@@ -40,6 +40,14 @@ The original image is attributed upstream, not a fresh Windows run. The after im
 
 Those are actual packaged executables, separately distinguished from the component-native harness. They exercise configuration/restart, real loopback, bounded stop, secondary-instance restoration, interrupted history without false recovery, actual read-only SQLite error and repair. Normal stages exit 0; deliberately killed disposable processes have documented nonzero status.
 
+The unpublished candidate at `65d917ac645139836cf97e48c48c137a09825942` passed [three-OS run 39761184906](https://github.com/samscript18/Synups/actions/runs/39761184906): per OS **107 deterministic/headless + 1 separate real-loopback + 8 Python safety cases**, zero-warning Release and six actual extracted apphost stages. [Independent package/runtime audit](../evidence/verification/2026-10-22-competitive-candidate-final.json). This adds two first-run tests; it does not relabel stable-release binaries or counts.
+
+### Candidate first run
+
+![Actual Linux candidate first-run client](../evidence/after/2026-10-22-competitive/linux-x64/first-run.png)
+
+[Windows](../evidence/after/2026-10-22-competitive/win-x64/first-run.png) and [macOS](../evidence/after/2026-10-22-competitive/osx-arm64/first-run.png) are genuine renders from those exact extracted apphosts. An empty IP field means no measurement or target is invented. Add creates an enabled group and your target in one save; explicit Start is still required. Native viewport checks and downloaded image review pass. These screens are in the unpublished candidate, not public 0.1.0.
+
 ## Try real monitoring
 
 1. Verify the downloaded archive checksum, extract completely and follow the platform/signing instructions.
@@ -52,7 +60,7 @@ The unpublished candidate’s initial overview can create an enabled group and f
 
 ## Reproduce incident evidence safely
 
-See [controlled real-incident protocol](REAL_INCIDENT.md). A disposable Linux namespace drops/restores actual loopback ICMP while the production IcmpProbe/engine and visible Avalonia UI run. No user network is changed and no probe results are injected. Pending execution is not a passing demonstration; exact run/captures/exports must be linked after completion. Deterministic fake-probe tests are separate and test-only.
+See [controlled real-incident protocol](REAL_INCIDENT.md). A disposable Linux namespace drops/restores actual loopback ICMP while the production IcmpProbe/engine and visible Avalonia UI run. No user network is changed and no probe results are injected. [Actual successful Linux run](https://github.com/samscript18/Synups/actions/runs/39754244507/job/119742116397) and raw timestamps/CSV/restart records are retained in that protocol. Deterministic fake-probe tests are separate and test-only.
 
 ## Challenges, effort and explicit limits
 

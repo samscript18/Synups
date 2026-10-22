@@ -84,3 +84,20 @@ Accessibility automation is disabled on the local Mac. No permission was enabled
 ## Authorized public release verification
 
 The later user explicitly authorized v0.1.0 publication and upload of the existing reviewed assets. This supersedes historical “not published/awaiting authorization” statements in the preparation section above; competition submission remains separately prohibited. Tag source 2973d3349fcb5af5639597920842288e6549bbd0 and all reviewed asset bytes are unchanged. [Publication record](../evidence/verification/synups-0.1.0-publication.json) retains UTC timestamps, public URLs, HTTP status and every SHA-256. The score adds only the remaining half-point for completed public handoff; trusted ordinary-user distribution remains 0, resource/accessibility remains 0.5, and no runtime/support claim is expanded. Windows remains unsigned; macOS remains ad-hoc/not notarized with Gatekeeper rejection.
+
+
+## Competitive improvement checkpoint — 22 October 2026
+
+- [x] Separate unpublished 0.1.1-rc.1; public 0.1.0 asset hashes unchanged.
+- [x] Guided first-target/group save, no automatic probe or profile overwrite; two new UI regressions pass.
+- [x] Three-OS source-specific run 39754244507: 107 deterministic/headless + 1 real-loopback + 8 Python cases per OS, zero-warning Release and six actual extracted-apphost stages.
+- [x] Isolated Linux real ICMP loss → grace → confirmed incident → recovery → separate-process SQLite/comment/event reload; raw CSV and genuine client captures retained.
+- [x] Native macOS normal launch/owned window/OS screenshot/native quit observed on stable executable; exact candidate also passed programmatic packaged checks locally.
+- [x] Main README foregrounds original architecture, preserved/rewrite/improvement comparison, exact stable/candidate evidence and limitations. Judge’s guide prepared.
+- [ ] Full mandatory macOS physical tray, keyboard, native save picker, minimize/restore, resize and active-close acceptance: Accessibility is disabled; no permission changed and no physical pass claimed.
+- [ ] Trusted Mac/Windows delivery, native notification delivery and broader desktop/accessibility/endurance acceptance remain open.
+
+Readiness stays **8.5/10 under the existing rubric**: stronger evidence and onboarding do not resolve trusted ordinary-user distribution or the outstanding human acceptance gates. Legacy parity remains 72.2%; no optional feature-count credit is added. A separate release candidate is justified by the first-run improvement, but publication is not authorized by this task. See [exact evidence and scope](CROSS_PLATFORM.md#competitive-candidate-verified-incident-and-onboarding--22-october-2026).
+
+
+Final candidate `65d917ac645139836cf97e48c48c137a09825942` passed [run 39761184906](https://github.com/samscript18/Synups/actions/runs/39761184906) on all three native runners, including viewport assertions and six extracted-apphost stages. Downloaded image review confirms the actual Windows fresh-window clipping fix; failed 375e2f7 evidence is retained. Final namespace incident/restart/CSV repeats successfully. Local exact downloaded Mac six-stage rerun passes; strict integrity passes, Gatekeeper rejects (3). [Frozen candidate package hashes](../release/COMPETITIVE_CANDIDATE.md), [final machine-readable evidence](../evidence/verification/2026-10-22-competitive-candidate-final.json). The candidate is prepared locally, not released; human Mac interactions/trusted signing remain blocked. Readiness and parity stay 8.5/10 and 72.2%.

@@ -2,7 +2,27 @@
 
 This is a reproducible engineering demonstration, **not simulated measurements and not an Internet outage**. Actual production IcmpProbe and MonitoringService run against 127.0.0.1 inside a disposable Linux network namespace. A namespace-local kernel firewall rule drops actual incoming echo replies after successful connectivity, then is removed after confirmed outage. The user’s host firewall, routes, interfaces and network configuration are never changed.
 
-Current execution status: harness compiled locally; real Linux namespace execution pending the exact-source CI. A successful compile or deterministic test is not an incident pass. Final source/run/results and screenshots must be added after actual execution.
+**Passed on Ubuntu/Xvfb**, source `535b91f18e2d98714d703364b9e3e3631cdad992`, [run 39754244507 / Linux job](https://github.com/samscript18/Synups/actions/runs/39754244507/job/119742116397). Downloaded artifacts were independently inspected: namespace file hashes, SQLite `quick_check`, CSV and second-process incident/event identity all pass. The user’s Mac/network was not modified.
+
+| Actual UTC observation | Recorded value |
+|---|---|
+| Session started / real healthy state observed before filtering | 2026-10-22 09:19:49.1430781Z |
+| First failed observation | 09:19:49.8702205Z |
+| Failure-grace UI capture observation | 09:19:49.8853444Z; no confirmed incident yet |
+| Outage confirmed | 09:19:52.1138880Z; 2.244s after first failure, configured grace 2s |
+| Recovery observed after removing isolated filter | 09:19:52.6619422Z |
+| Confirmed-incident monotonic duration | 0.5480901s; CSV rounded to 0.548s |
+| Clean stop / process reload | Same incident ID, comment and five events; exactly one outage and one recovery |
+
+Durations begin at confirmation, preserving WirePeep intent; the grace is not counted as confirmed outage duration. Session-start time is not claimed as the exact first successful packet timestamp. The short controlled disruption is evidence of transitions, not a representative service outage or long-duration endurance.
+
+[Raw incident](../evidence/verification/2026-10-22-real-incident/incident.json), [separate-process reload](../evidence/verification/2026-10-22-real-incident/restart.json), [namespace actions and hashes](../evidence/verification/2026-10-22-real-incident/namespace-evidence.json), [actual CSV](../evidence/verification/2026-10-22-real-incident/real-incident.csv), [retained CI logs](../evidence/verification/2026-10-22-competitive-ci-logs.zip).
+
+| Actual unresolved incident / in-app outage alert | Actual recovery / in-app recovery alert |
+|---|---|
+| ![Confirmed ICMP incident](../evidence/after/2026-10-22-competitive/linux-incident/confirmed-outage.png) | ![Observed ICMP recovery](../evidence/after/2026-10-22-competitive/linux-incident/recovered-history.png) |
+
+[Healthy](../evidence/after/2026-10-22-competitive/linux-incident/healthy.png), [grace](../evidence/after/2026-10-22-competitive/linux-incident/failure-grace.png), [restarted history](../evidence/after/2026-10-22-competitive/linux-incident/restart-history.png). These are genuine native client-tree renders from the source-component verifier. They are not physical desktop input, OS notification delivery or packaged-apphost incident tests.
 
 ## Guardrails
 
@@ -31,7 +51,12 @@ Do **not** remove namespace guards or run firewall commands in the host namespac
 - Clean Stop/Close; a separate process reloads the same incident/comment/events without generating another recovery or automatically starting.
 - Native client PNGs for healthy, grace, confirmed outage, recovery and restarted history; JSON transition data, namespace/actions/hashes, CSV and console logs retained by CI even on failure.
 
-These are observed loopback ICMP failures/recovery caused by a documented isolated filter, not a real Internet/provider outage or a physical cable/power-loss experiment. A Linux success must not be relabelled as a macOS/Windows incident run. No incident or screenshot is claimed until its actual recorded run passes.
+These are observed loopback ICMP failures/recovery caused by a documented isolated filter, not a real Internet/provider outage or a physical cable/power-loss experiment. A Linux success must not be relabelled as a macOS/Windows incident run. The linked exact-source run passed; other platforms are not assigned that incident result.
 
 
 First exact-source run7fe86f7 exposed a useful distinction: a namespace-local OUTPUT/drop of requests returned EACCES, correctly classified PermissionDenied/Unavailable, with no invented outage. The controller was corrected to filter incoming echo replies; real requests can then send successfully and expire without replies. Probe/engine semantics were not changed and assertions remain strict. Windows guard tests also needed create=True when mocking the Unix-only geteuid symbol; the Linux host-namespace guard itself was not relaxed. Failed run/logs are preserved and not counted as a demonstration pass.
+
+
+## Repeated at the final candidate revision
+
+Final source `65d917ac645139836cf97e48c48c137a09825942`, [successful run 39761184906](https://github.com/samscript18/Synups/actions/runs/39761184906), independently repeated the controlled real incident. First failure 10:13:54.9720378Z, confirmation 10:13:57.2113907Z, observed recovery 10:13:57.7604230Z; confirmed monotonic duration **0.5490790s**. Exactly one outage/recovery and the same ID/comment/events reloaded in a second process. [Final raw incident](../evidence/verification/2026-10-22-real-incident-final/incident.json), [reload](../evidence/verification/2026-10-22-real-incident-final/restart.json), [namespace/hash record](../evidence/verification/2026-10-22-real-incident-final/namespace-evidence.json), [CSV](../evidence/verification/2026-10-22-real-incident-final/real-incident.csv). Every namespace-listed file hash, SQLite quick_check and CSV identity passed independent inspection. The images above intentionally retain their first successful source 535b91f provenance rather than being relabelled as the later run.

@@ -1,0 +1,594 @@
+{
+  "verified_utc": "2026-10-22T09:54:45.633439+00:00",
+  "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+  "version": "0.1.1-rc.1",
+  "workflow_run": "https://github.com/samscript18/Synups/actions/runs/39754244507",
+  "jobs": {
+    "win-x64": 119742115768,
+    "osx-arm64": 119742115959,
+    "linux-x64": 119742116397
+  },
+  "independent_audit": [
+    {
+      "rid": "win-x64",
+      "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+      "artifact_id": 12414902391,
+      "artifact_name": "synups-win-x64-535b91f18e2d98714d703364b9e3e3631cdad992",
+      "artifact_sha256": "0ac5358e9dcefc4890c1b15ec76743369b4a6875ab5b4474e8425760b654e983",
+      "package_sha256": "54b9059cdcf3ff853da64be8961797355f1fe538d93d74162389331eb4f9d5de",
+      "apphost_sha256": "e64aba00bc3cb1917b8d0613647e045b77fdf838f251893179a85ae7325d98b3",
+      "file_count": 277,
+      "notice_packages": 25,
+      "signing": "No publisher signature; not an installer.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "108",
+            "executed": "107",
+            "passed": "107",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "de054428574d6988f9b374a5864e081f0ffe72c1c4131164f83ae7ba40101867"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "1",
+            "executed": "1",
+            "passed": "1",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "611809c4fbd69d6c2901a0e627f86e3ab400f304b143d4d723d1fed16d8101b5"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+        "package_sha256": "54b9059cdcf3ff853da64be8961797355f1fe538d93d74162389331eb4f9d5de",
+        "apphost_sha256": "e64aba00bc3cb1917b8d0613647e045b77fdf838f251893179a85ae7325d98b3",
+        "rid": "win-x64",
+        "platform": "Windows-2025Server-10.0.26100-SP0",
+        "verified_utc": "2026-10-22T09:20:52.262037+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 8976,
+            "started_utc": "2026-10-22T09:19:42.516930+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 5044,
+            "started_utc": "2026-10-22T09:19:57.250040+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 2828,
+            "started_utc": "2026-10-22T09:20:10.669076+00:00",
+            "exit_code": 1,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 9044,
+            "started_utc": "2026-10-22T09:20:23.340134+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 5836,
+            "started_utc": "2026-10-22T09:20:36.796511+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 984,
+            "started_utc": "2026-10-22T09:20:39.074996+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "exercise-compact.png": "9940516920a8bda9b7fe2b15a42b3ac9b9216d5d48807e4f7d0129f71cdbd684",
+          "exercise-first-run.png": "5d0fd9508e6f89ddd41443aa34fe7d19656a8bd9b24638cb8d833ccc33eeea80",
+          "exercise-focus.png": "24ef4ae30abef15eca4bd9202a2a46054617773b5edaac24d304dbd20bba0890",
+          "exercise-overview.png": "cb60b1815fcdb7410ca216a8e443466c691225e71b402ccb141cdd9185b45b5a",
+          "exercise-preferences.png": "78ae5d902352348030046ef8111a25b57b8fa211004bceb6d88399ca07276795",
+          "interruption-compact.png": "1871b80f68b1efaf5dbbfae8022c39389a88f2ecbc6bfcdb7d03b4b85f2a30fd",
+          "interruption-focus.png": "fed86e197df99d61721a80cf9f4f5bd652dd91d771f7033d178af7b00e33fece",
+          "interruption-overview.png": "ba0761af80d3a4b19231bb4f117b8763d147249a6912b6238ff61ea8eab40f33",
+          "recover-compact.png": "5af401fb392f4285f21d06f1eb44ea2188b181dfcfb7792ded74425c551b10a3",
+          "recover-focus.png": "b799f58f92338a4c54d4794c722c5771a66a0c67d8dc58fa98adcaa22af898b7",
+          "recover-overview.png": "e1f874159e417e6525ee236f80588032fed47de85e5cd2e9c0aa9b36fa7e8bec",
+          "restart-compact.png": "d90b45b069ef6d96d69ccb87bbef0af3e744d6466e19160665fc279e29d25697",
+          "restart-focus.png": "248fbf5389c1659cf7b11003f48ace78ead68823470fc4c22cdc25562dca2c1a",
+          "restart-overview.png": "a400935238a116f50e5d8628ad24594430f5b78661fdddf6e46192de87847121",
+          "storage-error-read-only.png": "11980232d6d84fe77a66f06fae372076fbfd1194441794b7bd7f3d1323b814c9",
+          "storage-recovered-compact.png": "55f6f100db02eace99e87655aee680f34c666de31b60d1d71d762db34353473a",
+          "storage-recovered-focus.png": "c9bf880c878c37545db155678af87dc24d4ff22eeb89b64c635bfd657460dc66",
+          "storage-recovered-overview.png": "c296fb83c1920ac39a85c6cce2fab0cc2ac25bc6cc360b87edf487f730627f03"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0
+    },
+    {
+      "rid": "osx-arm64",
+      "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+      "artifact_id": 12415057437,
+      "artifact_name": "synups-osx-arm64-535b91f18e2d98714d703364b9e3e3631cdad992",
+      "artifact_sha256": "323db912aed000dacee90173e51f1f20b6c01cd672c0d40c2c4045777314dda0",
+      "package_sha256": "f5cee166a1a68c1a2a73da64c5bab5333a4eb68f6100e586492eb9cf52df77f5",
+      "apphost_sha256": "3227f8516d4203a88a5a36dc494ffd05ac1be6a682fcdf768eb8eaf16386b6d2",
+      "file_count": 322,
+      "notice_packages": 24,
+      "signing": "Ad-hoc signed for bundle integrity only; no Developer ID identity, no notarization, no trusted publisher claim.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "108",
+            "executed": "107",
+            "passed": "107",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "c50b1e63dc292b0328fba9f71a685eed8adfc08f735ef30bcce12d290c0fd09c"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "1",
+            "executed": "1",
+            "passed": "1",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "b93edbab35f283eb1f70726e8bf3da28b77147a8f6be785f89cbb2c4330df024"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+        "package_sha256": "f5cee166a1a68c1a2a73da64c5bab5333a4eb68f6100e586492eb9cf52df77f5",
+        "apphost_sha256": "3227f8516d4203a88a5a36dc494ffd05ac1be6a682fcdf768eb8eaf16386b6d2",
+        "rid": "osx-arm64",
+        "platform": "macOS-15.7.9-arm64-arm-64bit",
+        "verified_utc": "2026-10-22T09:19:20.927412+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 2143,
+            "started_utc": "2026-10-22T09:18:16.243971+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 2243,
+            "started_utc": "2026-10-22T09:18:30.415411+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 2495,
+            "started_utc": "2026-10-22T09:18:42.781354+00:00",
+            "exit_code": -9,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 2705,
+            "started_utc": "2026-10-22T09:18:54.809374+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 2918,
+            "started_utc": "2026-10-22T09:19:07.350030+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 2921,
+            "started_utc": "2026-10-22T09:19:08.432864+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "exercise-overview.png": "90ec2c3e31aaef16ec4111640f0458ea982d8ff41d27d15ee7a497e9ba3978b3",
+          "exercise-focus.png": "c1a6b8ec79b6d7b7412810b061f6e9afebe6a2c03e544869d39ebe9c91f619a8",
+          "interruption-overview.png": "a197ce528d513f6e6305e6de2fefd2fe9456e75d5325c65429748ee76b1b9247",
+          "storage-recovered-focus.png": "f3fb4190bb853749f5b698c83d0f73eeb1057909117168f24034348495ff1bd2",
+          "restart-compact.png": "da8572bb3e6a74f996c545a05a1ae32363c3a177a4ada0a36869b99305d8b3b2",
+          "storage-recovered-compact.png": "888602bbdf76ddafa855189d63778fcc19a87700542e6a88d95e6a20bc3ee4dd",
+          "exercise-preferences.png": "757e152e7c70cbc6466f1d8114edd431b521355cdbc32e543b6321efeb4e51b2",
+          "recover-compact.png": "93d328f0106bff183db0be404977e8531cce082ba930af431b75765cc686e5fc",
+          "storage-error-read-only.png": "26f84bbc028257ceb5bf6a91af1627c37c24cf5ef357508b09b29e25ced325b2",
+          "interruption-compact.png": "bf6d83845724d5c021f2b631507af462d012ff804f6c77d6081e97bf89d6aefd",
+          "storage-recovered-overview.png": "ae586bfa588b58b5cc4406cbfbc8c855c999f3ed4a90fd788889c8ce58a8250c",
+          "restart-overview.png": "c441b9f8641d29dfb5218f054ba14d99e8236a726f67d021379db7243ba9ab4e",
+          "recover-focus.png": "4ecae275acab370891557c8b0944272330297ec38c7b68f4b775adaf0569915d",
+          "recover-overview.png": "884ee45b7d1c7198a292899bb41c630ed68539b9dc6d48fac12561d95aa06a6a",
+          "restart-focus.png": "b73e0b6bb893fa8248593f161e866a639c5e6a7a382f776af4ab8998ee41c62a",
+          "exercise-compact.png": "333b43b6eda0d1d5204ca9529a951840fca048b86f425688f649019a9350b716",
+          "exercise-first-run.png": "d2b9b66ad464c771029b05a90bf3bc7ee2723bd5dc5020dd181d21e4814ca00e",
+          "interruption-focus.png": "7be5a6b5e33e54c56fc3756323994eecf372c28bbb8b407de1ea749fc2656e54"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0
+    },
+    {
+      "rid": "linux-x64",
+      "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+      "artifact_id": 12414624749,
+      "artifact_name": "synups-linux-x64-535b91f18e2d98714d703364b9e3e3631cdad992",
+      "artifact_sha256": "c2ec99092d434126b4d71dbb316bf992382cb7a1d5f1d58de1630f8180c51d4f",
+      "package_sha256": "b4360b38a64382a79f11cc5f632b2af693283f71ea60d6b2236686b76f1a9744",
+      "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+      "file_count": 275,
+      "notice_packages": 24,
+      "signing": "No publisher signature; not an installer.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "108",
+            "executed": "107",
+            "passed": "107",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "a945ae09bd520a746a68ff06b5692353b284ef88d0ad7e52fe9ea4d0f1ea8176"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "1",
+            "executed": "1",
+            "passed": "1",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "82e024e744c8db171cc09e2817a6f9c9993c6965018dbb010bf9522b0172f524"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+        "package_sha256": "b4360b38a64382a79f11cc5f632b2af693283f71ea60d6b2236686b76f1a9744",
+        "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+        "rid": "linux-x64",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "verified_utc": "2026-10-22T09:19:42.404003+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 3648,
+            "started_utc": "2026-10-22T09:18:39.580430+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 3716,
+            "started_utc": "2026-10-22T09:18:54.023547+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 3785,
+            "started_utc": "2026-10-22T09:19:05.962426+00:00",
+            "exit_code": -9,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 3840,
+            "started_utc": "2026-10-22T09:19:17.606957+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 3910,
+            "started_utc": "2026-10-22T09:19:29.496921+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 3939,
+            "started_utc": "2026-10-22T09:19:30.464062+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "interruption-compact.png": "30c6df956be3de9bfe4951e330df8944df410cd0f0ee883b0f5ab8731454219d",
+          "storage-error-read-only.png": "63066f9e663491233067144e1eb3d378d1605f1c16cf3e06b5f5139fd0dd45dd",
+          "storage-recovered-compact.png": "cd40cfbd905482641c68f1846a992d3ef8fde513880d727c1a90d97b03d6342e",
+          "exercise-focus.png": "5dd1222f70b5451ad892b4ef118c15d298dbd97567e29cebc2ec5656f833cd5a",
+          "restart-compact.png": "3ce4c61a0c8f2588a1c110f197d6fdb3d7bf84d5c94cc9d2f98bc6125904bdc2",
+          "recover-focus.png": "df5fd8e4c191ff4c199e3480519ee8441564bd83f5540fa4840bfa29a19e960f",
+          "recover-compact.png": "65427efa507913710e90760938eb2717d72dd262cb3b2519b85a366ad9ca41dd",
+          "restart-focus.png": "8718d98ddb318cf1a2d61aeae67e86f46a1a478c972b00a3f854138d7f0d7db3",
+          "storage-recovered-overview.png": "21c88a20d50f2df74fd70793a25f6f3919135cc30ad3b13c6202bdd3139704f2",
+          "exercise-compact.png": "f424076ab48cf7697490ff276977589e6265c4e17ab928f7de4db41857c21889",
+          "exercise-first-run.png": "b2f662ccb804d909865c803989dcdda12fdc479b940f3aca6cb57e1bffac99d5",
+          "recover-overview.png": "3d04c78bdec47e7b378f66dfb500962862b4ec99cf46cb334ae40e9fc780061b",
+          "storage-recovered-focus.png": "72df6362befc7ef6daa644ab758b0c8ce0dfc7f78d96685a14206ba74f0e2aaf",
+          "exercise-preferences.png": "97016dd7af83702a905b374f68bc13be2970e3268e34b671ae912f322885951a",
+          "restart-overview.png": "3cb0fdcc89ae450cf34147ff49f67a36f0aa693ba7725b922985d94fc18a82e2",
+          "exercise-overview.png": "bfa53f1d0db45f8130f8d2bcee430b086af0ab57a19e23ba4758a8c096eb9437",
+          "interruption-focus.png": "c4ef9c736ed2dad0b5f5e6fa08ee080cc2fee6712019178d1c368c17e3720ae7",
+          "interruption-overview.png": "605848cc924e9630cfd896ed5c855e44a00d1d1949ac2465085f6b5f867402e7"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0
+    }
+  ],
+  "local_mac_downloaded_apphost": {
+    "source_revision": "535b91f18e2d98714d703364b9e3e3631cdad992",
+    "package_sha256": "f5cee166a1a68c1a2a73da64c5bab5333a4eb68f6100e586492eb9cf52df77f5",
+    "apphost_sha256": "3227f8516d4203a88a5a36dc494ffd05ac1be6a682fcdf768eb8eaf16386b6d2",
+    "rid": "osx-arm64",
+    "platform": "macOS-26.3.1-arm64-arm-64bit",
+    "verified_utc": "2026-10-22T09:52:10.152252+00:00",
+    "actual_published_apphost": true,
+    "launches": [
+      {
+        "stage": "exercise",
+        "pid": 70609,
+        "started_utc": "2026-10-22T09:51:37.215483+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 1,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "restart",
+        "pid": 70641,
+        "started_utc": "2026-10-22T09:51:45.631848+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 2,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "interruption",
+        "pid": 70660,
+        "started_utc": "2026-10-22T09:51:51.403689+00:00",
+        "exit_code": -9,
+        "expected_external_termination": true,
+        "durable_sessions": 3,
+        "actual_outages": 0,
+        "status": "ready-for-termination"
+      },
+      {
+        "stage": "recover",
+        "pid": 70672,
+        "started_utc": "2026-10-22T09:51:56.722513+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 4,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "storage-error",
+        "pid": 70684,
+        "started_utc": "2026-10-22T09:52:02.590621+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 4,
+        "actual_outages": 0,
+        "status": "passed"
+      },
+      {
+        "stage": "storage-recovered",
+        "pid": 70694,
+        "started_utc": "2026-10-22T09:52:04.366249+00:00",
+        "exit_code": 0,
+        "expected_external_termination": false,
+        "durable_sessions": 5,
+        "actual_outages": 0,
+        "status": "passed"
+      }
+    ],
+    "captures_sha256": {
+      "exercise-overview.png": "51ff287d7830deba003665b8dc60b4402e4fe34fb2b26edd2970ad5a411bd3cf",
+      "exercise-focus.png": "41caead8eceda001717dbf7e789a485652d084f561da52b16f9c515f834f25fd",
+      "interruption-overview.png": "932b1c3e4ab29a07adfb777e39cf4ed7288ef41985b4d5aa786481809c8d75fe",
+      "storage-recovered-focus.png": "8ed5c45caeebbf12aa2c6ae46000660fd6a6c353be1f2ac25edf6d695c72c255",
+      "restart-compact.png": "68189807e6cad8c98c022e30263deab7c460e2ad8ccdbf7a10f1e8aca08a87f7",
+      "storage-recovered-compact.png": "18dc9b78594363638d874dc1fc2bbf5495905fc16f59f99f66ccb44ff1a6d6d1",
+      "exercise-preferences.png": "6a55a4a46c60d6a9307d3007f76a669d150ac33da317e66319dd5e1be4eaee14",
+      "recover-compact.png": "f1703edae2a9c66bcdaf0c6c2516b81d97635eaa889d528878e77f073aa69188",
+      "storage-error-read-only.png": "509ed69784cf289756a6385bc3ebd364c803c4aad2c5bd2a05aae7a5022fca53",
+      "interruption-compact.png": "f6cf7256bc8982ad1d0271ed2c6107d78a76aab4a3ae3e6c404734e08e1beabd",
+      "storage-recovered-overview.png": "47603708af12ff5af9858f3e91c694d76dec6d112f05a66ad9c5d38fb669245e",
+      "restart-overview.png": "33af24dcdc15c6cb5edcd21e1d4d37d689d56bda0484235c461673a8dea40a06",
+      "recover-focus.png": "720d1d6337fcb333ca68a61ae08c67c4218c8f70b28c533e3b502e9c8ef8ad3d",
+      "recover-overview.png": "e92eda1df42ce2e1eb7f508a31008fd9dcb73b84b46ce95b33a16a1d92c77c2f",
+      "restart-focus.png": "4f745750647d854c5c3a95715a211bbeb1af08a927f3dcfb3170261ad97001e3",
+      "exercise-compact.png": "438c6fc0ca3ebcb4e714ae4c7eb312434ba90bd9803e4bcbca3e4e28090ca4e4",
+      "exercise-first-run.png": "6576b8771c27cc19a748b7882e94d5bfa2147b0ddcd5942069f0d10989d289ee",
+      "interruption-focus.png": "4fe55984fc1f5346e92e0df46652fc7162055ead5192c0b538678f423294b341"
+    },
+    "full_manifest_verified": true,
+    "limits": [
+      "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+      "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+      "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+    ]
+  },
+  "local_mac_signature_integrity_exit": 0,
+  "local_mac_gatekeeper_exit": 3,
+  "linux_incident": "2026-10-22-real-incident/incident.json",
+  "limits": [
+    "Unpublished candidate; public v0.1.0 bytes unchanged.",
+    "Actual published-apphost programmatic controls are distinct from physical interaction.",
+    "Linux isolated real incident uses source-component native verifier, not the packaged apphost.",
+    "macOS Accessibility disabled; physical keyboard/tray/native Save dialog tests blocked.",
+    "Initial Windows first-run capture at this revision has stale layout clipping; a later capture-only correction is separately verified."
+  ]
+}

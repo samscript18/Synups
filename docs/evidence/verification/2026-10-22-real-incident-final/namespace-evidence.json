@@ -1,0 +1,35 @@
+{
+  "network_namespace": "net:[4026532267]",
+  "host_namespace_untouched": true,
+  "target": "127.0.0.1",
+  "actions": [
+    {
+      "action": "drop_real_loopback_icmp_replies_in_isolated_namespace",
+      "monotonic_seconds": 189.528904058
+    },
+    {
+      "action": "restore_real_loopback_icmp_in_isolated_namespace",
+      "monotonic_seconds": 192.499255431
+    }
+  ],
+  "measurements": "Production IcmpProbe/MonitoringService, actual kernel-filtered ICMP; no fake probe or injected result",
+  "limits": "Controlled loopback ICMP disruption, not an Internet outage; source-component native UI harness, not published-apphost or physical interaction.",
+  "files_sha256": {
+    "restart-console.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "failure-grace.png": "014d104a7eeabb962f3295074554620e1a91c65fdb7a6f7c9aaa2f58e5dace5f",
+    "restart.json": "1e94cb133f3efc47308bb340a1d0ab49addfdd6a6dcfcc0a9efacd4048b74b0c",
+    "history.v1.db": "7579bc2207a50e5c0a94bc4fbe601ac13183e729bf666532a2c67b9ff8386bff",
+    "restart-history.png": "2d77d74513286de7b1eab4a895f9d68270af2b455a1949896d2ba5722cb3a3b5",
+    "preferences.v1.json": "546c3672f966f59c0406c85c937f1cfc31f50dfd3a2d6dbba0b3a4bf50ddeedd",
+    "incident-console.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "incident.json": "21cbe71f12882aa14e314375d81084de63846b7bc6047f9e3fdd7255025fd82f",
+    "healthy.png": "81c9877de1ea53cea7014e8f8742ec6e096bf423375245275fef0a56e4a2f0e5",
+    "recovered-history.png": "830076febd280ec2750b15b0317c16842668e84920057d1632eda192399b4622",
+    "healthy.ready": "f6cf1824407bdf8cae78c4b95a978343f21c54e3c1a119b0856937d9d38ead3a",
+    "history.v1.db.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "real-incident.csv": "3c40588e065734c56e8bfc51be978d61eb8dbef61692e1480659be068a0b7b21",
+    "configuration.v1.json": "1a6aab1a14141b6ec2c937fdae92be4e26f367757f7a55008d906bab6cc1fb02",
+    "outage.ready": "3b7eee1f0841e53c81c6e8d4ed52283db5d41e7131d3a675e56dd7e3862b3e5c",
+    "confirmed-outage.png": "0fbc871bfc32d82a4625fa4dfc606166f59f4f379679768ade3adf7c58216486"
+  }
+}

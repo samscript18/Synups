@@ -7,6 +7,9 @@
 LICENSE text eol=lf
 eng/licenses/*.txt text eol=lf
 
+# Raw exported incident evidence must retain its recorded SHA-256 bytes.
+docs/evidence/verification/**/real-incident.csv binary
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #

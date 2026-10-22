@@ -44,3 +44,10 @@ Freeze app binaries at2973d3349fcb5af5639597920842288e6549bbd0/run39682197118; e
 ## Public release completed
 
 The user authorized [Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0) at frozen source `2973d3349fcb5af5639597920842288e6549bbd0`. Existing reviewed packages and evidence were published unchanged; all 15 anonymous downloads/hash checks passed. Permanent download/readme links are in place. Next actions remain legitimate signing/ordinary-desktop acceptance and separately authorized competition submission; do not submit the form automatically or infer10/10 readiness from public availability.
+
+
+## Competitive work completed / next decision — 22 October 2026
+
+Guided first-target setup, near-top README comparison and judges’ guide are implemented. Controlled real ICMP loss/recovery in a disposable Linux namespace now has actual native UI, CSV and separate-process persistence evidence; no host network was altered. Source-specific three-OS packaged verification is retained in CROSS_PLATFORM.md. Public 0.1.0 is untouched; new UI belongs to a separate unpublished 0.1.1-rc.1.
+
+Next prioritize legitimate signing/trusted distribution and a human-operated desktop acceptance pass (especially Mac tray, keyboard and native Save dialog). Accessibility currently blocks those local automation tests. Discovery/import/native notification expansion remains deferred; do not trade a verified submission for speculative parity. Release/submission requires separate authorization.
