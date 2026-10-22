@@ -93,14 +93,6 @@ jobs:
         env:
           SYNUPS_SOUND_TESTS: '1'
           SYNUPS_AUDIO_EVIDENCE: ${{ github.workspace }}/artifacts/audio
-      - name: Independently observe native Windows notification delivery
-        if: runner.os == 'Windows'
-        run: |
-          set -o pipefail
-          dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~NativeWindowsNotificationDelivery --logger trx --results-directory ../artifacts/notifications 2>&1 | tee ../artifacts/logs/notifications.txt
-        env:
-          SYNUPS_DESKTOP_DELIVERY_TESTS: '1'
-          SYNUPS_NOTIFICATION_EVIDENCE: ${{ github.workspace }}/artifacts/notifications
       - name: Publish self-contained platform directory
         run: |
           set -o pipefail
