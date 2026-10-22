@@ -33,6 +33,8 @@ public sealed record LoginPlan(LoginPlatform Platform,string Name,string? FileNa
             var escaped=value.Replace("\\","\\\\").Replace("\"","\\\"").Replace("`","\\`").Replace("$","\\$").Replace("%","%%");
             return "\""+escaped.Replace("\\","\\\\")+"\"";
         }
+        if(platform==LoginPlatform.Linux && new[]{executable,dataDirectory}.Any(p=>p.IndexOfAny(['"','\\','%','$','`'])>=0))
+            throw new ArgumentException("Linux login registration does not support quotes, backslashes, percent, dollar or backtick in the executable/workspace path. Nothing was registered. Use ordinary absolute paths (spaces are supported), or launch manually.");
         if(platform==LoginPlatform.Linux && executable.Contains('='))throw new ArgumentException("The desktop-entry specification does not support '=' in the executable path. Move the app before enabling login registration.");
         return platform switch
         {

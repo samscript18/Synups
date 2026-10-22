@@ -17,8 +17,8 @@ public class LoginRegistrationTests
         var root=Path.Combine(Path.GetTempPath(),"Synups-launch-"+Guid.NewGuid());Directory.CreateDirectory(root);
         try
         {
-            var output=Path.Combine(root,"argv.json");var executable=Path.Combine(root,"Synups space$quote\"percent%.py");
-            var data=Path.Combine(root,"data `quote\" dollar$ backslash\\ percent% space");
+            var output=Path.Combine(root,"argv.json");var executable=Path.Combine(root,"Synups space & launcher.py");
+            var data=Path.Combine(root,"data space & arguments");
             await File.WriteAllTextAsync(executable,"#!/usr/bin/python3\nimport json,sys\nfrom pathlib import Path\nPath("+JsonSerializer.Serialize(output)+").write_text(json.dumps(sys.argv[1:]))\n",TestContext.Current.CancellationToken);
             if(OperatingSystem.IsLinux())File.SetUnixFileMode(executable,UnixFileMode.UserRead|UnixFileMode.UserWrite|UnixFileMode.UserExecute);
             var plan=LoginPlan.Create(LoginPlatform.Linux,executable,data,root,root);
@@ -47,7 +47,7 @@ public class LoginRegistrationTests
         var root=Path.Combine(Path.GetTempPath(),"Synups-login-test-"+Guid.NewGuid());Directory.CreateDirectory(root);
         try
         {
-            var exe=Path.Combine(root,"app space & percent%.app","Synups");var data=Path.Combine(root,"data space");
+            var exe=Path.Combine(root,"app space & symbols.app","Synups");var data=Path.Combine(root,"data space");
             var plan=LoginPlan.Create(platform,exe,data,root,Path.Combine(root,"config"));var registration=new LoginRegistration(plan);
             Assert.False((await registration.ReadAsync()).Registered);Assert.False(File.Exists(plan.FileName));
             await Assert.ThrowsAsync<InvalidOperationException>(()=>registration.SetAsync(true,false));Assert.False(File.Exists(plan.FileName));
@@ -57,7 +57,7 @@ public class LoginRegistrationTests
             {
                 var xml=XDocument.Parse(plan.Payload);Assert.Equal(new[]{exe,"--minimized","--data-directory",data},xml.Descendants("array").Elements("string").Select(s=>s.Value));
             }
-            else{Assert.Contains("percent%%",plan.Payload);Assert.Contains("--minimized",plan.Payload);}
+            else{Assert.Contains("--minimized",plan.Payload);Assert.Throws<ArgumentException>(()=>LoginPlan.Create(platform,exe+"%",data,root,root));}
             Assert.False((await registration.SetAsync(false,true)).Registered);Assert.False(File.Exists(plan.FileName));
             await File.WriteAllTextAsync(plan.FileName!,"Unrelated entry",TestContext.Current.CancellationToken);
             Assert.False((await registration.ReadAsync()).CanChange);await Assert.ThrowsAsync<InvalidOperationException>(()=>registration.SetAsync(false,true));
