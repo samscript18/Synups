@@ -194,6 +194,13 @@ public sealed class InstallationCheck(DesktopOptions options)
         await ClickAsync(window, "CreateFirstTarget"); await UntilAsync(() => vm.CanStart);
         Require(vm.LastMeasurement == "Not observed" && vm.Groups.Single().Targets.Single().Status == "Not checked", "Quick setup performed an undisclosed measurement.");
         Passed("fresh_profile_one_action_setup_without_probing"); vm.SelectedPage = 1;
+        await ClickAsync(window, "DiscoverGateway"); await UntilAsync(() => !vm.IsDiscovering);
+        Require(vm.GatewayStatus is Synups.Core.Network.DiscoveryStatus.Found or Synups.Core.Network.DiscoveryStatus.NoGateway,
+            "Read-only native gateway query failed: " + vm.DiscoveryMessage);
+        Require(vm.Groups.Single().Targets.Single().Address == "127.0.0.1" && vm.LastMeasurement == "Not observed",
+            "Gateway preview changed configuration or started a probe without confirmation.");
+        Passed("read_only_native_gateway_preview_without_config_or_probe", new { vm.GatewayStatus, vm.GatewayCandidates.Count, vm.DiscoveryMessage });
+        await CaptureAsync(window, "gateway-preview");
         Text(window, "PollSecondsEditor", "0.5"); Text(window, "FailSecondsEditor", "1"); Text(window, "TimeoutEditor", "500"); await ClickAsync(window, "ApplyGroup");
         await UntilAsync(() => vm.CanStart && vm.CanEdit);
         var groupId = vm.Groups[0].Id; var targetId = vm.Groups[0].Targets[0].Id;

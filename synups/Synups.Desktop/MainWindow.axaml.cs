@@ -127,6 +127,14 @@ public partial class MainWindow : Window
     private void ConfigureClicked(object? sender, RoutedEventArgs e) { if (ViewModel is { } vm) vm.SelectedPage = 1; }
     private void NewGroupClicked(object? sender, RoutedEventArgs e) => ViewModel?.NewGroup();
     private void NewTargetClicked(object? sender, RoutedEventArgs e) => ViewModel?.NewTarget();
+    private async void DiscoverGatewayClicked(object? sender, RoutedEventArgs e)
+    { if (ViewModel is { } vm) await vm.DiscoverGatewaysAsync(); }
+    private void CancelDiscoveryClicked(object? sender, RoutedEventArgs e) => ViewModel?.CancelDiscovery();
+    private async void AcceptGatewayClicked(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel is { SelectedGateway: { } gateway } vm && await ConfirmAsync("Add discovered gateway", $"Add {gateway.Address} on {gateway.InterfaceName} to your Synups profile? Existing targets stay unchanged. Monitoring will not start. This gateway is not proof of Internet availability."))
+            await RunAsync(() => vm.AcceptGatewayAsync(confirmed: true));
+    }
     private async void ApplyGroupClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.ApplyGroupAsync() ?? Task.CompletedTask);
     private async void ApplyTargetClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.ApplyTargetAsync() ?? Task.CompletedTask);
     private async void ReloadClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.InitializeAsync() ?? Task.CompletedTask);

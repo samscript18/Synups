@@ -125,6 +125,14 @@ No cloud account required." Classes="caption sidebarCaption" />
             <TextBlock Text="A responding peer establishes ICMP connectivity for its group. It does not establish that every target is online or that all Internet services work." Classes="caption" />
           </StackPanel>
           <StackPanel IsVisible="{Binding IsTargets}" Spacing="20">
+            <Border Classes="card"><StackPanel Spacing="12">
+              <TextBlock Text="Discover a default gateway" Classes="h2" />
+              <TextBlock Text="Read the OS default routes without scanning or sending probes. VPN/split routes can differ by destination. Select a result, then confirm adding it to the selected group (or a new group)." Classes="caption" />
+              <WrapPanel><Button Name="DiscoverGateway" Content="Discover gateway" Click="DiscoverGatewayClicked" IsEnabled="{Binding CanDiscover}" Classes="secondary" Margin="0,0,8,8" /><Button Name="CancelDiscovery" Content="Cancel discovery" Click="CancelDiscoveryClicked" IsEnabled="{Binding IsDiscovering}" Classes="quiet" Margin="0,0,0,8" /></WrapPanel>
+              <TextBlock Name="DiscoveryFeedback" Text="{Binding DiscoveryMessage}" Classes="caption" />
+              <ComboBox Name="GatewayPreview" ItemsSource="{Binding GatewayCandidates}" SelectedItem="{Binding SelectedGateway, Mode=TwoWay}" HorizontalAlignment="Stretch" AutomationProperties.Name="Discovered gateway preview" />
+              <Button Name="AcceptGateway" Content="Add selected gateway…" Click="AcceptGatewayClicked" IsEnabled="{Binding CanAcceptGateway}" Classes="primary" HorizontalAlignment="Left" />
+            </StackPanel></Border>
             <StackPanel Spacing="7"><TextBlock Text="MONITORING PROFILE" Classes="eyebrow accent" /><TextBlock Text="Targets and groups" Classes="h1" /><TextBlock Text="Organize your connections. Stop monitoring to edit; applied changes save immediately." Classes="muted" /><TextBlock Text="Create group → Apply → Add target → Apply → enable group → Apply. One responding peer establishes group connectivity. Original router/modem discovery-only defaults are disabled because discovery does not run; add a manual IP before enabling them." Classes="caption" /></StackPanel>
             <WrapPanel><Button Classes="secondary" Content="Restore original defaults…" IsEnabled="{Binding CanEdit}" Click="RestoreClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Reload configuration" IsEnabled="{Binding CanReload}" Click="ReloadClicked" Margin="0,0,8,8" /><Button Classes="secondary" Content="Recover with original defaults…" IsVisible="{Binding CanRecover}" Click="RecoverClicked" Margin="0,0,8,8" /></WrapPanel>
             <Border Classes="card">

@@ -55,7 +55,7 @@ jobs:
       - name: Explicit real loopback ICMP integration
         run: |
           set -o pipefail
-          dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~RealLoopback --logger trx --results-directory ../artifacts/real-network 2>&1 | tee ../artifacts/logs/icmp.txt
+          dotnet test ../Synups.slnx -c Release --no-build --filter 'FullyQualifiedName~RealLoopback|FullyQualifiedName~RealDefaultGateway' --logger trx --results-directory ../artifacts/real-network 2>&1 | tee ../artifacts/logs/icmp.txt
         env:
           SYNUPS_REAL_NETWORK_TESTS: '1'
       - name: Publish self-contained platform directory

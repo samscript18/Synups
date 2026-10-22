@@ -7,7 +7,7 @@ using Synups.Core.Persistence;
 
 namespace Synups.Desktop;
 
-public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
+public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDisposable
 {
     private readonly MonitoringService service;
     private readonly ConfigurationStore store;
@@ -106,9 +106,9 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     public ObservableCollection<MonitorEvent> Activity { get; } = new();
     public string ConfigurationPath => store.FileName;
     public bool IsRunning => snapshot.State is SessionState.Running or SessionState.Stopping;
-    public bool CanEdit => loaded && !busy && !IsRunning && !disposed;
+    public bool CanEdit => loaded && !busy && !IsRunning && !disposed && !IsDiscovering;
     public bool CanStart => CanEdit && service.HistoryReady && !service.HasUnsavedEvidence && configuration.Groups.Any(g => g.Enabled);
-    public string StartGuidance => disposed ? "This window is closing." : busy ? "Finishing the current action…" :
+    public string StartGuidance => disposed ? "This window is closing." : IsDiscovering ? "Finish or cancel gateway discovery before starting monitoring." : busy ? "Finishing the current action…" :
         IsRunning ? "Stop monitoring before editing. ICMP filtering can cause missed replies without a service outage." :
         !loaded ? "Load or recover your configuration before monitoring." :
         !service.HistoryReady || service.HasUnsavedEvidence ? "Repair history storage and Retry before starting; existing evidence is preserved." :
@@ -482,11 +482,13 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     }
     private void NotifyControls()
     {
+        Changed(nameof(CanDiscover)); Changed(nameof(CanAcceptGateway));
         foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(StartGuidance), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences), nameof(CanManageStorage), nameof(CanCleanupHistory) }) Changed(name);
     }
     public async ValueTask DisposeAsync()
     {
         if (disposed) return;
+        CancelDiscovery(); await discoveryTask; discoveryCancellation?.Dispose(); discoveryCancellation = null;
         // Preserve ownership if Stop times out: caller must keep window open and retry instead of abandoning workers.
         await service.StopAsync(); await WriteAutomaticLogsAsync();
         storageClosing = true;
