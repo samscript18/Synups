@@ -130,6 +130,24 @@ public partial class MainWindow : Window
         try { await operation(); }
         catch (Exception ex) { ViewModel?.ReportError(ex.Message); }
     }
+    private async void PreviewLegacyImportClicked(object? sender, RoutedEventArgs e) => await RunAsync(async () =>
+    {
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "Preview original WirePeep settings", AllowMultiple = false,
+            FileTypeFilter = [new FilePickerFileType("WirePeep settings") { Patterns = ["*.stgx"] }],
+        });
+        if (files.Count == 1 && ViewModel is { } vm)
+        {
+            var path = files[0].TryGetLocalPath() ?? throw new IOException("Choose a local settings file; remote providers are unsupported.");
+            await vm.PreviewLegacyImportAsync(path);
+        }
+    });
+    private async void ImportLegacyClicked(object? sender, RoutedEventArgs e)
+    {
+        if (await ConfirmAsync("Import WirePeep profile", "Replace all current Synups targets/groups with the previewed original IDs and timings? The current configuration will be backed up first. History, preferences, startup registration and the original file remain unchanged. No monitoring starts."))
+            await RunAsync(() => ViewModel?.ImportLegacyAsync(true) ?? Task.CompletedTask);
+    }
     private async void RetryHistoryClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.RetryHistoryAsync() ?? Task.CompletedTask);
     private async void LatestIncidentsClicked(object? sender, RoutedEventArgs e)
     { if (ViewModel is { } vm) await vm.LatestIncidentsAsync(); }

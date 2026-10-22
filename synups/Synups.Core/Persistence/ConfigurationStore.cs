@@ -35,7 +35,9 @@ public sealed class ConfigurationStore(string fileName)
         { return new(null, $"Cannot load {FileName}: {ex.Message}. The original file was left untouched. Retry after fixing it, or explicitly recover with defaults.", true); }
     }
 
-    public async Task SaveAsync(MonitorConfiguration configuration, bool recoverInvalid = false)
+    public Task SaveAsync(MonitorConfiguration configuration, bool recoverInvalid = false) => SaveCoreAsync(configuration, recoverInvalid, false);
+    public Task<string?> SaveWithBackupAsync(MonitorConfiguration configuration) => SaveCoreAsync(configuration, false, true);
+    private async Task<string?> SaveCoreAsync(MonitorConfiguration configuration, bool recoverInvalid, bool backupExisting)
     {
         var valid = configuration.ValidatedCopy();
         await writes.WaitAsync().ConfigureAwait(false);
@@ -45,8 +47,12 @@ public sealed class ConfigurationStore(string fileName)
             if (existing.NeedsRecovery && !recoverInvalid) throw new IOException(existing.Error);
             var directory = Path.GetDirectoryName(FileName)!;
             Directory.CreateDirectory(directory);
-            if (existing.NeedsRecovery)
-                File.Copy(FileName, FileName + $".recovered-{DateTimeOffset.UtcNow:yyyyMMddTHHmmssfff}-{Guid.NewGuid():N}.bak");
+            string? backup = null;
+            if (existing.NeedsRecovery || (backupExisting && File.Exists(FileName)))
+            {
+                backup = FileName + $".{(existing.NeedsRecovery ? "recovered" : "before-import")}-{Guid.NewGuid():N}.bak";
+                await Task.Run(() => File.Copy(FileName, backup, overwrite: false)).ConfigureAwait(false);
+            }
             var temporary = Path.Combine(directory, $".{Path.GetFileName(FileName)}.{Guid.NewGuid():N}.tmp");
             try
             {
@@ -59,6 +65,7 @@ public sealed class ConfigurationStore(string fileName)
                 File.Move(temporary, FileName, overwrite: true);
             }
             finally { if (File.Exists(temporary)) File.Delete(temporary); }
+            return backup;
         }
         finally { writes.Release(); }
     }

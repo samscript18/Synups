@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings Name="WirePeep">
+  <Settings Name="Window Placement">
+    <Setting Name="ShowCmd" Value="1" />
+    <Setting Name="MinPosition.X" Value="-1" />
+    <Setting Name="MinPosition.Y" Value="-1" />
+    <Setting Name="MaxPosition.X" Value="-1" />
+    <Setting Name="MaxPosition.Y" Value="-1" />
+    <Setting Name="NormalPosition.Left" Value="52" />
+    <Setting Name="NormalPosition.Top" Value="52" />
+    <Setting Name="NormalPosition.Right" Value="852" />
+    <Setting Name="NormalPosition.Bottom" Value="502" />
+  </Settings>
+  <Settings Name="GridSplitter">
+    <Settings Name="Row0">
+      <Setting Name="Value" Value="4" />
+      <Setting Name="GridUnitType" Value="Star" />
+    </Settings>
+    <Settings Name="Row1">
+      <Setting Name="Value" Value="1" />
+      <Setting Name="GridUnitType" Value="Star" />
+    </Settings>
+  </Settings>
+  <Settings Name="Profile">
+    <Settings Name="PeerGroups">
+      <Settings Name="3603b3a3-eb28-464e-944f-4aff0480f36d">
+        <Setting Name="Name" Value="Internet" />
+        <Setting Name="Fail" Value="00:00:10" />
+        <Setting Name="Poll" Value="00:00:05" />
+        <Setting Name="Wait" Value="00:00:00.2000000" />
+      </Settings>
+    </Settings>
+    <Settings Name="Locations">
+      <Settings Name="4b406024-64bc-44df-9d41-a98bf9c8acc1">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="Google" />
+        <Setting Name="Address" Value="8.8.8.8" />
+      </Settings>
+      <Settings Name="442c1c14-ed97-4936-8fe1-0fa87b1b1629">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="Google #2" />
+        <Setting Name="Address" Value="8.8.4.4" />
+      </Settings>
+      <Settings Name="28594af3-7b76-4556-b62a-8361b652c0e1">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="CloudFlare" />
+        <Setting Name="Address" Value="1.1.1.1" />
+      </Settings>
+      <Settings Name="f9693b67-7e26-4f92-9fd5-2fd84a1ed4b8">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="CloudFlare #2" />
+        <Setting Name="Address" Value="1.0.0.1" />
+      </Settings>
+      <Settings Name="f3bbbacf-5c7f-49a3-bf76-08820a046b1a">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="Neustar" />
+        <Setting Name="Address" Value="156.154.70.5" />
+      </Settings>
+      <Settings Name="a7ef2002-6aa2-4c99-a879-504d8216e0d3">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="Neustar #2" />
+        <Setting Name="Address" Value="156.154.71.5" />
+      </Settings>
+      <Settings Name="96ec55bd-4a04-4eee-8a11-b2e1222afcae">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="OpenDNS" />
+        <Setting Name="Address" Value="208.67.222.222" />
+      </Settings>
+      <Settings Name="81ccbbf0-3273-4f4b-8019-0eeb83f4a653">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="OpenDNS #2" />
+        <Setting Name="Address" Value="208.67.220.220" />
+      </Settings>
+      <Settings Name="7008a275-89a1-413a-bb69-bc566c01c6c6">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="Quad9" />
+        <Setting Name="Address" Value="9.9.9.9" />
+      </Settings>
+      <Settings Name="de16a334-1ed4-436c-b135-c815a258d1f8">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="Quad9 #2" />
+        <Setting Name="Address" Value="149.112.112.112" />
+      </Settings>
+      <Settings Name="d7940e7e-6c60-4a39-9a27-3b7c8785c246">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="CenturyLink" />
+        <Setting Name="Address" Value="4.2.2.2" />
+      </Settings>
+      <Settings Name="73604e15-1237-43ef-b14e-9f4d181165b5">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="CenturyLink #2" />
+        <Setting Name="Address" Value="4.2.2.3" />
+      </Settings>
+      <Settings Name="d73c9720-e695-4a6d-939b-208fbf0e563d">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="VeriSign" />
+        <Setting Name="Address" Value="64.6.64.6" />
+      </Settings>
+      <Settings Name="151e0f2f-c4e4-4a89-a0c4-475c29a2f068">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="VeriSign #2" />
+        <Setting Name="Address" Value="64.6.65.6" />
+      </Settings>
+      <Settings Name="6343b397-e47e-4286-88b6-b3e3bd6fbca2">
+        <Setting Name="PeerGroupId" Value="3603b3a3-eb28-464e-944f-4aff0480f36d" />
+        <Setting Name="Name" Value="Hurricane Electric" />
+        <Setting Name="Address" Value="74.82.42.42" />
+      </Settings>
+    </Settings>
+  </Settings>
+  <Settings Name="AppOptions">
+    <Setting Name="RunAtLogin" Value="False" />
+    <Setting Name="AutoStartMinimized" Value="False" />
+    <Setting Name="MinimizeToTray" Value="False" />
+    <Setting Name="AlwaysOnTop" Value="False" />
+    <Setting Name="ConfirmClose" Value="False" />
+    <Settings Name="FailureOptions">
+      <Setting Name="ShowWindow" Value="True" />
+      <Setting Name="ShowNotification" Value="True" />
+      <Setting Name="ColorInactiveTaskbarItem" Value="True" />
+      <Setting Name="PlaySound" Value="True" />
+      <Setting Name="SoundFileName" Value="%SystemRoot%\Media\Windows Notify System Generic.wav" />
+    </Settings>
+    <Settings Name="ReconnectOptions">
+      <Setting Name="ShowWindow" Value="True" />
+      <Setting Name="ShowNotification" Value="True" />
+      <Setting Name="ColorInactiveTaskbarItem" Value="True" />
+      <Setting Name="PlaySound" Value="True" />
+      <Setting Name="SoundFileName" Value="%SystemRoot%\Media\Windows Background.wav" />
+    </Settings>
+    <Settings Name="CommonOptions">
+      <Setting Name="LogFileNameFormat" Value="UtcNow" />
+      <Setting Name="LogFolder" />
+    </Settings>
+  </Settings>
+</Settings>

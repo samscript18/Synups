@@ -248,6 +248,29 @@ public sealed class InstallationCheck(DesktopOptions options)
         Require(vm.IsHelp, "F1 did not open Help/About."); await CaptureAsync(window, "help-about");
         Require(window.FindControl<TextBlock>("ApplicationVersion")!.Text == vm.VersionText, "About version does not match the real assembly.");
         Passed("programmatic_help_shortcut_and_real_version", vm.VersionText);
+        // Optional actual Windows serializer fixture supplied by the verification launcher, never bundled as product data.
+        if (Environment.GetEnvironmentVariable("SYNUPS_LEGACY_FIXTURE") is { Length: > 0 } fixture)
+        {
+            var configStore = new ConfigurationStore(vm.ConfigurationPath);
+            var loopback = (await configStore.LoadAsync()).Configuration!;
+            var loopbackBytes = await File.ReadAllBytesAsync(vm.ConfigurationPath);
+            var sourceHash = Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(fixture))).ToLowerInvariant();
+            Require(sourceHash == "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1", "Legacy fixture is not the reviewed actual Windows file.");
+            await vm.PreviewLegacyImportAsync(fixture); Require(vm.CanImportLegacy && !vm.IsRunning, "Actual legacy preview unavailable.");
+            vm.SelectedPage = 1;
+            window.FindControl<Expander>("LegacyImportExpander")!.IsExpanded = true;
+            await CaptureAsync(window, "legacy-import-preview");
+            await ClickAsync(window, "ImportLegacyProfile"); await ConfirmAsync(desktop, "Continue");
+            await UntilAsync(() => vm.CanEdit && !vm.CanImportLegacy);
+            Require(vm.Groups.Count == 1 && vm.Groups[0].Targets.Count == 15 && !vm.IsRunning, "Actual legacy profile import lost data or started probing.");
+            var backups = Directory.GetFiles(options.DataDirectory, "*.before-import-*.bak");
+            Require(backups.Length == 1 && (await File.ReadAllBytesAsync(backups[0])).SequenceEqual(loopbackBytes), "Original isolated configuration backup differs.");
+            Require(Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(fixture))).ToLowerInvariant() == sourceHash, "Legacy source changed.");
+            Passed("genuine_windows_legacy_fixture_preview_confirm_backup_import", new { sourceHash, groups = vm.Groups.Count, targets = vm.Groups[0].Targets.Count, no_probe_started = !vm.IsRunning });
+            // Never probe the fixture's public IPs: restore the explicit loopback profile before Start.
+            await configStore.SaveAsync(loopback); await vm.InitializeAsync();
+            Require(vm.Groups.SelectMany(g => g.Targets).All(t => t.Address == "127.0.0.1") && !vm.IsRunning, "Loopback profile restore failed.");
+        }
         vm.SelectedPage = 0; await ClickAsync(window, "StartMonitoring");
         await UntilAsync(() => vm.IsRunning && vm.Groups[0].Targets[0].Status.StartsWith("Responded", StringComparison.Ordinal));
     }

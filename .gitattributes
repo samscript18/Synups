@@ -68,3 +68,6 @@ docs/evidence/verification/**/real-incident.csv binary
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Genuine legacy serializer fixture: retain exact observed bytes.
+synups/Synups.Tests/Fixtures/*.stgx binary

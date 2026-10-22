@@ -502,7 +502,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     private void NotifyControls()
     {
         TimelineControlsChanged();
-        Changed(nameof(CanDiscover)); Changed(nameof(CanAcceptGateway)); Changed(nameof(CanCheckLegacy)); Changed(nameof(CanAcceptLegacy));
+        Changed(nameof(CanImportLegacy)); Changed(nameof(CanDiscover)); Changed(nameof(CanAcceptGateway)); Changed(nameof(CanCheckLegacy)); Changed(nameof(CanAcceptLegacy));
         foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(StartGuidance), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences), nameof(CanManageStorage), nameof(CanCleanupHistory) }) Changed(name);
     }
     public async ValueTask DisposeAsync()

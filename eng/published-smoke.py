@@ -101,6 +101,8 @@ def main():
     if args.rid!='win-x64' and executable.stat().st_mode&0o111==0:raise ValueError('Executable permission missing')
     if args.rid=='osx-arm64':subprocess.run(['codesign','--verify','--deep','--strict',str(root/'Synups.app')],check=True)
     environment=os.environ.copy()
+    legacy_fixture=Path(__file__).resolve().parent.parent / "synups/Synups.Tests/Fixtures/WirePeep-5.1.2-windows.stgx"
+    if legacy_fixture.exists():environment["SYNUPS_LEGACY_FIXTURE"]=str(legacy_fixture)
     for key in list(environment):
         if key=='DOTNET_ROOT' or key.startswith('DOTNET_ROOT_'):environment.pop(key)
     data=output/'isolated-data';reports=output/'reports';reports.mkdir()
