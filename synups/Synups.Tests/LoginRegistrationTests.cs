@@ -48,6 +48,7 @@ public class LoginRegistrationTests
         try
         {
             var exe=Path.Combine(root,"app space & symbols.app","Synups");var data=Path.Combine(root,"data space");
+            if(platform==LoginPlatform.Linux && OperatingSystem.IsWindows()){exe=exe.Replace('\\','/');data=data.Replace('\\','/');}
             var plan=LoginPlan.Create(platform,exe,data,root,Path.Combine(root,"config"));var registration=new LoginRegistration(plan);
             Assert.False((await registration.ReadAsync()).Registered);Assert.False(File.Exists(plan.FileName));
             await Assert.ThrowsAsync<InvalidOperationException>(()=>registration.SetAsync(true,false));Assert.False(File.Exists(plan.FileName));

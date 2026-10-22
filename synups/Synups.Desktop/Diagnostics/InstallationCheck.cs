@@ -70,7 +70,7 @@ public sealed class InstallationCheck(DesktopOptions options)
         try
         {
             var vm = (MainWindowViewModel)window.DataContext!;
-            await UntilAsync(() => window.IsVisible && (vm.CanEdit || vm.IsRunning));
+            await UntilAsync(() => vm.CanEdit || vm.IsRunning, ()=>$"Initialized={vm.CanEdit}, running={vm.IsRunning}, visible={window.IsVisible}, state={window.WindowState}, message={vm.Message}");
             await UntilAsync(()=>window.FindControl<Grid>("Workspace")!.IsEnabled);
             if(options.LaunchMinimized)
             {
@@ -78,6 +78,7 @@ public sealed class InstallationCheck(DesktopOptions options)
                 Passed("actual_apphost_launch_minimized_argument",new{window.WindowState,window.IsVisible,vm.IsRunning});
                 window.RestoreFromTray();await UntilAsync(()=>window.IsVisible && window.WindowState==WindowState.Normal);
             }
+            await UntilAsync(()=>window.IsVisible && window.WindowState!=WindowState.Minimized);
             var native = window.TryGetPlatformHandle();
             Require(native is not null && native.Handle != IntPtr.Zero, "Native OS window handle is missing.");
             Require(window.Icon is not null, "Synups window icon did not load.");
