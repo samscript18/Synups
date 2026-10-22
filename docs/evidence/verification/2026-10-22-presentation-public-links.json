@@ -1,0 +1,377 @@
+{
+  "verified_utc": "2026-10-22T21:02:56.794555+00:00",
+  "documentation_revision": "d068e427f8310b20e9f81c210acd6399420b20b3",
+  "presentation_revision": "321c9922d5b34a1fb34a7112679a04a6a64421af",
+  "application_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "method": "Anonymous unauthenticated GET; exact byte equality and SHA-256.",
+  "default_readme_matches": true,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "http_status": 200,
+      "bytes": 3058,
+      "sha256": "3681c2542cbcc1aa1061383fe7e3fe30aa292ea2c8bd7a244ab3fa8f764e900f",
+      "matches_local": true
+    },
+    {
+      "path": "README.md",
+      "http_status": 200,
+      "bytes": 15644,
+      "sha256": "98802ac6117433e339404a91862dfc2f0b20233aca587b647b23ee92ec0f2172",
+      "matches_local": true
+    },
+    {
+      "path": "docs/competition/INCIDENT_DEMO.md",
+      "http_status": 200,
+      "bytes": 3728,
+      "sha256": "156c39a349e1084ef858335fa2d6982d562e73229874a8b6ae614b52a0b78491",
+      "matches_local": true
+    },
+    {
+      "path": "docs/competition/JUDGES_GUIDE.md",
+      "http_status": 200,
+      "bytes": 8703,
+      "sha256": "648420a0b913101ed8acabe89336897653a06403d430d801b013f2809bcff58d",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/README.md",
+      "http_status": 200,
+      "bytes": 19971,
+      "sha256": "f8420e212e10061bbe57b0ebd2f588bbed019d69cc5502a340c8aba4ecb4475b",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-first-run.png",
+      "http_status": 200,
+      "bytes": 151278,
+      "sha256": "921a7c4048d0c7f15024a7a1d8d357013e2ef9e505ab104ba1d1824d634e22ee",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-legacy-import-preview.png",
+      "http_status": 200,
+      "bytes": 158500,
+      "sha256": "970edea9a564de9453e37d4b5a15270d987ba84c18bed006d5290e300fa7898b",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-preferences.png",
+      "http_status": 200,
+      "bytes": 144581,
+      "sha256": "c956a0fd7ed0479a120f38b97a9007177e27a30d751848c5f519647cabff70b0",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-first-run.png",
+      "http_status": 200,
+      "bytes": 105541,
+      "sha256": "5056f46c8f5d28e848dc2d44fe8df8616fb24b98b8c2e5f4cb66f8cdeac7c5fd",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-legacy-import-preview.png",
+      "http_status": 200,
+      "bytes": 117328,
+      "sha256": "7648df57e56661248f6f514011993a9dd94fb65a912544b376a56d2c560b4576",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-preferences.png",
+      "http_status": 200,
+      "bytes": 117601,
+      "sha256": "e45346d0d6c901b0053137c1a4a8029b43b1efe2c07644eb7a5e98ebba7496e0",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-first-run.png",
+      "http_status": 200,
+      "bytes": 108903,
+      "sha256": "966e0c8e9d04ac956c467aae1cb6741301fab5f7cd4767ce204869a8a9960f2a",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-legacy-import-preview.png",
+      "http_status": 200,
+      "bytes": 118642,
+      "sha256": "115316bc5c546836299847b6bad807e3479514dad52bf8fd6f68259a161a19c2",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-preferences.png",
+      "http_status": 200,
+      "bytes": 112280,
+      "sha256": "934cb81a6a4b1cbd33d9720330d262dfeb5646262303802f8ff2f32714a1208f",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/macos-normal-launch-fresh.png",
+      "http_status": 200,
+      "bytes": 552340,
+      "sha256": "4042add63d68994c5b4321157d709425a78d463ce3fb182a0e3b35c53239e5ef",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/before/2026-10-22-wirepeep-windows.png",
+      "http_status": 200,
+      "bytes": 23238,
+      "sha256": "6af8dfc135aac260a2561b0f5f5a3b261e6e3adfae833328c51b96b2153060a2",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion-ci-logs.zip",
+      "http_status": 200,
+      "bytes": 133318,
+      "sha256": "aa08808698f4b3bd2f1fc2fdf8e83a8df7662fef3fc1776a24060c6e4225dc41",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion-codeql.zip",
+      "http_status": 200,
+      "bytes": 53865,
+      "sha256": "95522f7c7dfa491e1b5240f227e59f702c20baf1ee0b253b66afc19e3685e89b",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion-coverage.xml",
+      "http_status": 200,
+      "bytes": 1168107,
+      "sha256": "34f18f1c06fa61f28b7106cbb6518f62a854c713c60c57679a71689ac350083b",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion-local-mac.json",
+      "http_status": 200,
+      "bytes": 4535,
+      "sha256": "f5b307d727b734b8b3bc03b86349688a5df07fbeed45354999563fcb03de65ea",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion-local-tests.zip",
+      "http_status": 200,
+      "bytes": 47511,
+      "sha256": "527ee6d2d4dc14fdfd4b606f8f0cc5ed0c0516a7f84d7a7edce42efcff8a40f8",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion-reports.zip",
+      "http_status": 200,
+      "bytes": 178556,
+      "sha256": "23ea2cea0d4b8cc39f1e0fb7632d938eb566b37351b2885c834a86b7b3a770aa",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion-upgrade.json",
+      "http_status": 200,
+      "bytes": 4131,
+      "sha256": "9bb108bacbf03420772ff8878425feecea5732a7e3bcdbf68abf5cd3989914d1",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-completion.json",
+      "http_status": 200,
+      "bytes": 28636,
+      "sha256": "c626d4e68be25177febb05f51d114af9a6dca43adaadb927dcc0aa4cf13619a1",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-desktop-integration-failed-ci-logs.zip",
+      "http_status": 200,
+      "bytes": 123063,
+      "sha256": "0fc841b8e5bd641411aa1577d879f86100e1bef305130b26ffe4f13546dba85f",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-original-windows-ci-logs.zip",
+      "http_status": 200,
+      "bytes": 6609,
+      "sha256": "b8b73479c4f26f596a6acf8f536cad2f8e206833affcbbae36d0581deeb24b11",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-original-windows-initial-failed-ci-logs.zip",
+      "http_status": 200,
+      "bytes": 16843,
+      "sha256": "fe09b894e9acc9a390ef2bf5d273de9cd2b69f6a71a6a7073c3d1cf16c5db99f",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-original-windows-reports.zip",
+      "http_status": 200,
+      "bytes": 6856,
+      "sha256": "018e55779c8b6041ac120fc54e5df2cd3738002fa1ac7e3cfa06786ae2e11c99",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-original-windows/original-evidence.json",
+      "http_status": 200,
+      "bytes": 1881,
+      "sha256": "62a02c2f0d33136375ca27850e5d228b9940cff750422a76f0f52f3d005cf068",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-original-windows/stderr.txt",
+      "http_status": 200,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-original-windows/stdout.txt",
+      "http_status": 200,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-presentation-macos.json",
+      "http_status": 200,
+      "bytes": 1549,
+      "sha256": "18b6afa6f44695e06e60d606343b5773a421280b9d4170afee761e1681eb960a",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-presentation-permissions.json",
+      "http_status": 200,
+      "bytes": 235,
+      "sha256": "dec5b58a89aa3dfc7b2c27d938928b6ae45795a7e13829fe75ac9ada9e9b332e",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-presentation-qa.json",
+      "http_status": 200,
+      "bytes": 1026,
+      "sha256": "5b3c5822bb86662d24bea02659f9a6fe975c5337880ba2c6bdc251d4b5e6e052",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-presentation-signing.json",
+      "http_status": 200,
+      "bytes": 448,
+      "sha256": "0625ab0443dfc57d493a520923b109865762709cb4d579cb6bde13165864d7d7",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-presentation.json",
+      "http_status": 200,
+      "bytes": 1014,
+      "sha256": "85b6033dc4acc99a29f171ce4a366dfc0d12d64f04f5702e1a2c78f60cf91403",
+      "matches_local": true
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-windows-notification-failed-reports.zip",
+      "http_status": 200,
+      "bytes": 48926,
+      "sha256": "7336e10467f312ecf5098559bcf007a596b567fb3c2d0012d2112392a7f5c4a4",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/ARCHITECTURE.md",
+      "http_status": 200,
+      "bytes": 32073,
+      "sha256": "69fccb810118dc3aee7ad25bf6d1837543184f9534f02a4b4468db9eec3e6084",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/BASELINE.md",
+      "http_status": 200,
+      "bytes": 5611,
+      "sha256": "4fcd58016c9e5750b7b5dbd41aef8753249fc60ea472f7a43d7dffe0b8b10641",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/CROSS_PLATFORM.md",
+      "http_status": 200,
+      "bytes": 54145,
+      "sha256": "d3ce07d1a6f5369e6cba474210ad38f5ed9aaf04cb45e2b6a9d47dee73269c4c",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/FEATURE_PARITY.md",
+      "http_status": 200,
+      "bytes": 23263,
+      "sha256": "34ce3a1e904a8bca19090977381b99497b4a5cbf8bb18d7666539ebe953155c0",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/LEGACY_INTEGRATIONS.md",
+      "http_status": 200,
+      "bytes": 7911,
+      "sha256": "05620e38a87b722fee5016355a12f9b1316d9e386e31c24779c51c8dcbac138c",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/MIGRATION_LOG.md",
+      "http_status": 200,
+      "bytes": 135634,
+      "sha256": "59b06eebd33de4ed2ca8ba02f525becef364c330cf0b25482d850f2dbc65153f",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/RELEASE_READINESS.md",
+      "http_status": 200,
+      "bytes": 25743,
+      "sha256": "084095acad6db389b6b12c7f0d2b765f1f9b8264d416d6e054bb4c24a1207ee0",
+      "matches_local": true
+    },
+    {
+      "path": "docs/migration/ROADMAP.md",
+      "http_status": 200,
+      "bytes": 10303,
+      "sha256": "ab93254594ef011b1d87e3bbb7eb3c2ab0e14fa42a8b0258543e8e372de539fc",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/DESKTOP_COMPLETION_CANDIDATE.md",
+      "http_status": 200,
+      "bytes": 7381,
+      "sha256": "1721e28b0add57ccbe59f98c32830f8d7976fc8bf9057486b4a77dd972c6b8ee",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/DISTRIBUTION_TRUST.md",
+      "http_status": 200,
+      "bytes": 3836,
+      "sha256": "1c7b62b15691e7150cf4c730df9f0c4e46b25e63c5ba68d056e72756fc5627f8",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/MACOS_ACCEPTANCE.md",
+      "http_status": 200,
+      "bytes": 8298,
+      "sha256": "dab53137daa1ce514c31ad385ff94ab3569712b5c273cdbcb85f13de94f95166",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/SUBMISSION.md",
+      "http_status": 200,
+      "bytes": 8700,
+      "sha256": "b317c7e4e5984edf227ff61f59ac659b3d2876e60d2fba96ea8fcdce4c67e30b",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/v0.1.1/ASSET_MANIFEST.json",
+      "http_status": 200,
+      "bytes": 7595,
+      "sha256": "1a44b7dd78cb49e81a07c277324e30b6b5294f37e856c9c0862c67295339e999",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/v0.1.1/PUBLICATION.md",
+      "http_status": 200,
+      "bytes": 2148,
+      "sha256": "b5a2fff8c60173e75463180078a7f1a8917e035e682208074f537253e8a4c55e",
+      "matches_local": true
+    },
+    {
+      "path": "docs/release/v0.1.1/RELEASE_BODY.md",
+      "http_status": 200,
+      "bytes": 4607,
+      "sha256": "d666f57e4a7613eeecd6ccd65cebd753a013a1995d5e785a0f5c47856fb30673",
+      "matches_local": true
+    }
+  ],
+  "initial_failure": "321c992 initially normalized one raw original JSON report to LF;51/52 matched. Evidence-only correction preserves exact1881 original bytes, with no app changes.",
+  "public_release_unchanged": "All15 v0.1.0 API asset digests match reviewed local assets; not a repeated asset-body download.",
+  "release_and_submission_created": false
+}
