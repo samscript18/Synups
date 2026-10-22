@@ -24,3 +24,9 @@ No new dependency planned initially. Reuse SQLite, .NET sockets/Ping, existing r
 ## Traceability
 
 The complete 31-item matrix lives in [FEATURE_MATRIX.md](FEATURE_MATRIX.md) and is updated with exact production/UI/test paths and limitations. Only VERIFIED means all feature acceptance gates passed; platform-untested paths stay PARTIALLY_VERIFIED. Essential end-to-end gaps mean NO-GO regardless of feature count.
+
+## Final execution outcome
+
+The application is frozen at `e16e3cd4209ec12bf2150a194373c30efcdf744f` on `feat/network-diagnostics`, version0.2.0-alpha.1. Initial candidate0501106 exposed two cross-platform fixture assumptions;6ac4c9c corrected them and all six CI jobs passed. Final e16e3cd additionally rejects oversized DNS datagrams. Full exact-source acceptance, artifact hashes and final verdict are in FINAL_REPORT.md and RELEASE_READINESS.md. Original baseline164 tests/159 passed/5 explicit skips grew to233 total cases; final platform counts and86.20% new Core coverage are source-specific.
+
+The complete matrix remains conservative:4 verified documentation features,19 partially verified,1 blocked,7 deferred. Core flows have direct native evidence, while entire feature scopes with multi-hop/IPv6/physical or remaining integration gaps stay partially verified. Advanced work is disabled rather than promoted through an unmet Phase A gate. This preserves the requested priority: executable investigation and trustworthy evidence before lower-priority feature-count expansion. Publicv0.1.1 and its unchanged15 assets remain the rollback release; no competition submission or public candidate release occurred.

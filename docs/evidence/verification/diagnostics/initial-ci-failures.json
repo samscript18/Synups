@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "initial_candidate": "0501106374075ff4df0aec512461ed579ce1b91c",
+  "ci_run": "https://github.com/samscript18/Synups/actions/runs/39867783924",
+  "failures": [
+    {
+      "platform": "win-x64",
+      "test": "GenuineTcpListenerAndRefusalUseConnectWithoutApplicationPayload",
+      "expected": "Refused",
+      "actual": "Timeout",
+      "root_cause": "The fixture used a one-second deadline shorter than the Windows TCP refusal retry; production classified the observed deadline honestly.",
+      "fix": "Allow five seconds, retaining the Refused assertion.",
+      "log_sha256": "e0f6453e6ef54729a250c413b677a8447960ea82a2271802f29fec8f5195d91d"
+    },
+    {
+      "platform": "linux-x64",
+      "stage": "Controlled ICMP namespace incident diagnostics",
+      "root_cause": "Fixture used localhost which selected IPv6, while its listener and controlled loss were explicitly IPv4.",
+      "fix": "Use approved literal127.0.0.1 so real TCP and ICMP target the actual isolated endpoint; retain successful handshake and three observed nonresponses assertions.",
+      "log_sha256": "a303ebd6c07f32d92e108ce55a6d2e17119752f30895ea4bc4600f4b27398ebd"
+    }
+  ],
+  "passed_jobs": [
+    "coverage",
+    "additional-build linux-arm64",
+    "additional-build osx-x64",
+    "macOS arm64 all native stages"
+  ],
+  "linux_extracted_apphost_six_stages_passed": true,
+  "limitations": "Failed checks were preserved; no tests or production observations were discarded or rewritten as successes."
+}

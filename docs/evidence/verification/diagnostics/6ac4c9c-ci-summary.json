@@ -1,0 +1,306 @@
+{
+  "version": 1,
+  "source_revision": "6ac4c9c1b8c527ac81f43944bde5fc44ce79579d",
+  "ci": "https://github.com/samscript18/Synups/actions/runs/39868686853",
+  "all_six_jobs_passed": true,
+  "scope": "Corrected fixtures + resolver cap; superseded by final DNS datagram guard candidate",
+  "platforms": [
+    {
+      "platform": "coverage",
+      "tests": [
+        {
+          "file": "_runnervm8k3b6_2026-10-22_22_59_26_net10.0.trx",
+          "total": 232,
+          "passed": 225,
+          "failed": 0,
+          "skipped": 7
+        }
+      ],
+      "artifact_sha256": "d98e97f8220551ccd272b3cb48debd3165b6e304810525aab08bece6d9149eca"
+    },
+    {
+      "platform": "linux-x64",
+      "tests": [
+        {
+          "file": "tests/_runnervm8k3b6_2026-10-22_23_01_12_net10.0.trx",
+          "total": 232,
+          "passed": 225,
+          "failed": 0,
+          "skipped": 7
+        },
+        {
+          "file": "real-network/_runnervm8k3b6_2026-10-22_23_01_27_net10.0.trx",
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "file": "audio/_runnervm8k3b6_2026-10-22_23_01_34_net10.0.trx",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "artifact_sha256": "3b2a60ec40e409d39e851ac95ccb3e57de52422ee9784e2e59e559168b2b752e",
+      "source": "6ac4c9c1b8c527ac81f43944bde5fc44ce79579d",
+      "package_sha256": "4bca293a6d0edea5b13fd578d022d7b76e9b3cf0bc3a31e6ee0c3a912735e4a2",
+      "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+      "actual_published_apphost": true,
+      "launches": [
+        {
+          "stage": "exercise",
+          "pid": 4744,
+          "started_utc": "2026-10-22T23:01:53.181116+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 1,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "restart",
+          "pid": 4820,
+          "started_utc": "2026-10-22T23:02:10.237513+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 2,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "interruption",
+          "pid": 4886,
+          "started_utc": "2026-10-22T23:02:23.685738+00:00",
+          "exit_code": -9,
+          "expected_external_termination": true,
+          "durable_sessions": 3,
+          "actual_outages": 0,
+          "status": "ready-for-termination"
+        },
+        {
+          "stage": "recover",
+          "pid": 4943,
+          "started_utc": "2026-10-22T23:02:36.514047+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-error",
+          "pid": 5009,
+          "started_utc": "2026-10-22T23:02:49.812530+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-recovered",
+          "pid": 5037,
+          "started_utc": "2026-10-22T23:02:51.281200+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 5,
+          "actual_outages": 0,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "platform": "osx-arm64",
+      "tests": [
+        {
+          "file": "tests/_sat12-bq167-1feed8e0-769a-43b8-bac5-59ca7fd5c3b1-863D7A58957E_2026-10-22_22_59_41_net10.0.trx",
+          "total": 232,
+          "passed": 224,
+          "failed": 0,
+          "skipped": 8
+        },
+        {
+          "file": "real-network/_sat12-bq167-1feed8e0-769a-43b8-bac5-59ca7fd5c3b1-863D7A58957E_2026-10-22_22_59_51_net10.0.trx",
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "file": "audio/_sat12-bq167-1feed8e0-769a-43b8-bac5-59ca7fd5c3b1-863D7A58957E_2026-10-22_23_00_00_net10.0.trx",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "artifact_sha256": "b637084cf1bf8f262b03be3530f0cc1d07d72e956288a59d449f3dca0f10ba56",
+      "source": "6ac4c9c1b8c527ac81f43944bde5fc44ce79579d",
+      "package_sha256": "325b087f7b379e4ec0d9ba0c6318b8c53cd1efc84adec86082d88b79bd58dde4",
+      "apphost_sha256": "ba56ff0e74d96d4222b77dec264dac26d4f8f99f1472fbb1f948126f0fb82c67",
+      "actual_published_apphost": true,
+      "launches": [
+        {
+          "stage": "exercise",
+          "pid": 2690,
+          "started_utc": "2026-10-22T23:00:18.726897+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 1,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "restart",
+          "pid": 2968,
+          "started_utc": "2026-10-22T23:00:37.654275+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 2,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "interruption",
+          "pid": 3309,
+          "started_utc": "2026-10-22T23:00:51.723176+00:00",
+          "exit_code": -9,
+          "expected_external_termination": true,
+          "durable_sessions": 3,
+          "actual_outages": 0,
+          "status": "ready-for-termination"
+        },
+        {
+          "stage": "recover",
+          "pid": 3490,
+          "started_utc": "2026-10-22T23:01:05.150787+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-error",
+          "pid": 3666,
+          "started_utc": "2026-10-22T23:01:19.115736+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-recovered",
+          "pid": 3673,
+          "started_utc": "2026-10-22T23:01:20.861818+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 5,
+          "actual_outages": 0,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "platform": "win-x64",
+      "tests": [
+        {
+          "file": "tests/runneradmin_runnervm0xl3a_2026-10-22_23_00_33_net10.0.trx",
+          "total": 232,
+          "passed": 224,
+          "failed": 0,
+          "skipped": 8
+        },
+        {
+          "file": "real-network/runneradmin_runnervm0xl3a_2026-10-22_23_00_55_net10.0.trx",
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "file": "audio/runneradmin_runnervm0xl3a_2026-10-22_23_01_13_net10.0.trx",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "artifact_sha256": "ddee48f746fc4b3d7136bfb6e1cfc853a8acdaa9b6c3995d8bb52c0fe2739b8d",
+      "source": "6ac4c9c1b8c527ac81f43944bde5fc44ce79579d",
+      "package_sha256": "a419f080d0e0bba22b27bedf26517cba08cd03e07af920aa505e64a3e9a83d5d",
+      "apphost_sha256": "d74ee9a79b408b98e83e89d0f8a79c42d9431fcc8f12c95217429c125f9dbac4",
+      "actual_published_apphost": true,
+      "launches": [
+        {
+          "stage": "exercise",
+          "pid": 8452,
+          "started_utc": "2026-10-22T23:01:29.141452+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 1,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "restart",
+          "pid": 3996,
+          "started_utc": "2026-10-22T23:01:49.562757+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 2,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "interruption",
+          "pid": 8848,
+          "started_utc": "2026-10-22T23:02:04.282120+00:00",
+          "exit_code": 1,
+          "expected_external_termination": true,
+          "durable_sessions": 3,
+          "actual_outages": 0,
+          "status": "ready-for-termination"
+        },
+        {
+          "stage": "recover",
+          "pid": 3140,
+          "started_utc": "2026-10-22T23:02:18.162801+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-error",
+          "pid": 8276,
+          "started_utc": "2026-10-22T23:02:32.909862+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-recovered",
+          "pid": 7712,
+          "started_utc": "2026-10-22T23:02:35.407332+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 5,
+          "actual_outages": 0,
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "additional_builds_only": [
+    "linux-arm64",
+    "osx-x64"
+  ],
+  "physical_desktop_tested": false
+}

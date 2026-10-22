@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "source_revision": "e16e3cd4209ec12bf2150a194373c30efcdf744f",
+  "checks": [
+    {
+      "artifact": "linux-x64/diagnostic-e2e/Synups-evidence-61b0e834725d4fd0a3d882e63153ea0f-a36963c19c98481caf276129d5a15ee9/evidence.pdf",
+      "pages": 2,
+      "parsed_characters": 6709,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "19bd6b00ed8e746768d657ba27f435e1947c4409a4b4f111ce2ef8784f7ec7b4"
+    },
+    {
+      "artifact": "linux-x64/diagnostic-e2e/Synups-evidence-ba137a0b78114c99b0d05f2531d4470a-6fc753f8c2044a90b1c1249a17bf9ead/evidence.pdf",
+      "pages": 2,
+      "parsed_characters": 5992,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "3ec4e6f2719d51a1f3db292ef03d23d976cc59474166d9f4c310d514584b8915"
+    },
+    {
+      "artifact": "linux-x64/incident/Synups-evidence-d56c3885aa5149d0be2c44a89d4ffebe-2b19b039c11844cbbd245e51522f594b/evidence.pdf",
+      "pages": 2,
+      "parsed_characters": 5415,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "ea8829f86f9a0b4049ce7bf87fc0643a0678c914d6185b01258f038a54f227d6"
+    },
+    {
+      "artifact": "linux-x64/incident/Synups-evidence-d56c3885aa5149d0be2c44a89d4ffebe-c0b4bd0b22ba466d97a25cef54a05f61/evidence.pdf",
+      "pages": 2,
+      "parsed_characters": 5448,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "3375e444bcf0e499ceaa4f2825e74b0933cb73a3ee74049d0a73424c807c9338"
+    },
+    {
+      "artifact": "linux-x64/published-apphost/reports/Synups-evidence-ddc7535e968d46dd9de457a0462bc9d9-78f3da13b6c24f97bdf872c89f0622e9/evidence.pdf",
+      "pages": 2,
+      "parsed_characters": 5994,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "e3841b2711d3fe4ec2f8f2b4337bf10f048114ea8e137cdc64dc97202c57cce0"
+    },
+    {
+      "artifact": "osx-arm64/diagnostic-e2e/Synups-evidence-92fc0e3a49ec482baff85eca7d633a78-9b01acb4a9c04bc0a61559e0d942a1cf/evidence.pdf",
+      "pages": 2,
+      "parsed_characters": 7096,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "64cf6dd322f27b621f63840155a8027a2707e32ebcc82b7be9f4ce3026998cf3"
+    },
+    {
+      "artifact": "osx-arm64/diagnostic-e2e/Synups-evidence-e8bf411fc5b04d7a86d92b923563e12c-97a1f8b835f54cd9a38589b526a1a1a1/evidence.pdf",
+      "pages": 3,
+      "parsed_characters": 7856,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "8b8b865990221429cd72c06320629293b9b90b88a845c1f592d2da8920b0a44d"
+    },
+    {
+      "artifact": "osx-arm64/published-apphost/reports/Synups-evidence-d80312531f884c9f82d10892249d85f7-2f61865b8259465aa64f0b04e43ce928/evidence.pdf",
+      "pages": 2,
+      "parsed_characters": 7099,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "a11030f8ca54f4ee84810b37fae0fc4754a3cf33dcbb255be95d695db8e8640e"
+    },
+    {
+      "artifact": "win-x64/diagnostic-e2e/Synups-evidence-40af869c16f84d7fbe02b1a82406e39b-aefd093e16df43ff9fbd10d9c3bc3d80/evidence.pdf",
+      "pages": 4,
+      "parsed_characters": 12532,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "884970c10239136d53464a39908d81fb236ee6ce047aa42c436f64dfbf9a1249"
+    },
+    {
+      "artifact": "win-x64/diagnostic-e2e/Synups-evidence-533ded67707543f8b8eee6a2c9b3e866-0c777be4380c4f158c98329a550c2b93/evidence.pdf",
+      "pages": 4,
+      "parsed_characters": 11813,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "d5912e0e1136836e125ef62af0ad21c242f6d6a0df406eb1e0f85f218eb1ee10"
+    },
+    {
+      "artifact": "win-x64/published-apphost/reports/Synups-evidence-38aa6b3233a74813ad4fb8f3a6d52d66-f04a61a715cc49db8b50ce3f5ab67e7b/evidence.pdf",
+      "pages": 4,
+      "parsed_characters": 11817,
+      "all_pages_within_bounds": true,
+      "redacted": true,
+      "sha256": "1d32b4e9f33149adc6df6a0db4e7ddadb9cceeea228ac7ab1ad38575bdc45ccd"
+    }
+  ],
+  "scope": "Independent parser, page-footer, redaction and all-character bounds; visually inspected representative rendered pages separately."
+}

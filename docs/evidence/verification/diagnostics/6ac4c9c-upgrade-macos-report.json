@@ -1,0 +1,180 @@
+{
+  "Version": 1,
+  "Utc": "2026-10-22T23:00:03.980782+00:00",
+  "Stage": "observe",
+  "RequiredLoopbackMeasurementsPassed": true,
+  "Runtime": ".NET 10.0.13",
+  "Platform": "macOS 26.3.1",
+  "Architecture": "Arm64",
+  "ApplicationVersion": "0.2.0-alpha.1+6ac4c9c1b8c527ac81f43944bde5fc44ce79579d",
+  "IncidentPayloadsUnchanged": true,
+  "OriginalIncidents": 0,
+  "OriginalComments": 0,
+  "IncidentLink": "No existing incident; none manufactured",
+  "Sessions": [
+    {
+      "Id": "10c76be0-4ef3-4d65-ae33-99c78032da55",
+      "State": "Completed",
+      "IncidentId": null,
+      "Results": [
+        {
+          "Test": "TcpConnect",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 4.1158,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "PingQuality",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 40.7798,
+          "Samples": {
+            "Attempted": 3,
+            "Completed": 3,
+            "Successful": 3,
+            "Unanswered": 0,
+            "MinimumMilliseconds": 0,
+            "AverageMilliseconds": 0.3333333333333333,
+            "MaximumMilliseconds": 1,
+            "StandardDeviationMilliseconds": 0.4714045207910317,
+            "JitterMilliseconds": 1,
+            "LossPercent": 0,
+            "Partial": false
+          },
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "TraceRoute",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 8.2933,
+          "Samples": null,
+          "HopCount": 1,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "NetworkConfiguration",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 100.3132,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": 20
+        }
+      ]
+    },
+    {
+      "Id": "1076c14a-bcfd-4722-9cc7-3eb58915e5b0",
+      "State": "Completed",
+      "IncidentId": null,
+      "Results": [
+        {
+          "Test": "TcpConnect",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 0.325,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "PingQuality",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 22.5884,
+          "Samples": {
+            "Attempted": 3,
+            "Completed": 3,
+            "Successful": 3,
+            "Unanswered": 0,
+            "MinimumMilliseconds": 0,
+            "AverageMilliseconds": 0,
+            "MaximumMilliseconds": 0,
+            "StandardDeviationMilliseconds": 0,
+            "JitterMilliseconds": 0,
+            "LossPercent": 0,
+            "Partial": false
+          },
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "TraceRoute",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 0.3274,
+          "Samples": null,
+          "HopCount": 1,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "NetworkConfiguration",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 55.0129,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": 20
+        }
+      ]
+    }
+  ],
+  "BaselineId": "bbc5e402-b129-4317-ac3d-cd81bec2b3d6",
+  "ComparisonId": "20919c7f-1679-4933-9d8c-3d47eeefa15f",
+  "PublicDnsRequested": true,
+  "PublicDnsOutcome": "Success",
+  "Exports": [
+    {
+      "Directory": "Synups-evidence-10c76be04ef34d65ae3399c78032da55-4e5dfb822c5d496a9aa4deadf2058011",
+      "ManifestSha256": "8999aa085f93372b47ef1d51b380d921085148fa4cbaa1582931aab3ae2fded0"
+    },
+    {
+      "Directory": "Synups-evidence-1076c14abcfd47229cc73eb58915e5b0-91ae8961afa144749eed8eba481c854d",
+      "ManifestSha256": "8d910be7b5a6310d19b08202662662028f0ea0db593c141733e4f17a81d84070"
+    },
+    {
+      "Directory": "Synups-evidence-cc242f55a34b4b0cabaa3f21bfb56beb-68f25127ea624ac09ce5b2eef30bd0f3",
+      "ManifestSha256": "0a70606b554e3fbae8d6f6a28cadcbf160b07c957703a78d27ce01ec09c30b3c"
+    }
+  ],
+  "Before": {
+    "Count": 0,
+    "Comments": 0,
+    "PayloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CommentsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "FirstId": null
+  },
+  "After": {
+    "Count": 0,
+    "Comments": 0,
+    "PayloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "CommentsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "FirstId": null
+  },
+  "Limitations": [
+    "Engineering Core harness, not a packaged executable or native UI acceptance.",
+    "Loopback verifies destination ICMP/TTL behavior, not a multi-hop Internet path or IPv6.",
+    "Snapshot is read-only; default-route availability and OS permission limitations remain in local persisted evidence.",
+    "No outage or incident was manufactured. Source data and raw database/logs are local-only; redacted exports can be reviewed separately."
+  ],
+  "EngineeringEnvironment": {
+    "sdk": "10.0.402",
+    "source_git_head": "6ac4c9c1b8c527ac81f43944bde5fc44ce79579d",
+    "source_has_uncommitted_changes": true,
+    "core_cs_sha256": "182eb760e75875f6a35a173b8ac37591b7a15159d6364f515bb1514383ae58b3",
+    "harness_cs_sha256": "a6bb76ffda994dd97c4b707d5cfccbf64a550635eb45da2173d0c3c47d1dd740",
+    "host_system": "Darwin",
+    "host_machine": "arm64",
+    "previous_data_supplied": true,
+    "copied_source_file_hashes": {
+      "history.v1.db": "74948c70ed38c8b74100f862201f21627bc74596ee00abba174ce49434b3af7e",
+      "configuration.v1.json": "09ea44787097dda2eb8983d75a13af85dc259072abe1d68de87d714e36655b87",
+      "preferences.v1.json": "e40dee3a2b8a15ec106bfb594ce5d8c56fdf94be5d478941ef66c5bf486a6517"
+    },
+    "public_dns_explicitly_requested": true,
+    "claim_scope": "Real Core diagnostics; two separate application processes; not published apphost or physical UI"
+  },
+  "ProcessExitCodes": {
+    "restore": 0,
+    "build": 0,
+    "observe": 0,
+    "reload": 0
+  },
+  "ObserveAndSeparateReloadPassed": true
+}

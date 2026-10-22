@@ -1,6 +1,6 @@
 # Synups
 
-> **Diagnostics development branch:** `0.2.0-alpha.1` adds a separate Diagnostics workspace with real TCP, UDP DNS, ICMP quality/path tests, read-only configuration, durable sessions, baseline comparisons and redacted local evidence export. Public **v0.1.1 remains the protected release**. See the [31-feature status matrix](docs/diagnostics/FEATURE_MATRIX.md), [candidate notes](docs/diagnostics/CANDIDATE_NOTES.md), [test evidence](docs/diagnostics/TEST_REPORT.md), [upgrade/rollback instructions](docs/diagnostics/SQLITE_MIGRATION.md) and [release decision](docs/diagnostics/RELEASE_READINESS.md). Unfinished advanced features are unavailable; this branch does not imply publication or competition submission.
+> **Diagnostics development branch:** `0.2.0-alpha.1` adds a separate Diagnostics workspace with real TCP, UDP DNS, ICMP quality/path tests, read-only configuration, durable sessions, baseline comparisons and redacted local evidence export. Public **v0.1.1 remains the protected release**. See the [31-feature status matrix](docs/diagnostics/FEATURE_MATRIX.md), [candidate notes](docs/diagnostics/CANDIDATE_NOTES.md), [Diagnostics user guide](docs/diagnostics/USER_GUIDE.md), [test evidence](docs/diagnostics/TEST_REPORT.md), [upgrade/rollback instructions](docs/diagnostics/SQLITE_MIGRATION.md) and [release decision](docs/diagnostics/RELEASE_READINESS.md). Unfinished advanced features are unavailable; this branch does not imply publication or competition submission.
 
 
 **Know when your network drops. Know how long it lasts. Keep the evidence.**

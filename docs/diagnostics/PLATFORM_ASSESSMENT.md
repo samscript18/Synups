@@ -14,7 +14,7 @@ The desktop project declares `win-x64;osx-arm64;linux-x64;linux-arm64;osx-x64`; 
 | `linux-arm64` | Declared additional target with build-only CI job; no native execution | Explicit RID restore/publish, native dependency asset inspection, arm64 native runner/hardware, real display/SQLite/ICMP/DNS/snapshot and extracted-app checks; cross-compilation alone proves none of these runtime gates |
 | `osx-x64` | Declared additional target with build-only CI job; no native execution | Explicit RID restore/publish and Intel native dependency inspection; native Intel macOS executable and network checks; emulation, if used, must be identified separately |
 
-For every target, report build, deterministic tests, native provider execution, extracted executable execution, native UI launch and physical desktop interaction independently. A successful `dotnet publish` cannot stand in for the remaining columns. No Windows/Linux diagnostics runtime or extra-architecture execution is certified by this document.
+For every target, report build, deterministic tests, native provider execution, extracted executable execution, native UI launch and physical desktop interaction independently. A successful `dotnet publish` cannot stand in for the remaining columns. Source-specific Windows/Linux/macOS runtime and extracted native UI results are recorded in TEST_REPORT.md and FINAL_REPORT.md. Additional-architecture execution remains untested.
 
 ## Providers and privilege limits
 

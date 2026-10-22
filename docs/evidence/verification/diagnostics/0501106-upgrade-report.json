@@ -1,0 +1,180 @@
+{
+  "Version": 1,
+  "Utc": "2026-10-22T22:51:10.5026+00:00",
+  "Stage": "observe",
+  "RequiredLoopbackMeasurementsPassed": true,
+  "Runtime": ".NET 10.0.13",
+  "Platform": "macOS 26.3.1",
+  "Architecture": "Arm64",
+  "ApplicationVersion": "0.2.0-alpha.1+0501106374075ff4df0aec512461ed579ce1b91c",
+  "IncidentPayloadsUnchanged": true,
+  "OriginalIncidents": 1,
+  "OriginalComments": 1,
+  "IncidentLink": "Linked the first existing genuine incident",
+  "Sessions": [
+    {
+      "Id": "05b377e9-2e64-4f59-930e-cde936836236",
+      "State": "Completed",
+      "IncidentId": "5eda9374-03a6-40a6-9bfe-346019e8bf73",
+      "Results": [
+        {
+          "Test": "TcpConnect",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 4.0183,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "PingQuality",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 40.9872,
+          "Samples": {
+            "Attempted": 3,
+            "Completed": 3,
+            "Successful": 3,
+            "Unanswered": 0,
+            "MinimumMilliseconds": 0,
+            "AverageMilliseconds": 0.3333333333333333,
+            "MaximumMilliseconds": 1,
+            "StandardDeviationMilliseconds": 0.4714045207910317,
+            "JitterMilliseconds": 0.5,
+            "LossPercent": 0,
+            "Partial": false
+          },
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "TraceRoute",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 8.5367,
+          "Samples": null,
+          "HopCount": 1,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "NetworkConfiguration",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 109.0189,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": 20
+        }
+      ]
+    },
+    {
+      "Id": "d548bd53-8d74-468f-bafa-d1cfc115dbc7",
+      "State": "Completed",
+      "IncidentId": "5eda9374-03a6-40a6-9bfe-346019e8bf73",
+      "Results": [
+        {
+          "Test": "TcpConnect",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 0.305,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "PingQuality",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 22.6671,
+          "Samples": {
+            "Attempted": 3,
+            "Completed": 3,
+            "Successful": 3,
+            "Unanswered": 0,
+            "MinimumMilliseconds": 0,
+            "AverageMilliseconds": 0,
+            "MaximumMilliseconds": 0,
+            "StandardDeviationMilliseconds": 0,
+            "JitterMilliseconds": 0,
+            "LossPercent": 0,
+            "Partial": false
+          },
+          "HopCount": null,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "TraceRoute",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 0.3535,
+          "Samples": null,
+          "HopCount": 1,
+          "InterfaceCount": null
+        },
+        {
+          "Test": "NetworkConfiguration",
+          "Outcome": "Success",
+          "ElapsedMilliseconds": 64.6923,
+          "Samples": null,
+          "HopCount": null,
+          "InterfaceCount": 20
+        }
+      ]
+    }
+  ],
+  "BaselineId": "00af1bf2-52f6-4cab-8c59-a5ac49a64174",
+  "ComparisonId": "d5b61cba-3a50-4551-ab61-af1833d77400",
+  "PublicDnsRequested": true,
+  "PublicDnsOutcome": "Success",
+  "Exports": [
+    {
+      "Directory": "Synups-evidence-05b377e92e644f59930ecde936836236-4ba725f5f1334500b0c23285d70b6056",
+      "ManifestSha256": "24fd1d4998d0614bb00bdbba7e20ce5c5e1ec070d5891fb42f319d4b9b2ab14b"
+    },
+    {
+      "Directory": "Synups-evidence-d548bd538d74468fbafad1cfc115dbc7-b36ee41e59744bc6959cfc3ea5e09c5d",
+      "ManifestSha256": "9a80348baaed69193766a8eaeb4e404063987c69f33680db931dd7b5066b411a"
+    },
+    {
+      "Directory": "Synups-evidence-682df61f397045879cd1d01d6d414347-83d75d243f264191ae9b298088d0782e",
+      "ManifestSha256": "d6c6bc86f1d1e0b3814e66610dd2edcf452c71f449677093b3edea830450c73f"
+    }
+  ],
+  "Before": {
+    "Count": 1,
+    "Comments": 1,
+    "PayloadSha256": "15e4ea502abf218ae802f45a300cbc068d55b15e657759b4776337fc6b1e0c29",
+    "CommentsSha256": "88dd22152bcd04147a3eaef78994341f085066a745f9607df8b2ece8741b7844",
+    "FirstId": "5eda9374-03a6-40a6-9bfe-346019e8bf73"
+  },
+  "After": {
+    "Count": 1,
+    "Comments": 1,
+    "PayloadSha256": "15e4ea502abf218ae802f45a300cbc068d55b15e657759b4776337fc6b1e0c29",
+    "CommentsSha256": "88dd22152bcd04147a3eaef78994341f085066a745f9607df8b2ece8741b7844",
+    "FirstId": "5eda9374-03a6-40a6-9bfe-346019e8bf73"
+  },
+  "Limitations": [
+    "Engineering Core harness, not a packaged executable or native UI acceptance.",
+    "Loopback verifies destination ICMP/TTL behavior, not a multi-hop Internet path or IPv6.",
+    "Snapshot is read-only; default-route availability and OS permission limitations remain in local persisted evidence.",
+    "No outage or incident was manufactured. Source data and raw database/logs are local-only; redacted exports can be reviewed separately."
+  ],
+  "EngineeringEnvironment": {
+    "sdk": "10.0.402",
+    "source_git_head": "0501106374075ff4df0aec512461ed579ce1b91c",
+    "source_has_uncommitted_changes": false,
+    "core_cs_sha256": "c7df463ae7bd8981c27a413c57b60b1200a33d6886165baad1846bc23a0376cf",
+    "harness_cs_sha256": "a6bb76ffda994dd97c4b707d5cfccbf64a550635eb45da2173d0c3c47d1dd740",
+    "host_system": "Darwin",
+    "host_machine": "arm64",
+    "previous_data_supplied": true,
+    "copied_source_file_hashes": {
+      "history.v1.db": "244b8208c27d7e4e1a5f8fd85d801b1cc9b7096d4ed32aef4500dad50162c635",
+      "configuration.v1.json": "110236b4c1dc8f7bddcd40d1b22e4d9f9977c2976b701b1aa27dbbabb0374476",
+      "preferences.v1.json": "677a7cefada7b048def316e1e8f4c820b2b7f32834a1aba556c570e729c669e5"
+    },
+    "public_dns_explicitly_requested": true,
+    "claim_scope": "Real Core diagnostics; two separate application processes; not published apphost or physical UI"
+  },
+  "ProcessExitCodes": {
+    "restore": 0,
+    "build": 0,
+    "observe": 0,
+    "reload": 0
+  },
+  "ObserveAndSeparateReloadPassed": true
+}
