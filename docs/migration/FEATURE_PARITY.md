@@ -154,3 +154,8 @@ Source **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, [verified three-OS actual a
 | Placement / tray | Persistent independent pane limits plus existing geometry/Show/Exit/hide safety | Physical tray clicks, native multiple-display restoration and full desktop acceptance |
 
 **Unchanged calculation: (15 complete×1+3 partial×0.5)/18=16.5/18=91.7%.** Frozen proposed rc.3 stays88.9%; public0.1.0 stays72.2%. No enhancement row or changed denominator is used. The owner explicitly cannot perform the remaining manual checks; permission blockers are retained, not silently passed. [Exact candidate, failures, hashes and164-case verification](../release/DESKTOP_COMPLETION_CANDIDATE.md). The mandatory public v0.1.1 preparation still uses rc.3 bytes pending a separate reviewed choice.
+
+
+### Final release alignment
+
+The owner now selects exact rc.4 application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03 for proposed public tag v0.1.1, superseding the earlier rc.3 preparation. Internal version remains0.1.1-rc.4. Parity stays91.7% under the unchanged rubric; alerts/preferences/placement retain the stated gaps. No new feature or verification pass is implied by this release alignment. Public0.1.0 and all historical candidate bytes remain unchanged. [Current publication checklist](../release/v0.1.1/PUBLICATION.md).

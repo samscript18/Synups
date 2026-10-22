@@ -1,4 +1,4 @@
-# Run the Synups candidate
+# Download and run Synups
 
 This is a portable, local-first Avalonia/.NET 10 application. The .NET runtime and native SQLite are included. A cloud account, server and separate .NET installation are not required. Native OS/display libraries are still required. Verification is tied to an exact commit in the artifact manifest and migration evidence, not to every version of an OS.
 
@@ -14,9 +14,17 @@ Compare the archive SHA-256 with its sidecar before extraction:
 
 The inner `ARTIFACT_MANIFEST.json` records source SHA, RID, all published file hashes, identity and signature limits. `LICENSE`, `THIRD_PARTY_NOTICES.md`, `DEPENDENCY_NOTICES.json` and `licenses/` preserve the original attribution and dependency terms.
 
+## Proposed v0.1.1 payload — not yet public
+
+The selected payload is the frozen **0.1.1-rc.4** application at **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, [native three-OS verification](https://github.com/samscript18/Synups/actions/runs/39850198899), **91.7% inventory parity**. Its public tag/release name will be `v0.1.1`; Help/About and ARTIFACT_MANIFEST retain `0.1.1-rc.4`. These are unchanged verified bytes, not a rebuilt final-version executable. [Release notes and archive hashes](v0.1.1/RELEASE_BODY.md) · [Reviewed upload manifest](v0.1.1/ASSET_MANIFEST.json). The public v0.1.0 links above remain valid; do not assume v0.1.1 is available before publication and anonymous verification.
+
+For a reviewed rc.4 package, extract into its own directory rather than overlaying a different version. Back up history through Synups before upgrading and keep the existing installation. Closed-copy rc.3 history/configuration/preferences compatibility passed, including a real incident/comment; this is not every historical-format certification. Opening never starts monitoring by default. Supported genuine WirePeep `.stgx` profiles may be imported through explicit preview/confirmation with destination backup; no automatic import or probing occurs.
+
+The README inside each frozen archive is the original build-time documentation snapshot and still discusses the older rc.3 proposal (88.9%). It is intentionally preserved byte-for-byte; use the accompanying current RELEASE_NOTES.md, INSTALLATION.md and VERIFICATION.json for this rc.4 payload (91.7%). Application identity is established by Help/About and ARTIFACT_MANIFEST.json, both identifying rc.4 and its exact source.
+
 ## Windows x64
 
-Extract the complete `Synups-win-x64.zip` to a local user-writable folder. Open **Synups.exe**. Do not move just the EXE: it needs its adjacent managed and native files. This portable build has no trusted publisher certificate; SmartScreen or organization policies can warn or block execution. No registry login/startup entry is created. An MSI/MSIX installer and publisher signing are not delivered.
+Extract the complete `Synups-win-x64.zip` to a local user-writable folder. Open **Synups.exe**. Do not move just the EXE: it needs its adjacent managed and native files. This portable build has no trusted publisher certificate; SmartScreen or organization policies can warn or block execution. Normal opening does not create a registry login/startup entry. rc.4 offers a separate explicit confirmed enable/remove action; actual next-login execution remains unverified. An MSI/MSIX installer and publisher signing are not delivered.
 
 Actual verification uses the exact Windows runner/image documented in CROSS_PLATFORM.md. A server runner is not proof of every ordinary Windows 10/11 desktop environment. Native OS notification delivery is unavailable in this portable Windows build; clearly labelled in-app alerts remain available.
 
@@ -36,11 +44,11 @@ A missing tray host must leave the window available through the taskbar. Optiona
 
 ## First run and daily use
 
-The app opens stopped with an empty profile. Add a group, add a literal IP target, enable the group, apply, then choose **Start monitoring**. Restore original defaults is optional and never performs discovery. Polling, failure grace, response timeout and peer-group status are visible; a group response proves ICMP connectivity to a peer, not universal Internet health. Unprobed targets stay not checked/stale. Stop before editing. Applied configurations persist immediately.
+The app opens stopped with an empty profile. In proposed rc.4, use the first-target group/name/literal-IP fields and **Add target and create group**, then **Start monitoring**. In public v0.1.0, add a group and literal IP target through Targets and groups. Restore original defaults is optional and never performs discovery. Polling, failure grace, response timeout and peer-group status are visible; a group response proves ICMP connectivity to a peer, not universal Internet health. Unprobed targets stay not checked/stale. Stop before editing. Applied configurations persist immediately.
 
 History is stored separately from configuration/preferences in the per-user `.NET LocalApplicationData/Synups` folder; the UI shows paths and storage details. `--data-directory ABSOLUTE_PATH` selects a separate local workspace without changing the original one. Avoid network filesystems and do not run two workspaces against the same database through path aliases. A second normal process for the same directory asks the existing instance to show; it does not start another monitoring engine.
 
-Closing means save, stop and quit, optionally confirmed; minimizing is separate. Show/Exit tray availability depends on the OS/session. Monitoring on launch is disabled until explicitly saved. No OS login registration is performed. Back up history through the in-app SQLite backup action. Pending write errors keep evidence owned in memory and block a misleading clean exit: repair storage and Retry rather than force quit. CSV is an outage export, not a full database backup. See the migration architecture/readiness documents for retention and recovery limits.
+Closing means save, stop and quit, optionally confirmed; minimizing is separate. Show/Exit tray availability depends on the OS/session. Monitoring on launch is disabled until explicitly saved. No OS login registration is performed automatically; rc.4 offers explicit enable/remove controls, and actual next-login execution/removal remains unverified. Back up history through the in-app SQLite backup action. Pending write errors keep evidence owned in memory and block a misleading clean exit: repair storage and Retry rather than force quit. CSV is an outage export, not a full database backup. See the migration architecture/readiness documents for retention and recovery limits.
 
 ## Explicit installation check
 

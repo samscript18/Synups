@@ -1,6 +1,6 @@
 # Reviewed unpublished candidate — 0.1.1-rc.4
 
-Application source: **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, branch `feat/avalonia-migration`. [Successful exact-source native CI](https://github.com/samscript18/Synups/actions/runs/39850198899). This is a separate candidate, not a replacement for public0.1.0 or frozen rc.1/rc.2/rc.3. The proposed public v0.1.1 payload remains **rc.3**, as requested; changing that choice requires review.
+Application source: **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, branch `feat/avalonia-migration`. [Successful exact-source native CI](https://github.com/samscript18/Synups/actions/runs/39850198899). This is a separate candidate, not a replacement for public0.1.0 or frozen rc.1/rc.2/rc.3. The owner now selects these exact **rc.4** archives as the proposed public **v0.1.1** payload, superseding the prior rc.3 proposal. Help/About and manifests retain internal version0.1.1-rc.4; no archive is rebuilt or relabelled. Publication still needs separate authorization.
 
 ## Implemented and tested
 

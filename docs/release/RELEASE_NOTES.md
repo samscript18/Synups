@@ -1,3 +1,5 @@
+> Historical v0.1.0 materials. The current **unpublished** v0.1.1 proposal uses frozen rc.4; see the [aligned checklist](v0.1.1/PUBLICATION.md) and [release body](v0.1.1/RELEASE_BODY.md). Existing public v0.1.0 assets are unchanged.
+
 # Synups 0.1.0 — published portable release
 
 Synups ports Bill Menees' WirePeep network downtime monitor to real Avalonia/C#/XAML on .NET 10. It retains the original Git history, MIT licence and source attribution. User-authorized [Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0) is published at exact source 2973d3349fcb5af5639597920842288e6549bbd0. All 15 public assets were anonymously downloaded/hash-checked; no binary was rebuilt or replaced. Competition submission is a separate action and has not been performed.

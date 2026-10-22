@@ -1,6 +1,6 @@
 # Cross-platform evidence and risks
 
-Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. Proposed v0.1.1 payload remains frozen rc.3 at88.9%; public0.1.0 remains unchanged.
+Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. The user-selected proposed v0.1.1 payload is now frozen rc.4 at91.7%, with internal0.1.1-rc.4 version disclosed; public0.1.0 remains unchanged. Earlier rc.3 payload decisions below are historical.
 
 Targets are Windows, macOS and Linux. Target intent and successful cross-compilation do not establish runtime support. No downloadable release has been created. Phase 1/2 evidence is historical below; Phase 3 is historical; Phase 4A below is the current verification matrix.
 
@@ -287,3 +287,8 @@ rc.4 also adds optional bounded local WAV requests, log naming modes (stable/UTC
 Windows/macOS audio processes accepted the request, but audible delivery is unverified. Linux lacks paplay and reports a safe fallback. The attempted Windows native notification adapter failed independent on-screen Shell observation in run39848205141; it was withdrawn, not represented as delivered. Retained failure logs/reports are linked from the candidate review. Accessible in-app alerts remain. Physical tray/keyboard/native Save-panel/multiple-display and actual-login tests remain blocked: Accessibility/event posting denied and the owner explicitly unavailable. Programmatic real-control tests do not substitute for these. No real-user startup registration, host network or security setting was changed.
 
 Inventory **91.7%=(15 complete+3 partial×0.5)/18**: settings persistence/profile import closes; alerts/preferences/placement retain their precise verification gaps. Frozen rc.3 remains88.9%. Readiness stays **8.5/10**, not100% or10/10. Trusted Mac distribution remains blocked by unavailable Developer ID/notarization; Windows remains unsigned. Wider topology/suspend/accessibility/Wayland/endurance and public publication/submission review remain open.
+
+
+## Final release alignment — selected rc.4
+
+The earlier rc.3 payload proposal above is superseded by the owner’s explicit selection of exact6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/0.1.1-rc.4 for proposed public v0.1.1. No new build, runtime certification, signing or parity change occurs. Three archive hashes/manifests/native dependencies/permissions and exact-source live CI were rechecked. Current91.7% rubric and the three remaining partial areas are unchanged. [Aligned publication checklist and GO/NO-GO conditions](../release/v0.1.1/PUBLICATION.md). Publication still requires separate authorization; current public downloads remainv0.1.0.

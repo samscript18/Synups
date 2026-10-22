@@ -1,6 +1,6 @@
 # Discovery and WirePeep settings investigation
 
-Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. Proposed v0.1.1 payload remains frozen rc.3 at88.9%; public0.1.0 remains unchanged.
+Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. The user-selected proposed v0.1.1 payload is now frozen rc.4 at91.7%, with internal0.1.1-rc.4 version disclosed; public0.1.0 remains unchanged. Earlier rc.3 payload decisions below are historical.
 
 Work date: 2026-10-16. These P2 items were investigated after the durable-history and desktop work. No discovery feature or importer is shipped in Phase 3.
 

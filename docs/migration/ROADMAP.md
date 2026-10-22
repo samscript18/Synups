@@ -1,6 +1,6 @@
 # Migration roadmap
 
-Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. Proposed v0.1.1 payload remains frozen rc.3 at88.9%; public0.1.0 remains unchanged.
+Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. The user-selected proposed v0.1.1 payload is now frozen rc.4 at91.7%, with internal0.1.1-rc.4 version disclosed; public0.1.0 remains unchanged. Earlier rc.3 payload decisions below are historical.
 
 Phase 3 local functional work and Phase 4A three-OS CI/native-harness checkpoint are implemented. Published-executable and installed-desktop/distribution gates remain open; Synups is not production-ready. See [release checklist](RELEASE_READINESS.md).
 
@@ -68,4 +68,4 @@ Stop expanding scope: immutable7ca85cc now reaches88.9% inventory with verified 
 
 ## Post-rc.4 handoff
 
-Genuine original-profile import is now verified; remove it from the current missing-feature list for rc.4 only. Public0.1.0/rc.3 do not acquire this functionality retroactively. Next action is review the prepared release choice: requested v0.1.1 payload is immutable rc.3; separately verified rc.4 needs an explicit choice before publication. Do not let optional features delay the deadline. Retain manual tray/Save/keyboard/multi-display/login and actual OS-delivery blockers; the owner is unavailable for those checks. Trusted signing remains credential-dependent. Publish only after authorization, anonymously verify every asset, then obtain separate submission authorization/receipt. [Current review](../release/DESKTOP_COMPLETION_CANDIDATE.md).
+Genuine original-profile import is now verified; remove it from the current missing-feature list for rc.4 only. Public0.1.0/rc.3 do not acquire this functionality retroactively. The owner has now chosen frozen rc.4 for proposed v0.1.1. Next action is publication review/authorization using the aligned15-file upload set; internal version remains0.1.1-rc.4. Do not let optional features delay the deadline. Retain manual tray/Save/keyboard/multi-display/login and actual OS-delivery blockers; the owner is unavailable for those checks. Trusted signing remains credential-dependent. Publish only after authorization, anonymously verify every asset, then obtain separate submission authorization/receipt. [Current review](../release/DESKTOP_COMPLETION_CANDIDATE.md).

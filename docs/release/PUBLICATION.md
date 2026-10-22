@@ -1,3 +1,5 @@
+> Historical v0.1.0 materials. The current **unpublished** v0.1.1 proposal uses frozen rc.4; see the [aligned checklist](v0.1.1/PUBLICATION.md) and [release body](v0.1.1/RELEASE_BODY.md). Existing public v0.1.0 assets are unchanged.
+
 # Synups 0.1.0 publication — completed
 
 The user explicitly authorized publication of the frozen reviewed assets. **[Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0)** was published at `2026-10-21T22:34:54Z`. Tag `v0.1.0` points exactly to 2973d3349fcb5af5639597920842288e6549bbd0. All 15 public assets were downloaded without authentication; SHA-256 and archive integrity checks passed. [Exact publication/download record](../evidence/verification/synups-0.1.0-publication.json). No rebuild/replacement, force-push, security bypass or competition submission occurred.
