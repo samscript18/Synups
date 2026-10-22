@@ -545,3 +545,58 @@ Upgrade experiment initially required the database file itself to be byte-identi
 
 
 Run39819866935 retained two further failures. Windows's unchanged gateway integration hit the8s cold PowerShell/NetTCPIP startup deadline; uses the already supported15s maximum on Windows now, with cancellation and typed timeout errors unchanged. Linux failure image showed a normal visible first-run window: bare Xvfb has no window manager to honor minimization, so it cannot prove the new launch flag. CI now installs Openbox/x11-utils and uses an owned disposable WM helper inside each Xvfb session. The helper waits for the actual EWMH root property, propagates child exit codes and terminates only its own WM. No assert is skipped and no production fake minimize/metric is introduced. Linux source remains unchanged for minimization; the graphical test environment now supplies the missing native facility.
+
+## Final legacy completion — 22 October 2026
+
+Continuation of the authorized legacy-completion task. The accidentally pasted sentence about partial rows was withdrawn by the user and did not replace the implementation objective. Starting checkpoint b23aa9118772751c4ad777f89fc36a8a7749b484 retained rc.2 application 6446990571c285b5c2e2a4bb293cbd8e3af40171. Baseline126 deterministic/headless cases passed; baseline Release 0 warnings/errors (7.53s). Reviewed the original App/MainWindow/status/commands/options/discovery and current monitoring, durable storage, exports, desktop synchronization and existing evidence before changes. Risk assessment: keep engine/SQLite ownership unchanged; contain work to additive status/UI/platform adapters; never mutate login/network settings on startup; verify every new apphost separately. No new dependency or development-hours estimate.
+
+### Implemented increments
+
+1. Compatible `/Minimize`/`--minimized`, persisted launch-minimized option, exact process arguments/version and restored second-instance behavior. No automatic monitoring flag; explicit saved monitoring-on-launch remains separate.
+2. Observed session time, nullable confirmed group-change UTC and monotonic elapsed display, unknown-safe target/incident values, proper TSV row escaping and real clipboard. Row context/value menus, scoped edit/Delete/copy/Escape keys, owner focus restoration and native picker/Help consistency. Tests exposed a real focus loss when controls re-enabled; RunAsync and confirmation owner restoration now explicitly reacquire focus.
+3. Exact original XML modem/transceiver candidate lists and 50ms wait; finite ordered production ICMP checks, stop-on-success, error/cancellation/drain, explicit confirmation before probes and addition. Guided default merge/router addition preserves existing IDs, duplicate guards and manually disabled discovery groups; never scans/changes the network/starts monitoring or infers device identity.
+4. Explicit confirmed reversible per-workspace Windows HKCU Run/macOS LaunchAgents/Linux XDG autostart adapters, validated process arguments/conflict protection. Tests use temporary files and native Linux Gio launch, not real startup registrations. Actual next-login execution remains unverified. Optional UTC date-prefixed logs preserve default names and old files; mixed-display invalid-screen clamping tested.
+5. Retained original alert intent review and existing dedupe/focus/in-app fallback. No actual native notification delivery/sound proof or genuine Menees fixture appeared, so those rows remain partial; no speculative importer. Physical Mac interactions remain denied by Accessibility/event-post permission.
+
+Source increments committed/pushed as d646c674b99820656938433b83b3a9e40704326f, be12da15caac17474898cc50d75b57527e32be9e, f1825fe4f0cc639dcde8caa32b2c312372c33a16, then frozen final **7ca85cccce6e3609d08d64e4f23172fa14fffb25**. Version 0.1.1-rc.3;29 commits after original upstream 61ae14391151ca9f209223e62c98fae3df5482b8. Later documentation commits do not change those binary/source hashes. No original WPF source/build file or MIT licence was altered.
+
+### Failures and actual corrections
+
+Initial local compiler/analyzer failures (nullable clipboard assertions, missing diagnostic local and platform-specific Unix fixture guard) were corrected without warning suppression. A ListBox test incorrectly assumed the container itself was focusable; it now focuses the real item and waits for owned async completion. Mixed-DPI expected-coordinate test was corrected to the actual40px available bound. Confirmation cancel exposed a real owner-focus issue fixed with immediate and queued restoration. All new tests subsequently passed.
+
+- Run 39816823353: Linux Gio rejected a specially escaped Exec path. Constrained unsupported special path characters explicitly, preserved ordinary spaces/ampersands, and verified actual Gio.launch argument roundtrip; no unusable autostart entry is silently written.
+- Run 39818020120: Windows rejected a Linux fixture's backslashes; normalized the Linux-only plan fixture. Linux apphost verifier waited for visibility before restoring the intentionally minimized window; reordered to await initialized/idle, check actual minimize, restore, then require visible native window. Assertions were not removed.
+- Run 39819866935: cold Windows PowerShell exceeded 8s; route query now uses finite 15s. Bare Linux Xvfb could not honor minimize without a WM; added isolated Openbox with bounded EWMH readiness/trap cleanup. Actual initial minimized-state check remains enforced.
+
+[All three failed logs](../evidence/verification/2026-10-22-legacy-completion-failed-ci-logs.zip) are retained alongside the final successful logs. No security auditing or warnings were disabled and no failed test was skipped to manufacture success.
+
+### Final source-specific quality gates
+
+| Gate | Actual result for 7ca85cc |
+|---|---|
+| Local locked restore/audit |Passed; lock files unchanged, no dependency added|
+| Local Release |0 warnings/errors;7.60s reported|
+| Local default/headless tests |143 passed,4 intentional skips;5.79s reported|
+| Local separately enabled native/network |3 passed;83ms reported, production loopback/native routing/candidate-loopback|
+| Python safety |8 passed|
+| Three-OS exact-source CI |[39821153798](https://github.com/samscript18/Synups/actions/runs/39821153798) all native and coverage jobs succeeded; locked restore/zero-warning Release|
+| Windows/macOS .NET |143 default passed/4 skips;3 separate native/network passed;8 Python each|
+| Linux .NET |144 default passed/3 opt-in skips;3 separate native/network passed;8 Python; extra native Gio case|
+| Actual extracted apphosts |Six stages per OS; initial minimized/restored, second process `/Minimize` restores existing, real clipboard/keys/loopback/native SQLite/interruption/read-only error/repair. Five normal exits0; deliberate killWindows 1/Unix -9|
+| Independent archive review |Every API digest/CRC/sidecar/manifest/file/set/RID/CPU/native SQLite/runtime/notices/licences/Unix mode checked; no diagnostics/tests/PDB shipped|
+| CodeQL |[39821182932](https://github.com/samscript18/Synups/actions/runs/39821182932) succeeded; downloaded SARIF0 results|
+| Scoped coverage |2409/2981 lines 80.81%;1736/2578 branches 67.34%; Core 96.67% lines/Desktop 71.39%|
+| Local exact downloaded Mac apphost |Six stages passed17:26–17:27Z; normal LaunchServices/fresh profile at17:28:28Z displayed owned OS window, zero sessions, native OS quit/process exit observed; LaunchServices app exit code unobservable|
+| Mac signing/permissions |Strict/deep integrity0; Gatekeeper rejects3; Accessibility/event postingfalse, screen capturetrue. No security or permissions changed|
+| Genuine isolated incident |Production probe/engine/source-component native UI: first failed17:19:04.425587Z, confirmed17:19:06.6648923Z, recovered17:19:07.4621134Z, monotonic0.7973031s. Single incident/comment/CSV/restart identical; namespace hashes/SQLite quick_check passed|
+| rc.2 upgrade |Closed copies of genuine Mac sessions and Linux incident load through final Core; all SQL records/IDs/comments/UTC identical; configuration/preferences bytes identical. Existing schema transaction changes SQLite header bytes, explicitly not claimed byte-identical|
+
+The 147 unique .NET cases comprise144 ordinary/platform cases plus 3 opt-in; native Gio is Linux-only, explaining one extra intentional skip elsewhere. Repeated OS runs are not added to inflate unique counts. Production measurements are real; fake probes/clocks remain test-only. Controlled kernel ICMP filtering changes only an isolated Linux namespace, not the user's host network. Its incident UI is component-native, distinct from six-stage packaged loopback checks. Native routing success is not connectivity proof.
+
+### Frozen handoff and remaining blockers
+
+[Reviewed rc.3](../release/LEGACY_COMPLETION_CANDIDATE.md), [independent evidence](../evidence/verification/2026-10-22-legacy-completion-final.json), [reports/reproduction/SARIF/coverage](../evidence/verification/2026-10-22-legacy-completion-reports.zip), [CI logs](../evidence/verification/2026-10-22-legacy-completion-ci-logs.zip). Genuine18 captures and raw incident files retained unchanged. Prepared ignored `artifacts/parity-completion/0.1.1-rc.3/` contains exact CI archives/sidecars/manifest and SHA256SUMS, not rebuilt or re-signed. Windows 8a0a46ba…2e2, Mac 98964878…5c9, Linux 59842e90…52c; full hashes in review/evidence. Rechecked all public 0.1.0/rc.1/rc.2 local SHA256SUMS; rollback sets unchanged.
+
+Final inventory **88.9%=(14 complete+4 partial×0.5)/18**, versus75% at rc.2. The five new complete rows reflect functional startup/status/default/discovery/menu intent with documented safe substitutions. Alerts, preferences, settings import and placement/tray remain partial because actual OS delivery/login/physical interactions/genuine fixture remain missing. No denominator or weight changed. Product readiness remains **8.5/10**, not production certification. Physical Mac tray/Save-panel/keyboard/resize/minimize/pending-write close, trusted signing, actual next login, wider desktop/IPv6/VPN/suspend/Wayland and newer-source endurance still require evidence. Windows unsigned and Mac unnotarized/Gatekeeper rejection remain prominent. No new public tag/Release or competition submission; separately authorized review/publication/submission remains the handoff.
+
+Final handoff rerun after interruption: sandboxed restore failed NU1900 fetching vulnerability metadata; network-enabled locked restore/audit passed (Core5.82s/Desktop56ms). Sandboxed build failed MSB4018 writing Avalonia BuildServices outside the workspace; authorized retry passed Release0 warnings/errors,4.10s. No audit or warning suppression. Default suite143 passed/4 intentional skips (reported2s), separate3 real/native cases passed (68ms), Python8/8. New TRX retained in the reports ZIP and final evidence; verified CI archive bytes were not rebuilt/replaced. The interrupted approval request itself is not counted as a passed restore.

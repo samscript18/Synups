@@ -45,3 +45,9 @@ On the disposable loopback workspace, confirm ordinary Close while monitoring dr
 ## Results and limits
 
 The operator cases above remain **not physically certified** because both Accessibility and event posting are denied. Headless control/routing tests and real extracted-apphost/native clipboard/loopback/restart/permission tests are recorded separately in CROSS_PLATFORM.md. Normal native launch/window capture/OS quit can be observed without substituting those checks for physical tray, Save-panel or keyboard acceptance. [Release readiness](../migration/RELEASE_READINESS.md) retains this blocker.
+
+## rc.3 handoff update
+
+Use source **7ca85cccce6e3609d08d64e4f23172fa14fffb25**, [candidate/hashes](LEGACY_COMPLETION_CANDIDATE.md). Fresh check22October16:40:38Z still reports Accessibility=false/event posting=false/screen capture=true. Normal extracted-bundle LaunchServices/window/OS quit at17:28:28Z and six direct actual-apphost stages passed; the physical actions above remain unperformed.
+
+Add these operator checks: select a target/incident and exercise chosen-value/row context copying, F4 edit, Delete confirmation and Escape returning focus; launch with `/Minimize` and reopen the same workspace; use explicit candidate checks only on networks you are authorized to probe and cancel before adding if not desired. Test mixed-display restoration on actual hardware. Do not enable login registration merely for routine acceptance: only if a person explicitly wants that OS change, confirm enable, verify the actual next login, then confirm remove and verify reversal. Automated tests used isolated files and did not alter your OS startup settings. Native notification delivery remains a separate real operator observation.

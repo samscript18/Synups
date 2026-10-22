@@ -1,6 +1,6 @@
 # Feature inventory and parity
 
-All legacy paths below are relative to `src/`. The legacy baseline was source-audited; original WPF runtime has not been exercised on this Mac. The original inventory below records Phase 1; Phase 2 scoring is retained historically; Phase 3 scoring below is historical; the final hardening assessment at the end is current.
+All legacy paths below are relative to `src/`. The legacy baseline was source-audited; original WPF runtime has not been exercised on this Mac. The original inventory below records Phase 1; Phase 2 scoring is retained historically; Phase 3 scoring below is historical; the legacy-completion assessment at the end is current.
 
 | Feature | Actual implementation and dependencies | Limitation / migration work | Synups Phase 1 |
 |---|---|---|---|
@@ -105,10 +105,39 @@ Final Phase 4B evidence: source 292b847 passed actual apphosts on all three nati
 Guided first-target creation/start guidance and richer judging evidence improve quality, not the count of original features. Before/after inventory stays72.2%=(9+8×0.5)/18. Core selection/failure/recovery algorithms and original resources are unchanged. The separate 0.1.1-rc.1 candidate has source-specific three-OS packaged verification recorded in CROSS_PLATFORM.md; it does not replace verified public 0.1.0. Discovery/import/login/sound/menu gaps are not claimed complete. Physical Mac desktop acceptance remains permission-blocked despite genuine normal-launch/window/OS-quit evidence.
 
 
-## Final hardening candidate — current application inventory
+## Final hardening rc.2 — historical application inventory
 
 The unchanged 18-row rubric now scores **(9 complete + 9 partial×0.5 + 0 pending)/18 = 13.5/18 =75.0%**, versus72.2% at rc.1. Only the Discovery row changes from pending0 to partial0.5: explicit read-only native gateway candidates, preview/confirmation, duplicate protection, bounded cancellation and three-OS native tests are implemented. Original modem/transceiver candidate/TTL behavior is not migrated and startup probing is intentionally absent. Default-profile discovery is still manual, so its row stays partial.
 
 All nine complete rows retain their scores. The eight previously partial rows remain partial: startup/CLI details, main status details, defaults, alerts (focus now present; sounds/taskbar/native delivery incomplete), preferences (login absent), legacy settings import, placement/tray physical acceptance and menus/dialogs. IP/incident clipboard and native Help/About improve the last row, but arbitrary legacy cell/row context actions are not claimed complete. No scoring rule, denominator or simulation exclusion changed. Paginated durable history and engineering/security evidence earn no artificial extra legacy rows.
 
 Exact source, tests, package hashes and limitations: [reviewed rc.2](../release/FINAL_HARDENING_CANDIDATE.md). Public0.1.0 and frozen rc.1 remain72.2% binaries. Native CI query/packaged tests cover Windows/macOS/Linux; physical Mac acceptance remains blocked by disabled Accessibility/event-post permission. This is not 75% effort or universal platform certification.
+
+## Legacy completion rc.3 — current application inventory
+
+Frozen application **7ca85cccce6e3609d08d64e4f23172fa14fffb25**, [actual three-OS packaged verification](https://github.com/samscript18/Synups/actions/runs/39821153798). Functional completeness uses the same 18 original rows and weights; certification of physical desktop behavior remains separate. No new enhancement earns an extra row.
+
+| Original inventory item | Current evidence / remaining qualification | Score |
+|---|---|---|
+| Startup / shutdown | `/Minimize`, `--minimized`, saved preference; actual minimized apphost and second-instance restoration; owned stop/save/close. Existing instance deliberately restores rather than silently ignoring a new launch. |Complete 1|
+| Main status UI | Real target/group/freshness/RTT, observed session time, confirmed transition timing, row selection, selected values/TSV/context copy and scoped keys. Unknown data stays unknown. |Complete 1|
+| ViewModels / state | Preserved UI-free snapshots and safe observable updates. |Complete 1|
+| Named IP targets | Preserved validated IPv4/IPv6 CRUD/moves and stable IDs. |Complete 1|
+| Groups and timing | Preserved CRUD, enablement, membership, poll/failure/timeout. |Complete 1|
+| Default profile | Original XML literals/timings, non-destructive missing-default merge; confirmed native gateway→Local Router and exact original candidate→matching group setup. Discovery is intentionally manual; empty groups stay disabled. |Complete 1|
+| Discovery | Native gateway preview plus original ordered modem/transceiver checks, finite bounds/cancellation, stop-on-success, explicit before-probe/add confirmation and duplicate protection. Actual device identity/response is not inferred; startup TTL behavior intentionally replaced. |Complete 1|
+| Connectivity | Real finite-timeout cancellable ICMP unchanged. |Complete 1|
+| Poll orchestration | Bounded non-overlapping group loops, sorted round robin and stop-on-success unchanged. |Complete 1|
+| Failure / recovery | Characterized thresholds and monotonic/indeterminate corrections unchanged; no shutdown recovery. |Complete 1|
+| Outage list/comments | Stable real incidents/comments, durable reload and timeline preserved. |Complete 1|
+| Text logs / statistics | Durable transitions plus automatic JSON/CSV and observed close summaries; optional stable UTC date prefix. No invented Internet uptime percentage. |Complete 1|
+| Export | Escaped chronological UTC CSV, streaming history, clear partial-file error; native picker retained. |Complete 1|
+| Alerts | Deduplicated in-app/focus behavior and native request/fallback retained. Actual OS delivery, optional sounds and taskbar equivalents remain incomplete. |Partial 0.5|
+| Preferences | Persisted desktop/log options; explicit reversible per-workspace startup registration implemented. Actual next-login/Windows registry execution and full filename-format behavior not certified. |Partial 0.5|
+| Settings persistence | Safe Synups configuration/preferences and rc.2 upgrade verified; no genuine Menees settings fixture or validated importer. |Partial 0.5|
+| Placement / tray | Native Show/Exit handlers, hide safety, restoration/geometry and mixed-DPI clamping; physical tray interactions, actual multiple-display and split placement still incomplete. |Partial 0.5|
+| Menus / dialogs | Target/incident value/row contexts and clipboard, edit/delete/confirmations, Help/About, preferences/native export and focus/Escape/shortcuts cover inventoried functional intent. Physical native Save-panel/keyboard acceptance is still separately blocked. |Complete 1|
+
+**(14 complete×1 +4 partial×0.5)/18 =16/18 =88.9%.** Before rc.3: 75.0%=(9+9×0.5)/18. The five changes are startup, main status, defaults, discovery and menus/dialogs. No denominator, weight or simulation exclusion changed. Complete reflects the recorded functional intent with documented safe substitutions, not every Windows-specific visual detail, physical interaction, actual hardware candidate or platform certification. Alerts/preferences/placement/import are conservatively partial for the explicit missing evidence above.
+
+[Reviewed candidate, hashes, tests, failures and limitations](../release/LEGACY_COMPLETION_CANDIDATE.md). Windows/macOS default suites 143 passed (4 intentional skips); Linux 144 (3 intentional skips), each plus 3 separately enabled native/network and 8 Python cases. All 147 cases execute across the suite invocations on Linux; the Gio-specific case is unsupported/skipped on Windows/macOS. Actual six-stage extracted apphosts pass on all three native runners. Physical macOS tray/Save-panel/keyboard acceptance remains blocked by denied Accessibility/event-post permission. Public 0.1.0/rc.1 remain 72.2%, rc.2 remains 75.0%; these immutable earlier binaries do not acquire rc.3 functionality.

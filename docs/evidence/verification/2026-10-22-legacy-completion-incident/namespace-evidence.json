@@ -1,0 +1,35 @@
+{
+  "network_namespace": "net:[4026532268]",
+  "host_namespace_untouched": true,
+  "target": "127.0.0.1",
+  "actions": [
+    {
+      "action": "drop_real_loopback_icmp_replies_in_isolated_namespace",
+      "monotonic_seconds": 193.146148056
+    },
+    {
+      "action": "restore_real_loopback_icmp_in_isolated_namespace",
+      "monotonic_seconds": 196.270213827
+    }
+  ],
+  "measurements": "Production IcmpProbe/MonitoringService, actual kernel-filtered ICMP; no fake probe or injected result",
+  "limits": "Controlled loopback ICMP disruption, not an Internet outage; source-component native UI harness, not published-apphost or physical interaction.",
+  "files_sha256": {
+    "outage.ready": "5b0368bfe9278eb5f75b12a848e3299bb90483557b011653ac598eb7b9077c94",
+    "failure-grace.png": "ce2720067ea7f71d45769a03d4ce663dc22e8452bdb42c1b2dcc9cef8815ec6d",
+    "history.v1.db": "e596276571cd9fcc3b913115839702c4382e90309c8b1fb6e2eafb390b7d1705",
+    "healthy.png": "d0781c886f24757e9b82745c019346a9eb646e9198be1914c0e1758cf2617630",
+    "configuration.v1.json": "bb259c4f86eac9042ab7295a085136f2d2fb19cec0320cd1deb98f08aec7d4f2",
+    "restart-console.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "history.v1.db.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "restart.json": "8478a29e8e8abf11fd4a3ed1c656e96c25cf5c31c75ea62acbcacbc2fd41c461",
+    "healthy.ready": "ef0f4a8dbaf12d81efcb7a0e528d5b3c25d79f457829398c5b11e8476138a82d",
+    "recovered-history.png": "71f792402d0073412448d71746d2e85a5d23296cbc4fe541a8c09e99e7c31c54",
+    "confirmed-outage.png": "dc961c8107a4e17716a2593371d5dfe6be660cf3df728a283715b564d96cd31a",
+    "real-incident.csv": "dea1c50b117b554203220a4ad59e9e7a5bb1e71e449ce326547b196081af894e",
+    "incident-console.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "restart-history.png": "cd5c03344b51d2d8ad73866b69f826a59716d42051726b61fb8afd907238bf25",
+    "incident.json": "8882077ab3980bf533772fdb56ce2de74b6e7bf25bc49b3cad00076093706c45",
+    "preferences.v1.json": "19fe643091617cbb51da7fcd2445ad580ffc845d7d46330b87c83f667f9d7537"
+  }
+}

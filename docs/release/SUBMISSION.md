@@ -34,3 +34,7 @@ Publication/anonymous download checks are complete and [recorded](../evidence/ve
 ## Optional newer candidate — do not silently substitute
 
 Separately verified unpublished [0.1.1-rc.2](FINAL_HARDENING_CANDIDATE.md) adds explicit gateway discovery, bounded incident timeline, clipboard/help/shortcuts and opt-in event restoration. Its source,128 unique .NET cases exercised per OS,8 Python cases, exact packages/hashes, CodeQL/coverage and genuine images are recorded separately. Public judge downloads above remain0.1.0 until a separately authorized Release is published and anonymously checked. No new candidate URL or accepted competition entry is implied. Physical Mac acceptance/trusted signing remain explicit limitations.
+
+## Latest reviewed unpublished alternative — rc.3
+
+[Legacy-completion candidate](LEGACY_COMPLETION_CANDIDATE.md), exact source 7ca85cccce6e3609d08d64e4f23172fa14fffb25, has verified three-OS archives and 88.9% unchanged-rubric inventory parity. Windows/Mac 143 default cases, Linux 144, each plus 3 opt-in native/network and 8 Python cases; all six actual extracted-executable stages pass. This is not a new public release link: stable0.1.0 remains the permanent download above until separate publication authorization and anonymous verification. Physical Mac acceptance, trusted signing and four partial inventory rows remain explicit. Do not submit this document or publish a candidate automatically.

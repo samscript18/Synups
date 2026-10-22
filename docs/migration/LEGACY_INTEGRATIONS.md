@@ -22,3 +22,11 @@ Before implementing: capture a real fixture with the baseline Windows app and pa
 ## Final hardening follow-up
 
 The earlier unimplemented-discovery assessment describes the previous release. Unpublished rc.2 now reimplements only useful default-gateway intent with explicit read-only OS route queries, candidate/interface preview and confirmed addition, not TTL probing or modem/transceiver candidates. All three native CI route queries pass; permissions/no routes/VPN/multiple routes/cancellation are typed and fixture-tested. No actual-fixture legacy importer, startup-registration integration or sound adapter was invented. See [exact reviewed scope](../release/FINAL_HARDENING_CANDIDATE.md).
+
+## rc.3: original discovery intent and explicit login integration
+
+The rc.2 paragraph above is historical. Frozen source 7ca85cccce6e3609d08d64e4f23172fa14fffb25 adds explicit original CableModem192.168.100.1/10.0.0.1/10.1.0.1 and Transceiver192.168.1.254 checks with original 50ms waits, ordered stop-on-success, finite overall cancellation, result preview and separate confirmation. Gateway confirmation can populate the original Local Router group; missing-default merge preserves IDs/configuration. Native route discovery replaces risky startup TTL probing. No range scan, automatic monitoring, device identity inference or real candidate response is claimed. Configuration failures leave manual IP setup available.
+
+Explicit per-workspace login enable/remove exists for Windows HKCU Run, macOS LaunchAgents and Linux XDG autostart. Only confirmed user actions write registrations; normal opening/preferences save does not. Temporary fixtures and native Linux Gio.launch are tested; no actual login/Windows registry mutation is certified, so Preferences stays partial. Supported-path limits and frozen evidence: [rc.3 review](../release/LEGACY_COMPLETION_CANDIDATE.md).
+
+No genuine Menees settings-store fixture was supplied or found in the available repository/evidence. Original serialization depends on the external store; Windows CI access is not an actual user's historical fixture. No hypothetical importer was added and original WirePeep data remains untouched. Settings persistence stays partial until a genuine fixture and compatible read-only preview/import can be verified.

@@ -119,3 +119,22 @@ Reviewed unpublished [0.1.1-rc.2](../release/FINAL_HARDENING_CANDIDATE.md) now p
 - [ ] Review/explicit authorization for a separate candidate Release and separate competition submission. Actions downloads are not permanent public candidate links.
 
 Readiness remains **8.5/10 under the existing rubric**. More functionality/tests do not resolve distribution trust or physical acceptance, so neither10/10 nor Phase-wide completion is claimed. The new candidate is functionally stronger with source-specific regressions, while rc.1 remains the smaller rollback baseline. Full-archive logging/retention still warrants large-history testing; the bounded2k/20k synthetic experiment is not endurance certification. No production mock measurements or historical latency/uptime invention exists.
+
+## Current rc.3 checkpoint — 22 October 2026
+
+**8.5/10 readiness remains unchanged; functional inventory rises to88.9%.** These are different assessments. Exact unpublished application 7ca85cccce6e3609d08d64e4f23172fa14fffb25 passes [three native jobs/coverage](https://github.com/samscript18/Synups/actions/runs/39821153798), [candidate/hash review](../release/LEGACY_COMPLETION_CANDIDATE.md).
+
+- [x] Locked restore/security audit, zero-warning Release on all three native runners.
+- [x] Windows/Mac 143 default .NET passes, Linux 144; each 3 separate real/native plus 8 Python cases. Intentional opt-in/platform skips documented.
+- [x] Actual extracted executables: initial minimized state, restoration/second instance, clipboard/status keys, loopback, SQLite restart/interruption/read-only repair, normal clean exits.
+- [x] Exact original candidate rules, bounded cancellation, confirmation/duplicates/ID preservation and guided defaults tested; no production simulator or automatic discovery.
+- [x] Closed rc.2 real session/incident upgrade preserves every logical record/comment/ID/UTC and configuration/preferences bytes; no false recovery.
+- [x] Exact CI archives, manifests, licences/notices/runtime/permissions/hashes independently audited and separately frozen as rc.3. Rollback sets unchanged.
+- [x] CodeQL retained zero SARIF results; scoped coverage 80.81% lines/67.34% branches.
+- [ ] Physical tray/keyboard/native CSV Save-panel/multiple-display acceptance: macOS Accessibility/event posting denied. Normal launch/window/OS quit and programmatic controls are separate evidence.
+- [ ] Trusted Mac distribution: integrity valid but Gatekeeper exit 3; no Developer ID/notarization. Windows unsigned.
+- [ ] Actual next-login/Windows startup-registry execution and OS notification delivery/sounds/taskbar certification. Explicit registration implementation alone is not completion.
+- [ ] Genuine WirePeep settings fixture/import, wider IPv6/VPN/suspend/Wayland/desktop acceptance and representative long-running GUI workloads.
+- [ ] Separate reviewed candidate Release authorization/public permanent download verification, then separately authorized competition submission. No new Release/submission performed.
+
+Prior passed results remain source-qualified historical evidence. Do not callrc.3 fully production-ready or replace stable0.1.0/rc.1/rc.2 archives. Optional parity work must not delay a reliable submission.
