@@ -182,6 +182,14 @@ public sealed class InstallationCheck(DesktopOptions options)
         Require(vm.HasNoGroups && !vm.IsRunning && vm.LastMeasurement == "Not observed", "Fresh startup was not passive and empty.");
         Passed("passive_startup_without_network_configuration");
         await CaptureAsync(window, "first-run");
+        foreach (var name in new[] { "FirstTargetAddress", "CreateFirstTarget", "StopMonitoring" })
+        {
+            var control = window.FindControl<Control>(name)!;
+            var edge = control.TranslatePoint(new Point(control.Bounds.Width, control.Bounds.Height), window);
+            Require(edge is { } point && point.X <= window.Bounds.Width && point.Y <= window.Bounds.Height,
+                "First-run control lies outside the native viewport: " + name);
+        }
+        Passed("first_run_controls_fit_native_viewport");
         Text(window, "FirstGroupName", "Installation loopback"); Text(window, "FirstTargetName", "This computer"); Text(window, "FirstTargetAddress", "127.0.0.1");
         await ClickAsync(window, "CreateFirstTarget"); await UntilAsync(() => vm.CanStart);
         Require(vm.LastMeasurement == "Not observed" && vm.Groups.Single().Targets.Single().Status == "Not checked", "Quick setup performed an undisclosed measurement.");
@@ -217,7 +225,9 @@ public sealed class InstallationCheck(DesktopOptions options)
     private async Task CaptureAsync(Window window, string name)
     {
         // Native startup can clamp the window to a smaller work area before the
-        // queued layout pass. Render the current layout, not its previous size.
+        // queued resize notification/layout pass. Yield to the native event
+        // loop before rendering; UpdateLayout alone cannot dispatch WM_SIZE.
+        await Task.Delay(150);
         window.UpdateLayout();
         using var image = new RenderTargetBitmap(new PixelSize((int)window.Bounds.Width, (int)window.Bounds.Height), new Vector(96, 96));
         image.Render(window);
