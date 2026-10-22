@@ -1,6 +1,6 @@
-# Reviewed unpublished candidate — 0.1.1-rc.4
+# Verified release payload — v0.1.1 / internal 0.1.1-rc.4
 
-Application source: **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, branch `feat/avalonia-migration`. [Successful exact-source native CI](https://github.com/samscript18/Synups/actions/runs/39850198899). This is a separate candidate, not a replacement for public0.1.0 or frozen rc.1/rc.2/rc.3. The owner now selects these exact **rc.4** archives as the proposed public **v0.1.1** payload, superseding the prior rc.3 proposal. Help/About and manifests retain internal version0.1.1-rc.4; no archive is rebuilt or relabelled. Publication still needs separate authorization.
+Application source: **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, branch `feat/avalonia-migration`. [Successful exact-source native CI](https://github.com/samscript18/Synups/actions/runs/39850198899). This is a separate candidate, not a replacement for public0.1.0 or frozen rc.1/rc.2/rc.3. These unchanged archives are now public as [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1). Help/About and manifests retain internal0.1.1-rc.4. [All15 public anonymous download/hash checks](../evidence/verification/synups-0.1.1-publication.json). Original review sections below preserve their historical scope; publication does not add physical desktop or signing certification.
 
 ## Implemented and tested
 
@@ -45,4 +45,4 @@ The first import test helper mishandled the fixture's actual BOM; production str
 
 **Parity: (15 complete+3 partial×0.5)/18=91.7%.** The settings-persistence row is now complete for the recorded profile-import intent. Alerts remain partial for actual OS delivery/sound/attention verification; preferences for actual next-login execution; placement/tray for physical menu and multiple-display acceptance. The owner is unavailable for manual checks and explicitly requested retaining these blockers. Accessibility/event posting remain denied; no permission or real-user startup setting was changed. Windows remains unsigned; macOS remains ad-hoc/not notarized. See [physical checklist](MACOS_ACCEPTANCE.md) and [distribution trust](DISTRIBUTION_TRUST.md).
 
-This candidate adds verified migration functionality and retains the monitoring/storage regressions, but does not establish universal desktop reliability or100% parity. Readiness remains **8.5/10**: publication choice, trusted distribution and physical acceptance still matter more than an inventory score. No Release/tag or competition form was created.
+This candidate adds verified migration functionality and retains the monitoring/storage regressions, but does not establish universal desktop reliability or100% parity. Readiness remains **8.5/10**: publication choice, trusted distribution and physical acceptance still matter more than an inventory score. The v0.1.1 Release/tag was subsequently authorized, published and anonymously verified; no competition form was submitted.

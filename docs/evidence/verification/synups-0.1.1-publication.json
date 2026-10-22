@@ -1,0 +1,800 @@
+{
+  "repository": "samscript18/Synups",
+  "tag": "v0.1.1",
+  "tag_commit": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "tag_object_sha": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "tag_object_type": "commit",
+  "peeled_application_commit": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "internal_version": "0.1.1-rc.4",
+  "release_title": "Synups 0.1.1 \u2014 verified rc.4 build",
+  "release_body_sha256": "9d3a8a6b7d4567ce1dbb6390e870a3eaf45a29bb80fe8e31806413e921978783",
+  "approved_release_body_verbatim": true,
+  "draft": false,
+  "prerelease": false,
+  "release_id": 421217596,
+  "release_url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+  "published_at": "2026-10-22T21:32:10Z",
+  "verification_completed_utc": "2026-10-22T21:46:40.444619+00:00",
+  "authentication_used": false,
+  "release_http_status": 200,
+  "assets": [
+    {
+      "name": "INSTALLATION.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/INSTALLATION.md",
+      "bytes": 9119,
+      "sha256": "62eabcec63e3158f261bde903dc9888f3e8d377ed19dae03dd2dcf09d066b5be",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 9118,
+          "bytes": 9119,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "LICENSE",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/LICENSE",
+      "bytes": 1068,
+      "sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 1067,
+          "bytes": 1068,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "PUBLICATION.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/PUBLICATION.md",
+      "bytes": 5063,
+      "sha256": "3ec53ee18269402c8673c196b1c4d3b920ea3eeb6b4c944e470f908f71064c3e",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 5062,
+          "bytes": 5063,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "RELEASE_NOTES.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/RELEASE_NOTES.md",
+      "bytes": 7241,
+      "sha256": "9d3a8a6b7d4567ce1dbb6390e870a3eaf45a29bb80fe8e31806413e921978783",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 7240,
+          "bytes": 7241,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "SHA256SUMS",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS",
+      "bytes": 1213,
+      "sha256": "69633fb5a7b20f19f36596b19c6505c91e8102eefcd07e2b3dd6c71ca9d7769f",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 1212,
+          "bytes": 1213,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "SOURCE_REVISION.txt",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/SOURCE_REVISION.txt",
+      "bytes": 351,
+      "sha256": "8e112fa38d5c5f63a7cb79c66e71e7151da97754207fc8db37f252f5b0eecc71",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 350,
+          "bytes": 351,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "SUBMISSION.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/SUBMISSION.md",
+      "bytes": 8422,
+      "sha256": "b93f03ec00e80722fcf17d3847624b987bc95f1b85e8a66fb6a05480f6f6f24a",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 8421,
+          "bytes": 8422,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz",
+      "bytes": 46438274,
+      "sha256": "49387bf6358b8d06478a64091f8780a64f41861f820df8f0ee1b04e17117c757",
+      "authenticated": false,
+      "http_status": 206,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 30408703,
+          "bytes": 30408704,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        },
+        {
+          "start": 30408704,
+          "end": 31457279,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 31457280,
+          "end": 32505855,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 32505856,
+          "end": 33554431,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 33554432,
+          "end": 34603007,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 34603008,
+          "end": 35651583,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 35651584,
+          "end": 36700159,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 36700160,
+          "end": 37748735,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 37748736,
+          "end": 38797311,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 38797312,
+          "end": 39845887,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 39845888,
+          "end": 40894463,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 40894464,
+          "end": 41943039,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 41943040,
+          "end": 42991615,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 42991616,
+          "end": 44040191,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 44040192,
+          "end": 45088767,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 45088768,
+          "end": 46137343,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 46137344,
+          "end": 46438273,
+          "bytes": 300930,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        }
+      ]
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz.sha256",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz.sha256",
+      "bytes": 90,
+      "sha256": "f0fe7b8261cdc720f8eff39ef4513e4a36f8d13975aed0fb60df603f357b6cc1",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 89,
+          "bytes": 90,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz",
+      "bytes": 46458693,
+      "sha256": "fa00e6a06255b4cd116ecb985806a05a02fb4e93db6977e34420a63f0cc31200",
+      "authenticated": false,
+      "http_status": 206,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 23068671,
+          "bytes": 23068672,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        },
+        {
+          "start": 23068672,
+          "end": 24117247,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 24117248,
+          "end": 25165823,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 25165824,
+          "end": 26214399,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 26214400,
+          "end": 27262975,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 27262976,
+          "end": 28311551,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 28311552,
+          "end": 29360127,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 29360128,
+          "end": 30408703,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 30408704,
+          "end": 31457279,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 31457280,
+          "end": 32505855,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 32505856,
+          "end": 33554431,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 33554432,
+          "end": 34603007,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 34603008,
+          "end": 35651583,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 35651584,
+          "end": 36700159,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 36700160,
+          "end": 37748735,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 37748736,
+          "end": 38797311,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 38797312,
+          "end": 39845887,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 39845888,
+          "end": 40894463,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 40894464,
+          "end": 41943039,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 41943040,
+          "end": 42991615,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 42991616,
+          "end": 44040191,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 44040192,
+          "end": 45088767,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 45088768,
+          "end": 46137343,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 46137344,
+          "end": 46458692,
+          "bytes": 321349,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        }
+      ]
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz.sha256",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz.sha256",
+      "bytes": 90,
+      "sha256": "b29de26f38bb6ed4e8446387b55b9e26d735b9dbfc1a674f6a98697abc98a0e5",
+      "authenticated": false,
+      "http_status": 200,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 89,
+          "bytes": 90,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        }
+      ]
+    },
+    {
+      "name": "Synups-win-x64.zip",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip",
+      "bytes": 49329805,
+      "sha256": "cc02117abc393cc0e6baf39e75aceebf529c8d695e5d61e93a18262b36a9d570",
+      "authenticated": false,
+      "http_status": 206,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 18874367,
+          "bytes": 18874368,
+          "http_status": 200,
+          "source": "Preserved initial anonymous GET; stopped only for bounded ranged continuation."
+        },
+        {
+          "start": 18874368,
+          "end": 19922943,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 19922944,
+          "end": 20971519,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 20971520,
+          "end": 22020095,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 22020096,
+          "end": 23068671,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 23068672,
+          "end": 24117247,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 24117248,
+          "end": 25165823,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 25165824,
+          "end": 26214399,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 26214400,
+          "end": 27262975,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 27262976,
+          "end": 28311551,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 28311552,
+          "end": 29360127,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 29360128,
+          "end": 30408703,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 30408704,
+          "end": 31457279,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 31457280,
+          "end": 32505855,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 32505856,
+          "end": 33554431,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 33554432,
+          "end": 34603007,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 34603008,
+          "end": 35651583,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 35651584,
+          "end": 36700159,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 36700160,
+          "end": 37748735,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 37748736,
+          "end": 38797311,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 38797312,
+          "end": 39845887,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 39845888,
+          "end": 40894463,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 40894464,
+          "end": 41943039,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 41943040,
+          "end": 42991615,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 42991616,
+          "end": 44040191,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 44040192,
+          "end": 45088767,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 45088768,
+          "end": 46137343,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 46137344,
+          "end": 47185919,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 47185920,
+          "end": 48234495,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 48234496,
+          "end": 49283071,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 49283072,
+          "end": 49329804,
+          "bytes": 46733,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        }
+      ]
+    },
+    {
+      "name": "Synups-win-x64.zip.sha256",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip.sha256",
+      "bytes": 86,
+      "sha256": "bfafffb943f985d55f88407bdf613657368743297cc63f00ae0f0facbbcfa746",
+      "authenticated": false,
+      "http_status": 206,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 85,
+          "bytes": 86,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        }
+      ]
+    },
+    {
+      "name": "VERIFICATION.json",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/VERIFICATION.json",
+      "bytes": 28636,
+      "sha256": "c626d4e68be25177febb05f51d114af9a6dca43adaadb927dcc0aa4cf13619a1",
+      "authenticated": false,
+      "http_status": 206,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 28635,
+          "bytes": 28636,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        }
+      ]
+    },
+    {
+      "name": "VERIFICATION_EVIDENCE.zip",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/VERIFICATION_EVIDENCE.zip",
+      "bytes": 2922669,
+      "sha256": "399071e96ebaa82ff39493a3886c5961caaa478f49c9fe2799370e2b4daa1ecd",
+      "authenticated": false,
+      "http_status": 206,
+      "all_bytes_covered_without_gaps_or_overlap": true,
+      "received_ranges": [
+        {
+          "start": 0,
+          "end": 1048575,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 1048576,
+          "end": 2097151,
+          "bytes": 1048576,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        },
+        {
+          "start": 2097152,
+          "end": 2922668,
+          "bytes": 825517,
+          "http_status": 206,
+          "source": "Anonymous public HTTP Range GET"
+        }
+      ]
+    }
+  ],
+  "transport": "Initial anonymous GET bytes preserved; missing ranges fetched with8 bounded workers and exact206 Content-Range validation. Every byte covered once; final sizes/SHA256/full archive manifests checked. Approved local data was only compared, never used to fill missing download bytes.",
+  "range_retry_log": [],
+  "all_download_hashes_match_reviewed_assets": true,
+  "all_archive_integrity_checks_passed": true,
+  "all_public_inner_manifests_rids_cpu_sqlite_runtime_licences_and_unix_modes_verified": true,
+  "v0.1.0_asset_ids_sizes_api_digests_unchanged": true,
+  "v0.1.0_tag_unchanged": true,
+  "form_submitted": false,
+  "release_alignment_documentation_commit": "5f20060025076e3943a592fb616d672bf721e465",
+  "approved_asset_manifest_sha256": "87c0c6a0827ecf2a06107464eda227d869c57d9d8c56898ff67a710c0b62607e",
+  "approved_release_body_from_alignment_commit_matches": true
+}

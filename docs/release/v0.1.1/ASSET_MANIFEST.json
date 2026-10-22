@@ -1,7 +1,7 @@
 {
   "proposed_tag": "v0.1.1",
   "title": "Synups 0.1.1 \u2014 verified rc.4 build",
-  "publication_status": "prepared only; publication requires separate authorization",
+  "publication_status": "published and independently anonymously verified; all approved asset bytes unchanged",
   "application_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
   "internal_binary_version": "0.1.1-rc.4",
   "workflow": "https://github.com/samscript18/Synups/actions/runs/39850198899",
@@ -215,5 +215,9 @@
   "checksum_file_sha256": "69633fb5a7b20f19f36596b19c6505c91e8102eefcd07e2b3dd6c71ca9d7769f",
   "checksum_file_note": "14 payload files plus SHA256SUMS =15 upload assets. SHA256SUMS does not hash itself; its hash is recorded here. This review manifest and UPLOAD_FILES.txt are source documents, not upload assets.",
   "supersedes": "Earlier rc.3 proposal preserved in Git040944283a935878def71a39b7c4535aa772badf and artifacts/presentation/v0.1.1-ready/. Never upload those files for this aligned release.",
-  "no_binaries_rebuilt_replaced_or_resigned": true
+  "no_binaries_rebuilt_replaced_or_resigned": true,
+  "release_url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+  "release_id": 421217596,
+  "published_at": "2026-10-22T21:32:10Z",
+  "public_verification_record": "docs/evidence/verification/synups-0.1.1-publication.json"
 }

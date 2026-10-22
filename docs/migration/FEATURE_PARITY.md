@@ -159,3 +159,8 @@ Source **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, [verified three-OS actual a
 ### Final release alignment
 
 The owner now selects exact rc.4 application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03 for proposed public tag v0.1.1, superseding the earlier rc.3 preparation. Internal version remains0.1.1-rc.4. Parity stays91.7% under the unchanged rubric; alerts/preferences/placement retain the stated gaps. No new feature or verification pass is implied by this release alignment. Public0.1.0 and all historical candidate bytes remain unchanged. [Current publication checklist](../release/v0.1.1/PUBLICATION.md).
+
+
+### Public v0.1.1 —91.7% released inventory
+
+The owner-authorized public [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1) tag points exactly6c812fde9a29eeb8cfd6399a2f1a75e333e81e03 and ships unchanged internal0.1.1-rc.4 archives. All15 assets were anonymously downloaded/hashed and archive/manifest/runtime/licence checks passed. [Publication evidence](../evidence/verification/synups-0.1.1-publication.json). Released parity remains(15+3×0.5)/18=91.7%; alerts/preferences/placement are still partial. Publication does not certify their missing desktop/login/delivery checks. v0.1.0 and all historical candidates remain unchanged. No form submission.

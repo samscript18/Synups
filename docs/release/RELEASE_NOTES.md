@@ -1,3 +1,5 @@
+> **Publication complete:** [Synups v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), exact application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, internal0.1.1-rc.4. [All15 anonymous public checks](../evidence/verification/synups-0.1.1-publication.json). Earlier preparation/checklist wording below is historical. Public assets and the approved release body are unchanged. No competition submission.
+
 > Historical v0.1.0 materials. The current **unpublished** v0.1.1 proposal uses frozen rc.4; see the [aligned checklist](v0.1.1/PUBLICATION.md) and [release body](v0.1.1/RELEASE_BODY.md). Existing public v0.1.0 assets are unchanged.
 
 # Synups 0.1.0 — published portable release

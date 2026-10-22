@@ -22,17 +22,17 @@ Checked against the [official Avalonia Port Challenge announcement](https://aval
 
 ## Working public release links
 
-Current public **v0.1.0**, exact application/tag source **2973d3349fcb5af5639597920842288e6549bbd0**:
+**Submit these current v0.1.1 links**, application/tag **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, internal binary version **0.1.1-rc.4**:
 
-- [Release page](https://github.com/samscript18/Synups/releases/tag/v0.1.0)
-- [Windows x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip)
-- [macOS arm64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz)
-- [Linux x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz)
-- [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS)
+- [Release page](https://github.com/samscript18/Synups/releases/tag/v0.1.1)
+- [Windows x64](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip)
+- [macOS arm64](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz)
+- [Linux x64](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz)
+- [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS)
 
-All15 public assets were anonymously downloaded/hash-verified at publication. [Publication evidence](../evidence/verification/synups-0.1.0-publication.json). [Actual original-release CI](https://github.com/samscript18/Synups/actions/runs/39682197118):105 deterministic/headless+1 opt-in real-loopback perOS, zero-warning Release and actual packaged execution. Public0.1.0 inventory parity remains72.2%.
+All15 public assets were anonymously downloaded and matched the approved hashes/byte sizes; archive/full-manifest/runtime/licence checks passed. [Publication receipt](../evidence/verification/synups-0.1.1-publication.json). **Latest released parity91.7%=(15 complete+3 partial×0.5)/18.** These are the unchanged rc.4 CI archives, not rebuilt or relabelled executables. [Exact source/CI/hashes](DESKTOP_COMPLETION_CANDIDATE.md).
 
-**Do not silently substitute a candidate.** Frozen unpublished **0.1.1-rc.4**, application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, reaches91.7% and adds genuine settings-profile import/backup, guided setup, safe original discovery, paginated incidents, optional WAV requests and log/pane preferences. [Exact candidate/hashes](DESKTOP_COMPLETION_CANDIDATE.md). [Proposed v0.1.1 description and assets](v0.1.1/RELEASE_BODY.md) use these same rc.4 binaries, including their internal version. Public links remain0.1.0 until separate publication authorization and anonymous verification. The proposed public tag is `v0.1.1`, while Help/About and manifests retain **0.1.1-rc.4**. No archive is rebuilt or relabelled.
+Historical rollback: [public v0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0), source2973d3349fcb5af5639597920842288e6549bbd0,72.2% inventory; its15 asset IDs/sizes/API digests remain unchanged. Historical rc.1/rc.2/rc.3 candidates are also preserved. Do not use their feature/test claims for this release.
 
 ## Migration answers and evidence
 
@@ -46,7 +46,7 @@ All15 public assets were anonymously downloaded/hash-verified at publication. [P
 
 **Actual effort:** AI-assisted repository sessions began16October2026. Frozen rc.4 was committed22October with39 commits after the preserved upstream; the README provides the reproducible command. No total developer-hours estimate was measured or invented.
 
-**Proposed release-payload verification:** [run39850198899](https://github.com/samscript18/Synups/actions/runs/39850198899): Windows/Mac159 default .NET cases, Linux160, each3 opt-in real/native+1 audio request/fallback and8 Python cases; zero-warning Release; six actual extracted executable stages on native Windows/macOS and Linux/Xvfb+Openbox. Of164 unique .NET cases,4 are opt-in and1 Linux-native Gio case is platform-specific. [CodeQL](https://github.com/samscript18/Synups/actions/runs/39851153694) zero SARIF results, scoped coverage79.83% lines/66.89% branches. Actual source/package/runtime distinction remains explicit in [platform evidence](../migration/CROSS_PLATFORM.md).
+**Released payload verification:** [run39850198899](https://github.com/samscript18/Synups/actions/runs/39850198899): Windows/Mac159 default .NET cases, Linux160, each3 opt-in real/native+1 audio request/fallback and8 Python cases; zero-warning Release; six actual extracted executable stages on native Windows/macOS and Linux/Xvfb+Openbox. Of164 unique .NET cases,4 are opt-in and1 Linux-native Gio case is platform-specific. [CodeQL](https://github.com/samscript18/Synups/actions/runs/39851153694) zero SARIF results, scoped coverage79.83% lines/66.89% branches. Actual source/package/runtime distinction remains explicit in [platform evidence](../migration/CROSS_PLATFORM.md).
 
 **Before/after:** [fresh original WPF Windows capture, credited upstream illustration and genuine source-specific Synups captures](../evidence/README.md). [Real incident demonstration](../competition/INCIDENT_DEMO.md): actual kernel-filtered ICMP in a disposable namespace, confirmation/recovery/comment/CSV/restart evidence, not an ISP outage or injected result.
 
@@ -61,7 +61,4 @@ Physical tray/keyboard/native Save-panel/multiple-display acceptance, actual OS 
 Obtain separate submission authorization; review entrant/contact/team eligibility, chosen public version, all limitations and verified public links. A public Release does not submit the form. Record the actual confirmation/receipt only after a real authorized submission. Do not claim acceptance from this prepared text.
 
 
-**Release alignment:** the earlier rc.3 proposal is superseded by the user-selected rc.4 payload. Public0.1.0 remains unchanged and linked until v0.1.1 is separately authorized, published and anonymously verified. Audio process acceptance is not audible delivery; Linux reported a missing-helper fallback. The Windows notification adapter failed independent delivery observation and was withdrawn. No public release or form submission is performed by preparing this text.
-
-
-**Official links:** the challenge article was accessible and its linked form URL confirmed on22 October2026. The form itself was inaccessible through the available browsing tool; the owner must open it in an ordinary browser. No fields, usable-form pass, acceptance or receipt are claimed.
+**Publication is complete; competition submission is not.** The approved release body/handoff assets retain their original preparation wording, as required; this current draft and the anonymous receipt identify the released version. The official article/form URL was checked, but the form remains inaccessible through available tooling. The owner must review entrant/contact/team information and explicitly authorize form submission; no acceptance or receipt is claimed.

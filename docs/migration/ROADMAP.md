@@ -1,5 +1,7 @@
 # Migration roadmap
 
+**Current public release:** [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), source6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, internal0.1.1-rc.4,91.7% inventory. [Anonymous publication verification](../evidence/verification/synups-0.1.1-publication.json). Earlier unpublished/proposed-release statements below are historical. Remaining signing/physical/login/alert blockers are unchanged; competition submission is separate.
+
 Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. The user-selected proposed v0.1.1 payload is now frozen rc.4 at91.7%, with internal0.1.1-rc.4 version disclosed; public0.1.0 remains unchanged. Earlier rc.3 payload decisions below are historical.
 
 Phase 3 local functional work and Phase 4A three-OS CI/native-harness checkpoint are implemented. Published-executable and installed-desktop/distribution gates remain open; Synups is not production-ready. See [release checklist](RELEASE_READINESS.md).

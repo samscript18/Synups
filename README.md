@@ -10,23 +10,23 @@ Built with **Avalonia, C# and XAML**, migrating [Bill Menees’ WirePeep](https:
 
 ## Download
 
-**Public release: [v0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0).** These permanent downloads require neither a GitHub account nor a .NET SDK. Extract the complete archive and keep its files together.
+**Recommended public release: [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), 91.7% legacy parity.** These permanent downloads require neither a GitHub account nor a .NET SDK. Extract the complete archive and keep its files together.
 
 | Platform | Download | Launch / installation note |
 |---|---|---|
-| Windows x64 | [ZIP](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip) | `Synups.exe` — unsigned; Windows or organizational policy may warn/block. |
-| macOS arm64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz) | `Synups.app` — ad-hoc integrity only, **not notarized; Gatekeeper rejects trusted distribution**. Read the [installation guidance](docs/release/INSTALLATION.md). |
-| Linux x64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz) | `./Synups` — retain executable permissions; native desktop libraries are required. |
+| Windows x64 | [ZIP](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip) | `Synups.exe` — unsigned; Windows or organizational policy may warn/block. |
+| macOS arm64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz) | `Synups.app` — ad-hoc integrity only, **not notarized; Gatekeeper rejects trusted distribution**. Read the [installation guidance](docs/release/INSTALLATION.md). |
+| Linux x64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz) | `./Synups` — retain executable permissions; native desktop libraries are required. |
 
-Verify downloads against [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS). The runtime, Avalonia, SQLite, licences and dependency notices are bundled. Do not disable operating-system security protections.
+Verify downloads against [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS). The runtime, Avalonia, SQLite, licences and dependency notices are bundled. Do not disable operating-system security protections.
 
-**Proposed v0.1.1: verified rc.4 binaries, 91.7% legacy parity — not yet published.** It adds genuine WirePeep profile import, guided setup, safe discovery, durable incident history and desktop conveniences. [Exact candidate, hashes and evidence](docs/release/DESKTOP_COMPLETION_CANDIDATE.md) · [Prepared release notes](docs/release/v0.1.1/RELEASE_BODY.md). The public tag will be `v0.1.1`, but the unchanged binaries identify themselves as **0.1.1-rc.4**, source `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`. Publication awaits authorization; the working public download links above still serve v0.1.0.
+**Released v0.1.1 uses the verified, unchanged 0.1.1-rc.4 binaries**, application source `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`. Help/About and manifests retain **0.1.1-rc.4**; no binary was rebuilt or relabelled. [Anonymous verification of all 15 public assets](docs/evidence/verification/synups-0.1.1-publication.json) · [Release notes](https://github.com/samscript18/Synups/releases/tag/v0.1.1) · [Exact source and evidence](docs/release/DESKTOP_COMPLETION_CANDIDATE.md). [v0.1.0 remains an unchanged rollback release](https://github.com/samscript18/Synups/releases/tag/v0.1.0).
 
-The frozen archive’s bundled README is a historical build-time snapshot. Current release notes, installation guidance and verification records accompany the proposed upload; no archive is edited to update documentation.
+The frozen archive’s bundled README and approved release handoff documents retain their historical build/prepublication wording. Use this current README, the repository installation guide and publication receipt for current status and links. All approved asset bytes and the verbatim release body remain unchanged.
 
 ## See Synups
 
-These genuine overview captures show the exact **rc.4 proposed-release binaries**, using real loopback ICMP. The separately linked incident sequence retains its original rc.3 source qualification: controlled packet filtering in an isolated Linux namespace, not an ISP outage.
+These genuine overview captures show the exact **v0.1.1 / internal rc.4 binaries**, using real loopback ICMP. The separately linked incident sequence retains its original rc.3 source qualification: controlled packet filtering in an isolated Linux namespace, not an ISP outage.
 
 ![Synups rc.4 monitoring a real loopback target on Windows](docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-overview.png)
 
@@ -45,14 +45,14 @@ These genuine overview captures show the exact **rc.4 proposed-release binaries*
 - **Configure your own monitoring:** named IPv4/IPv6 targets, group membership, persistent settings and guided first-target setup.
 - **Migrate actual WirePeep profiles in rc.4:** preview a genuine Menees `.stgx` profile, confirm replacement and keep a backup; original IDs/timings are preserved and nothing starts automatically. Unsupported formats are refused.
 - **Use desktop controls:** Start/Stop, window preferences, clipboard/context actions, Help, transition alerts and safe tray/restoration behavior.
-- **Discover deliberately in the proposed release:** inspect native gateway candidates or explicitly check the original modem/transceiver addresses, then confirm before adding. No subnet scan, network change or startup discovery.
+- **Discover deliberately:** inspect native gateway candidates or explicitly check the original modem/transceiver addresses, then confirm before adding. No subnet scan, network change or startup discovery.
 
-Some conveniences are candidate-only; the [version-specific inventory](docs/migration/FEATURE_PARITY.md) distinguishes them from public v0.1.0.
+Some features are newer than v0.1.0; the [version-specific inventory](docs/migration/FEATURE_PARITY.md) distinguishes them from public v0.1.0.
 
 ## Quick start
 
 1. Extract and launch the platform package, following its installation guidance.
-2. In rc.4, enter a group name, target name and a literal IP you are authorized to monitor, then choose **Add target and create group**. In v0.1.0, use **Targets and groups** to create the group and target.
+2. In v0.1.1 (internal rc.4), enter a group name, target name and a literal IP you are authorized to monitor, then choose **Add target and create group**. In v0.1.0, use **Targets and groups** to create the group and target.
 3. Choose **Start monitoring**. Opening Synups does not probe automatically unless you deliberately enable monitoring on launch.
 4. Review live results, then **Activity and outages** for confirmed incidents. Add comments and export CSV when records exist.
 5. Stop before editing configuration. Settings and recorded evidence survive a clean restart.
@@ -92,7 +92,7 @@ WirePeep.Common inherited Windows targets and depended on Menees configuration/d
 
 ## Platform verification
 
-Frozen proposed-release application: **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, internal version **0.1.1-rc.4**. [Successful exact-source three-OS run](https://github.com/samscript18/Synups/actions/runs/39850198899).
+Frozen released application: **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, internal version **0.1.1-rc.4**. [Successful exact-source three-OS run](https://github.com/samscript18/Synups/actions/runs/39850198899).
 
 | Actual environment | Default tests | Separate real/native | Audio request/fallback | Extracted executable |
 |---|---:|---:|---:|---|
@@ -108,7 +108,7 @@ Public v0.1.0 remains pinned to `2973d3349fcb5af5639597920842288e6549bbd0`: [105
 
 ## Legacy parity
 
-**Proposed v0.1.1 / verified rc.4: (15 complete + 3 partial × 0.5) / 18 = 91.7%.** Public v0.1.0 remains 72.2%; frozen rc.3 remains 88.9%. Existing binaries are never upgraded by changing a document.
+**Released v0.1.1 / verified rc.4: (15 complete + 3 partial × 0.5) / 18 = 91.7%.** Public v0.1.0 remains 72.2%; frozen rc.3 remains 88.9%. Existing binaries are never upgraded by changing a document.
 
 The remaining partial areas are **alerts** (actual OS delivery/audibility/attention), **preferences** (actual next-login execution/removal) and **placement/tray** (physical menu and multiple-display acceptance). Genuine settings-profile import is now tested using a fixture emitted by the untouched original Windows executable. This is a coarse functional inventory, not percent effort or universal platform certification. [Unchanged 18-item rubric](docs/migration/FEATURE_PARITY.md).
 

@@ -1,0 +1,62 @@
+{
+  "verified_utc": "2026-10-22T21:47:25.419332+00:00",
+  "local_markdown_and_json": "passed",
+  "licence_and_ancestry": "preserved",
+  "application_code_and_build_workflows": "unchanged from exact frozen source6c812fd",
+  "links": [
+    {
+      "url": "https://avaloniaui.net/blog/avalonia-port-challenge",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/menees/WirePeep",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/menees/WirePeep/commit/61ae14391151ca9f209223e62c98fae3df5482b8",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39682197118",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39841203591",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39850198899",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39851153694",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/tag/v0.1.0",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+      "status": 200
+    }
+  ],
+  "readme_and_judges_external_links_all_http200": true,
+  "limits": "HTTP status/structure is not browser visual acceptance. No physical desktop, signing or competition-form pass implied."
+}

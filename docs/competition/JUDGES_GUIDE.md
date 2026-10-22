@@ -6,13 +6,13 @@ Synups helps individuals, developers and IT professionals diagnose intermittent 
 
 ## Evaluate it quickly
 
-1. Download the current public [Synups0.1.0 release](https://github.com/samscript18/Synups/releases/tag/v0.1.0). [Windows x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip), [macOS arm64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz), [Linux x64](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz), [checksums](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS). No account/SDK/backend is needed.
+1. Download the current public [Synups v0.1.1 release](https://github.com/samscript18/Synups/releases/tag/v0.1.1). [Windows x64](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip), [macOS arm64](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz), [Linux x64](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz), [checksums](https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS). No account/SDK/backend is needed.
 2. Follow [platform installation guidance](../release/INSTALLATION.md). Windows is unsigned; Mac is ad-hoc only and Gatekeeper rejects trusted delivery. No security bypass is recommended.
 3. Configure a named literal IP and enabled peer group, then choose Start. Stop before editing. Opening the app does not automatically probe unless explicitly configured to do so.
 4. Inspect real target status, freshness and RTT, then Activity/outages and CSV if actual incidents exist. Unknown is not reported as zero latency or uptime.
 5. For observed failure/grace/recovery without disrupting your network, inspect the [genuine isolated incident sequence](INCIDENT_DEMO.md), its timestamps/CSV and reproduction protocol.
 
-**Version distinction:** public0.1.0 is the permanent judge-accessible download above. The proposed v0.1.1 uses reviewed, unpublished **0.1.1-rc.4** and adds genuine profile import, first-run guidance, discovery, paginated incidents and desktop conveniences, reaching91.7% inventory parity. [Exact source, hashes and evidence](../release/DESKTOP_COMPLETION_CANDIDATE.md). [Proposed v0.1.1 release materials](../release/v0.1.1/RELEASE_BODY.md) await publication authorization; do not treat proposed links as downloads. Public release tag `v0.1.1` will retain internal binary version **0.1.1-rc.4**; no rebuilding or relabelling is planned.
+**Released version:** public **v0.1.1** contains the unchanged verified **0.1.1-rc.4** application at6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, with **91.7% inventory parity**. [All15 anonymous public download/hash checks](../evidence/verification/synups-0.1.1-publication.json) · [Exact source, hashes and evidence](../release/DESKTOP_COMPLETION_CANDIDATE.md). Help/About and manifests retain the internal rc.4 version. [v0.1.0 is preserved as rollback](https://github.com/samscript18/Synups/releases/tag/v0.1.0).
 
 ## Original application and the migration
 
@@ -48,4 +48,4 @@ Signing/trusted Mac delivery, actual native notification delivery/login executio
 Public0.1.0 and rc.1/rc.2/rc.3 are rollback baselines, not overwritten. Source changes after a frozen revision require independent verification. This guide prepares evaluation; **no official competition submission or acceptance is claimed**.
 
 
-**Release alignment:** the earlier rc.3 proposal is superseded by the user-selected rc.4 payload. Public0.1.0 remains unchanged and linked until v0.1.1 is separately authorized, published and anonymously verified. Audio process acceptance is not audible delivery; Linux reported a missing-helper fallback. The Windows notification adapter failed independent delivery observation and was withdrawn. No public release or form submission is performed by preparing this text.
+**Publication status:** v0.1.1 is public and anonymously verified. The approved release body and bundled handoff documents preserve their prepublication wording verbatim; this current guide, the release page and verification receipt establish publication status. Actual alert delivery/audibility, next-login execution and physical tray/multiple-display acceptance remain limited. No competition form was submitted.
