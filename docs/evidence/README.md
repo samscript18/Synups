@@ -56,3 +56,8 @@ The earlier verifier captures remain historical. New captures below come from th
 
 
 The [two-hour real-Core observation](verification/2026-10-21-engine-endurance-macos-arm64.json) completed on local macOS arm64 with28,792 real loopback probes and clean stop/restart/reopen. [Raw720 samples](verification/2026-10-21-engine-endurance-samples.jsonl) retain CPU/RSS/descriptors/workers/probes/database data. Source/build qualification is explicit: earlier working-tree Core subsequently committed unchanged, exact loaded assembly hash retained; not a published-apphost or multi-hour GUI claim. No actual outage, physical power failure or leak-free result is fabricated.
+
+
+## Genuine macOS OS-window capture —22 October2026
+
+[Normal launch of unchanged published0.1.0 including native OS chrome](after/2026-10-22-competitive/macos-stable-normal-launch.png), [exact source/apphost/PID/permission/quit record](verification/2026-10-22-macos-desktop-acceptance.json). Used the reviewed downloaded bundle at2973d3349fcb5af5639597920842288e6549bbd0 through LaunchServices with a fresh isolated profile, no installation-check mode and no configured target. CoreGraphics identified only its owned native window; screencapture for that exact window succeeded. Zero sessions were created; no measurements are implied. Native OS quit request completed, but application exit code is unknown. Accessibility permission remains false, so this is not evidence of physical tray/keyboard/save-picker interaction. Earlier failed screenshot attempts remain historical; no image was generated, edited or staged with invented metrics.

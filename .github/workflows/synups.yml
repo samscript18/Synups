@@ -37,7 +37,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1
+          sudo apt-get install -y xvfb libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1 iproute2 iptables
       - name: Archive tool safety tests
         run: python -m unittest discover -s ../eng/tests -v
       - name: Locked dependency restore
@@ -81,6 +81,12 @@ jobs:
         run: |
           set -o pipefail
           python ../eng/native-smoke.py --screenshots ../artifacts/screenshots 2>&1 | tee ../artifacts/logs/native.txt
+      - name: Real ICMP incident in disposable Linux network namespace
+        if: runner.os == 'Linux'
+        run: |
+          set -o pipefail
+          python ../eng/incident-smoke.py --prepare ../artifacts/incident-build 2>&1 | tee ../artifacts/logs/incident-build.txt
+          xvfb-run -a -s '-screen 0 1440x1000x24' bash -c 'sudo env "PATH=$PATH" "DOTNET_ROOT=$DOTNET_ROOT" "DISPLAY=$DISPLAY" "XAUTHORITY=$XAUTHORITY" "GITHUB_SHA=$GITHUB_SHA" unshare --net -- python ../eng/incident-smoke.py --worker ../artifacts/incident-build/bin/Release/net10.0/Synups.IncidentSmoke.dll --output ../artifacts/incident' 2>&1 | tee ../artifacts/logs/incident.txt
       - name: Linux X11 native smoke under Xvfb
         if: runner.os == 'Linux'
         run: |
@@ -100,4 +106,5 @@ jobs:
             artifacts/published-apphost/reports/
             artifacts/published-apphost/launch-summary.json
             artifacts/published-apphost/isolated-data/
+            artifacts/incident/
           retention-days: 30

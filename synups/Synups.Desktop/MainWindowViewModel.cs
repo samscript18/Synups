@@ -74,6 +74,10 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     private string groupName = "", pollSeconds = "5", failSeconds = "10", timeoutMilliseconds = "200";
     private bool groupEnabled;
     private string targetName = "", targetAddress = "", outageComment = "";
+    private string firstGroupName = "Primary connection", firstTargetName = "First target", firstTargetAddress = "";
+    public string FirstGroupName { get => firstGroupName; set => Set(ref firstGroupName, value ?? ""); }
+    public string FirstTargetName { get => firstTargetName; set => Set(ref firstTargetName, value ?? ""); }
+    public string FirstTargetAddress { get => firstTargetAddress; set => Set(ref firstTargetAddress, value ?? ""); }
     private bool disposed, resultsMatchConfiguration;
 
     public MainWindowViewModel() : this(SynupsPaths.DataDirectory) { }
@@ -104,6 +108,13 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     public bool IsRunning => snapshot.State is SessionState.Running or SessionState.Stopping;
     public bool CanEdit => loaded && !busy && !IsRunning && !disposed;
     public bool CanStart => CanEdit && service.HistoryReady && !service.HasUnsavedEvidence && configuration.Groups.Any(g => g.Enabled);
+    public string StartGuidance => disposed ? "This window is closing." : busy ? "Finishing the current action…" :
+        IsRunning ? "Stop monitoring before editing. ICMP filtering can cause missed replies without a service outage." :
+        !loaded ? "Load or recover your configuration before monitoring." :
+        !service.HistoryReady || service.HasUnsavedEvidence ? "Repair history storage and Retry before starting; existing evidence is preserved." :
+        Groups.Count == 0 ? "Add your first IP below. Nothing is probed until you choose Start monitoring." :
+        !configuration.Groups.Any(g => g.Enabled) ? "No group is enabled. Add a target to a group, enable it and Apply group." :
+        "Ready: choose Start monitoring. Not checked means no observation; stale means that peer was not checked in the latest cycle.";
     public bool CanStop => IsRunning && !busy;
     public bool CanRecover => recoveryRequired && !busy && !IsRunning;
     public bool CanReload => !busy && !IsRunning;
@@ -214,6 +225,16 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     });
     public Task StopAsync() => ExecuteAsync(async () =>
     { await service.StopAsync(); await WriteAutomaticLogsAsync(); Message = "Monitoring stopped. History saved; unresolved outages were not recovered."; });
+
+    public Task CreateFirstTargetAsync() => ExecuteAsync(async () =>
+    {
+        EnsureEditing();
+        if (configuration.Groups.Count != 0) throw new InvalidOperationException("Use Targets and groups to edit your existing profile; quick setup never replaces it.");
+        var target = new TargetConfiguration(Guid.NewGuid(), FirstTargetName.Trim(), FirstTargetAddress.Trim());
+        var group = new GroupConfiguration(Guid.NewGuid(), FirstGroupName.Trim(), true, 5000, 10000, 1000, [target]);
+        await SaveConfigurationAsync(new(1, [group]), group.Id, target.Id);
+        Message = "Your target and enabled group are saved. Choose Start monitoring when ready; no network request has been made.";
+    });
 
     public void NewGroup()
     {
@@ -461,7 +482,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable
     }
     private void NotifyControls()
     {
-        foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences), nameof(CanManageStorage), nameof(CanCleanupHistory) }) Changed(name);
+        foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(StartGuidance), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences), nameof(CanManageStorage), nameof(CanCleanupHistory) }) Changed(name);
     }
     public async ValueTask DisposeAsync()
     {

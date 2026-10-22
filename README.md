@@ -4,6 +4,29 @@ A local-first network reliability monitor for Windows, macOS and Linux, built wi
 
 **Early release, not a production-readiness claim.** Actual self-contained executables are exercised on native Windows/macOS runners and Linux under Xvfb. Signing and everyday desktop/accessibility coverage still have explicit limits. There is no WebView, backend, account or cloud service, and no fabricated monitoring data.
 
+## Why this migration matters
+
+WirePeep was a Windows WPF utility for rotating peer-group ICMP checks, failure grace, outage comments and session logs. Its Common project inherited Windows targets and Menees settings; the WPF window also owned scheduling, logging and alerts. Replacing XAML alone could not make that architecture portable.
+
+| Original WirePeep | Synups |
+|---|---|
+| WPF/.NET Framework and Windows-targeted .NET; Windows shell integrations | Avalonia C#/XAML, UI-free Core and explicit desktop/platform boundaries |
+| Synchronous probes, coarse timer, wall-clock thresholds | Bounded async groups, finite cancellation/drain and monotonic elapsed timing |
+| Named IPs, sorted rotating peers, stop after success, failure grace and comments | Those monitoring intents preserved and characterized against linked original source |
+| Session-memory outage list and text exports | Durable SQLite sessions/incidents/comments, restart/interruption handling, CSV/JSON logs and verified backups |
+| Unavailable errors could end a failure; shutdown could race callbacks | Probe errors reduce confidence, never manufacture recovery; stop/close owns pending work |
+| No automated tests found in baseline | Exact-source three-OS **extracted executable** verification and regression tests |
+
+**Published 0.1.0 evidence:** per OS, 105 deterministic/headless cases plus 1 separately enabled real-loopback case and 4 Python safety tests; locked restore and zero-warning Release. [Exact verified run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118), [platform limits](docs/migration/CROSS_PLATFORM.md), [publication/hash evidence](docs/evidence/verification/synups-0.1.0-publication.json). Native Windows Server/macOS runners and Ubuntu/Xvfb are the actual scope, not every desktop. MIT attribution, original source and upstream ancestry remain intact.
+
+| Before: Bill Menees’ upstream illustration | After: actual Synups macOS published-apphost client render |
+|---|---|
+| ![Original WirePeep illustration](docs/evidence/before/wirepeep-upstream.png) | ![Synups real loopback observation](docs/evidence/after/2026-10-21-apphost/osx-arm64/exercise-overview.png) |
+
+The before image was not freshly captured here; the after image contains genuine explicit loopback measurements, not Internet-health statistics. [Image provenance](docs/evidence/README.md). **Legacy inventory parity remains 72.2%=(9+8×0.5)/18**: discovery/import/login/sounds and some taskbar/menu details remain missing. Windows is unsigned; Mac ad-hoc integrity is not notarization and Gatekeeper rejects trusted delivery; Linux physical/Wayland acceptance remains limited. [Judge’s guide](docs/competition/JUDGES_GUIDE.md), [exact legacy semantics](docs/migration/LEGACY_SEMANTICS.md), [architecture](docs/migration/ARCHITECTURE.md), [feature inventory](docs/migration/FEATURE_PARITY.md) and [honest migration log](docs/migration/MIGRATION_LOG.md).
+
+**Unreleased work:** 0.1.1-rc.1 adds a guided first-target setup and clearer start/status guidance. It is separate from the unchanged public 0.1.0 packages; its own exact-source native CI/evidence must pass before adoption. The controlled incident demonstration is tracked separately and must not be confused with fake probe tests or a live Internet outage.
+
 ## Download and run
 
 Download **[Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0)** using the matching platform link below. These are public Release assets: no GitHub account or SDK is required. Verify the archive against [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS), then extract the complete archive. The original MIT licence, dependency notices, runtime/native SQLite and source/file manifest are included.

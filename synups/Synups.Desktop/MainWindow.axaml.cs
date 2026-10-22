@@ -113,6 +113,7 @@ public partial class MainWindow : Window
     }
     private async void RetryHistoryClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.RetryHistoryAsync() ?? Task.CompletedTask);
     private async void StartClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.StartAsync() ?? Task.CompletedTask);
+    private async void CreateFirstTargetClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.CreateFirstTargetAsync() ?? Task.CompletedTask);
     private async void StopClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.StopAsync() ?? Task.CompletedTask);
     private void NavigationChanged(object? sender, SelectionChangedEventArgs e)
     {

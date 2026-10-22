@@ -20,6 +20,7 @@ for path in source.rglob('*'):
  if path.is_file() and any(s in path.name.lower() for s in ['xunit','testhost','synups.tests','nativesmoke','engineendurance','avalonia.headless','avalonia.diagnostics']):parser.error('Unexpected test/development runtime asset: '+path.name)
 if args.rid!='win-x64' and not (source/original).stat().st_mode&0o111:parser.error('Published apphost lacks executable permission')
 dependencies=json.loads((source/'Synups.Desktop.deps.json').read_text())
+app_version=next(n.split('/',1)[1] for n in dependencies['libraries'] if n.startswith('Synups.Desktop/'))
 runtime_package=next((n.removeprefix('runtimepack.') for n in dependencies['libraries'] if n.startswith('runtimepack.Microsoft.NETCore.App.Runtime.')),None)
 if runtime_package is None:parser.error('No self-contained runtime pack in dependency manifest')
 package_id,version=runtime_package.lower().split('/');runtime_cache=args.nuget_cache/package_id/version
@@ -55,7 +56,7 @@ with tempfile.TemporaryDirectory(prefix='synups-package-') as temporary:
       '-p:BundleHost='+str(macos/executable),'-p:BundleAssembly='+str(runtime_files/'Synups.Desktop.dll')],check=True,cwd=repo/'synups')
   for native in runtime_files.glob('*.dylib'):
    subprocess.run(['codesign','--force','--sign','-','--timestamp=none',str(native)],check=True)
-  info=dict(CFBundleName='Synups',CFBundleDisplayName='Synups',CFBundleIdentifier='io.github.samscript18.synups',CFBundleExecutable='Synups',CFBundleIconFile='Synups.icns',CFBundlePackageType='APPL',CFBundleShortVersionString='0.1.0',CFBundleVersion='1',NSHighResolutionCapable=True,NSSupportsAutomaticGraphicsSwitching=True)
+  info=dict(CFBundleName='Synups',CFBundleDisplayName='Synups',CFBundleIdentifier='io.github.samscript18.synups',CFBundleExecutable='Synups',CFBundleIconFile='Synups.icns',CFBundlePackageType='APPL',CFBundleShortVersionString=app_version.split('-',1)[0],CFBundleVersion='1',NSHighResolutionCapable=True,NSSupportsAutomaticGraphicsSwitching=True)
   (app/'Contents/Info.plist').write_bytes(plistlib.dumps(info))
   subprocess.run(['codesign','--force','--deep','--sign','-','--timestamp=none',str(app)],check=True)
   subprocess.run(['codesign','--verify','--deep','--strict',str(app)],check=True)
@@ -71,10 +72,10 @@ with tempfile.TemporaryDirectory(prefix='synups-package-') as temporary:
    (root/'Synups.desktop.example').write_text('[Desktop Entry]\nType=Application\nName=Synups\nComment=Local network reliability monitor\nExec=/ABSOLUTE/PATH/TO/Synups\nIcon=/ABSOLUTE/PATH/TO/Synups.png\nTerminal=false\nCategories=Network;Monitor;\nStartupWMClass=Synups\n')
  if (repo/'docs/release/INSTALLATION.md').exists():shutil.copyfile(repo/'docs/release/INSTALLATION.md',root/'INSTALLATION.md')
  if (repo/'docs/release/RELEASE_NOTES.md').exists():shutil.copyfile(repo/'docs/release/RELEASE_NOTES.md',root/'RELEASE_NOTES.md')
- (root/'RUNNING.txt').write_text(f'Synups0.1.0 candidate — {args.rid}\nSource: {args.revision}\n\n'+instructions+'\nThe .NET runtime is included. Keep every extracted runtime/native/SQLite file together.\nMonitoring is stopped by default; configure targets and explicitly start, unless you enable the saved launch preference.\nSettings/history use per-user LocalApplicationData/Synups. --data-directory selects a separate local workspace.\nUse --help for an explicit isolated real-loopback installation check. This is not physical OS input/accessibility certification.\n'+signing+'\nNo release or competition submission is implied by this verification artifact.\nhttps://github.com/samscript18/Synups\n')
+ (root/'RUNNING.txt').write_text(f'Synups {app_version} candidate — {args.rid}\nSource: {args.revision}\n\n'+instructions+'\nThe .NET runtime is included. Keep every extracted runtime/native/SQLite file together.\nMonitoring is stopped by default; configure targets and explicitly start, unless you enable the saved launch preference.\nSettings/history use per-user LocalApplicationData/Synups. --data-directory selects a separate local workspace.\nUse --help for an explicit isolated real-loopback installation check. This is not physical OS input/accessibility certification.\n'+signing+'\nNo release or competition submission is implied by this verification artifact.\nhttps://github.com/samscript18/Synups\n')
  files={p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob('*')) if p.is_file()}
  runtime_relative='Synups.app/Contents/Resources/runtime' if args.rid=='osx-arm64' else '.'
- manifest=dict(rid=args.rid,source_revision=args.revision,apphost_relative_path=apphost,runtime_relative_path=runtime_relative,installation_check_protocol=1,signing=signing,runtime_libraries=list(dependencies['libraries']),runtime_package_notice_count=notice_count,files_sha256=files)
+ manifest=dict(version=app_version,rid=args.rid,source_revision=args.revision,apphost_relative_path=apphost,runtime_relative_path=runtime_relative,installation_check_protocol=1,signing=signing,runtime_libraries=list(dependencies['libraries']),runtime_package_notice_count=notice_count,files_sha256=files)
  (root/'ARTIFACT_MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
  archive=output/(name+('.zip' if args.rid=='win-x64' else '.tar.gz'))
  if args.rid=='win-x64':

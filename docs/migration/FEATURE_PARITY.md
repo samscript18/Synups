@@ -98,3 +98,8 @@ Per-workspace activation forwarding and restoration now exist; legacy command-li
 
 
 Final Phase 4B evidence: source 292b847 passed actual apphosts on all three native runners; each verifies saved configuration, native SQLite reload, loopback, stop/restart, real read-only error/repair and same-workspace restoration. Windows/Linux/Mac apphost state is distinct from the earlier component harness. Physical tray/notifications/accessibility and installed desktop claims remain limited. Public default branch now displays Synups; own identity, bundle/notices and release materials are delivered enhancements, not additional legacy inventory rows. **Parity remains (9 +8×0.5)/18 =72.2%.**
+
+
+## Competitive candidate — unchanged inventory score
+
+Guided first-target creation/start guidance and richer judging evidence improve quality, not the count of original features. Before/after inventory stays72.2%=(9+8×0.5)/18. Core selection/failure/recovery algorithms and original resources are unchanged. The separate0.1.1-rc.1 candidate needs its own source-specific native verification; it does not replace verified public0.1.0. Discovery/import/login/sound/menu gaps are not claimed complete. Physical Mac desktop acceptance remains permission-blocked despite genuine normal-launch/window/OS-quit evidence.

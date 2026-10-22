@@ -1,0 +1,48 @@
+{
+  "started_utc": "2026-10-22T08:22:00.111060+00:00",
+  "release": "v0.1.0",
+  "source_revision": "2973d3349fcb5af5639597920842288e6549bbd0",
+  "apphost_sha256": "5795f741302e310a526f6ea3aa5dd1309053d827d452f096d7d15592a5d2b0eb",
+  "normal_launch_without_installation_check": true,
+  "physical_interaction_verified": false,
+  "launchservices_exit_code": 0,
+  "process_id": 64454,
+  "owned_on_screen_windows": [
+    {
+      "kCGWindowAlpha": 1,
+      "kCGWindowBounds": {
+        "Height": 779,
+        "Width": 1180,
+        "X": 130,
+        "Y": 30
+      },
+      "kCGWindowIsOnscreen": true,
+      "kCGWindowLayer": 0,
+      "kCGWindowMemoryUsage": 2368,
+      "kCGWindowName": "Synups \u2014 Network reliability",
+      "kCGWindowNumber": 24877,
+      "kCGWindowOwnerName": "Synups",
+      "kCGWindowOwnerPID": 64454,
+      "kCGWindowSharingState": 1,
+      "kCGWindowStoreType": 1
+    }
+  ],
+  "accessibility_permission": "false",
+  "blocked_interactions": [
+    "physical tray Show/Exit",
+    "keyboard Tab/Shift+Tab/Enter/Space/Escape",
+    "native CSV save dialog",
+    "physical minimize/restore",
+    "physical close while monitoring/pending storage",
+    "physical resize/readability review"
+  ],
+  "os_window_capture_exit_code": 0,
+  "os_window_capture_error": "",
+  "native_quit_request": "true",
+  "owned_process_exited_after_native_quit": true,
+  "application_exit_code": "Not observable through LaunchServices; not claimed as0",
+  "sessions_on_passive_normal_launch": 0,
+  "finished_utc": "2026-10-22T08:22:10.291645+00:00",
+  "screenshot_sha256": "12d25198607a786e64cda242177ca2d0a542a414026ad4722c1a5d515dd35acc",
+  "limitation": "Real OS window capture and native quit of unchanged0.1.0; no physical tray/keyboard/native CSV interaction verified. Accessibility disabled; no permission/security settings changed."
+}

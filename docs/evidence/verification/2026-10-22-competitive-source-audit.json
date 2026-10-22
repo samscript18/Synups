@@ -1,0 +1,28 @@
+[
+  {
+    "repository": "kzagoris/winmtr-remaster",
+    "revision": "557d58d5c80f52d5b251b5f31670389dce89c7df",
+    "verification": "Read-only source/workflow audit; competitor binaries/tests not executed",
+    "files_sha256": {
+      "README.md": "3a288674d1ac58beab38b8124ac39218edf39cf72b39efea2255890082f4f1ce",
+      ".github/workflows/release.yml": "56e573f4a68589f98deb85ca4ac8577c1b50176d55daed2ab90564104dd495d6",
+      ".github/workflows/ci.yml": "e27b3f86591d9f737382e1d5c1d2f06c1d518600a534867d8be51ad646d3afb5",
+      "src/WinMtr.Infrastructure/PingProbeChannel.cs": "c501cffb92aaccebf0e98dbfd31c840dc66441f48c27bfb575ab2fb304578c24",
+      "src/WinMtr.Desktop/ViewModels/MainWindowViewModel.cs": "4bffb5ef2234f6f6a15b3192e742d85f5ee14215f176b6c28d3d6dd14196959c"
+    }
+  },
+  {
+    "repository": "NeverMorewd/Draft.SidebarDiagnostics.Avalonia",
+    "revision": "1abd2b5a198ea9594ca769d9965a46a3c60334a8",
+    "verification": "Read-only source/workflow audit; competitor binaries/tests not executed",
+    "files_sha256": {
+      "README.md": "1cc9135e86a398515d8575a67fc70e7f9ba62d975f540227ba0b231af2e6701a",
+      "docs/PARITY.md": "95fcc9efae41eba8fb499664c9819829138656cf0bd14ba09be9f710ef3556de",
+      ".github/workflows/release.yml": "88857eae1b2984afe704098fe94b5f670fd45f458a04be65563b4110dad92f59",
+      ".github/workflows/ci.yml": "5aaf4727e0d35186463cc8632357936de4be65073d56b6cb40940c94f42a6a29",
+      "src/Services/Hardware/MacOsHardwareSensorService.cs": "4ca455a4175c5852aa779eedba87a9de96b1021620985a9d7e388e23465b12f8",
+      "src/Services/Platform/LinuxMetricsProvider.cs": "a1871b23c51d543709a8e647cf3e524801c5cd1bf1e2b420124fccf24dfca564",
+      "src/Services/Platform/MacOsMetricsProvider.cs": "e9065c2a014d5f2c9ba946d6f6b11462f57a53aa5cec49bf823c6ece3f767368"
+    }
+  }
+]

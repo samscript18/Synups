@@ -23,6 +23,57 @@ public static class TestAppBuilder
 public class ShellTests
 {
     [AvaloniaFact]
+    public async Task FreshProfileQuickSetupSavesOneEnabledGroupWithoutProbingOrOverwriting()
+    {
+        var directory = Path.Combine(Path.GetTempPath(), "Synups-first-run-" + Guid.NewGuid());
+        var path = Path.Combine(directory, "configuration.json");
+        var probe = new ScriptedProbe();
+        var vm = new MainWindowViewModel(new MonitoringService(probe), new ConfigurationStore(path));
+        var window = new MainWindow { DataContext = vm };
+        try
+        {
+            window.Show(); await UntilAsync(() => vm.CanEdit);
+            Assert.False(vm.CanStart); Assert.Contains("Add your first IP", vm.StartGuidance);
+            Assert.Empty(probe.Addresses);
+            window.FindControl<TextBox>("FirstTargetAddress")!.Text = "127.0.0.1";
+            window.FindControl<Button>("CreateFirstTarget")!.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            await UntilAsync(() => vm.CanStart);
+            var group = Assert.Single(vm.Groups); var target = Assert.Single(group.Targets);
+            Assert.True(group.Configuration.Enabled); Assert.Equal("127.0.0.1", target.Address);
+            Assert.Equal("Not checked", target.Status); Assert.Equal("Not observed", vm.LastMeasurement);
+            Assert.Contains("Ready", vm.StartGuidance); Assert.Empty(probe.Addresses);
+            var saved = (await new ConfigurationStore(path).LoadAsync()).Configuration!;
+            Assert.Equal(group.Id, Assert.Single(saved.Groups).Id);
+            var before = await File.ReadAllBytesAsync(path, TestContext.Current.CancellationToken);
+            vm.FirstTargetAddress = "127.0.0.2"; await vm.CreateFirstTargetAsync();
+            Assert.Equal(before, await File.ReadAllBytesAsync(path, TestContext.Current.CancellationToken));
+            Assert.Contains("never replaces", vm.Message); Assert.Empty(probe.Addresses);
+        }
+        finally { window.Close(); await UntilAsync(() => !window.IsVisible); await vm.DisposeAsync(); if (Directory.Exists(directory)) Directory.Delete(directory, true); }
+    }
+
+    [AvaloniaFact]
+    public async Task FirstRunRejectsInvalidInputWithoutPartialConfigurationOrMeasurements()
+    {
+        var directory = Path.Combine(Path.GetTempPath(), "Synups-first-invalid-" + Guid.NewGuid());
+        var path = Path.Combine(directory, "configuration.json");
+        var probe = new ScriptedProbe();
+        var vm = new MainWindowViewModel(new MonitoringService(probe), new ConfigurationStore(path));
+        try
+        {
+            await vm.InitializeAsync();
+            vm.FirstTargetAddress = "example.invalid"; await vm.CreateFirstTargetAsync();
+            Assert.Contains("literal", vm.Message); Assert.False(File.Exists(path)); Assert.True(vm.HasNoGroups);
+            vm.FirstTargetAddress = "127.0.0.1"; vm.FirstGroupName = ""; await vm.CreateFirstTargetAsync();
+            Assert.Contains("Names", vm.Message); Assert.False(File.Exists(path));
+            Assert.False(vm.CanStart); Assert.Empty(probe.Addresses);
+            vm.NewGroup(); vm.GroupName = "Manual"; await vm.ApplyGroupAsync();
+            Assert.Contains("No group is enabled", vm.StartGuidance);
+        }
+        finally { await vm.DisposeAsync(); if (Directory.Exists(directory)) Directory.Delete(directory, true); }
+    }
+
+    [AvaloniaFact]
     public async Task ShellLoadsConfigurationDoesNotProbeOnOpenAndDisplaysLiveEngineChanges()
     {
         var path = Path.Combine(Path.GetTempPath(), "Synups-ui-" + Guid.NewGuid() + ".json");

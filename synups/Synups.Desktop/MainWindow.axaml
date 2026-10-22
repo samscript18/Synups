@@ -50,14 +50,14 @@ No cloud account required." Classes="caption sidebarCaption" />
           <Border Grid.Column="1" Classes="badge" Classes.connected="{Binding IsCurrentlyConnected}" Classes.outage="{Binding HasCurrentOutage}" Classes.warning="{Binding HasCurrentUncertainty}" VerticalAlignment="Center" Margin="12,0">
             <TextBlock Name="SessionState" Text="{Binding MonitoringState}" />
           </Border>
-          <Button Grid.Column="2" Name="StartMonitoring" Classes="primary" IsEnabled="{Binding CanStart}" Click="StartClicked" Margin="0,0,8,0" AutomationProperties.Name="Start monitoring">
+          <Button Grid.Column="2" Name="StartMonitoring" Classes="primary" IsEnabled="{Binding CanStart}" Click="StartClicked" Margin="0,0,8,0" AutomationProperties.Name="Start monitoring" ToolTip.Tip="{Binding StartGuidance}">
             <StackPanel Orientation="Horizontal" Spacing="8"><Path Data="M0,0 L0,10 L8,5 Z" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="8" Height="10" Stretch="Uniform" VerticalAlignment="Center" /><TextBlock Text="Start monitoring" /></StackPanel>
           </Button>
           <Button Grid.Column="3" Name="StopMonitoring" Classes="secondary" Content="Stop" IsEnabled="{Binding CanStop}" Click="StopClicked" />
         </Grid>
       </Border>
       <Border Grid.Row="1" Padding="24,12" Background="{DynamicResource SidebarBrush}" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource LineBrush}">
-        <TextBlock Name="Feedback" Text="{Binding Message}" Classes="caption" />
+        <StackPanel Spacing="6"><TextBlock Name="Feedback" Text="{Binding Message}" Classes="caption" /><TextBlock Name="StartGuidance" Text="{Binding StartGuidance}" Classes="caption" /></StackPanel>
       </Border>
       <Border Grid.Row="2" Padding="24,12" IsVisible="{Binding HasAlertBanner}" Background="{DynamicResource WarningSoftBrush}">
         <TextBlock Text="{Binding AlertBanner}" Foreground="{DynamicResource WarningBrush}" />
@@ -66,6 +66,20 @@ No cloud account required." Classes="caption sidebarCaption" />
         <Grid Classes="page">
           <StackPanel IsVisible="{Binding IsOverview}" Spacing="24">
             <StackPanel Spacing="7"><TextBlock Text="{Binding OverviewEyebrow}" Classes="eyebrow accent" /><TextBlock Text="Network overview" Classes="h1" /><TextBlock Text="A clear view of your configured ICMP connections." Classes="muted" /></StackPanel>
+            <Border Classes="card" IsVisible="{Binding HasNoGroups}">
+              <StackPanel Spacing="14" IsEnabled="{Binding CanEdit}">
+                <TextBlock Text="Monitor your first connection" Classes="h2" />
+                <TextBlock Text="A target is an IP address you choose. A peer group contains alternative targets: one response makes that group reachable. Synups records confirmed missed replies and observed recovery, not universal Internet uptime." Classes="muted" />
+                <Grid ColumnDefinitions="*,*">
+                  <StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Group name" Classes="caption" /><TextBox Name="FirstGroupName" Text="{Binding FirstGroupName, Mode=TwoWay}" AutomationProperties.Name="First group name" /></StackPanel>
+                  <StackPanel Grid.Column="1" Spacing="7"><TextBlock Text="Target name" Classes="caption" /><TextBox Name="FirstTargetName" Text="{Binding FirstTargetName, Mode=TwoWay}" AutomationProperties.Name="First target name" /></StackPanel>
+                </Grid>
+                <StackPanel Spacing="7"><TextBlock Text="IP address · IPv4 or IPv6" Classes="caption" /><TextBox Name="FirstTargetAddress" Text="{Binding FirstTargetAddress, Mode=TwoWay}" PlaceholderText="Enter an IP you are authorized to monitor" AutomationProperties.Name="First target IP address" /></StackPanel>
+                <Button Name="CreateFirstTarget" Content="Add target and create group" Classes="primary" Click="CreateFirstTargetClicked" HorizontalAlignment="Left" />
+                <TextBlock Text="Setup saves locally and does not probe. Next choose Start monitoring above. Defaults: check every 5s, confirm after 10s of failed observations, timeout 1s; change these in Targets and groups." Classes="caption" />
+                <Button Content="Create groups or restore original defaults…" Classes="quiet" Click="ConfigureClicked" HorizontalAlignment="Left" />
+              </StackPanel>
+            </Border>
             <Border Classes="card">
               <StackPanel Spacing="20">
                 <Grid ColumnDefinitions="Auto,*">
@@ -94,7 +108,7 @@ No cloud account required." Classes="caption sidebarCaption" />
               </UniformGrid>
             </StackPanel>
             <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Monitored groups" Classes="h2" /><TextBlock Grid.Column="1" Text="ICMP CONNECTIVITY" Classes="eyebrow" VerticalAlignment="Center" /></Grid>
-            <Border Classes="card" IsVisible="{Binding HasNoGroups}"><StackPanel Spacing="10"><TextBlock Text="Build your monitoring profile" Classes="h2" /><TextBlock Text="Add a group and a literal IP target, or restore the original WirePeep defaults. Start monitoring when you are ready." Classes="muted" /><Button Content="Set up targets and groups" Classes="primary" Click="ConfigureClicked" HorizontalAlignment="Left" /></StackPanel></Border>
+
             <ItemsControl ItemsSource="{Binding Groups}">
               <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="local:GroupRow">
@@ -111,7 +125,7 @@ No cloud account required." Classes="caption sidebarCaption" />
             <TextBlock Text="A responding peer establishes ICMP connectivity for its group. It does not establish that every target is online or that all Internet services work." Classes="caption" />
           </StackPanel>
           <StackPanel IsVisible="{Binding IsTargets}" Spacing="20">
-            <StackPanel Spacing="7"><TextBlock Text="MONITORING PROFILE" Classes="eyebrow accent" /><TextBlock Text="Targets and groups" Classes="h1" /><TextBlock Text="Organize your connections. Stop monitoring to edit; applied changes save immediately." Classes="muted" /></StackPanel>
+            <StackPanel Spacing="7"><TextBlock Text="MONITORING PROFILE" Classes="eyebrow accent" /><TextBlock Text="Targets and groups" Classes="h1" /><TextBlock Text="Organize your connections. Stop monitoring to edit; applied changes save immediately." Classes="muted" /><TextBlock Text="Create group → Apply → Add target → Apply → enable group → Apply. One responding peer establishes group connectivity. Original router/modem discovery-only defaults are disabled because discovery does not run; add a manual IP before enabling them." Classes="caption" /></StackPanel>
             <WrapPanel><Button Classes="secondary" Content="Restore original defaults…" IsEnabled="{Binding CanEdit}" Click="RestoreClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Reload configuration" IsEnabled="{Binding CanReload}" Click="ReloadClicked" Margin="0,0,8,8" /><Button Classes="secondary" Content="Recover with original defaults…" IsVisible="{Binding CanRecover}" Click="RecoverClicked" Margin="0,0,8,8" /></WrapPanel>
             <Border Classes="card">
               <StackPanel Spacing="14">

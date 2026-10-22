@@ -180,12 +180,14 @@ public sealed class InstallationCheck(DesktopOptions options)
     private async Task ExerciseAsync(MainWindow window, IClassicDesktopStyleApplicationLifetime desktop, MainWindowViewModel vm)
     {
         Require(vm.HasNoGroups && !vm.IsRunning && vm.LastMeasurement == "Not observed", "Fresh startup was not passive and empty.");
-        Passed("passive_startup_without_network_configuration"); vm.SelectedPage = 1;
-        await ClickAsync(window, "NewGroup"); Text(window, "GroupNameEditor", "Installation loopback"); Text(window, "PollSecondsEditor", "0.5");
-        Text(window, "FailSecondsEditor", "1"); Text(window, "TimeoutEditor", "500"); await ClickAsync(window, "ApplyGroup");
-        await UntilAsync(() => vm.Groups.Count == 1 && vm.CanEdit);
-        await ClickAsync(window, "NewTarget"); Text(window, "TargetNameEditor", "This computer"); Text(window, "TargetAddressEditor", "127.0.0.1");
-        await ClickAsync(window, "ApplyTarget"); await UntilAsync(() => vm.Groups[0].Targets.Count == 1 && vm.CanEdit);
+        Passed("passive_startup_without_network_configuration");
+        await CaptureAsync(window, "first-run");
+        Text(window, "FirstGroupName", "Installation loopback"); Text(window, "FirstTargetName", "This computer"); Text(window, "FirstTargetAddress", "127.0.0.1");
+        await ClickAsync(window, "CreateFirstTarget"); await UntilAsync(() => vm.CanStart);
+        Require(vm.LastMeasurement == "Not observed" && vm.Groups.Single().Targets.Single().Status == "Not checked", "Quick setup performed an undisclosed measurement.");
+        Passed("fresh_profile_one_action_setup_without_probing"); vm.SelectedPage = 1;
+        Text(window, "PollSecondsEditor", "0.5"); Text(window, "FailSecondsEditor", "1"); Text(window, "TimeoutEditor", "500"); await ClickAsync(window, "ApplyGroup");
+        await UntilAsync(() => vm.CanStart && vm.CanEdit);
         var groupId = vm.Groups[0].Id; var targetId = vm.Groups[0].Targets[0].Id;
         await ClickAsync(window, "NewTarget"); Text(window, "TargetNameEditor", "Temporary target"); Text(window, "TargetAddressEditor", "127.0.0.1");
         await ClickAsync(window, "ApplyTarget"); await UntilAsync(() => vm.Groups[0].Targets.Count == 2 && vm.CanEdit);

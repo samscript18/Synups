@@ -1,0 +1,27 @@
+# Competitive quality audit — 22 October 2026
+
+This audit compares public source and evidence, not popularity or an invented judge score. No competitor binaries/test suites were run here. Exact pinned inputs and file hashes are [retained](../evidence/verification/2026-10-22-competitive-source-audit.json). Competitor GPL code was not copied into Synups.
+
+## What was actually inspected
+
+**Sidebar Diagnostics:** `NeverMorewd/SidebarDiagnostics.Avalonia` returned an empty-repository commit query (409). The implemented public entry is [NeverMorewd/Draft.SidebarDiagnostics.Avalonia](https://github.com/NeverMorewd/Draft.SidebarDiagnostics.Avalonia/tree/1abd2b5a198ea9594ca769d9965a46a3c60334a8), pinned at `1abd2b5a198ea9594ca769d9965a46a3c60334a8`. Its README identifies the challenge entry. Actual [Mac provider](https://github.com/NeverMorewd/Draft.SidebarDiagnostics.Avalonia/blob/1abd2b5a198ea9594ca769d9965a46a3c60334a8/src/Services/Platform/MacOsMetricsProvider.cs) uses Mach/sysctl, Linux provider reads/provides platform metrics, and Mac hardware service explicitly limits public sensor coverage. The [CI source](https://github.com/NeverMorewd/Draft.SidebarDiagnostics.Avalonia/blob/1abd2b5a198ea9594ca769d9965a46a3c60334a8/.github/workflows/ci.yml) includes three-OS tests, AOT publish/file checks and Debian install/upgrade/uninstall checks. These are implemented pipeline operations; this audit does not certify their actual run outcomes or physical tray behavior. Its parity document also records incomplete graph/network/settings behavior. Broad sensor/UI/packaging feature lists are not automatically independent runtime evidence.
+
+**WinMTR Remaster:** [kzagoris/winmtr-remaster](https://github.com/kzagoris/winmtr-remaster/tree/557d58d5c80f52d5b251b5f31670389dce89c7df), pinned at `557d58d5c80f52d5b251b5f31670389dce89c7df`. The actual [PingProbeChannel](https://github.com/kzagoris/winmtr-remaster/blob/557d58d5c80f52d5b251b5f31670389dce89c7df/src/WinMtr.Infrastructure/PingProbeChannel.cs) implements bounded payload-capability discovery/cancellation and typed ICMP probing; the desktop ViewModel drives tracing/report actions. CI and release workflows have multi-platform build/package operations. README accurately distinguishes cross-built Intel Mac output from executed targets and acknowledges unsigned/ad-hoc distribution. AOT startup/memory claims and broad platform usability were not benchmarked here. Traceroute/hop analysis solves a different problem from durable group-incident evidence; it is not evidence Synups needs a rushed traceroute rewrite.
+
+## Three largest demonstrable Synups gaps
+
+| Gap and direct evidence | Judging effect | Bounded action |
+|---|---|---|
+| Published 0.1.0 empty overview puts setup below the fold and requires group→target→enable saves; genuine [normal Mac capture](../evidence/after/2026-10-22-competitive/macos-stable-normal-launch.png) | Application quality/usefulness; initial judge experience | Candidate creates a first enabled group/target atomically, above the fold, still requiring explicit Start; show disabled-state and stale/ICMP guidance. Test invalid/no-overwrite/no-probe paths and actual packaged controls. |
+| Published real-network proof is healthy loopback; outage/recovery evidence had been deterministic only | Engineering quality, resulting application, honest write-up | Add namespace-confined real ICMP drop/restore demonstration with native UI, history, CSV and second-process reload. Do not call it passed before actual Linux execution. |
+| README buries WPF difficulty/algorithm reuse/SQLite value; rich docs require too much navigation; physical desktop/trusted delivery remains narrower than source claims | Migration difficulty/completeness, write-up, cross-platform quality | Put original-vs-port comparison and exact three-OS evidence near top; give judges a focused guide and explicit acceptance/OS-signing limits. Attempt native Mac interaction and report permission blockers. |
+
+## Scope decisions
+
+Do not add AOT, traceroute, broad sensors, an installer framework, automatic discovery or a native notification stack just to match another README before the deadline. Synups’ useful differentiator is persistent, honest connectivity-incident evidence with controlled semantics, not invented charts or universal Internet-health claims.
+
+Discovery remains deferred: original WirePeep sends TTL-limited external pings and probes modem candidates, which is not a reliable portable gateway API. No new implementation has native Windows/macOS/Linux validation. Manual literal-IP configuration remains available; startup sends no undisclosed probes.
+
+Notification audit found no confirmed defect requiring a new adapter. Existing policy deduplicates event sequences and throttles probe-error requests; bounded delivery keeps the in-app banner/history available. Mac osascript/Linux notify-send request acceptance cannot certify OS display. Windows native notification support remains explicitly absent with in-app fallback. Existing deterministic tests cover policy/preferences/worker cancellation; native delivery is unverified. The real-incident harness must validate actual in-app transition banners separately.
+
+Legacy inventory is unchanged: **72.2%=(9+8×0.5)/18**. Better onboarding/evidence/documents are quality improvements, not extra legacy feature rows or a proof of complete migration. Stable 0.1.0 and its hashes remain the rollback baseline; changed binaries require a separate unpublished candidate and exact-source platform verification.
