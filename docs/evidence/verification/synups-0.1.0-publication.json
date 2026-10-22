@@ -1,0 +1,209 @@
+{
+  "repository": "samscript18/Synups",
+  "tag": "v0.1.0",
+  "tag_commit": "2973d3349fcb5af5639597920842288e6549bbd0",
+  "release_id": 420120266,
+  "release_url": "https://github.com/samscript18/Synups/releases/tag/v0.1.0",
+  "published_at": "2026-10-21T22:34:54Z",
+  "verification_started_utc": "2026-10-22T00:39:42.393372+00:00",
+  "authentication_used": false,
+  "assets": [
+    {
+      "name": "INSTALLATION.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/INSTALLATION.md",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 6919,
+      "sha256": "43e425007330c5a272f6ac96d085d51bb10d7ff6daa42dea2a8b83ab9c708ad1",
+      "authenticated": false
+    },
+    {
+      "name": "LICENSE",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/LICENSE",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 1068,
+      "sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+      "authenticated": false
+    },
+    {
+      "name": "PUBLICATION.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/PUBLICATION.md",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 4133,
+      "sha256": "912e65e6eac0d17a8fa66409bd160852f47334ca08571e5d4a1fd970232612fb",
+      "authenticated": false
+    },
+    {
+      "name": "RELEASE_NOTES.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/RELEASE_NOTES.md",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 3641,
+      "sha256": "9135a025b9f8683be4011af01c787a82e97c9b3854a9346ad73af4a0fe910777",
+      "authenticated": false
+    },
+    {
+      "name": "SHA256SUMS",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 1213,
+      "sha256": "cbdaa38c3c698f717f6f5cfa49f97402807c888391f7ec98426510cf06a83b78",
+      "authenticated": false
+    },
+    {
+      "name": "SOURCE_REVISION.txt",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SOURCE_REVISION.txt",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 195,
+      "sha256": "51cf063f176919e08c3145fd18697a0bc32c6d2495be678b179f8b8c424a4a3d",
+      "authenticated": false
+    },
+    {
+      "name": "SUBMISSION.md",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SUBMISSION.md",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 3896,
+      "sha256": "f4b1850c415355eac10bc7f72ff08b46cfea87a099c35e9dc6e63e0a64124ceb",
+      "authenticated": false
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 46353580,
+      "sha256": "cf072e7b31c55e16ee39e544882453c926204338a86cfe6df7553b62b1477222",
+      "authenticated": false
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz.sha256",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz.sha256",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 90,
+      "sha256": "80794c0535cae4d8da56e4586bb2aab6b95702542615f37ff1e2859bc49ff819",
+      "authenticated": false
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 46371914,
+      "sha256": "40cc8ccdcc8cfde7bea19e6c9759b0502313182e9c1b8d74f1b198a4e9cc3bcc",
+      "authenticated": false
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz.sha256",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz.sha256",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 90,
+      "sha256": "14eb1e43c2f69aeedaa74092956c254dcf3cb9c389345abb999ba2b15d9e1965",
+      "authenticated": false
+    },
+    {
+      "name": "Synups-win-x64.zip",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 49250022,
+      "sha256": "94d39f3320ead8cd1b1620c2f29ab7887faca7920f352d0f3b470712a03ee2d6",
+      "authenticated": false
+    },
+    {
+      "name": "Synups-win-x64.zip.sha256",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip.sha256",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 86,
+      "sha256": "287c059f022d5dc59c13f8ee04bb6d498dc0d9efaa669963883537a555652ff7",
+      "authenticated": false
+    },
+    {
+      "name": "VERIFICATION.json",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/VERIFICATION.json",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 118953,
+      "sha256": "690849e7a55268e6e196c6302ad5d63eaa4d25421249cf4c844c22805516b0f3",
+      "authenticated": false
+    },
+    {
+      "name": "VERIFICATION_EVIDENCE.zip",
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/VERIFICATION_EVIDENCE.zip",
+      "http_status": 200,
+      "redirect_host": "release-assets.githubusercontent.com",
+      "bytes": 4712073,
+      "sha256": "b483967ae9e90422c6c3bb53c34683b9a857c66a6f3c0845f980ec7f55be8600",
+      "authenticated": false
+    }
+  ],
+  "links": [
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/README.md",
+      "status": 200,
+      "sha256": "ebd3a3b7458900b84a23c994dcba314436f992a2a58e03296feaeb5eb31e9fb7",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/LICENSE",
+      "status": 200,
+      "sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/docs/migration/MIGRATION_LOG.md",
+      "status": 200,
+      "sha256": "a949f927312d398df2ae57eccbc61745d3a64d8f5b4aed2b68a9c6b06a8ed21e",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/docs/evidence/README.md",
+      "status": 200,
+      "sha256": "5b102438a288b1f25e7246f941bb658c9b5bf8736669b3618545c6e19c196c82",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/docs/evidence/before/wirepeep-upstream.png",
+      "status": 200,
+      "sha256": "08210f548df07c4a06484df1b37324487cfa7444c73a04c5ce891c0fdd807e8e",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/docs/evidence/after/2026-10-21-apphost/win-x64/exercise-overview.png",
+      "status": 200,
+      "sha256": "52911cfa70f8714715342704ec11982df0362233c90323fe22ef4906c89b2709",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/docs/evidence/after/2026-10-21-apphost/osx-arm64/exercise-overview.png",
+      "status": 200,
+      "sha256": "4ef13b59f39946cb8d3bb3e3e364dcd28a4626766b4ccf616ecea17d653a75f3",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/feat/avalonia-migration/docs/evidence/after/2026-10-21-apphost/linux-x64/exercise-overview.png",
+      "status": 200,
+      "sha256": "f3ffff7b31c8ac1bcfde918a9746032e84ecd83c5a1fc1f2cc7eb00582396f4c",
+      "authenticated": false
+    }
+  ],
+  "release_http_status": 200,
+  "all_download_hashes_match_reviewed_assets": true,
+  "all_archive_integrity_checks_passed": true,
+  "verification_completed_utc": "2026-10-22T00:40:10.088758+00:00",
+  "binary_assets_rebuilt_or_replaced": false,
+  "competition_entry_submitted": false,
+  "publication_authorization": "Explicit user instruction to publish approved Synups0.1.0 at frozen2973d3349fcb5af5639597920842288e6549bbd0",
+  "signing_limits": {
+    "windows": "Unsigned publisher; SmartScreen/organization policy may block.",
+    "macos": "Ad-hoc integrity only; Gatekeeper assessment rejects; no Developer ID/notarization.",
+    "linux": "Graphical/native libraries required; X11/Xvfb evidence does not certify Wayland/physical desktops."
+  }
+}

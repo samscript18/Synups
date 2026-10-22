@@ -39,3 +39,8 @@ The scoped two-hour real-Core observation and two five-minute actual GUI process
 ## Phase 5 handoff
 
 Freeze app binaries at2973d3349fcb5af5639597920842288e6549bbd0/run39682197118; exact downloaded hashes and real apphost results are retained. [Publication instructions](../release/PUBLICATION.md) assemble original CI bytes and prepared notes/evidence without rebuilding. [Submission information](../release/SUBMISSION.md) lists the actual report/screenshots and explicitly non-live planned download URLs. Prioritize legitimate Mac trust/ordinary-desktop acceptance and user-authorized permanent Release delivery before optional legacy features. Publication and form submission remain separate user decisions; no automatic release or entry occurs.
+
+
+## Public release completed
+
+The user authorized [Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0) at frozen source `2973d3349fcb5af5639597920842288e6549bbd0`. Existing reviewed packages and evidence were published unchanged; all 15 anonymous downloads/hash checks passed. Permanent download/readme links are in place. Next actions remain legitimate signing/ordinary-desktop acceptance and separately authorized competition submission; do not submit the form automatically or infer10/10 readiness from public availability.

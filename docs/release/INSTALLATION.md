@@ -4,7 +4,7 @@ This is a portable, local-first Avalonia/.NET 10 application. The .NET runtime a
 
 ## Download and integrity
 
-Until a separately authorized GitHub Release is published, use the [Synups workflow](https://github.com/samscript18/Synups/actions/workflows/synups.yml), select a successful run for the reviewed source SHA, and download its matching platform artifact. GitHub login may be required. These CI artifacts expire after 30 days. Inside the download, use `packages/Synups-<rid>.zip` or `.tar.gz` and its adjacent `.sha256` file. Do not run executables from the outer CI ZIP or mix runtime files from different versions. Release candidates are not installers.
+Download the matching complete archive from **[Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0)** and its [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS) or adjacent `.sha256` sidecar. Public Release downloads require no GitHub login and do not use CI artifact expiration. Extract the archive itself; there is no outer CI ZIP or `packages/` directory to navigate. Do not mix runtime files from different versions. These portable builds are not installers. Release/tag source is `2973d3349fcb5af5639597920842288e6549bbd0`; [anonymous download verification](../evidence/verification/synups-0.1.0-publication.json) confirms exact reviewed bytes.
 
 Compare the archive SHA-256 with its sidecar before extraction:
 

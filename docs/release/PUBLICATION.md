@@ -1,6 +1,6 @@
-# Reviewed publication handoff — authorization still required
+# Synups 0.1.0 publication — completed
 
-No Release, tag or submission has been created by Phase 5. The user explicitly reserved final GitHub Release publication and the competition form for separate authorization. CI login/30-day artifacts do **not** meet permanent judge delivery. This remains a mandatory blocker until authorized publication and anonymous download verification.
+The user explicitly authorized publication of the frozen reviewed assets. **[Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0)** was published at `2026-10-21T22:34:54Z`. Tag `v0.1.0` points exactly to 2973d3349fcb5af5639597920842288e6549bbd0. All 15 public assets were downloaded without authentication; SHA-256 and archive integrity checks passed. [Exact publication/download record](../evidence/verification/synups-0.1.0-publication.json). No rebuild/replacement, force-push, security bypass or competition submission occurred.
 
 ## Frozen application bytes
 
@@ -8,7 +8,7 @@ Candidate source: **2973d3349fcb5af5639597920842288e6549bbd0**. [Successful nati
 
 The Phase 5 documentation/tool checkpoint may be newer than the application revision. Release the frozen reviewed archives, with the manifest's candidate revision as the tag target. Do not attach newly rebuilt documentation-checkpoint binaries and reuse this evidence.
 
-## Reproduce the local handoff
+## Historical handoff preparation
 
 Download the **complete outer artifacts** listed in [VERIFIED_ARTIFACTS.md](VERIFIED_ARTIFACTS.md), saving them as `win-x64.zip`, `osx-arm64.zip`, `linux-x64.zip` in a local ignored directory. Then, from the repository root:
 
@@ -23,7 +23,7 @@ The assembler requires a new destination, checks all outer/inner/file hashes, ex
 
 Inspect all assets before publishing; verify the consolidated hashes with `shasum -a 256 -c SHA256SUMS` on macOS or `sha256sum -c SHA256SUMS` on Linux. On Windows compare each named file using `Get-FileHash -Algorithm SHA256`. Keep original CI downloads/logs separately; the verification ZIP is not a backup of user history.
 
-## After explicit publication authorization only
+## Historical reviewed publication command
 
 Review [release text](RELEASE_BODY.md), signing/desktop limitations and [submission information](SUBMISSION.md). The proposed name/tag is `Synups 0.1.0` / `v0.1.0`. Stop if that tag/release already exists; do not overwrite it. An authorized operator with GitHub CLI can create the reviewed release with an explicit immutable target and all reviewed assets:
 
@@ -36,6 +36,6 @@ gh release create v0.1.0 \
   artifacts/phase5/final-release-candidate/*
 ```
 
-This command has **not** been executed. Publication is a separate approval; GitHub CLI is not installed in this environment. No draft/private asset is represented as public. Preserve every asset beyond CI expiration and do not edit binaries after checksumming.
+GitHub CLI was unavailable, so publication used the authenticated GitHub API after explicit user authorization: verified tag/release absence, created the exact tag, staged a draft, uploaded all 15 unchanged assets, compared GitHub SHA-256 values, then made the release public. The command above remains an illustrative equivalent; **do not rerun it or replace published assets**. Original archive/checksum bytes remain unchanged. Supplemental handoff documents inside published assets intentionally retain pre-publication wording.
 
-After publication, use an unauthenticated client to fetch all three archives, sidecars, `SHA256SUMS`, installation/notes, `VERIFICATION.json` and verification ZIP; verify hashes and archive integrity again. Replace README's CI-only download paragraph with these real tested public links and retain signature warnings. Record actual HTTP status, source, hashes and release URL. Only then separately authorize and submit the competition form before the deadline. If a new binary correction is required, repeat exact-source CI/apphost/download audit and prepare a new immutable candidate instead of silently replacing these files.
+The completed independent verification used an unauthenticated client to fetch all three archives, sidecars, `SHA256SUMS`, installation/notes, `VERIFICATION.json` and verification ZIP. All hashes and archive integrity checks passed. README now uses these verified permanent links and retains signing warnings. Actual status/source/hashes/URL are recorded. Competition submission remains prohibited until separately authorized. If a new binary correction is required, repeat exact-source CI/apphost/download audit and prepare a new immutable candidate instead of silently replacing these files.

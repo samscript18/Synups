@@ -2,17 +2,19 @@
 
 A local-first network reliability monitor for Windows, macOS and Linux, built with **Avalonia, C# and XAML**. Synups is a migration of [Bill Menees’ WirePeep](https://github.com/menees/WirePeep), preserving its Git history, MIT licence and peer-group monitoring intent.
 
-**Release candidate, not a production-readiness claim.** Actual self-contained executables are exercised on native Windows/macOS runners and Linux under Xvfb. Signing, everyday desktop/accessibility coverage and final distribution still have explicit limits. There is no WebView, backend, account or cloud service, and no fabricated monitoring data.
+**Early release, not a production-readiness claim.** Actual self-contained executables are exercised on native Windows/macOS runners and Linux under Xvfb. Signing and everyday desktop/accessibility coverage still have explicit limits. There is no WebView, backend, account or cloud service, and no fabricated monitoring data.
 
 ## Download and run
 
-Use a successful exact-SHA [Synups verification run](https://github.com/samscript18/Synups/actions/workflows/synups.yml), then download the matching artifact and extract the inner archive under `packages/`. Its adjacent `.sha256` and `ARTIFACT_MANIFEST.json` identify the exact files/source. **GitHub login may be required; CI downloads expire after 30 days.** No public GitHub Release has been published by this migration task. The [verified candidate artifact index](docs/release/VERIFIED_ARTIFACTS.md) pins download links/hashes. See [release materials](docs/release/RELEASE_NOTES.md), [installation instructions](docs/release/INSTALLATION.md) and the [reviewed publication handoff](docs/release/PUBLICATION.md). The frozen Phase 5 application candidate is **2973d3349fcb5af5639597920842288e6549bbd0**; later documentation commits do not replace its audited archives. [Prepared entry information](docs/release/SUBMISSION.md) remains unsubmitted.
+Download **[Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0)** using the matching platform link below. These are public Release assets: no GitHub account or SDK is required. Verify the archive against [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS), then extract the complete archive. The original MIT licence, dependency notices, runtime/native SQLite and source/file manifest are included.
 
-| Candidate | Start the extracted application | Actual verification scope |
+| Download | Start the extracted application | Actual verification scope / signing limits |
 |---|---|---|
-| Windows x64 ZIP | `Synups.exe` | Windows Server 2025 CI; ordinary Windows desktops need further acceptance review. Unsigned publisher. |
-| macOS arm64 tar.gz | `Synups.app`, or `./Synups.app/Contents/MacOS/Synups` | macOS 15 CI and local macOS 26.3.1. Ad-hoc integrity signature only; no Developer ID/notarization or Gatekeeper trust. |
-| Linux x64 tar.gz | `./Synups` | Ubuntu 24.04/X11 under Xvfb; real desktops and Wayland need separate checks. Native display/font/graphics libraries required. |
+| [Windows x64 ZIP](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip) | `Synups.exe` | Windows Server 2025 CI; ordinary Windows desktops need further acceptance review. **Unsigned**; SmartScreen/organization policy may block. |
+| [macOS arm64 tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz) | `Synups.app`, or `./Synups.app/Contents/MacOS/Synups` | macOS 15 CI and local macOS 26.3.1. **Ad-hoc integrity only; no Developer ID/notarization. Gatekeeper rejects trusted delivery.** |
+| [Linux x64 tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz) | `./Synups` | Ubuntu 24.04/X11 under Xvfb; real desktops/Wayland need separate checks. Native display/font/graphics libraries required. |
+
+Exact release/tag/application source: **2973d3349fcb5af5639597920842288e6549bbd0**. All 15 release assets were downloaded anonymously and checked against the reviewed hashes; archives were not rebuilt or replaced. [Publication verification](docs/evidence/verification/synups-0.1.0-publication.json), [artifact hashes](docs/release/VERIFIED_ARTIFACTS.md), [installation](docs/release/INSTALLATION.md) and [release notes](docs/release/RELEASE_BODY.md). Later documentation commits do not change the release binaries. Bundled handoff documents retain their pre-publication wording; this README and the release page record current status. [Competition information](docs/release/SUBMISSION.md) remains unsubmitted.
 
 The .NET runtime, Avalonia native assets and SQLite are included. Keep the entire extracted folder/bundle together. An SDK is unnecessary for these packages. Installers, Intel Mac/ARM Windows/Linux builds and trusted publisher signatures are not provided. Do not disable OS security to run a candidate.
 

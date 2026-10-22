@@ -1,6 +1,6 @@
-# Synups 0.1.0 candidate — unreleased
+# Synups 0.1.0 — published portable release
 
-Synups ports Bill Menees' WirePeep network downtime monitor to real Avalonia/C#/XAML on .NET 10. It retains the original Git history, MIT licence and source attribution. This candidate is prepared for review; no GitHub Release or competition submission has been authorized or performed.
+Synups ports Bill Menees' WirePeep network downtime monitor to real Avalonia/C#/XAML on .NET 10. It retains the original Git history, MIT licence and source attribution. User-authorized [Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0) is published at exact source 2973d3349fcb5af5639597920842288e6549bbd0. All 15 public assets were anonymously downloaded/hash-checked; no binary was rebuilt or replaced. Competition submission is a separate action and has not been performed.
 
 Delivered: real cancellable ICMP, characterized peer-group rotation/stop-on-success/freshness, explicit failure grace and observed recovery, editable persistent literal-IP profiles, honest live status, durable SQLite incidents/comments/sessions, automatic session logs, CSV export, storage policy/backups/retention, in-app alerts, desktop preferences and a consistent native desktop UI. Probe errors never invent recovery; ordinary shutdown never marks an unresolved incident recovered.
 
@@ -10,4 +10,4 @@ Candidate targets: Windows x64 portable ZIP, Apple-silicon macOS app bundle in t
 
 Still missing or limited: validated legacy settings import, explicit gateway/modem discovery, login registration, sound/taskbar/focus parity, native Windows notifications, complete legacy menu/clipboard/help parity, installers/trusted signing, broad installed-desktop/accessibility/permission/IPv6/VPN/sleep-resume/endurance proof. Linux native CI uses Xvfb and does not certify Wayland or tray-host behavior on every desktop. In-app alerts are distinct from OS notifications. No analytics/cloud/account features or production fake metrics are added.
 
-Before distribution, review INSTALLATION.md, the exact manifest/checksums, licences and the release readiness checklist. CI evidence expires; preserve the approved release materials and reports separately when publishing is authorized.
+Before distribution, review INSTALLATION.md, the exact manifest/checksums, licences and the release readiness checklist. Public Release assets now retain the approved packages and CI evidence beyond CI expiration. Bundled handoff documents retain their reviewed pre-publication wording; the public release description/current repository record actual publication.

@@ -1,6 +1,6 @@
 # Synups 0.1.0 — Avalonia Port Challenge candidate
 
-Prepared release text; **not published**. Application packages below are immutable CI bytes from **2973d3349fcb5af5639597920842288e6549bbd0**, [verified run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118). Later documentation commits do not change these binaries. Do not rebuild or substitute packages under the same verification record.
+Application packages below are immutable CI bytes from **2973d3349fcb5af5639597920842288e6549bbd0**, [verified run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118). Later documentation commits do not change these binaries. Do not rebuild or substitute packages under the same verification record.
 
 Synups is a local-first network reliability monitor built with Avalonia, C# and XAML on .NET 10. It migrates Bill Menees' MIT-licensed WirePeep while retaining its ancestry, original source and attribution. Configure literal-IP peers, explicitly start real ICMP monitoring, inspect group health/freshness and retain confirmed incidents, comments and sessions locally in SQLite. No cloud account, backend, WebView or fabricated production measurements.
 
@@ -18,4 +18,6 @@ Each native CI job passed locked restore/audit, zero-warning Release, 105 determ
 
 Known limits: unsigned/unnotarized distribution; ordinary downloaded-desktop acceptance and broader accessibility review pending; Windows native alerts use a labelled in-app fallback; macOS/Linux notification requests depend on OS policy. Legacy import/discovery/login/sounds and some menu/taskbar details are absent. Conservative legacy inventory parity is 72.2%, not a complete-port claim. Use full history backup for preservation; CSV is not a database backup. Pending storage failures must be repaired before clean close.
 
-[Repository and migration write-up](https://github.com/samscript18/Synups), [before/after evidence](https://github.com/samscript18/Synups/tree/feat/avalonia-migration/docs/evidence), [release readiness](https://github.com/samscript18/Synups/blob/feat/avalonia-migration/docs/migration/RELEASE_READINESS.md). No production-readiness or trusted-publisher claim. No competition entry is submitted by preparing this text.
+[Repository and migration write-up](https://github.com/samscript18/Synups), [before/after evidence](https://github.com/samscript18/Synups/tree/feat/avalonia-migration/docs/evidence), [release readiness](https://github.com/samscript18/Synups/blob/feat/avalonia-migration/docs/migration/RELEASE_READINESS.md). No production-readiness or trusted-publisher claim. Publishing this release does not submit the competition entry.
+
+Bundled handoff documents preserve their reviewed pre-publication wording. This public release page and the current repository record publication status; all reviewed asset bytes and checksums remain unchanged.

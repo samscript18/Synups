@@ -12,9 +12,9 @@ Before/after: [attributed original illustration and genuine Synups captures](../
 
 Candidate application revision: **2973d3349fcb5af5639597920842288e6549bbd0**. [Actual three-OS run](https://github.com/samscript18/Synups/actions/runs/39682197118). Windows x64, macOS arm64 and Linux x64 packages contain the runtime/native SQLite. Claims are limited to the documented native runner/local OS versions; consumer Windows, Linux physical desktops/Wayland and ordinary browser-quarantined Mac launch are not certified.
 
-## Publication fields awaiting authorization
+## Published release — competition submission still separate
 
-Proposed tag: `v0.1.0`, attached to the exact candidate application revision above. **The following are planned addresses, not live download links and must not be submitted until publication and anonymous verification:**
+Published tag: `v0.1.0`, attached to the exact application revision above. All following public addresses returned HTTP 200; all 15 release asset downloads were anonymously hash-verified. Publication was explicitly authorized; the competition form has not been submitted.
 
 ```text
 https://github.com/samscript18/Synups/releases/tag/v0.1.0
@@ -28,4 +28,4 @@ Installation limitations must accompany the entry: Mac ad-hoc integrity passes b
 
 The [official announcement](https://avaloniaui.net/blog/avalonia-port-challenge) was rechecked on 2026-10-21: deadline **2026-10-23 23:59 UTC**, submission through its linked [official form](https://forms.gle/bgvQLAmJpTCNcqwR9). The browser-fetch tool could not retrieve the redirected Google form; no fields were filled and no entry was submitted. Entrant identity/contact/team eligibility must be supplied and reviewed by the user, not invented.
 
-Before submitting, publish only after separate authorization, independently download every public asset without authentication and verify SHA-256, check the README/download/screenshot links, confirm the exact source SHA and record the final submission receipt. Prepared information is not an accepted entry.
+Publication/anonymous download checks are complete and [recorded](../evidence/verification/synups-0.1.0-publication.json). Before any entry, obtain separate submission authorization, review entrant identity/contact/team eligibility and all stated limitations, recheck public links and record the actual submission receipt. Prepared information is not an accepted entry.

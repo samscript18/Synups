@@ -1,6 +1,6 @@
 # Release readiness — Phase 5
 
-Assessment date: **2026-10-21**. **8/10 submission readiness; not production-ready and not 10/10.** Mandatory ordinary-user delivery and desktop acceptance gates remain open. No GitHub Release or competition entry has been published. Historical assessments remain in Git and [MIGRATION_LOG.md](MIGRATION_LOG.md); this checklist supersedes their current-state wording.
+Assessment updated for user-authorized **[Synups 0.1.0 publication](https://github.com/samscript18/Synups/releases/tag/v0.1.0)**. **8.5/10 submission readiness; not production-ready and not 10/10.** All 15 public assets were downloaded anonymously and hash-checked. Mandatory signing/ordinary-desktop acceptance gates remain open. Competition entry has not been submitted. Historical assessments remain in Git and MIGRATION_LOG.md.
 
 Frozen release application source: **2973d3349fcb5af5639597920842288e6549bbd0**, `feat/avalonia-migration`, [successful three-OS run 39682197118](https://github.com/samscript18/Synups/actions/runs/39682197118). [Exact Phase 5 downloaded evidence](../evidence/verification/2026-10-21-release-candidate.json), [platform limits](CROSS_PLATFORM.md#phase-5-frozen-release-candidate--2973d33), [launch instructions](../release/INSTALLATION.md) and [candidate notes](../release/RELEASE_NOTES.md).
 
@@ -24,13 +24,13 @@ Frozen release application source: **2973d3349fcb5af5639597920842288e6549bbd0**,
 
 The separate **two-hour Core-engine test passed**: 7,201.54s total including restart, 28,792 real loopback probes, no failures/errors, four workers while running and zero after drain, 12.4ms stop, two clean durable sessions/reopen. Mean CPU1.07% of one core; RSS70.55→55.06MiB (peak85.48MiB); descriptors101→104 (peak105); database40,960bytes with no sampled growth. [Full summary/source qualification](../evidence/verification/2026-10-21-engine-endurance-macos-arm64.json) and [720 samples](../evidence/verification/2026-10-21-engine-endurance-samples.jsonl) are retained. This working-tree Core-console build is not a published apphost or multi-hour GUI certification.
 
-## Mandatory open gates
+## Delivery and remaining gates
 
 - [ ] **Trusted macOS delivery:** Gatekeeper rejects the actual final bundle (assessment exit 3). Ad-hoc integrity is not Developer ID/notarization. Obtain a legitimate signing identity/notarization workflow or agree and verify a candid distribution policy; never disable OS security to manufacture a pass.
 - [ ] **Ordinary downloaded desktop acceptance:** browser download/quarantine, consumer Windows desktop, real Linux desktops/Wayland, physical tray Show/Exit, native save-picker, topmost/z-order, keyboard traversal and screen-reader/high-contrast/high-DPI/disconnected-screen behavior. Programmatic controls, a Server runner and Xvfb cover narrower behavior.
 - [ ] **OS notification request/delivery/denial:** macOS identity/permission and Linux daemon/host combinations. Windows currently has a documented in-app fallback; native Windows delivery and sounds are absent.
 - [ ] **Broader reliability:** representative hours/days GUI and large-history workloads, real pending-native-ICMP cancellation, IPv6/VPN/firewall/no-network/suspend/resume, physical disk-full and power-loss experiments. Healthy loopback, file read-only tests and process kill are different evidence.
-- [ ] **Public delivery:** final reviewed release handoff; CI artifacts expire after 30 days and may require login. Preserve approved packages/logs and publish only after explicit authorization. No installers, trusted publisher signatures or public Release are delivered.
+- [x] **Public delivery:** explicitly authorized [https://github.com/samscript18/Synups/releases/tag/v0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0) published at `2026-10-21T22:34:54Z`, exact tag/application commit `2973d3349fcb5af5639597920842288e6549bbd0`. All 15 assets anonymously downloaded, HTTP 200, SHA-256 and archive integrity passed. Stable Release links replace CI-only downloads. Installers/trusted signing remain absent.
 - [ ] **Final competition submission:** public persistent runnable builds, final source/material review and separately authorized entry. Recorded deadline: October 23, 2026, 23:59 UTC.
 
 No unresolved automated failure is hidden: Windows licence CRLF, post-archive Mac signatures, focus-test foreground assumptions and macOS 15 minimize/restoration failures and corrections remain in the migration log. The final exact application source passes all three jobs. Successful testing does not erase the open delivery gates.
@@ -49,9 +49,9 @@ Ten equally weighted milestone checks, with half credit only for explicitly inco
 | Package integrity, identity and notices | 1 | Independent downloaded audit and extracted signature validation |
 | Honest write-up and before/after evidence | 1 | Attributed original illustration, genuine apphost captures, detailed records |
 | Resource and accessibility acceptance | 0.5 | Measured scoped observations/focus/contrast; broader GUI/accessibility pending |
-| Reviewed public landing and release handoff | 0.5 | Reviewed source/materials and draft PR; final landing/handoff tracked below |
+| Reviewed public landing and release handoff | 1 | Public Release/assets, anonymous downloads/hashes and README links verified |
 | Trusted ordinary-user distribution | 0 | Gatekeeper rejection and manual installed-desktop checks remain |
-| **Total** | **8/10** | **Submission remains blocked; no 10/10 claim** |
+| **Total** | **8.5/10** | **Trust/desktop acceptance and separate submission authorization remain open** |
 
 Legacy inventory parity remains **72.2% = (9 + 8×0.5)/18**. It is separate from this release rubric. Discovery, validated real-WirePeep settings import, login/sound/taskbar/focus and menu/clipboard/help details remain missing; see [FEATURE_PARITY.md](FEATURE_PARITY.md).
 
@@ -78,4 +78,9 @@ Accessibility automation is disabled on the local Mac. No permission was enabled
 
 [Publication handoff](../release/PUBLICATION.md), [prepared release text](../release/RELEASE_BODY.md) and [submission fields](../release/SUBMISSION.md) are concrete and reviewable. The assembly tool validates reviewed input hashes/source/runtime stages, preserves archive bytes, excludes temporary databases/settings and prepares consolidated checksums plus retained CI logs/TRX/captures. Successful assembly/checksum verification and rejection of failed-workflow/existing-output inputs were exercised. No permanent public download, Release/tag or form submission is created. Planned download URLs must not be submitted before separately authorized publication and anonymous verification.
 
-**Readiness stays8/10 under the same rubric**, rather than earning extra credit for preparing documents. Permanent public downloads, trusted/accepted ordinary Mac delivery and remaining desktop/accessibility acceptance are still real blockers. Conservative legacy parity stays72.2%=(9+8×0.5)/18.
+**Readiness stays8/10 under the same rubric**, rather than earning extra credit for preparing documents. Permanent public downloads, trusted/accepted ordinary Mac delivery and remaining desktop/accessibility acceptance are still real blockers. Conservative legacy parity stays 72.2%=(9+8×0.5)/18.
+
+
+## Authorized public release verification
+
+The later user explicitly authorized v0.1.0 publication and upload of the existing reviewed assets. This supersedes historical “not published/awaiting authorization” statements in the preparation section above; competition submission remains separately prohibited. Tag source 2973d3349fcb5af5639597920842288e6549bbd0 and all reviewed asset bytes are unchanged. [Publication record](../evidence/verification/synups-0.1.0-publication.json) retains UTC timestamps, public URLs, HTTP status and every SHA-256. The score adds only the remaining half-point for completed public handoff; trusted ordinary-user distribution remains 0, resource/accessibility remains 0.5, and no runtime/support claim is expanded. Windows remains unsigned; macOS remains ad-hoc/not notarized with Gatekeeper rejection.
