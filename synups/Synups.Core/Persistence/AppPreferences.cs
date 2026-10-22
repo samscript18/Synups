@@ -15,6 +15,7 @@ public sealed record AppPreferences
     public bool NotifyRecovery { get; init; } = true;
     public bool NotifyErrors { get; init; } = true;
     public bool NativeNotifications { get; init; }
+    public bool FocusOnConfirmedEvents { get; init; } // Explicit opt-in; independent of notification delivery.
     public bool AutomaticLogs { get; init; } = true;
     public string LogDirectory { get; init; } = Path.Combine(SynupsPaths.DataDirectory, "logs");
     public int RetentionDays { get; init; } // 0 keeps all evidence, bounded by the store's capacity.

@@ -56,7 +56,7 @@ public sealed class GatewayDiscovery(IRouteCommandRunner? runner = null, RoutePl
         RoutePlatform.MacOS => [new("/sbin/route", ["-n", "get", "default"]), new("/sbin/route", ["-n", "get", "-inet6", "default"])],
         RoutePlatform.Linux => [new(LinuxIp(), ["-j", "-4", "route", "show", "default"]), new(LinuxIp(), ["-j", "-6", "route", "show", "default"])],
         RoutePlatform.Windows => [new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "WindowsPowerShell", "v1.0", "powershell.exe"),
-            ["-NoProfile", "-NonInteractive", "-Command", "$ErrorActionPreference='Stop'; $up=@(Get-NetIPInterface | Where-Object ConnectionState -eq 'Connected' | Select-Object -ExpandProperty InterfaceIndex); Get-NetRoute -PolicyStore ActiveStore -DestinationPrefix '0.0.0.0/0','::/0' | Where-Object { $up -contains $_.InterfaceIndex -and $_.State -ne 'Dead' } | Select-Object -First 100 -Property NextHop,InterfaceAlias,RouteMetric | ConvertTo-Json -Compress"])],
+            ["-NoProfile", "-NonInteractive", "-Command", "$ErrorActionPreference='Stop'; $up=@(Get-NetIPInterface | Where-Object ConnectionState -eq 'Connected' | Select-Object -ExpandProperty InterfaceIndex); Get-NetRoute -PolicyStore ActiveStore | Where-Object { $_.DestinationPrefix -in @('0.0.0.0/0','::/0') -and $up -contains $_.InterfaceIndex -and $_.State -ne 'Dead' } | Select-Object -First 100 -Property NextHop,InterfaceAlias,RouteMetric | ConvertTo-Json -Compress"])],
         _ => [],
     };
     private static string LinuxIp() => new[] { "/usr/sbin/ip", "/sbin/ip", "/usr/bin/ip", "/bin/ip" }.FirstOrDefault(File.Exists) ?? "/usr/sbin/ip";

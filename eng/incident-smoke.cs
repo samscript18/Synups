@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
+using Avalonia.Input.Platform;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using Synups.Core.Monitoring;
@@ -32,6 +33,8 @@ internal static class IncidentSmoke
         var engine = new MonitoringService(history: new SqliteHistoryStore(historyPath));
         var vm = new MainWindowViewModel(engine, store, new PreferencesStore(Path.Combine(root, "preferences.v1.json"), Path.Combine(root, "logs")));
         var exit = 1;
+        var focusRequests = 0;
+        vm.FocusRequested += (_, _) => Interlocked.Increment(ref focusRequests);
         MainWindow? window = null;
         async Task VerifyAsync()
         {
@@ -54,6 +57,7 @@ internal static class IncidentSmoke
                 }
                 else
                 {
+                    await Dispatcher.UIThread.InvokeAsync(async () => { vm.PrefFocus = true; await vm.SavePreferencesAsync(); });
                     await Dispatcher.UIThread.InvokeAsync(() => window!.FindControl<Button>("StartMonitoring")!.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)));
                     await UntilAsync(() => engine.Capture().Groups.Single().Connectivity == GroupConnectivity.Connected);
                     await CaptureAsync(window!, Path.Combine(root, "healthy.png"));
@@ -62,7 +66,8 @@ internal static class IncidentSmoke
                     Require(engine.Capture().Outages.Count == 0, "First failure skipped the grace period.");
                     var graceObservedUtc = DateTimeOffset.UtcNow;
                     await CaptureAsync(window!, Path.Combine(root, "failure-grace.png"));
-                    await UntilAsync(() => engine.Capture().Outages.Count == 1 && vm.Outages.Count == 1);
+                    await Dispatcher.UIThread.InvokeAsync(() => window!.Hide());
+                    await UntilAsync(() => engine.Capture().Outages.Count == 1 && vm.Outages.Count == 1 && window!.IsVisible && Volatile.Read(ref focusRequests) == 1);
                     var outage = engine.Capture().Outages.Single();
                     Require(!outage.RecoveredUtc.HasValue && outage.StartedUtc - outage.FirstFailureUtc >= TimeSpan.FromSeconds(2), "Confirmation grace or unresolved state incorrect.");
                     await Dispatcher.UIThread.InvokeAsync(async () =>
@@ -71,6 +76,11 @@ internal static class IncidentSmoke
                         vm.OutageComment = "Controlled disposable namespace ICMP filter; real packets, not an Internet outage.";
                         await vm.SaveCommentAsync();
                     });
+                    await UntilAsync(() => vm.CanReadTimeline);
+                    await Dispatcher.UIThread.InvokeAsync(() => window!.FindControl<Button>("CopyIncidentDetails")!.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)));
+                    await UntilAsync(() => vm.Message.Contains("Copied incident details", StringComparison.Ordinal));
+                    var copied = await Dispatcher.UIThread.InvokeAsync(async () => await window!.Clipboard!.TryGetTextAsync());
+                    Require(copied?.Contains(outage.Id.ToString(), StringComparison.Ordinal) == true && copied.Contains("Confirmed UTC:", StringComparison.Ordinal), "Native clipboard lost real incident identity/UTC details.");
                     Require(vm.AlertBanner.Contains("outage confirmed", StringComparison.OrdinalIgnoreCase), "Actual in-app outage alert missing.");
                     await CaptureAsync(window!, Path.Combine(root, "confirmed-outage.png"));
                     await File.WriteAllTextAsync(Path.Combine(root, "outage.ready"), outage.Id.ToString());
@@ -79,6 +89,7 @@ internal static class IncidentSmoke
                     Require(recovered.Id == outage.Id && recovered.Elapsed > TimeSpan.Zero && !recovered.ContainsObservationGap, "Recovery identity/duration/confidence incorrect.");
                     Require(Math.Abs(((recovered.RecoveredUtc!.Value - recovered.StartedUtc) - recovered.Elapsed).TotalMilliseconds) < 500, "Monotonic duration differs materially from stable UTC observations.");
                     await Dispatcher.UIThread.InvokeAsync(() => { vm.Refresh(); vm.SelectedPage = 2; });
+                    await UntilAsync(() => vm.Outages.Single().IsRecovered && Volatile.Read(ref focusRequests) == 2);
                     Require(vm.AlertBanner.Contains("connectivity recovered", StringComparison.OrdinalIgnoreCase), "Actual in-app recovery alert missing.");
                     await CaptureAsync(window!, Path.Combine(root, "recovered-history.png"));
                     await Dispatcher.UIThread.InvokeAsync(async () =>
@@ -96,6 +107,8 @@ internal static class IncidentSmoke
                         probe = typeof(IcmpProbe).FullName, target = "127.0.0.1", grace_milliseconds = 2000,
                         grace_observed_utc = graceObservedUtc, outage = recovered, saved.Events,
                         actual_native_client = true, physical_interaction = false,
+                        native_window_restored_on_confirmed_outage = true, confirmed_focus_requests = focusRequests,
+                        actual_native_clipboard_incident_verified = true,
                         explanation = "Real ICMP dropped and restored by a filter confined to a disposable network namespace. Not an Internet outage."
                     }, new JsonSerializerOptions { WriteIndented = true }));
                 }

@@ -6,6 +6,34 @@ on:
 permissions:
   contents: read
 jobs:
+  coverage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+        working-directory: synups
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: synups/global.json
+      - name: Headless font prerequisites
+        run: sudo apt-get update && sudo apt-get install -y libfontconfig1
+      - name: Isolated optimized Release coverage build
+        run: |
+          set -o pipefail
+          mkdir -p ../artifacts/coverage-results
+          dotnet test ../Synups.slnx -c Release --artifacts-path ../artifacts/coverage-build -p:DebugType=portable -p:DebugSymbols=true -p:RestoreLockedMode=true -p:UseSharedCompilation=false --settings ../eng/coverage.runsettings --collect 'Code Coverage' --logger trx --results-directory ../artifacts/coverage-results 2>&1 | tee ../artifacts/coverage-results/coverage.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: synups-coverage-${{ github.sha }}
+          path: |
+            artifacts/coverage-results/**/*.cobertura.xml
+            artifacts/coverage-results/*.trx
+            artifacts/coverage-results/coverage.log
+          retention-days: 30
   build-test-publish:
     strategy:
       fail-fast: false

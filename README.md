@@ -1,6 +1,10 @@
 # Synups
 
+**Know when your network drops. Know how long it lasts. Keep the evidence.**
+
 A local-first network reliability monitor for Windows, macOS and Linux, built with **Avalonia, C# and XAML**. Synups is a migration of [Bill Menees’ WirePeep](https://github.com/menees/WirePeep), preserving its Git history, MIT licence and peer-group monitoring intent.
+
+Built for the [2026 Avalonia Port Challenge](https://avaloniaui.net/blog/avalonia-port-challenge), targeting Best IT Pro Tool. Submission or acceptance is not claimed. ICMP reachability is evidence about configured peers, not proof that every Internet service works.
 
 **Early release, not a production-readiness claim.** Actual self-contained executables are exercised on native Windows/macOS runners and Linux under Xvfb. Signing and everyday desktop/accessibility coverage still have explicit limits. There is no WebView, backend, account or cloud service, and no fabricated monitoring data.
 
@@ -28,6 +32,8 @@ The before image was not freshly captured here; the after image contains genuine
 **Unpublished candidate 0.1.1-rc.1:** guided first-target setup and clearer start/status guidance passed [three-OS run 39761184906](https://github.com/samscript18/Synups/actions/runs/39761184906), source `65d917ac645139836cf97e48c48c137a09825942`: per OS **107 deterministic/headless + 1 separate real-loopback + 8 Python tests**, zero-warning Release and six actual extracted executable stages. [Independent audit](docs/evidence/verification/2026-10-22-competitive-candidate-final.json). These changes are separate from the unchanged public 0.1.0 packages. The final candidate also fixes fresh-window clipping confirmed on Windows; [candidate notes and hashes](docs/release/COMPETITIVE_CANDIDATE.md).
 
 **Real incident demonstration:** an isolated Linux namespace dropped actual loopback ICMP replies, then restored them. The production probe/engine recorded grace, one confirmed incident, one recovery, a persisted comment and the same incident after process restart. [Genuine screenshots, exact timestamps, exported CSV and reproduction](docs/competition/REAL_INCIDENT.md). This is controlled kernel-level packet loss, not injected probe data or an Internet/provider outage. No user network was altered.
+
+**Final hardening work (unpublished 0.1.1-rc.2):** explicit read-only gateway preview/confirmation, a paged real-incident timeline, complete streaming CSV, clipboard actions, native Help/About, shortcuts and opt-in event focus are implemented. Local gates pass; this candidate is undergoing its own exact-source three-OS packaged verification. Do not apply the earlier candidate’s test claims to these changed binaries. Public 0.1.0 and frozen 0.1.1-rc.1 remain rollback baselines.
 
 ## Download and run
 
@@ -105,6 +111,20 @@ Intentional corrections are tested and documented: unavailable/error results can
 Actual difficulties include Windows-only baseline execution, first-time SDK/NuGet restrictions, xUnit version compatibility, real storage/deadline contention, truthful unavailable-state migration, safe pending-write shutdown, failed screenshot capture, an action-readiness race, Windows licence newline conversion, macOS archive signature loss and native minimize/restoration behavior. These failures and tested corrections remain in the [migration log](docs/migration/MIGRATION_LOG.md). Native component execution was explicitly kept separate from later published-executable proof. Code-authored icons and a macOS bundle now establish identity without claiming publisher trust.
 
 This is AI-assisted repository work across interrupted sessions. No total development hours were instrumented or invented. Command timings and measured observations are evidence, not labor hours. The [baseline](docs/migration/BASELINE.md), [architecture](docs/migration/ARCHITECTURE.md), [platform matrix](docs/migration/CROSS_PLATFORM.md), [migration log](docs/migration/MIGRATION_LOG.md), [roadmap](docs/migration/ROADMAP.md) and [release checklist](docs/migration/RELEASE_READINESS.md) retain actual scope and outstanding work. No public release or competition entry is submitted automatically.
+
+## Direct answers to the migration write-up questions
+
+The [official challenge](https://avaloniaui.net/blog/avalonia-port-challenge) asks for an honest account of effort, reuse, redesign and surprises.
+
+**How much work did it take?** Session records begin on **16 October 2026**; the frozen application checkpoint `65d917ac645139836cf97e48c48c137a09825942` was committed **22 October 2026**. It contains **19 commits after upstream `61ae14391151ca9f209223e62c98fae3df5482b8`**, whose commit date is **1 June 2024**. Reproduce that count with `git rev-list --count 61ae14391151ca9f209223e62c98fae3df5482b8..65d917ac645139836cf97e48c48c137a09825942`. These are calendar/source facts, not developer-hours estimates. Work continued after that checkpoint; final candidate evidence pins its own exact revision. No total labor hours were measured.
+
+**What translated cleanly?** Literal-IP configuration, peer names/IDs, sorted round-robin selection, stop-after-success, failure grace and outage/comment intent. The original XML is reused directly, and five linked-original characterization tests protect state/rotation behavior. Bill Menees’ MIT attribution and Git ancestry remain.
+
+**What needed rethinking?** Common inherited Windows targets and Menees settings/discovery; WPF owned timer, logging and UI callbacks. Avalonia presentation and desktop lifetime were rewritten, probes became cancellable bounded tasks, immutable session configuration replaced live collection mutation, and SQLite became the durable evidence source. Error uncertainty, monotonic time and shutdown ownership needed explicit rules. New paginated history/streaming exports keep the timeline independent of an ever-growing snapshot cache. Discovery reads OS routes only after an explicit request; it preserves the useful gateway intent without TTL probing or startup scans.
+
+**What caught you by surprise?** The legacy unavailable result could falsely end an outage. Real Linux OUTPUT filtering returned PermissionDenied rather than a timeout, so the isolated test had to drop incoming replies. Windows clamped native geometry while retaining larger requested layout dimensions; actual screenshot review caught clipping that green component tests missed. A missing IPv6 default route also caused Windows’ combined route query to discard IPv4 output. macOS execution and ad-hoc integrity did not imply Gatekeeper trust, while archive layout could invalidate a signature. Native UI, physical interaction, permission denial and signed distribution require separate evidence.
+
+**AI assistance and limits:** AI assisted source analysis, C#/XAML/scripts, tests and documentation across interrupted sessions. Compiler/test outputs, native process records, hashes and screenshots are real; generated code was exercised and failures were retained. Fakes and synthetic storage fixtures are confined to tests/explicit engineering tools, never production measurements. OS notification delivery, trusted signing, physical desktop/accessibility acceptance and missing legacy integrations are not claimed from passing unit tests.
 
 ## Licence and attribution
 

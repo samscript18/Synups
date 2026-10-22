@@ -7,6 +7,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
+using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
@@ -226,6 +227,14 @@ public sealed class InstallationCheck(DesktopOptions options)
         Text(window, "TargetAddressEditor", "127.0.0.1"); await ClickAsync(window, "ApplyTarget"); await UntilAsync(() => vm.CanStart);
         Require(vm.Groups[0].Id == groupId && vm.Groups[0].Targets[0].Id == targetId, "Stable identities were lost.");
         Passed("bound_controls_crud_groups_targets_validation_and_stable_ids", new { group_id = groupId, target_id = targetId });
+        await ClickAsync(window, "CopyTargetAddress");
+        await UntilAsync(() => vm.Message.Contains("Copied target IP", StringComparison.Ordinal));
+        Require(await window.Clipboard!.TryGetTextAsync() == "127.0.0.1", "Actual native clipboard did not retain the selected target IP.");
+        Passed("actual_native_clipboard_target_ip", new { address = "127.0.0.1", vm.SelectedTarget!.Id });
+        window.RaiseEvent(new KeyEventArgs { RoutedEvent = InputElement.KeyDownEvent, Key = Key.F1 });
+        Require(vm.IsHelp, "F1 did not open Help/About."); await CaptureAsync(window, "help-about");
+        Require(window.FindControl<TextBlock>("ApplicationVersion")!.Text == vm.VersionText, "About version does not match the real assembly.");
+        Passed("programmatic_help_shortcut_and_real_version", vm.VersionText);
         vm.SelectedPage = 0; await ClickAsync(window, "StartMonitoring");
         await UntilAsync(() => vm.IsRunning && vm.Groups[0].Targets[0].Status.StartsWith("Responded", StringComparison.Ordinal));
     }

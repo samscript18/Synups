@@ -8,8 +8,20 @@ public sealed class AlertPolicy(IMonitorClock? clock = null)
 {
     private readonly IMonitorClock clock = clock ?? new MonitorClock();
     private long lastSequence;
+    private long lastFocusSequence;
     private readonly Dictionary<Guid, long> lastError = new();
-    public void IgnoreExisting(IEnumerable<MonitorEvent> events) => lastSequence = events.Select(e => e.Sequence).DefaultIfEmpty(0).Max();
+    public void IgnoreExisting(IEnumerable<MonitorEvent> events) => lastFocusSequence = lastSequence = events.Select(e => e.Sequence).DefaultIfEmpty(0).Max();
+    public bool ShouldFocus(IEnumerable<MonitorEvent> events, bool enabled)
+    {
+        var focus = false;
+        foreach (var e in events.OrderBy(e => e.Sequence))
+        {
+            if (e.Sequence <= lastFocusSequence) continue;
+            lastFocusSequence = e.Sequence;
+            if (enabled && e.Kind is MonitorEventKind.OutageStarted or MonitorEventKind.Recovery) focus = true;
+        }
+        return focus;
+    }
     public IReadOnlyList<AlertMessage> Select(IEnumerable<MonitorEvent> events, AppPreferences preferences)
     {
         var selected = new List<AlertMessage>();

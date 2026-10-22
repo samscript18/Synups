@@ -17,7 +17,7 @@ public interface IHistoryStore : IAsyncDisposable
 }
 
 /// <summary>Single owned connection, serialized off-thread I/O. SQLite async APIs are synchronous.</summary>
-public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryCapacity.DefaultBytes) : IHistoryStore, IHistoryStorageManagement
+public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryCapacity.DefaultBytes) : IHistoryStore, IHistoryStorageManagement, IIncidentHistoryReader
 {
     private readonly SemaphoreSlim io = new(1, 1);
     private readonly string path = Path.GetFullPath(fileName);
@@ -172,23 +172,76 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryC
     public Task<HistoryState> LoadAsync(bool includeAllEvents = false) => WorkAsync(() =>
     {
         Open();
-        var sessions = Read<SessionRecord>("SELECT payload FROM sessions ORDER BY rowid");
-        var outages = Read<OutageRecord>("SELECT payload FROM outages ORDER BY rowid");
+        RecoverOpenSessions();
+        // Normal startup/cache reads are bounded. Explicit full archive/logging remains a separate operation.
+        var sessions = Read<SessionRecord>(includeAllEvents ? "SELECT payload FROM sessions ORDER BY rowid" :
+            "SELECT payload FROM sessions WHERE rowid IN(SELECT rowid FROM sessions ORDER BY rowid DESC LIMIT 200) OR id IN(SELECT session_id FROM outages WHERE recovered=0 AND observed_end=0) ORDER BY rowid");
+        var outages = Read<OutageRecord>(includeAllEvents ? "SELECT payload FROM outages ORDER BY rowid" :
+            "SELECT payload FROM outages WHERE rowid IN(SELECT rowid FROM outages ORDER BY rowid DESC LIMIT 200) OR (recovered=0 AND observed_end=0) ORDER BY rowid");
         var events = Read<MonitorEvent>(includeAllEvents ? "SELECT payload FROM events ORDER BY sequence" : "SELECT payload FROM (SELECT payload,sequence FROM events ORDER BY sequence DESC LIMIT 500) ORDER BY sequence");
         var seq = Convert.ToInt64(Scalar("SELECT sequence FROM metadata WHERE id=1"), CultureInfo.InvariantCulture);
-        var interruptedIds = sessions.Where(s => s.EndedUtc is null && !s.Interrupted).Select(s => s.Id).ToHashSet();
-        if (!recoveredOpenSessions && interruptedIds.Count > 0)
+        return new HistoryState(outages, events, sessions, seq);
+    });
+
+    private void RecoverOpenSessions()
+    {
+        if (recoveredOpenSessions) return;
+        while (true)
         {
-            var recoveredSessions = sessions.Select(s => interruptedIds.Contains(s.Id) ? s with { Interrupted = true, ContainsObservationGap = true } : s).ToArray();
-            var recoveredOutages = outages.Select(o => interruptedIds.Contains(o.SessionId) && o.RecoveredUtc is null && o.ObservationEndedUtc is null
-                ? o with { ObservationEndedUtc = sessions.Single(s => s.Id == o.SessionId).LastObservedUtc ?? o.StartedUtc, ContainsObservationGap = true } : o).ToArray();
-            var notices = interruptedIds.Select(id => new MonitorEvent(++seq, id, null, DateTimeOffset.UtcNow, MonitorEventKind.Interrupted,
-                "Previous process ended without a clean session end. Last observations retained; no recovery inferred.")).ToArray();
-            Commit(new(recoveredOutages, notices, null), recoveredSessions);
-            outages = recoveredOutages.ToList(); sessions = recoveredSessions.ToList(); events.AddRange(notices);
+            var open = Read<SessionRecord>("SELECT payload FROM sessions WHERE json_extract(payload,'$.EndedUtc') IS NULL AND json_extract(payload,'$.Interrupted')=0 LIMIT 100");
+            if (open.Count == 0) break;
+            foreach (var session in open)
+            {
+                var notice = new MonitorEvent(Number("SELECT sequence FROM metadata WHERE id=1") + 1, session.Id, null, DateTimeOffset.UtcNow,
+                    MonitorEventKind.Interrupted, "Previous process ended without a clean session end. Last observations retained; no recovery inferred.");
+                using var tx = connection!.BeginTransaction();
+                using var command = connection.CreateCommand(); command.Transaction = tx;
+                // SQL updates unresolved rows without materializing every historic outage. One session's recovery is atomic.
+                command.CommandText = """
+                    UPDATE outages SET observed_end=1,
+                      payload=json_set(payload,'$.ObservationEndedUtc',COALESCE($last,json_extract(payload,'$.StartedUtc')),'$.ContainsObservationGap',json('true'))
+                      WHERE session_id=$session AND recovered=0 AND observed_end=0;
+                    UPDATE sessions SET payload=$payload WHERE id=$session;
+                    INSERT INTO events(id,sequence,session_id,payload) VALUES($id,$seq,$session,$event);
+                    UPDATE metadata SET sequence=$seq WHERE id=1;
+                    """;
+                command.Parameters.AddWithValue("$last", (object?)session.LastObservedUtc?.ToString("O", CultureInfo.InvariantCulture) ?? DBNull.Value);
+                command.Parameters.AddWithValue("$session", session.Id.ToString());
+                command.Parameters.AddWithValue("$payload", Json(session with { Interrupted = true, ContainsObservationGap = true }));
+                command.Parameters.AddWithValue("$id", notice.Id.ToString()); command.Parameters.AddWithValue("$seq", notice.Sequence);
+                command.Parameters.AddWithValue("$event", Json(notice)); command.ExecuteNonQuery(); tx.Commit();
+            }
         }
         recoveredOpenSessions = true;
-        return new HistoryState(outages, includeAllEvents ? events : events.TakeLast(500).ToArray(), sessions, seq);
+    }
+
+    public Task<IncidentPage> ReadIncidentPageAsync(IncidentQuery query) => WorkAsync(() =>
+    {
+        if (query.Limit is < 1 or > 100 || query.Cursor is <= 0 || query.UpperBound is < 0) throw new ArgumentException("Incident page: 1–100 rows and valid positive cursor.");
+        Open(); RecoverOpenSessions();
+        var upper = query.UpperBound ?? Number("SELECT COALESCE(MAX(rowid),0) FROM outages");
+        using var command = connection!.CreateCommand();
+        var direction = query.OldestFirst ? "ASC" : "DESC"; var comparison = query.OldestFirst ? ">" : "<";
+        var cursorClause = query.Cursor.HasValue ? $"AND o.rowid {comparison} $cursor" : "";
+        command.CommandText = $"""
+            SELECT o.rowid,o.payload,COALESCE(json_extract(s.payload,'$.Interrupted'),0)
+            FROM outages o LEFT JOIN sessions s ON s.id=o.session_id
+            WHERE o.rowid <= $upper {cursorClause}
+            ORDER BY o.rowid {direction} LIMIT $limit
+            """;
+        command.Parameters.AddWithValue("$upper", upper); command.Parameters.AddWithValue("$cursor", (object?)query.Cursor ?? DBNull.Value);
+        command.Parameters.AddWithValue("$limit", query.Limit + 1);
+        using var reader = command.ExecuteReader(); var rows = new List<(long Id, IncidentItem Item)>();
+        while (reader.Read()) rows.Add((reader.GetInt64(0), new(Parse<OutageRecord>(reader.GetString(1)), reader.GetInt64(2) != 0)));
+        var more = rows.Count > query.Limit; if (more) rows.RemoveAt(rows.Count - 1);
+        return new IncidentPage(rows.Select(r => r.Item).ToArray(), more ? rows[^1].Id : null, upper);
+    });
+
+    public Task<OutageRecord?> FindIncidentAsync(Guid id) => WorkAsync(() =>
+    {
+        Open(); RecoverOpenSessions(); using var command = connection!.CreateCommand();
+        command.CommandText = "SELECT payload FROM outages WHERE id=$id"; command.Parameters.AddWithValue("$id", id.ToString());
+        return command.ExecuteScalar() is string payload ? Parse<OutageRecord>(payload) : null;
     });
     private List<T> Read<T>(string sql)
     {
@@ -198,7 +251,7 @@ public sealed class SqliteHistoryStore(string fileName, long maxBytes = HistoryC
         return rows;
     }
 
-    public Task CommitAsync(HistoryBatch batch) => WorkAsync(() => { Open(); Commit(batch); return true; });
+    public Task CommitAsync(HistoryBatch batch) => WorkAsync(() => { Open(); RecoverOpenSessions(); Commit(batch); return true; });
     private void Commit(HistoryBatch batch, IEnumerable<SessionRecord>? extraSessions = null)
     {
         using var transaction = connection!.BeginTransaction();

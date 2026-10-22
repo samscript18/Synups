@@ -24,6 +24,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        InitializeDesktopActions();
         Opened += async (_, _) => await RunAsync(async () =>
         {
             if (initialized) return;
@@ -117,6 +118,10 @@ public partial class MainWindow : Window
         catch (Exception ex) { ViewModel?.ReportError(ex.Message); }
     }
     private async void RetryHistoryClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.RetryHistoryAsync() ?? Task.CompletedTask);
+    private async void LatestIncidentsClicked(object? sender, RoutedEventArgs e)
+    { if (ViewModel is { } vm) await vm.LatestIncidentsAsync(); }
+    private async void OlderIncidentsClicked(object? sender, RoutedEventArgs e)
+    { if (ViewModel is { } vm) await vm.OlderIncidentsAsync(); }
     private async void StartClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.StartAsync() ?? Task.CompletedTask);
     private async void CreateFirstTargetClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.CreateFirstTargetAsync() ?? Task.CompletedTask);
     private async void StopClicked(object? sender, RoutedEventArgs e) => await RunAsync(() => ViewModel?.StopAsync() ?? Task.CompletedTask);

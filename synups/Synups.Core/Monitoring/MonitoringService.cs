@@ -36,6 +36,8 @@ public sealed class MonitoringService : IAsyncDisposable
         get { lock (gate) return new(Volatile.Read(ref activeGroupWorkers), Interlocked.Read(ref completedPolls), pending.Count); }
     }
     public bool HasDurableHistory => history is not null;
+    public bool HasPagedHistory => history is IIncidentHistoryReader;
+    public long HistoryRevision { get { lock (gate) return historyRevision; } }
     public bool HistoryReady { get { lock (gate) return history is null || historyLoaded; } }
     public bool HasUnsavedEvidence { get { lock (gate) return pending.Count > 0; } }
     public string? PersistenceError { get { lock (gate) return persistenceError; } }
@@ -209,13 +211,20 @@ public sealed class MonitoringService : IAsyncDisposable
             if (i < 0) throw new ArgumentException("Outage record no longer exists.");
             outages[i] = outages[i] with { Comment = comment };
             AddEvent(outages[i].GroupId, MonitorEventKind.Comment, $"Outage {outageId} comment: {comment}", outages[i].SessionId);
-        }, [outageId]);
+        }, [outageId], async () =>
+        {
+            lock (gate) { if (outages.Any(o => o.Id == outageId)) return; }
+            if (history is not IIncidentHistoryReader reader || await reader.FindIncidentAsync(outageId).ConfigureAwait(false) is not { } saved)
+                throw new ArgumentException("Outage record no longer exists.");
+            lock (gate) outages.Add(saved);
+        });
     }
-    private async Task ChangeAsync(Action change, Guid[] changedIds)
+    private async Task ChangeAsync(Action change, Guid[] changedIds, Func<Task>? prepare = null)
     {
         await evidence.WaitAsync().ConfigureAwait(false);
         try
         {
+            if (prepare is not null) await prepare().ConfigureAwait(false);
             HistoryBatch batch;
             lock (gate)
             {
@@ -225,6 +234,17 @@ public sealed class MonitoringService : IAsyncDisposable
                 if (history is not null) pending.Enqueue(batch);
             }
             await FlushCoreAsync().ConfigureAwait(false);
+            if (history is IIncidentHistoryReader)
+            {
+                // Committed history is read through pages; keep only a small working cache plus active incidents.
+                lock (gate)
+                {
+                    var keep = outages.TakeLast(200).Select(o => o.Id).ToHashSet();
+                    outages.RemoveAll(o => !keep.Contains(o.Id) && (o.RecoveredUtc.HasValue || o.ObservationEndedUtc.HasValue));
+                    var sessionKeep = sessions.Values.TakeLast(200).Select(s => s.Id).ToHashSet();
+                    foreach (var id in sessions.Where(p => !sessionKeep.Contains(p.Key) && p.Value.EndedUtc.HasValue).Select(p => p.Key).ToArray()) sessions.Remove(id);
+                }
+            }
             if (history is not null && retentionDays > 0 && clock.UtcNow >= nextRetentionUtc)
                 await RetainCoreAsync(retentionDays).ConfigureAwait(false);
         }
@@ -262,6 +282,38 @@ public sealed class MonitoringService : IAsyncDisposable
             lock (gate) return new(outages.ToArray(), events.ToArray(), sessions.Values.ToArray(), sequence);
         }
         finally { evidence.Release(); }
+    }
+    public async Task<IncidentPage> ReadIncidentPageAsync(IncidentQuery query)
+    {
+        await evidence.WaitAsync().ConfigureAwait(false);
+        try
+        {
+            await FlushCoreAsync().ConfigureAwait(false);
+            if (history is IIncidentHistoryReader reader) return await reader.ReadIncidentPageAsync(query).ConfigureAwait(false);
+            if (query.Limit is < 1 or > 100) throw new ArgumentException("Incident page: 1–100 rows.");
+            lock (gate)
+            {
+                var upper = query.UpperBound ?? outages.Count;
+                var rows = outages.Select((o, i) => (Id: (long)i + 1, Item: new IncidentItem(o, sessions.GetValueOrDefault(o.SessionId)?.Interrupted == true)))
+                    .Where(r => r.Id <= upper && (query.Cursor is null || (query.OldestFirst ? r.Id > query.Cursor : r.Id < query.Cursor)));
+                rows = query.OldestFirst ? rows.OrderBy(r => r.Id) : rows.OrderByDescending(r => r.Id);
+                var page = rows.Take(query.Limit + 1).ToArray(); var more = page.Length > query.Limit;
+                return new(page.Take(query.Limit).Select(r => r.Item).ToArray(), more ? page[query.Limit - 1].Id : null, upper);
+            }
+        }
+        finally { evidence.Release(); }
+    }
+    public Task ExportIncidentsAsync(Stream destination) => CsvExporter.WriteAsync(destination, StreamIncidentsAsync());
+    private async IAsyncEnumerable<OutageRecord> StreamIncidentsAsync()
+    {
+        var query = new IncidentQuery(100, OldestFirst: true);
+        while (true)
+        {
+            var page = await ReadIncidentPageAsync(query).ConfigureAwait(false);
+            foreach (var item in page.Items) yield return item.Incident;
+            if (page.NextCursor is not { } cursor) yield break;
+            query = query with { Cursor = cursor, UpperBound = page.UpperBound };
+        }
     }
     public async Task ApplyRetentionAsync(int days)
     {

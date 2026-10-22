@@ -68,22 +68,32 @@ public sealed class TargetRow(TargetConfiguration configuration) : ObservableObj
     public static string DisplayTime(DateTimeOffset? time) => time?.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss zzz") ?? "Not observed";
 }
 
-public sealed class OutageRow(OutageRecord record) : ObservableObject
+public sealed class OutageRow(OutageRecord record, bool interrupted = false) : ObservableObject
 {
     private OutageRecord record = record;
+    private bool interrupted = interrupted;
     public Guid Id => record.Id;
     public string GroupName => record.GroupName;
     public string Comment => record.Comment;
+    public bool IsRecovered => record.RecoveredUtc.HasValue;
+    public bool IsConfirmed => !IsRecovered && record.ObservationEndedUtc is null;
+    public bool IsEndedUnresolved => !IsRecovered && !IsConfirmed;
+    public string State => IsRecovered ? "Observed recovery" : interrupted ? "Unresolved · interrupted" : IsEndedUnresolved ? "Unresolved · observation ended" : "Confirmed · awaiting recovery";
+    public string Details => $"Incident {record.Id}\nGroup {record.GroupName} ({record.GroupId})\nSession {record.SessionId}\n" +
+        $"First failed observation UTC: {record.FirstFailureUtc:O}\nConfirmed UTC: {record.StartedUtc:O}\n" +
+        $"Recovery UTC: {record.RecoveredUtc?.ToString("O") ?? "Not observed"}\nObservation ended UTC: {record.ObservationEndedUtc?.ToString("O") ?? "Not ended"}\n" +
+        $"Observed duration since confirmation: {record.Elapsed:g}\nContains observation gaps: {record.ContainsObservationGap}\nSession interrupted: {interrupted}\nComment: {record.Comment}";
     public string Summary => $"Confirmed {TargetRow.DisplayTime(record.StartedUtc)} · " +
         (record.RecoveredUtc.HasValue ? $"recovered {TargetRow.DisplayTime(record.RecoveredUtc)}" :
             record.ObservationEndedUtc.HasValue ? "unresolved when observation stopped" : "unresolved") +
         $" · elapsed at last observation {record.Elapsed:g}" + (record.ContainsObservationGap ? " (includes uncertain observation gaps)" : "") +
         (record.SincePrevious is { } previous ? $" · since previous recovery {previous:g}" : "");
     public string Session => $"Session {record.SessionId}";
-    public void Apply(OutageRecord value)
+    public void Apply(OutageRecord value, bool? sessionInterrupted = null)
     {
-        if (record == value) return;
-        record = value; Changed(nameof(GroupName)); Changed(nameof(Comment)); Changed(nameof(Summary));
+        if (record == value && (sessionInterrupted is null || sessionInterrupted == interrupted)) return;
+        record = value; interrupted = sessionInterrupted ?? interrupted;
+        foreach (var name in new[] { nameof(GroupName), nameof(Comment), nameof(Summary), nameof(State), nameof(Details), nameof(IsRecovered), nameof(IsConfirmed), nameof(IsEndedUnresolved) }) Changed(name);
     }
     public override string ToString() => $"{GroupName} · {TargetRow.DisplayTime(record.StartedUtc)}";
 }

@@ -53,6 +53,19 @@ public class GatewayTests
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() => new RouteCommandRunner().RunAsync(new("does-not-exist", []), cancel.Token));
     }
 
+    [Fact]
+    public async Task NativeRunnerCancelsAndDrainsItsOwnedProcess()
+    {
+        var command = OperatingSystem.IsWindows()
+            ? new RouteCommand(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "WindowsPowerShell", "v1.0", "powershell.exe"), ["-NoProfile", "-NonInteractive", "-Command", "Start-Sleep -Seconds 30"])
+            : new RouteCommand("/bin/sleep", ["30"]);
+        using var cancel = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
+        cancel.CancelAfter(TimeSpan.FromMilliseconds(100));
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => new RouteCommandRunner().RunAsync(command, cancel.Token));
+        Assert.True(watch.Elapsed < TimeSpan.FromSeconds(5), "Owned native process did not drain promptly after cancellation.");
+    }
+
     [AvaloniaFact]
     public async Task PreviewRequiresConfirmationPreservesIdsAndRefusesDuplicateAddresses()
     {

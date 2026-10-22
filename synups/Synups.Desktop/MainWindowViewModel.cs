@@ -48,7 +48,9 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool HasAlertBanner => !string.IsNullOrWhiteSpace(AlertBanner);
     public string NativeAlertStatus => NativeAlertSink.Capability + " " + alertDelivery.Status;
     public bool CanPreferences => !busy && !IsRunning;
-    private bool prefConfirmExit, prefTopmost, prefTray, prefMinimized, prefAutoStart, prefOutage = true, prefRecovery = true, prefErrors = true, prefNative, prefLogs = true;
+    private bool prefConfirmExit, prefTopmost, prefTray, prefMinimized, prefAutoStart, prefOutage = true, prefRecovery = true, prefErrors = true, prefNative, prefLogs = true, prefFocus;
+    public bool PrefFocus { get => prefFocus; set => Set(ref prefFocus, value); }
+    public event EventHandler? FocusRequested;
     private string prefLogDirectory = "", prefRetentionDays = "0";
     public bool PrefConfirmExit { get => prefConfirmExit; set => Set(ref prefConfirmExit, value); }
     public bool PrefTopmost { get => prefTopmost; set => Set(ref prefTopmost, value); }
@@ -99,6 +101,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         new("Targets and groups", "Your monitoring profile", "M9,3 L15,3 L15,9 L9,9 Z M3,15 L9,15 L9,21 L3,21 Z M15,15 L21,15 L21,21 L15,21 Z M12,9 L12,12 M6,15 L6,12 L18,12 L18,15"),
         new("Activity and outages", "Evidence and comments", "M3,4 L21,4 M3,12 L7,12 L10,7 L14,17 L17,12 L21,12 M3,20 L21,20"),
         new("Preferences", "Make Synups yours", "M4,6 L8,6 M12,6 L20,6 M4,12 L14,12 M18,12 L20,12 M4,18 L6,18 M10,18 L20,18 M8,3 L12,3 L12,9 L8,9 Z M14,9 L18,9 L18,15 L14,15 Z M6,15 L10,15 L10,21 L6,21 Z"),
+        new("Help and About", "Use Synups confidently", "M12,3 A9,9 0 1 0 12,21 A9,9 0 1 0 12,3 M9,8 Q12,5 15,8 Q17,11 12,13 L12,15 M12,17 L12,18"),
     ];
     public string PageTitle => NavigationItems[SelectedPage].Title;
     public ObservableCollection<GroupRow> Groups { get; } = new();
@@ -109,7 +112,9 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool CanEdit => loaded && !busy && !IsRunning && !disposed && !IsDiscovering;
     public bool CanStart => CanEdit && service.HistoryReady && !service.HasUnsavedEvidence && configuration.Groups.Any(g => g.Enabled);
     public string StartGuidance => disposed ? "This window is closing." : IsDiscovering ? "Finish or cancel gateway discovery before starting monitoring." : busy ? "Finishing the current action…" :
-        IsRunning ? "Stop monitoring before editing. ICMP filtering can cause missed replies without a service outage." :
+        IsRunning ? (snapshot.Groups.SelectMany(g => g.Targets).Any(t => t.Result.Error == ProbeError.PermissionDenied)
+            ? "ICMP permission was denied. Check OS/firewall policy; this is indeterminate, not confirmed downtime. Synups never elevates itself automatically."
+            : "Stop monitoring before editing. ICMP filtering can cause missed replies without a service outage.") :
         !loaded ? "Load or recover your configuration before monitoring." :
         !service.HistoryReady || service.HasUnsavedEvidence ? "Repair history storage and Retry before starting; existing evidence is preserved." :
         Groups.Count == 0 ? "Add your first IP below. Nothing is probed until you choose Start monitoring." :
@@ -122,7 +127,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public bool HasSelectedOutage => selectedOutage is not null;
     public bool CanExport => Outages.Count > 0 && !busy;
     public bool HasNoGroups => Groups.Count == 0;
-    public bool HasNoOutages => service.HistoryReady && Outages.Count == 0;
+    public bool HasNoOutages => service.HistoryReady && !timelineReading && Outages.Count == 0;
     public bool HasSelectedGroup => SelectedGroup is not null;
     public string Message { get => message; private set => Set(ref message, value); }
     public string MonitoringState => snapshot.State.ToString();
@@ -160,12 +165,17 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public int SelectedPage
     {
         get => selectedPage;
-        set { if (value is < 0 or > 3 || !Set(ref selectedPage, value)) return; Changed(nameof(IsOverview)); Changed(nameof(IsTargets)); Changed(nameof(IsHistory)); Changed(nameof(IsPreferences)); Changed(nameof(PageTitle)); }
+        set { if (value is < 0 or > 4 || !Set(ref selectedPage, value)) return; Changed(nameof(IsOverview)); Changed(nameof(IsTargets)); Changed(nameof(IsHistory)); Changed(nameof(IsPreferences)); Changed(nameof(IsHelp)); Changed(nameof(PageTitle)); }
     }
     public bool IsOverview => SelectedPage == 0;
     public bool IsTargets => SelectedPage == 1;
     public bool IsHistory => SelectedPage == 2;
     public bool IsPreferences => SelectedPage == 3;
+    public bool IsHelp => SelectedPage == 4;
+    public string VersionText => typeof(MainWindowViewModel).Assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), false)
+        .OfType<System.Reflection.AssemblyInformationalVersionAttribute>().Single().InformationalVersion;
+    public string KeyboardHelp => $"F1: Help · F5: Start · Shift+F5: Stop · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+1…5: screens · {(OperatingSystem.IsMacOS() ? "Command" : "Ctrl")}+Shift+C: copy target IP · +Shift+I: copy incident. Escape cancels confirmation dialogs or active discovery. Tab/Shift+Tab move between controls; Enter/Space activate focused buttons.";
+    public bool HasSelectedTarget => SelectedTarget is not null;
     public GroupRow? SelectedGroup
     {
         get => selectedGroup;
@@ -184,7 +194,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     public TargetRow? SelectedTarget
     {
         get => selectedTarget;
-        set { if (!Set(ref selectedTarget, value)) return; TargetName = value?.Name ?? ""; TargetAddress = value?.Address ?? ""; TargetGroup = SelectedGroup; }
+        set { if (!Set(ref selectedTarget, value)) return; TargetName = value?.Name ?? ""; TargetAddress = value?.Address ?? ""; TargetGroup = SelectedGroup; Changed(nameof(HasSelectedTarget)); }
     }
     public OutageRow? SelectedOutage
     {
@@ -214,6 +224,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         recoveryRequired = result.NeedsRecovery; loaded = !result.NeedsRecovery;
         if (result.Configuration is { } config) SetConfiguration(config);
         Message = result.Error ?? service.PersistenceError ?? PreferencesError ?? (Groups.Count == 0 ? "No groups configured. Add a group or restore original defaults. No probes run until Start." : "Configuration loaded. Monitoring stays stopped until Start.");
+        await RequestTimelineRefresh();
     });
 
     public Task StartAsync() => ExecuteAsync(async () =>
@@ -312,6 +323,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         PrefAutoStart = SavedPreferences.MonitorOnLaunch; PrefOutage = SavedPreferences.NotifyOutages;
         PrefRecovery = SavedPreferences.NotifyRecovery; PrefErrors = SavedPreferences.NotifyErrors;
         PrefNative = SavedPreferences.NativeNotifications; PrefLogs = SavedPreferences.AutomaticLogs;
+        PrefFocus = SavedPreferences.FocusOnConfirmedEvents;
         PrefLogDirectory = SavedPreferences.LogDirectory; PrefRetentionDays = SavedPreferences.RetentionDays.ToString(CultureInfo.InvariantCulture);
     }
     public Task SavePreferencesAsync(bool recover = false, bool confirmRetention = false) => ExecuteAsync(async () =>
@@ -321,7 +333,8 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         if (days > 0 && !confirmRetention) throw new InvalidOperationException("Confirm automatic history deletion before enabling retention.");
         var next = SavedPreferences with { ConfirmExit = PrefConfirmExit, AlwaysOnTop = PrefTopmost, MinimizeToTray = PrefTray,
             LaunchMinimized = PrefMinimized, MonitorOnLaunch = PrefAutoStart, NotifyOutages = PrefOutage, NotifyRecovery = PrefRecovery,
-            NotifyErrors = PrefErrors, NativeNotifications = PrefNative, AutomaticLogs = PrefLogs, LogDirectory = PrefLogDirectory.Trim(), RetentionDays = days };
+            NotifyErrors = PrefErrors, NativeNotifications = PrefNative, AutomaticLogs = PrefLogs, LogDirectory = PrefLogDirectory.Trim(), RetentionDays = days,
+            FocusOnConfirmedEvents = PrefFocus };
         next.Validate(); await preferencesStore.SaveAsync(next, recover); SavedPreferences = next; PreferencesError = null;
         await service.SetAutomaticRetentionAsync(days);
         await RefreshStorageAsync(force: true);
@@ -393,8 +406,13 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     private Task WriteAutomaticLogsAsync() => SavedPreferences.AutomaticLogs && service.HistoryReady ? ExportAutomaticAsync() : Task.CompletedTask;
     private async Task ExportAutomaticAsync() => await AutomaticLogExporter.WriteAsync(SavedPreferences.LogDirectory, await service.ReadArchiveAsync());
     public Task ExportAsync(Stream destination) => ExecuteAsync(async () =>
-    { await CsvExporter.WriteAsync(destination, service.Capture().Outages); Message = "Outage CSV exported with UTC timestamps. Empty recovery fields mean no recovery was observed."; });
+    {
+        try { await service.ExportIncidentsAsync(destination); }
+        catch (Exception ex) { throw new IOException($"CSV export did not complete; the destination may be partial. Source history is preserved. {ex.Message}", ex); }
+        Message = "Outage CSV exported with UTC timestamps. Empty recovery fields mean no recovery was observed.";
+    });
     public void ReportError(string error) => Message = error;
+    public void ReportInformation(string information) => Message = information;
 
     private async Task SaveConfigurationAsync(MonitorConfiguration config, Guid? selectedGroupId = null, Guid? selectedTargetId = null, bool recoverInvalid = false)
     {
@@ -446,6 +464,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
             AlertBanner = $"In-app alert — {notification.Title}: {notification.Body}";
             if (SavedPreferences.NativeNotifications) alertDelivery.Enqueue(notification);
         }
+        if (alertPolicy.ShouldFocus(snapshot.Events, SavedPreferences.FocusOnConfirmedEvents)) FocusRequested?.Invoke(this, EventArgs.Empty);
         if (service.PersistenceError is { } storageError && storageError != lastStorageAlert && SavedPreferences.NotifyErrors)
         {
             lastStorageAlert = storageError; AlertBanner = $"In-app storage alert — {storageError}";
@@ -456,12 +475,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         foreach (var g in Groups) g.Apply(snapshot.Groups.FirstOrDefault(s => s.Id == g.Id), IsRunning);
         if (seenHistory != snapshot.HistoryRevision)
         {
-            foreach (var removed in Outages.Where(o => !snapshot.Outages.Any(r => r.Id == o.Id)).ToArray()) Outages.Remove(removed);
-            foreach (var record in snapshot.Outages)
-            {
-                var row = Outages.FirstOrDefault(o => o.Id == record.Id);
-                if (row is null) Outages.Add(new(record)); else row.Apply(record);
-            }
+            _ = RequestTimelineRefresh(); // One owned read, coalesced; no sample backlog or full-history UI load.
             // No window replacement: the bounded event viewport changes only when the event sequence changes.
             if (!Activity.Select(e => e.Sequence).SequenceEqual(snapshot.Events.Select(e => e.Sequence)))
             {
@@ -482,6 +496,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
     }
     private void NotifyControls()
     {
+        TimelineControlsChanged();
         Changed(nameof(CanDiscover)); Changed(nameof(CanAcceptGateway));
         foreach (var name in new[] { nameof(IsRunning), nameof(CanEdit), nameof(CanStart), nameof(StartGuidance), nameof(CanStop), nameof(CanRecover), nameof(CanReload), nameof(CanComment), nameof(CanExport), nameof(CanPreferences), nameof(CanManageStorage), nameof(CanCleanupHistory) }) Changed(name);
     }
@@ -492,11 +507,13 @@ public sealed partial class MainWindowViewModel : ObservableObject, IAsyncDispos
         // Preserve ownership if Stop times out: caller must keep window open and retry instead of abandoning workers.
         await service.StopAsync(); await WriteAutomaticLogsAsync();
         storageClosing = true;
+        timelineClosing = true;
         try
         {
+            await timelineRead;
             await storageRefresh;
             await service.DisposeAsync(); await alertDelivery.DisposeAsync(); disposed = true; Refresh();
         }
-        finally { if (!disposed) storageClosing = false; }
+        finally { if (!disposed) { storageClosing = false; timelineClosing = false; } }
     }
 }

@@ -6,6 +6,7 @@
   <Grid Name="Workspace" ColumnDefinitions="Auto,*">
     <Border Classes="sidebar">
       <Grid RowDefinitions="Auto,*,Auto" Margin="12,28,12,20">
+        <ScrollViewer Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,16">
         <StackPanel Spacing="28">
           <Grid ColumnDefinitions="Auto,*" Margin="12,0">
             <Border Width="34" Height="34" CornerRadius="10" Background="{DynamicResource AccentSoftBrush}" VerticalAlignment="Center">
@@ -33,6 +34,7 @@
             </ListBox>
           </StackPanel>
         </StackPanel>
+        </ScrollViewer>
         <Border Grid.Row="2" Classes="inset" BorderThickness="1" BorderBrush="{DynamicResource LineBrush}" Padding="14">
           <StackPanel Spacing="8">
             <StackPanel Orientation="Horizontal" Spacing="7"><Ellipse Width="6" Height="6" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Center" /><TextBlock Text="LOCAL FIRST" Classes="eyebrow" /></StackPanel>
@@ -164,6 +166,7 @@ No cloud account required." Classes="caption sidebarCaption" />
                 <ListBox Name="TargetList" ItemsSource="{Binding SelectedGroup.Targets}" SelectedItem="{Binding SelectedTarget, Mode=TwoWay}" MaxHeight="360" AutomationProperties.Name="Monitoring targets">
                   <ListBox.ItemTemplate><DataTemplate x:DataType="local:TargetRow"><StackPanel Spacing="8"><Grid ColumnDefinitions="*,Auto"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" /><TextBlock Grid.Column="1" Text="{Binding Address}" Classes="muted" Margin="12,0,0,0" /></Grid><TextBlock Text="{Binding Status}" FontSize="13" /><TextBlock Text="{Binding Details}" Classes="caption" /></StackPanel></DataTemplate></ListBox.ItemTemplate>
                 </ListBox>
+                <Button Name="CopyTargetAddress" Content="Copy selected target IP" Classes="secondary" Click="CopyTargetClicked" IsEnabled="{Binding HasSelectedTarget}" HorizontalAlignment="Left" />
                 <TextBlock Text="Groups stop after a responding peer. Unprobed targets remain not checked or stale; a group response does not prove that every target is online." Classes="caption" />
               </StackPanel>
             </Border>
@@ -181,10 +184,13 @@ No cloud account required." Classes="caption sidebarCaption" />
           <StackPanel IsVisible="{Binding IsHistory}" Spacing="20">
             <StackPanel Spacing="7"><TextBlock Text="LOCAL EVIDENCE" Classes="eyebrow accent" /><TextBlock Text="Activity and outages" Classes="h1" /><TextBlock Text="Observed incidents, recoveries and the context you add." Classes="muted" /></StackPanel>
             <Border Classes="card"><StackPanel Spacing="14"><TextBlock Text="{Binding HistoryStatus}" /><WrapPanel><Button Classes="primary" Content="Export outages CSV…" Click="ExportClicked" IsEnabled="{Binding CanExport}" Margin="0,0,8,8" /><Button Classes="secondary" Content="Retry history storage" Click="RetryHistoryClicked" Margin="0,0,0,8" /></WrapPanel><TextBlock Text="History and comments survive restart. Stopping observation never implies recovery. Durations begin at outage confirmation; marked gaps mean continuity was uncertain." Classes="caption" /></StackPanel></Border>
-            <Border Classes="card" IsVisible="{Binding HasNoOutages}"><StackPanel Spacing="10"><TextBlock Text="No confirmed outages in your history" Classes="h2" /><TextBlock Text="Confirmed incidents will appear here with their observation times and recovery status. Start monitoring to collect evidence." Classes="muted" /></StackPanel></Border>
-            <ListBox ItemsSource="{Binding Outages}" SelectedItem="{Binding SelectedOutage, Mode=TwoWay}" MaxHeight="360" AutomationProperties.Name="Outage history">
-              <ListBox.ItemTemplate><DataTemplate x:DataType="local:OutageRow"><StackPanel Spacing="8"><TextBlock Text="{Binding GroupName}" FontWeight="SemiBold" /><TextBlock Text="{Binding Summary}" FontSize="13" /><TextBlock Text="{Binding Comment}" Classes="muted" /><TextBlock Text="{Binding Session}" Classes="caption" /></StackPanel></DataTemplate></ListBox.ItemTemplate>
+            <Border Classes="card" IsVisible="{Binding HasNoOutages}"><StackPanel Spacing="10"><TextBlock Text="No incidents in this history range" Classes="h2" /><TextBlock Text="Choose Latest to refresh the range. Start monitoring to collect actual observations; confirmed incidents appear with their recovery or unresolved status." Classes="muted" /></StackPanel></Border>
+            <WrapPanel><Button Name="LatestIncidents" Content="Latest incidents" Classes="secondary" IsEnabled="{Binding CanReadTimeline}" Click="LatestIncidentsClicked" Margin="0,0,8,8" /><Button Name="OlderIncidents" Content="Older incidents" Classes="secondary" IsEnabled="{Binding CanReadOlderIncidents}" Click="OlderIncidentsClicked" Margin="0,0,0,8" /></WrapPanel>
+            <TextBlock Name="TimelineFeedback" Text="{Binding TimelineMessage}" Classes="caption" />
+            <ListBox Name="IncidentTimeline" ItemsSource="{Binding Outages}" SelectedItem="{Binding SelectedOutage, Mode=TwoWay}" MaxHeight="440" AutomationProperties.Name="Incident timeline, newest recorded first">
+              <ListBox.ItemTemplate><DataTemplate x:DataType="local:OutageRow"><Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="3,0,0,0" Padding="14,4"><StackPanel Spacing="8"><TextBlock Text="{Binding GroupName}" FontWeight="SemiBold" /><Border Classes="badge" Classes.connected="{Binding IsRecovered}" Classes.outage="{Binding IsConfirmed}" Classes.warning="{Binding IsEndedUnresolved}" HorizontalAlignment="Left"><TextBlock Text="{Binding State}" /></Border><TextBlock Text="{Binding Summary}" FontSize="13" /><TextBlock Text="{Binding Comment}" Classes="muted" /><TextBlock Text="{Binding Session}" Classes="caption" /><Expander Header="Exact UTC evidence"><TextBlock Text="{Binding Details}" Classes="caption" Margin="12" /></Expander></StackPanel></Border></DataTemplate></ListBox.ItemTemplate>
             </ListBox>
+            <Button Name="CopyIncidentDetails" Content="Copy selected incident details" Classes="secondary" Click="CopyIncidentClicked" IsEnabled="{Binding HasSelectedOutage}" HorizontalAlignment="Left" />
             <Border Classes="card" IsVisible="{Binding HasSelectedOutage}"><StackPanel Spacing="12" IsEnabled="{Binding CanComment}"><TextBlock Text="Incident comment" Classes="h2" /><TextBox Text="{Binding OutageComment, Mode=TwoWay}" AcceptsReturn="True" MaxLength="4000" MinHeight="80" PlaceholderText="Add context for this outage…" AutomationProperties.Name="Outage comment" /><Button Classes="primary" Content="Save comment" Click="SaveCommentClicked" HorizontalAlignment="Left" /></StackPanel></Border>
             <StackPanel Spacing="6"><TextBlock Text="Session activity" Classes="h2" /><TextBlock Text="Latest 500 events · occurrence order · UTC timestamps" Classes="caption" /></StackPanel>
             <ItemsControl ItemsSource="{Binding Activity}">
@@ -218,6 +224,7 @@ No cloud account required." Classes="caption sidebarCaption" />
               <CheckBox Name="PrefTray" IsChecked="{Binding PrefTray, Mode=TwoWay}"><TextBlock Text="Minimize to tray when reliable restoration is available" /></CheckBox>
               <CheckBox Content="Launch minimized" IsChecked="{Binding PrefMinimized, Mode=TwoWay}" />
               <CheckBox Name="PrefAutoStart" IsChecked="{Binding PrefAutoStart, Mode=TwoWay}"><TextBlock Text="Start monitoring on launch (off by default; uses saved targets)" /></CheckBox>
+              <CheckBox Name="PrefFocusEvents" IsChecked="{Binding PrefFocus, Mode=TwoWay}"><TextBlock Text="Bring Synups forward on confirmed outage/recovery (off by default; independent of notifications)" /></CheckBox>
               <TextBlock Name="TrayCapability" Text="Tray initializes when the native window opens." Classes="caption" />
               <TextBlock Text="A taskbar/dock fallback stays available when tray restoration is uncertain. These options apply when Synups starts. OS login/startup registration is not implemented." Classes="caption" />
             </StackPanel></Border>
@@ -238,6 +245,19 @@ No cloud account required." Classes="caption sidebarCaption" />
               <TextBlock Text="0 keeps all history (default). A positive value, 1–3650 days, requires confirmation and deletes only eligible fully ended sessions now, at launch and daily during monitoring. Entire unresolved/interrupted sessions stay. Freed pages are reused." Classes="caption" />
             </StackPanel></Border>
             <WrapPanel IsEnabled="{Binding CanPreferences}"><Button Name="ApplyPreferences" Classes="primary" Content="Apply preferences…" Click="ApplyPreferencesClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Recover unreadable preferences…" Click="RecoverPreferencesClicked" Margin="0,0,0,8" /></WrapPanel>
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsHelp}" Spacing="20">
+            <StackPanel Spacing="7"><TextBlock Text="HELP AND ABOUT" Classes="eyebrow accent" /><TextBlock Text="Keep the evidence" Classes="h1" /><TextBlock Text="Synups monitors the ICMP reachability of the IP groups you configure. It does not infer universal Internet uptime." Classes="muted" /></StackPanel>
+            <Border Classes="card"><StackPanel Spacing="14">
+              <TextBlock Text="Start a useful session" Classes="h2" />
+              <TextBlock Text="1. Add a literal IP you are authorized to monitor. A peer group holds alternative targets; one response establishes group reachability, not the status of every peer. On an empty profile, the Overview saves your first target and enabled group together." />
+              <TextBlock Text="2. In Targets and groups, optionally Discover gateway. This reads OS routes without probing. Preview and confirm before saving. VPN and split routes may change which gateway serves a destination." />
+              <TextBlock Text="3. Choose Start monitoring, or press F5. Stop before editing configuration. Unknown means not checked; stale means a peer was skipped in the latest cycle. ICMP filtering can block replies even when services work. Permission errors remain indeterminate, not confirmed downtime." />
+              <TextBlock Text="4. Activity and outages shows up to 50 incidents per page, with local dates and exact UTC details. Recovery requires a real response. Stop, close or restart cannot manufacture recovery. Add comments, copy details, or export the complete incident CSV." />
+              <TextBlock Text="5. Preferences offers a full SQLite backup, storage limits and opt-in retention. CSV is not a complete database backup. A write error preserves pending evidence in memory: repair storage and Retry; force quit can lose uncommitted data." />
+            </StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12"><TextBlock Text="Keyboard and desktop behavior" Classes="h2" /><TextBlock Text="{Binding KeyboardHelp}" /><TextBlock Text="Closing stops owned workers and saves evidence. Minimize-to-tray requires a reliable restoration path; Linux keeps a taskbar fallback. Focus-on-event is off by default and OS activation policies may refuse foreground focus. In-app alerts are separate from optional native requests, whose actual delivery is controlled by the OS." Classes="caption" /></StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12"><TextBlock Text="About Synups" Classes="h2" /><TextBlock Name="ApplicationVersion" Text="{Binding VersionText}" FontFamily="monospace" /><TextBlock Text="A native Avalonia C#/XAML migration of Bill Menees’ WirePeep. Original MIT licence, attribution and Git ancestry are retained. Built for the 2026 Avalonia Port Challenge; acceptance or endorsement is not implied." /><TextBlock Text="Source: https://github.com/samscript18/Synups · local-first, no backend or account. Windows portable builds are unsigned. Mac ad-hoc integrity is not Developer ID/notarization. Linux physical desktop/Wayland and native OS notification delivery need separate acceptance checks." Classes="caption" /></StackPanel></Border>
           </StackPanel>
         </Grid>
       </ScrollViewer>

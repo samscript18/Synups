@@ -1,0 +1,44 @@
+name: Synups CodeQL
+on:
+  push:
+    branches: [feat/avalonia-migration, master, main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 6 * * 2'
+permissions:
+  contents: read
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: synups/global.json
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: csharp
+          build-mode: manual
+          queries: security-extended
+      - name: Build the actual Synups solution under analysis
+        working-directory: synups
+        run: |
+          dotnet restore ../Synups.slnx --locked-mode --disable-parallel
+          dotnet build ../Synups.slnx -c Release --no-restore -p:UseSharedCompilation=false
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:csharp
+          output: artifacts/codeql
+      - name: Retain SARIF including findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: synups-codeql-${{ github.sha }}
+          path: artifacts/codeql/
+          retention-days: 30

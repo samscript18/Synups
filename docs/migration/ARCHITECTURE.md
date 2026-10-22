@@ -125,3 +125,26 @@ Unpublished0.1.1-rc.1 keeps Core monitoring/persistence unchanged. Desktop Creat
 
 
 Native Windows verification revealed that fresh windows also need the existing safe-placement policy: actual client dimensions can be smaller than requested Width/Height on startup. Fresh geometry is now normalized through DesktopPolicy.Clamp, just like saved placement. Actual apphost checks verify first-target/Add/Stop bounds and yield to native resize before capture; this does not alter monitoring semantics. Headless and all three native checks pass at the final candidate source recorded in CROSS_PLATFORM.md.
+
+
+## Final hardening boundaries
+
+```mermaid
+flowchart LR
+  Routes[Read-only OS default routes] --> Preview[Explicit preview and confirmation]
+  Preview --> Config[Atomic configuration store]
+  Config --> Engine[MonitoringService]
+  Ping[Real IcmpProbe] --> Groups[GroupMonitor]
+  Groups --> Engine
+  Engine --> Store[Owned SQLite history]
+  Store --> Pages[Cursor pages: up to 100 rows]
+  Pages --> VM[Observable timeline: 50 rows]
+  VM --> UI[Avalonia C# / XAML]
+  Engine --> Alerts[Deduplicated alert and focus policy]
+  Alerts --> UI
+  Pages --> CSV[Streaming complete CSV]
+```
+
+The original payload tables and schema version remain. Normal startup reads only recent working state; interrupted-session repair updates unresolved payloads atomically per session in SQL, without loading all outage records. Paging follows recorded occurrence order with rowid cursors and a read high-water mark, preserving evidence even across UTC clock jumps. Retention can remove eligible rows between pages; Latest reloads the range. A page is not a long-lived transaction snapshot across concurrent retention.
+
+Comments on older pages are resolved by stable incident ID inside the evidence gate. Engine working caches prune only committed closed incidents; current active incidents remain. Complete CSV streams pages in occurrence order, independent of the working cache. Explicit full-archive automatic JSON/statistics and retention still materialize historical records and remain separate large-history limits; paginated timeline work does not certify all operations as bounded-memory.
