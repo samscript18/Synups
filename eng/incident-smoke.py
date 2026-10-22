@@ -62,7 +62,10 @@ def main():
         raise RuntimeError('Output must be new; previous evidence is never removed')
     output.mkdir(parents=True)
     assembly = args.worker.resolve()
-    rule = ['OUTPUT', '-d', '127.0.0.1/32', '-p', 'icmp', '--icmp-type', 'echo-request', '-m', 'comment', '--comment', 'synups-isolated-incident', '-j', 'DROP']
+    # LOCAL_OUT drops can make sendto fail with EACCES: that is correctly an
+    # unavailable probe, not an outage. Drop incoming replies instead so the
+    # real request is sent and missing responses produce an actual timeout.
+    rule = ['INPUT', '-s', '127.0.0.1/32', '-d', '127.0.0.1/32', '-p', 'icmp', '--icmp-type', 'echo-reply', '-m', 'comment', '--comment', 'synups-isolated-incident', '-j', 'DROP']
     applied = False
     process = None
     actions = []
@@ -83,7 +86,7 @@ def main():
             namespace_guard()
             subprocess.run(['iptables', '-A']+rule, check=True)
             applied = True
-            actions.append({'action': 'drop_real_loopback_icmp_requests_in_isolated_namespace', 'monotonic_seconds': time.monotonic()})
+            actions.append({'action': 'drop_real_loopback_icmp_replies_in_isolated_namespace', 'monotonic_seconds': time.monotonic()})
             wait_for('outage.ready')
             namespace_guard()
             subprocess.run(['iptables', '-D']+rule, check=True)
@@ -104,6 +107,11 @@ def main():
         record['files_sha256'] = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in output.iterdir() if p.is_file()}
         (output/'namespace-evidence.json').write_text(json.dumps(record, indent=2)+'\n')
         print('REAL_ISOLATED_INCIDENT_RECOVERY_RESTART=PASS', flush=True)
+    except BaseException:
+        console = output/'incident-console.txt'
+        if console.exists():
+            print(console.read_text()[-8000:], flush=True)
+        raise
     finally:
         if applied:
             namespace_guard()

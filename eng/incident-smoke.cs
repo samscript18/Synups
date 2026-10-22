@@ -101,7 +101,12 @@ internal static class IncidentSmoke
                 }
                 exit = 0;
             }
-            catch (Exception ex) { Console.Error.WriteLine(ex); }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                Console.Error.WriteLine(JsonSerializer.Serialize(engine.Capture()));
+                if (window?.IsVisible == true) await CaptureAsync(window, Path.Combine(root, "failure.png"));
+            }
             finally { await Dispatcher.UIThread.InvokeAsync(() => window?.Close()); }
         }
         AppBuilder.Configure(() => new App(() => vm)).UsePlatformDetect().WithInterFont().LogToTrace()

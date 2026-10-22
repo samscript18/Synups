@@ -1,6 +1,6 @@
 # Controlled real ICMP incident protocol
 
-This is a reproducible engineering demonstration, **not simulated measurements and not an Internet outage**. Actual production IcmpProbe and MonitoringService run against 127.0.0.1 inside a disposable Linux network namespace. A namespace-local kernel firewall rule drops actual echo requests after successful connectivity, then is removed after confirmed outage. The user’s host firewall, routes, interfaces and network configuration are never changed.
+This is a reproducible engineering demonstration, **not simulated measurements and not an Internet outage**. Actual production IcmpProbe and MonitoringService run against 127.0.0.1 inside a disposable Linux network namespace. A namespace-local kernel firewall rule drops actual incoming echo replies after successful connectivity, then is removed after confirmed outage. The user’s host firewall, routes, interfaces and network configuration are never changed.
 
 Current execution status: harness compiled locally; real Linux namespace execution pending the exact-source CI. A successful compile or deterministic test is not an incident pass. Final source/run/results and screenshots must be added after actual execution.
 
@@ -32,3 +32,6 @@ Do **not** remove namespace guards or run firewall commands in the host namespac
 - Native client PNGs for healthy, grace, confirmed outage, recovery and restarted history; JSON transition data, namespace/actions/hashes, CSV and console logs retained by CI even on failure.
 
 These are observed loopback ICMP failures/recovery caused by a documented isolated filter, not a real Internet/provider outage or a physical cable/power-loss experiment. A Linux success must not be relabelled as a macOS/Windows incident run. No incident or screenshot is claimed until its actual recorded run passes.
+
+
+First exact-source run7fe86f7 exposed a useful distinction: a namespace-local OUTPUT/drop of requests returned EACCES, correctly classified PermissionDenied/Unavailable, with no invented outage. The controller was corrected to filter incoming echo replies; real requests can then send successfully and expire without replies. Probe/engine semantics were not changed and assertions remain strict. Windows guard tests also needed create=True when mocking the Unix-only geteuid symbol; the Linux host-namespace guard itself was not relaxed. Failed run/logs are preserved and not counted as a demonstration pass.
