@@ -22,9 +22,9 @@ public class IncidentPagingTests
                 await edit.OpenAsync(TestContext.Current.CancellationToken); using var command = edit.CreateCommand();
                 command.CommandText="UPDATE outages SET payload='{bad' WHERE id=$id"; command.Parameters.AddWithValue("$id",data.Rows[0].Id.ToString()); command.ExecuteNonQuery();
             }
-            var bytes = await File.ReadAllBytesAsync(path, TestContext.Current.CancellationToken);
+            var bytes = await ReadDatabaseBytesAsync(path);
             await Assert.ThrowsAsync<System.Text.Json.JsonException>(() => store.ReadIncidentPageAsync(new(50, OldestFirst:true)));
-            Assert.Equal(bytes, await File.ReadAllBytesAsync(path, TestContext.Current.CancellationToken));
+            Assert.Equal(bytes, await ReadDatabaseBytesAsync(path));
             Assert.Equal(50,(await store.ReadIncidentPageAsync(new(50))).Items.Count);
             var vm = new MainWindowViewModel(new MonitoringService(new ScriptedProbe(), history: store), new ConfigurationStore(Path.Combine(Path.GetDirectoryName(path)!,"config.json")));
             try
@@ -32,12 +32,22 @@ public class IncidentPagingTests
                 await vm.InitializeAsync(); vm.PrefLogs = false; await vm.SavePreferencesAsync();
                 await using var csv = new MemoryStream(); await vm.ExportAsync(csv);
                 Assert.Contains("destination may be partial", vm.Message); Assert.Contains("Source history is preserved", vm.Message);
-                Assert.Equal(bytes, await File.ReadAllBytesAsync(path, TestContext.Current.CancellationToken));
+                Assert.Equal(bytes, await ReadDatabaseBytesAsync(path));
             }
             finally { await vm.DisposeAsync(); }
         }
         finally { if (Directory.Exists(Path.GetDirectoryName(path))) Directory.Delete(Path.GetDirectoryName(path)!,true); }
     }
+    // SQLite retains an open read/write handle. Permit that handle on Windows while
+    // comparing bytes at quiescent boundaries; these reads do not mutate the store.
+    private static async Task<byte[]> ReadDatabaseBytesAsync(string path)
+    {
+        await using var input = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
+        await using var copy = new MemoryStream();
+        await input.CopyToAsync(copy, TestContext.Current.CancellationToken);
+        return copy.ToArray();
+    }
+
     private static (SessionRecord Session, OutageRecord[] Rows) Fixture(int count, bool interrupted = false)
     {
         var utc = new DateTimeOffset(2026, 10, 20, 12, 0, 0, TimeSpan.Zero); var id = Guid.NewGuid();
