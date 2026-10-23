@@ -1,0 +1,30 @@
+{
+  "source_revision": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+  "ci": "https://github.com/samscript18/Synups/actions/runs/39896104073",
+  "packages": [
+    {
+      "file": "Synups-win-x64.zip",
+      "sha256": "13d62339917301a0e1e79d9aaf47401c986d34ca4fb913afdf0819ce32c639b9",
+      "bytes": 49432018,
+      "manifest_file_count": 277,
+      "source": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+      "signing": "No publisher signature; not an installer."
+    },
+    {
+      "file": "Synups-linux-x64.tar.gz",
+      "sha256": "f5f290c3f1e404dc1e594fc6d198471bc89ffed7e5a1d731046d19acdf10520e",
+      "bytes": 46537675,
+      "manifest_file_count": 275,
+      "source": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+      "signing": "No publisher signature; not an installer."
+    },
+    {
+      "file": "Synups-osx-arm64.tar.gz",
+      "sha256": "541f8e08cd79a1ab5632e8d9280e81b4eb759a0ee1bbac0bac2fb82998a2d926",
+      "bytes": 46548195,
+      "manifest_file_count": 322,
+      "source": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+      "signing": "Ad-hoc signed for bundle integrity only; no Developer ID identity, no notarization, no trusted publisher claim."
+    }
+  ]
+}

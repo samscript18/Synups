@@ -1,0 +1,20 @@
+[
+  {
+    "file": "artifacts/hardening/large-export-fixtures/Synups-evidence-9c7514c72aa647dbbcce3250f1e05a4a-89f2677b0c40407c927ff43a3d82934e/evidence.pdf",
+    "sha256": "eb451e81c031f2af0989a914124d6c5d9270ebe06f5b319f44b99c6dc0439f1c",
+    "pages": 157,
+    "all_character_bounds_valid": true,
+    "all_page_footers_valid": true,
+    "fixture_unredacted": true,
+    "unicode_policy": "UTF-16 escapes visible in portable PDF; Markdown retains native Unicode"
+  },
+  {
+    "file": "artifacts/hardening/large-export-fixtures/Synups-evidence-9c7514c72aa647dbbcce3250f1e05a4a-c711fe39d38d41048b03a8f24a25db6e/evidence.pdf",
+    "sha256": "95eb4414ace14a43bb5b72885ace80d5a3e1a13f254381ad3369bbc6ec5caa76",
+    "pages": 63,
+    "all_character_bounds_valid": true,
+    "all_page_footers_valid": true,
+    "fixture_unredacted": false,
+    "unicode_policy": "UTF-16 escapes visible in portable PDF; Markdown retains native Unicode"
+  }
+]

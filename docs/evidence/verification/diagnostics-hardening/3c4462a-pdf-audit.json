@@ -1,0 +1,145 @@
+{
+  "source": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+  "pdf_count": 17,
+  "total_pages": 687,
+  "native_export_pages": 27,
+  "large_fixture_pages": 660,
+  "checks": [
+    {
+      "file": "linux-x64/diagnostic-e2e/Synups-evidence-7132b96c42e143b19845dd39fba93c96-d49d8d77415c48e58d6fbc91f1e2bf81/evidence.pdf",
+      "sha256": "c6b308e336de8ed6b93cdc2fe02b190b03dead052017ddde1f97fde67ab52d7e",
+      "pages": 2,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "linux-x64/diagnostic-e2e/Synups-evidence-b1b6526308f5467e9afa2b15af3f7e02-33b685e643f44da1a62dcc2246071f25/evidence.pdf",
+      "sha256": "cbe1fc773518f9eafe5fb735c502b8bbdbadf6417c5e2e1dbdfed6fbe7deb6cb",
+      "pages": 2,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "linux-x64/incident/Synups-evidence-2803cb81227848c787927ba4c37fdb01-06b08f67386a4dabb1a461281e0c9514/evidence.pdf",
+      "sha256": "85bdedc9ebbd9276766be77d6d5ca3934d692e06d6d19f5dcda4e729d0be6aae",
+      "pages": 2,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "linux-x64/incident/Synups-evidence-2803cb81227848c787927ba4c37fdb01-4bdd96392aab4ad99fc71528bb9bb2f6/evidence.pdf",
+      "sha256": "87be3b0b4b78a008de55138338742f7e2a15c7e2989ce134c6584de706f1d560",
+      "pages": 2,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "linux-x64/large-export-fixtures/Synups-evidence-e3abe53b8b4b40d1ac21354e4f926a93-0d24801bf661467aae3aaa7f5c2107e4/evidence.pdf",
+      "sha256": "390f409fd231836df9377013cec1f09df19acd12404309571ccff0726f91bcd3",
+      "pages": 157,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": true
+    },
+    {
+      "file": "linux-x64/large-export-fixtures/Synups-evidence-e3abe53b8b4b40d1ac21354e4f926a93-3104866cb59343169e56767c103e8079/evidence.pdf",
+      "sha256": "ff3178c17acbb32c52283a29b20d521b35e9de5129435541672da539376653fc",
+      "pages": 63,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": true
+    },
+    {
+      "file": "linux-x64/published-apphost/reports/Synups-evidence-d6d16692f26248ac85c30decbf0a3849-4c79e21f89e3486781ed5746c46877be/evidence.pdf",
+      "sha256": "c7e52cb76bdd32a9b1791d17ddc25f88faf0515f07184055006d04b4fac1c85c",
+      "pages": 2,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "osx-arm64/diagnostic-e2e/Synups-evidence-6f07471feeda424e9508ae82972b3263-b2ca3fc9ebd84fef9d23ed1a3bcb06cb/evidence.pdf",
+      "sha256": "38f5e09cda00b048142aa00725aa1e9c5d15e2944b861f4570a04b56e339a0d7",
+      "pages": 2,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "osx-arm64/diagnostic-e2e/Synups-evidence-b0fc95371ca547d0b3b2a00db3c66842-79d9272094304e56a7927c26daa7c657/evidence.pdf",
+      "sha256": "0b6308c49adebd2a875ecd92dd642d5f44c078bb51b3158c437ae99526385c55",
+      "pages": 3,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "osx-arm64/large-export-fixtures/Synups-evidence-36a0c4ed5e344160935cddded2ecd9f8-19c2d7a9a1b44cc4ae133b703d39b891/evidence.pdf",
+      "sha256": "f3786ad83dc71f995a316cd9d255b0a199a7ed29ef82d7938024e4798d45e28f",
+      "pages": 157,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": true
+    },
+    {
+      "file": "osx-arm64/large-export-fixtures/Synups-evidence-36a0c4ed5e344160935cddded2ecd9f8-26c8e10b6b5140b2b37ce193608195cf/evidence.pdf",
+      "sha256": "c145a4b057684077f70de06c2d1a27f96912d30069b4adad5c79c1547e8c5315",
+      "pages": 63,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": true
+    },
+    {
+      "file": "osx-arm64/published-apphost/reports/Synups-evidence-21e8a362393549818a0862e603a7bf25-263e8da7e11b4313ab07f1b122d84afa/evidence.pdf",
+      "sha256": "d11f84b17934907583c38b132c821ab220a234ef5942e888c71a0c90e603e129",
+      "pages": 2,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "win-x64/diagnostic-e2e/Synups-evidence-6e9a57fe48154e4b91d9d7cf60d98c2e-fda6610a1f4943e19a878dbf7088dfbd/evidence.pdf",
+      "sha256": "7366af011bed14343c3b74585b4c00466549258a76a8d5b967dadce8d41a40b2",
+      "pages": 4,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "win-x64/diagnostic-e2e/Synups-evidence-cd7104edd0c34148821b41d88deec14a-82063e7ad2454dc5a36a6fa0166b25f1/evidence.pdf",
+      "sha256": "b3fd782c6aa9501fd99a9765f0adb4ff15cf8dc9783baefc7d521727200b577d",
+      "pages": 3,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    },
+    {
+      "file": "win-x64/large-export-fixtures/Synups-evidence-0bab082360c44d9f89668699fe24d2cb-2988f81c370a481d83eca158c1a61557/evidence.pdf",
+      "sha256": "8d56a4ac672fa7b32ba239c96b08db5fa3364bafb89dbce969b1505b73061ede",
+      "pages": 63,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": true
+    },
+    {
+      "file": "win-x64/large-export-fixtures/Synups-evidence-0bab082360c44d9f89668699fe24d2cb-90ed17e651054ea8a96ea5ad55472416/evidence.pdf",
+      "sha256": "5b048b48727a201c628726ae38e734fe76bc6b51664a7d3a84dc40a018d1f744",
+      "pages": 157,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": true
+    },
+    {
+      "file": "win-x64/published-apphost/reports/Synups-evidence-ecfb10f385904d2c94d29fe97fbf947f-4c8d2676adc2451d913a233071f74c8e/evidence.pdf",
+      "sha256": "e6165f1acf96cc38498df7777e0f3f3cebe0008b60ebe6cb4d5a832dbebba979",
+      "pages": 3,
+      "all_character_bounds_valid": true,
+      "all_page_footers_valid": true,
+      "test_fixture": false
+    }
+  ]
+}

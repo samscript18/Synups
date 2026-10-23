@@ -1,0 +1,1380 @@
+{
+  "version": 1,
+  "source_revision": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+  "ci": "https://github.com/samscript18/Synups/actions/runs/39896104073",
+  "jobs": [
+    {
+      "name": "coverage",
+      "id": 120226822691,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/samscript18/Synups/actions/runs/39896104073/job/120226822691"
+    },
+    {
+      "name": "build-test-publish (macos-15, osx-arm64)",
+      "id": 120226822809,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/samscript18/Synups/actions/runs/39896104073/job/120226822809"
+    },
+    {
+      "name": "additional-builds (linux-arm64)",
+      "id": 120226822866,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/samscript18/Synups/actions/runs/39896104073/job/120226822866"
+    },
+    {
+      "name": "additional-builds (osx-x64)",
+      "id": 120226822877,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/samscript18/Synups/actions/runs/39896104073/job/120226822877"
+    },
+    {
+      "name": "build-test-publish (ubuntu-24.04, linux-x64)",
+      "id": 120226822896,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/samscript18/Synups/actions/runs/39896104073/job/120226822896"
+    },
+    {
+      "name": "build-test-publish (windows-latest, win-x64)",
+      "id": 120226822999,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/samscript18/Synups/actions/runs/39896104073/job/120226822999"
+    }
+  ],
+  "platforms": [
+    {
+      "rid": "coverage",
+      "artifact_sha256": "591c541ca1ca4149ac99d2747ffdf0a3919dbd2611a3555bb666da90c4cdb6ba",
+      "artifact_id": 12476588763,
+      "tests": [
+        {
+          "file": "_runnervm8k3b6_2026-10-23_03_39_33_net10.0.trx",
+          "total": 251,
+          "passed": 244,
+          "failed": 0,
+          "skipped": 7,
+          "sha256": "98c43ccb9b6b3238ad20a361a57652738e7d4801ba9bc065f624969b76126096"
+        }
+      ],
+      "packages": []
+    },
+    {
+      "rid": "win-x64",
+      "artifact_sha256": "41acabd557861da8ad1c2f0651322f4bdcca5e3e892249a1ddd7a42adc000183",
+      "artifact_id": 12476758760,
+      "tests": [
+        {
+          "file": "tests/runneradmin_runnervm0xl3a_2026-10-23_03_40_44_net10.0.trx",
+          "total": 251,
+          "passed": 243,
+          "failed": 0,
+          "skipped": 8,
+          "sha256": "81d9cb79d01fac65e23eb31d916a3d2a564579672ee8c4ef21a0c153bd98bf0a"
+        },
+        {
+          "file": "real-network/runneradmin_runnervm0xl3a_2026-10-23_03_41_20_net10.0.trx",
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "sha256": "afccbb6485c1f6dc5491a6e1efe8592e4f1cacecd0760998c9b91c95c5704631"
+        },
+        {
+          "file": "audio/runneradmin_runnervm0xl3a_2026-10-23_03_41_45_net10.0.trx",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "sha256": "0bca222f09c949870c13edffece794dc6059cabf267eaa3061dc7812e3f4042c"
+        }
+      ],
+      "packages": [
+        {
+          "file": "Synups-win-x64.zip",
+          "sha256": "13d62339917301a0e1e79d9aaf47401c986d34ca4fb913afdf0819ce32c639b9",
+          "bytes": 49432018,
+          "manifest_file_count": 277,
+          "source": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+          "signing": "No publisher signature; not an installer."
+        }
+      ],
+      "os": "Microsoft Windows 10.0.26100",
+      "runtime": "10.0.13",
+      "actual_ui_actions": [
+        {
+          "action": "actual_apphost_launch_minimized_argument",
+          "passed": true,
+          "utc": "2026-10-23T03:42:04.4101762+00:00",
+          "observed": {
+            "WindowState": 1,
+            "IsVisible": true,
+            "IsRunning": false
+          }
+        },
+        {
+          "action": "actual_native_window_created",
+          "passed": true,
+          "utc": "2026-10-23T03:42:04.4348654+00:00",
+          "observed": {
+            "Title": "Synups \u2014 Network reliability",
+            "IsVisible": true,
+            "Width": 1024,
+            "Height": 720,
+            "RenderScaling": 1,
+            "native_descriptor": "HWND",
+            "native_handle_present": true,
+            "window_icon_loaded": true
+          }
+        },
+        {
+          "action": "passive_startup_without_network_configuration",
+          "passed": true,
+          "utc": "2026-10-23T03:42:04.4394464+00:00",
+          "observed": null
+        },
+        {
+          "action": "first_run_controls_fit_native_viewport",
+          "passed": true,
+          "utc": "2026-10-23T03:42:04.6585619+00:00",
+          "observed": null
+        },
+        {
+          "action": "fresh_profile_one_action_setup_without_probing",
+          "passed": true,
+          "utc": "2026-10-23T03:42:04.7778783+00:00",
+          "observed": null
+        },
+        {
+          "action": "read_only_native_gateway_preview_without_config_or_probe",
+          "passed": true,
+          "utc": "2026-10-23T03:42:05.8136106+00:00",
+          "observed": {
+            "GatewayStatus": 0,
+            "Count": 1,
+            "DiscoveryMessage": "Read-only OS default-route snapshot. Select and confirm an address; no target or probe was created. VPN/split routes may override particular destinations. A gateway response does not prove Internet availability."
+          }
+        },
+        {
+          "action": "bound_controls_crud_groups_targets_validation_and_stable_ids",
+          "passed": true,
+          "utc": "2026-10-23T03:42:06.8618113+00:00",
+          "observed": {
+            "group_id": "a6dc1e3b-562f-48a0-91c6-03190c97d2b5",
+            "target_id": "22a4cf8c-e9c9-4811-867d-5c8b3edba680"
+          }
+        },
+        {
+          "action": "actual_native_clipboard_target_ip",
+          "passed": true,
+          "utc": "2026-10-23T03:42:06.912747+00:00",
+          "observed": {
+            "address": "127.0.0.1",
+            "Id": "22a4cf8c-e9c9-4811-867d-5c8b3edba680"
+          }
+        },
+        {
+          "action": "actual_native_clipboard_value_and_tsv_row_unknown_preserved",
+          "passed": true,
+          "utc": "2026-10-23T03:42:06.9477769+00:00",
+          "observed": null
+        },
+        {
+          "action": "programmatic_help_shortcut_and_real_version",
+          "passed": true,
+          "utc": "2026-10-23T03:42:07.1458154+00:00",
+          "observed": "0.2.0-alpha.1+3c4462a71cbb90032603cd3eaf4366c2561474d7"
+        },
+        {
+          "action": "genuine_windows_legacy_fixture_preview_confirm_backup_import",
+          "passed": true,
+          "utc": "2026-10-23T03:42:07.4852492+00:00",
+          "observed": {
+            "sourceHash": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1",
+            "groups": 1,
+            "targets": 15,
+            "no_probe_started": true
+          }
+        },
+        {
+          "action": "actual_diagnostics_workspace_confirmed_loopback_session",
+          "passed": true,
+          "utc": "2026-10-23T03:42:09.5225576+00:00",
+          "observed": {
+            "Id": "ecfb10f3-8590-4d2c-94d2-9fe97fbf947f",
+            "State": 2,
+            "tcp_listener_port": 54573,
+            "accepted_connections": 1,
+            "results": [
+              {
+                "Kind": 0,
+                "Outcome": 0,
+                "Method": "System hostname resolution (if needed), then one Socket.ConnectAsync TCP handshake; no raw SYN probing",
+                "ElapsedMilliseconds": 3.8638,
+                "Error": null
+              },
+              {
+                "Kind": 2,
+                "Outcome": 0,
+                "Method": "ICMP echo; samples=3; interval=100ms; timeout=500ms; payload=0 bytes",
+                "ElapsedMilliseconds": 251.1477,
+                "Error": null
+              },
+              {
+                "Kind": 4,
+                "Outcome": 0,
+                "Method": "ICMP echo TTL/hop-limit=1..4; probes/hop<=1; timeout=500ms; RTT=monotonic send-to-reply elapsed (includes local scheduling); payload=0 bytes",
+                "ElapsedMilliseconds": 14.9678,
+                "Error": null
+              },
+              {
+                "Kind": 3,
+                "Outcome": 0,
+                "Method": "Read-only .NET interface enumeration and native OS default-route discovery; no probes or configuration changes",
+                "ElapsedMilliseconds": 914.8557,
+                "Error": null
+              }
+            ],
+            "dns": "Explicitly excluded: no public target or resolver queried",
+            "privilege_limited_outcomes": []
+          }
+        },
+        {
+          "action": "actual_diagnostic_json_markdown_pdf_export_redaction_and_hashes",
+          "passed": true,
+          "utc": "2026-10-23T03:42:09.8327957+00:00",
+          "observed": {
+            "session_id": "ecfb10f3-8590-4d2c-94d2-9fe97fbf947f",
+            "bundle": "D:\\a\\Synups\\Synups\\artifacts\\published-apphost\\reports\\Synups-evidence-ecfb10f385904d2c94d29fe97fbf947f-4c8d2676adc2451d913a233071f74c8e",
+            "artifact_names": [
+              "evidence.json",
+              "evidence.md",
+              "evidence.pdf",
+              "manifest.json"
+            ],
+            "pdf": "Real generated artifact signature verified; independent visual QA remains separate",
+            "native_folder_picker": "Not automated; direct VM export to isolated approved verification directory"
+          }
+        },
+        {
+          "action": "real_icmp_and_live_ui",
+          "passed": true,
+          "utc": "2026-10-23T03:42:20.0727759+00:00",
+          "observed": {
+            "LastMeasurementUtc": "2026-10-23T03:42:19.9891529+00:00",
+            "summary": "Session: 1 active groups \u00b7 1 connected \u00b7 0 confirmed unresolved outages \u00b7 0 unavailable \u00b7 0 not checked.",
+            "targets": [
+              {
+                "Id": "22a4cf8c-e9c9-4811-867d-5c8b3edba680",
+                "CheckedAtUtc": "2026-10-23T03:42:19.9891529+00:00",
+                "LastSuccessUtc": "2026-10-23T03:42:19.9891529+00:00",
+                "Outcome": 1,
+                "LatencyMilliseconds": 0
+              }
+            ],
+            "diagnostics": {
+              "ActiveGroupWorkers": 1,
+              "CompletedPolls": 21,
+              "PendingEvidenceBatches": 0
+            }
+          }
+        },
+        {
+          "action": "programmatic_tab_focus_and_minimum_layout",
+          "passed": true,
+          "utc": "2026-10-23T03:42:20.7487128+00:00",
+          "observed": {
+            "focused": "Button",
+            "width": 820,
+            "height": 560
+          }
+        },
+        {
+          "action": "stop_drains_workers_without_recovery",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.0027686+00:00",
+          "observed": {
+            "ActiveGroupWorkers": 0,
+            "CompletedPolls": 22,
+            "PendingEvidenceBatches": 0
+          }
+        },
+        {
+          "action": "csv_export_service_empty_header",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.0384064+00:00",
+          "observed": {
+            "outage_rows": 0,
+            "native_file_picker": "not automated"
+          }
+        },
+        {
+          "action": "fixed_log_naming_and_pane_sizes_applied",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.2237464+00:00",
+          "observed": {
+            "LogNaming": 3,
+            "GroupPaneHeight": 180,
+            "TargetPaneHeight": 320,
+            "IncidentPaneHeight": 380
+          }
+        },
+        {
+          "action": "preferences_topmost_alerts_and_explicit_autostart_saved",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.2238133+00:00",
+          "observed": {
+            "Topmost": true,
+            "MonitorOnLaunch": true,
+            "ConfirmExit": true,
+            "NativeAlertStatus": "Windows native notification delivery is not verified; accessible in-app alerts remain available. Native notifications are opt-in. In-app alerts are separate."
+          }
+        },
+        {
+          "action": "secondary_apphost_request_completed",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.7308672+00:00",
+          "observed": {
+            "previousActivations": 0,
+            "current_activations": 1,
+            "IsVisible": true,
+            "WindowState": 0
+          }
+        },
+        {
+          "action": "second_actual_apphost_restores_existing_instance",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.7310954+00:00",
+          "observed": {
+            "minimized_visible": false,
+            "activation_count": 1,
+            "IsVisible": true,
+            "WindowState": 0
+          }
+        },
+        {
+          "action": "exit_confirmation_cancel_keeps_window_open",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.8574241+00:00",
+          "observed": null
+        },
+        {
+          "action": "normal_close_requested",
+          "passed": true,
+          "utc": "2026-10-23T03:42:21.8924892+00:00",
+          "observed": "External launcher must verify exit code and durable session end."
+        }
+      ],
+      "native_ui_launched": true,
+      "launches": [
+        {
+          "stage": "exercise",
+          "pid": 8916,
+          "started_utc": "2026-10-23T03:42:01.903157+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 1,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "restart",
+          "pid": 3792,
+          "started_utc": "2026-10-23T03:42:22.209956+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 2,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "interruption",
+          "pid": 3884,
+          "started_utc": "2026-10-23T03:42:37.051431+00:00",
+          "exit_code": 1,
+          "expected_external_termination": true,
+          "durable_sessions": 3,
+          "actual_outages": 0,
+          "status": "ready-for-termination"
+        },
+        {
+          "stage": "recover",
+          "pid": 2748,
+          "started_utc": "2026-10-23T03:42:51.132025+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-error",
+          "pid": 8656,
+          "started_utc": "2026-10-23T03:43:05.854786+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-recovered",
+          "pid": 8684,
+          "started_utc": "2026-10-23T03:43:08.273310+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 5,
+          "actual_outages": 0,
+          "status": "passed"
+        }
+      ],
+      "package_sha256": "13d62339917301a0e1e79d9aaf47401c986d34ca4fb913afdf0819ce32c639b9",
+      "apphost_sha256": "8896aeec0ad08a797aae775112e5de7d06a0065ca42b9befde5bc467e2fa4437",
+      "actual_published_apphost": true
+    },
+    {
+      "rid": "linux-x64",
+      "artifact_sha256": "97fcdf2864e102d49110162d107775b77a67b54da5afc48f4c08c6aee1f4f541",
+      "artifact_id": 12476514419,
+      "tests": [
+        {
+          "file": "tests/_runnervm8k3b6_2026-10-23_03_40_04_net10.0.trx",
+          "total": 251,
+          "passed": 244,
+          "failed": 0,
+          "skipped": 7,
+          "sha256": "645a0a0de5a5b710e59d35167301f5a91e7f114782502126d86609ef793a37f2"
+        },
+        {
+          "file": "audio/_runnervm8k3b6_2026-10-23_03_40_33_net10.0.trx",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "sha256": "5445a172ffe0103bcab6531ab3db84c76cace0b7977164803bde3a64ef7b616f"
+        },
+        {
+          "file": "real-network/_runnervm8k3b6_2026-10-23_03_40_17_net10.0.trx",
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "sha256": "673b7e56ae204af8150133328f64aca85197e300c0a25203c612a09bf9343b6e"
+        }
+      ],
+      "packages": [
+        {
+          "file": "Synups-linux-x64.tar.gz",
+          "sha256": "f5f290c3f1e404dc1e594fc6d198471bc89ffed7e5a1d731046d19acdf10520e",
+          "bytes": 46537675,
+          "manifest_file_count": 275,
+          "source": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+          "signing": "No publisher signature; not an installer."
+        }
+      ],
+      "os": "Ubuntu 24.04.5 LTS",
+      "runtime": "10.0.13",
+      "actual_ui_actions": [
+        {
+          "action": "actual_apphost_launch_minimized_argument",
+          "passed": true,
+          "utc": "2026-10-23T03:40:58.2465941+00:00",
+          "observed": {
+            "WindowState": 1,
+            "IsVisible": true,
+            "IsRunning": false
+          }
+        },
+        {
+          "action": "actual_native_window_created",
+          "passed": true,
+          "utc": "2026-10-23T03:40:58.3090092+00:00",
+          "observed": {
+            "Title": "Synups \u2014 Network reliability",
+            "IsVisible": true,
+            "Width": 1180,
+            "Height": 840,
+            "RenderScaling": 1,
+            "native_descriptor": "XID",
+            "native_handle_present": true,
+            "window_icon_loaded": true
+          }
+        },
+        {
+          "action": "passive_startup_without_network_configuration",
+          "passed": true,
+          "utc": "2026-10-23T03:40:58.3138131+00:00",
+          "observed": null
+        },
+        {
+          "action": "first_run_controls_fit_native_viewport",
+          "passed": true,
+          "utc": "2026-10-23T03:40:58.5234427+00:00",
+          "observed": null
+        },
+        {
+          "action": "fresh_profile_one_action_setup_without_probing",
+          "passed": true,
+          "utc": "2026-10-23T03:40:58.6292116+00:00",
+          "observed": null
+        },
+        {
+          "action": "read_only_native_gateway_preview_without_config_or_probe",
+          "passed": true,
+          "utc": "2026-10-23T03:40:58.8076716+00:00",
+          "observed": {
+            "GatewayStatus": 0,
+            "Count": 1,
+            "DiscoveryMessage": "Read-only OS default-route snapshot. Select and confirm an address; no target or probe was created. VPN/split routes may override particular destinations. A gateway response does not prove Internet availability."
+          }
+        },
+        {
+          "action": "bound_controls_crud_groups_targets_validation_and_stable_ids",
+          "passed": true,
+          "utc": "2026-10-23T03:40:59.7201741+00:00",
+          "observed": {
+            "group_id": "6680ebda-77ff-411f-9809-0fb66668380e",
+            "target_id": "4d1ebb48-1517-48cf-8d04-b4c245744f16"
+          }
+        },
+        {
+          "action": "actual_native_clipboard_target_ip",
+          "passed": true,
+          "utc": "2026-10-23T03:40:59.7485153+00:00",
+          "observed": {
+            "address": "127.0.0.1",
+            "Id": "4d1ebb48-1517-48cf-8d04-b4c245744f16"
+          }
+        },
+        {
+          "action": "actual_native_clipboard_value_and_tsv_row_unknown_preserved",
+          "passed": true,
+          "utc": "2026-10-23T03:40:59.7786062+00:00",
+          "observed": null
+        },
+        {
+          "action": "programmatic_help_shortcut_and_real_version",
+          "passed": true,
+          "utc": "2026-10-23T03:40:59.993115+00:00",
+          "observed": "0.2.0-alpha.1+3c4462a71cbb90032603cd3eaf4366c2561474d7"
+        },
+        {
+          "action": "genuine_windows_legacy_fixture_preview_confirm_backup_import",
+          "passed": true,
+          "utc": "2026-10-23T03:41:00.3277096+00:00",
+          "observed": {
+            "sourceHash": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1",
+            "groups": 1,
+            "targets": 15,
+            "no_probe_started": true
+          }
+        },
+        {
+          "action": "actual_diagnostics_workspace_confirmed_loopback_session",
+          "passed": true,
+          "utc": "2026-10-23T03:41:01.1111689+00:00",
+          "observed": {
+            "Id": "d6d16692-f262-48ac-85c3-0decbf0a3849",
+            "State": 2,
+            "tcp_listener_port": 36505,
+            "accepted_connections": 1,
+            "results": [
+              {
+                "Kind": 0,
+                "Outcome": 0,
+                "Method": "System hostname resolution (if needed), then one Socket.ConnectAsync TCP handshake; no raw SYN probing",
+                "ElapsedMilliseconds": 2.9944,
+                "Error": null
+              },
+              {
+                "Kind": 2,
+                "Outcome": 0,
+                "Method": "ICMP echo; samples=3; interval=100ms; timeout=500ms; payload=0 bytes",
+                "ElapsedMilliseconds": 227.8848,
+                "Error": null
+              },
+              {
+                "Kind": 4,
+                "Outcome": 0,
+                "Method": "ICMP echo TTL/hop-limit=1..4; probes/hop<=1; timeout=500ms; RTT=monotonic send-to-reply elapsed (includes local scheduling); payload=0 bytes",
+                "ElapsedMilliseconds": 15.0382,
+                "Error": null
+              },
+              {
+                "Kind": 3,
+                "Outcome": 0,
+                "Method": "Read-only .NET interface enumeration and native OS default-route discovery; no probes or configuration changes",
+                "ElapsedMilliseconds": 14.8441,
+                "Error": null
+              }
+            ],
+            "dns": "Explicitly excluded: no public target or resolver queried",
+            "privilege_limited_outcomes": []
+          }
+        },
+        {
+          "action": "actual_diagnostic_json_markdown_pdf_export_redaction_and_hashes",
+          "passed": true,
+          "utc": "2026-10-23T03:41:01.3786074+00:00",
+          "observed": {
+            "session_id": "d6d16692-f262-48ac-85c3-0decbf0a3849",
+            "bundle": "/home/runner/work/Synups/Synups/artifacts/published-apphost/reports/Synups-evidence-d6d16692f26248ac85c30decbf0a3849-4c79e21f89e3486781ed5746c46877be",
+            "artifact_names": [
+              "manifest.json",
+              "evidence.json",
+              "evidence.pdf",
+              "evidence.md"
+            ],
+            "pdf": "Real generated artifact signature verified; independent visual QA remains separate",
+            "native_folder_picker": "Not automated; direct VM export to isolated approved verification directory"
+          }
+        },
+        {
+          "action": "real_icmp_and_live_ui",
+          "passed": true,
+          "utc": "2026-10-23T03:41:11.5173562+00:00",
+          "observed": {
+            "LastMeasurementUtc": "2026-10-23T03:41:11.4299866+00:00",
+            "summary": "Session: 1 active groups \u00b7 1 connected \u00b7 0 confirmed unresolved outages \u00b7 0 unavailable \u00b7 0 not checked.",
+            "targets": [
+              {
+                "Id": "4d1ebb48-1517-48cf-8d04-b4c245744f16",
+                "CheckedAtUtc": "2026-10-23T03:41:11.4299866+00:00",
+                "LastSuccessUtc": "2026-10-23T03:41:11.4299866+00:00",
+                "Outcome": 1,
+                "LatencyMilliseconds": 0
+              }
+            ],
+            "diagnostics": {
+              "ActiveGroupWorkers": 1,
+              "CompletedPolls": 21,
+              "PendingEvidenceBatches": 0
+            }
+          }
+        },
+        {
+          "action": "programmatic_tab_focus_and_minimum_layout",
+          "passed": true,
+          "utc": "2026-10-23T03:41:12.1955652+00:00",
+          "observed": {
+            "focused": "Button",
+            "width": 820,
+            "height": 560
+          }
+        },
+        {
+          "action": "stop_drains_workers_without_recovery",
+          "passed": true,
+          "utc": "2026-10-23T03:41:12.4856573+00:00",
+          "observed": {
+            "ActiveGroupWorkers": 0,
+            "CompletedPolls": 22,
+            "PendingEvidenceBatches": 0
+          }
+        },
+        {
+          "action": "csv_export_service_empty_header",
+          "passed": true,
+          "utc": "2026-10-23T03:41:12.4984752+00:00",
+          "observed": {
+            "outage_rows": 0,
+            "native_file_picker": "not automated"
+          }
+        },
+        {
+          "action": "fixed_log_naming_and_pane_sizes_applied",
+          "passed": true,
+          "utc": "2026-10-23T03:41:12.6412337+00:00",
+          "observed": {
+            "LogNaming": 3,
+            "GroupPaneHeight": 180,
+            "TargetPaneHeight": 320,
+            "IncidentPaneHeight": 380
+          }
+        },
+        {
+          "action": "preferences_topmost_alerts_and_explicit_autostart_saved",
+          "passed": true,
+          "utc": "2026-10-23T03:41:12.641297+00:00",
+          "observed": {
+            "Topmost": true,
+            "MonitorOnLaunch": true,
+            "ConfirmExit": true,
+            "NativeAlertStatus": "Linux: optional notify-send when installed and a notification daemon is available. Native notifications are opt-in. In-app alerts are separate."
+          }
+        },
+        {
+          "action": "secondary_apphost_request_completed",
+          "passed": true,
+          "utc": "2026-10-23T03:41:13.0666745+00:00",
+          "observed": {
+            "previousActivations": 0,
+            "current_activations": 1,
+            "IsVisible": true,
+            "WindowState": 0
+          }
+        },
+        {
+          "action": "second_actual_apphost_restores_existing_instance",
+          "passed": true,
+          "utc": "2026-10-23T03:41:13.0667738+00:00",
+          "observed": {
+            "minimized_visible": true,
+            "activation_count": 1,
+            "IsVisible": true,
+            "WindowState": 0
+          }
+        },
+        {
+          "action": "exit_confirmation_cancel_keeps_window_open",
+          "passed": true,
+          "utc": "2026-10-23T03:41:13.1425926+00:00",
+          "observed": null
+        },
+        {
+          "action": "normal_close_requested",
+          "passed": true,
+          "utc": "2026-10-23T03:41:13.1565515+00:00",
+          "observed": "External launcher must verify exit code and durable session end."
+        }
+      ],
+      "native_ui_launched": true,
+      "launches": [
+        {
+          "stage": "exercise",
+          "pid": 5326,
+          "started_utc": "2026-10-23T03:40:55.230852+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 1,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "restart",
+          "pid": 5404,
+          "started_utc": "2026-10-23T03:41:13.396553+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 2,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "interruption",
+          "pid": 5471,
+          "started_utc": "2026-10-23T03:41:27.249570+00:00",
+          "exit_code": -9,
+          "expected_external_termination": true,
+          "durable_sessions": 3,
+          "actual_outages": 0,
+          "status": "ready-for-termination"
+        },
+        {
+          "stage": "recover",
+          "pid": 5529,
+          "started_utc": "2026-10-23T03:41:40.696985+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-error",
+          "pid": 5596,
+          "started_utc": "2026-10-23T03:41:54.603192+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-recovered",
+          "pid": 5623,
+          "started_utc": "2026-10-23T03:41:56.574582+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 5,
+          "actual_outages": 0,
+          "status": "passed"
+        }
+      ],
+      "package_sha256": "f5f290c3f1e404dc1e594fc6d198471bc89ffed7e5a1d731046d19acdf10520e",
+      "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+      "actual_published_apphost": true
+    },
+    {
+      "rid": "osx-arm64",
+      "artifact_sha256": "8ba809e46af3aff98937dfc14726cc89681dc28c540c2449141d1ab4d6195329",
+      "artifact_id": 12477335636,
+      "tests": [
+        {
+          "file": "tests/_iad20-eo1214-245c93ce-22c3-4186-afd5-c952f7c52cb6-0AACD7DBFB1C_2026-10-23_03_39_47_net10.0.trx",
+          "total": 251,
+          "passed": 243,
+          "failed": 0,
+          "skipped": 8,
+          "sha256": "5a83f95cedae10bcd0bd70577efe9936150c7d32bddef05e93fa6876f916065a"
+        },
+        {
+          "file": "real-network/_iad20-eo1214-245c93ce-22c3-4186-afd5-c952f7c52cb6-0AACD7DBFB1C_2026-10-23_03_39_57_net10.0.trx",
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "sha256": "454f05c17e7b2e22f2a5478976857a970be178dab43dba76cd76579a8d6239b1"
+        },
+        {
+          "file": "audio/_iad20-eo1214-245c93ce-22c3-4186-afd5-c952f7c52cb6-0AACD7DBFB1C_2026-10-23_03_40_13_net10.0.trx",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "sha256": "c5bd149bf8f0ed294730dadedacecedf9265a85a37fdf28f0b2895c9c1fb9e7e"
+        }
+      ],
+      "packages": [
+        {
+          "file": "Synups-osx-arm64.tar.gz",
+          "sha256": "541f8e08cd79a1ab5632e8d9280e81b4eb759a0ee1bbac0bac2fb82998a2d926",
+          "bytes": 46548195,
+          "manifest_file_count": 322,
+          "source": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+          "signing": "Ad-hoc signed for bundle integrity only; no Developer ID identity, no notarization, no trusted publisher claim."
+        }
+      ],
+      "os": "macOS 15.7.9",
+      "runtime": "10.0.13",
+      "actual_ui_actions": [
+        {
+          "action": "actual_apphost_launch_minimized_argument",
+          "passed": true,
+          "utc": "2026-10-23T03:40:32.160789+00:00",
+          "observed": {
+            "WindowState": 1,
+            "IsVisible": true,
+            "IsRunning": false
+          }
+        },
+        {
+          "action": "actual_native_window_created",
+          "passed": true,
+          "utc": "2026-10-23T03:40:32.175441+00:00",
+          "observed": {
+            "Title": "Synups \u2014 Network reliability",
+            "IsVisible": true,
+            "Width": 1004,
+            "Height": 633,
+            "RenderScaling": 1,
+            "native_descriptor": "NSWindow",
+            "native_handle_present": true,
+            "window_icon_loaded": true
+          }
+        },
+        {
+          "action": "passive_startup_without_network_configuration",
+          "passed": true,
+          "utc": "2026-10-23T03:40:32.180935+00:00",
+          "observed": null
+        },
+        {
+          "action": "first_run_controls_fit_native_viewport",
+          "passed": true,
+          "utc": "2026-10-23T03:40:32.421559+00:00",
+          "observed": null
+        },
+        {
+          "action": "fresh_profile_one_action_setup_without_probing",
+          "passed": true,
+          "utc": "2026-10-23T03:40:32.638115+00:00",
+          "observed": null
+        },
+        {
+          "action": "read_only_native_gateway_preview_without_config_or_probe",
+          "passed": true,
+          "utc": "2026-10-23T03:40:32.932811+00:00",
+          "observed": {
+            "GatewayStatus": 0,
+            "Count": 1,
+            "DiscoveryMessage": "Read-only OS default-route snapshot. Select and confirm an address; no target or probe was created. VPN/split routes may override particular destinations. A gateway response does not prove Internet availability."
+          }
+        },
+        {
+          "action": "bound_controls_crud_groups_targets_validation_and_stable_ids",
+          "passed": true,
+          "utc": "2026-10-23T03:40:34.452407+00:00",
+          "observed": {
+            "group_id": "96f32c00-9141-4a25-9e79-1100cb539d0e",
+            "target_id": "29df4430-876c-477a-89d8-7e83cbe90283"
+          }
+        },
+        {
+          "action": "actual_native_clipboard_target_ip",
+          "passed": true,
+          "utc": "2026-10-23T03:40:34.504494+00:00",
+          "observed": {
+            "address": "127.0.0.1",
+            "Id": "29df4430-876c-477a-89d8-7e83cbe90283"
+          }
+        },
+        {
+          "action": "actual_native_clipboard_value_and_tsv_row_unknown_preserved",
+          "passed": true,
+          "utc": "2026-10-23T03:40:34.52156+00:00",
+          "observed": null
+        },
+        {
+          "action": "programmatic_help_shortcut_and_real_version",
+          "passed": true,
+          "utc": "2026-10-23T03:40:34.720808+00:00",
+          "observed": "0.2.0-alpha.1+3c4462a71cbb90032603cd3eaf4366c2561474d7"
+        },
+        {
+          "action": "genuine_windows_legacy_fixture_preview_confirm_backup_import",
+          "passed": true,
+          "utc": "2026-10-23T03:40:35.208986+00:00",
+          "observed": {
+            "sourceHash": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1",
+            "groups": 1,
+            "targets": 15,
+            "no_probe_started": true
+          }
+        },
+        {
+          "action": "actual_diagnostics_workspace_confirmed_loopback_session",
+          "passed": true,
+          "utc": "2026-10-23T03:40:36.341673+00:00",
+          "observed": {
+            "Id": "21e8a362-3935-4981-8a08-62e603a7bf25",
+            "State": 2,
+            "tcp_listener_port": 49270,
+            "accepted_connections": 1,
+            "results": [
+              {
+                "Kind": 0,
+                "Outcome": 0,
+                "Method": "System hostname resolution (if needed), then one Socket.ConnectAsync TCP handshake; no raw SYN probing",
+                "ElapsedMilliseconds": 1.2579,
+                "Error": null
+              },
+              {
+                "Kind": 2,
+                "Outcome": 0,
+                "Method": "ICMP echo; samples=3; interval=100ms; timeout=500ms; payload=0 bytes",
+                "ElapsedMilliseconds": 447.028,
+                "Error": null
+              },
+              {
+                "Kind": 4,
+                "Outcome": 0,
+                "Method": "ICMP echo TTL/hop-limit=1..4; probes/hop<=1; timeout=500ms; RTT=monotonic send-to-reply elapsed (includes local scheduling); payload=0 bytes",
+                "ElapsedMilliseconds": 7.2634,
+                "Error": null
+              },
+              {
+                "Kind": 3,
+                "Outcome": 0,
+                "Method": "Read-only .NET interface enumeration and native OS default-route discovery; no probes or configuration changes",
+                "ElapsedMilliseconds": 63.6185,
+                "Error": null
+              }
+            ],
+            "dns": "Explicitly excluded: no public target or resolver queried",
+            "privilege_limited_outcomes": []
+          }
+        },
+        {
+          "action": "actual_diagnostic_json_markdown_pdf_export_redaction_and_hashes",
+          "passed": true,
+          "utc": "2026-10-23T03:40:36.708514+00:00",
+          "observed": {
+            "session_id": "21e8a362-3935-4981-8a08-62e603a7bf25",
+            "bundle": "/Users/runner/work/Synups/Synups/artifacts/published-apphost/reports/Synups-evidence-21e8a362393549818a0862e603a7bf25-263e8da7e11b4313ab07f1b122d84afa",
+            "artifact_names": [
+              "evidence.json",
+              "evidence.md",
+              "manifest.json",
+              "evidence.pdf"
+            ],
+            "pdf": "Real generated artifact signature verified; independent visual QA remains separate",
+            "native_folder_picker": "Not automated; direct VM export to isolated approved verification directory"
+          }
+        },
+        {
+          "action": "real_icmp_and_live_ui",
+          "passed": true,
+          "utc": "2026-10-23T03:40:46.996719+00:00",
+          "observed": {
+            "LastMeasurementUtc": "2026-10-23T03:40:46.816571+00:00",
+            "summary": "Session: 1 active groups \u00b7 1 connected \u00b7 0 confirmed unresolved outages \u00b7 0 unavailable \u00b7 0 not checked.",
+            "targets": [
+              {
+                "Id": "29df4430-876c-477a-89d8-7e83cbe90283",
+                "CheckedAtUtc": "2026-10-23T03:40:46.816571+00:00",
+                "LastSuccessUtc": "2026-10-23T03:40:46.816571+00:00",
+                "Outcome": 1,
+                "LatencyMilliseconds": 0
+              }
+            ],
+            "diagnostics": {
+              "ActiveGroupWorkers": 1,
+              "CompletedPolls": 18,
+              "PendingEvidenceBatches": 0
+            }
+          }
+        },
+        {
+          "action": "programmatic_tab_focus_and_minimum_layout",
+          "passed": true,
+          "utc": "2026-10-23T03:40:48.054457+00:00",
+          "observed": {
+            "focused": "Button",
+            "width": 820,
+            "height": 560
+          }
+        },
+        {
+          "action": "stop_drains_workers_without_recovery",
+          "passed": true,
+          "utc": "2026-10-23T03:40:48.482215+00:00",
+          "observed": {
+            "ActiveGroupWorkers": 0,
+            "CompletedPolls": 20,
+            "PendingEvidenceBatches": 0
+          }
+        },
+        {
+          "action": "csv_export_service_empty_header",
+          "passed": true,
+          "utc": "2026-10-23T03:40:48.495979+00:00",
+          "observed": {
+            "outage_rows": 0,
+            "native_file_picker": "not automated"
+          }
+        },
+        {
+          "action": "fixed_log_naming_and_pane_sizes_applied",
+          "passed": true,
+          "utc": "2026-10-23T03:40:48.577988+00:00",
+          "observed": {
+            "LogNaming": 3,
+            "GroupPaneHeight": 180,
+            "TargetPaneHeight": 320,
+            "IncidentPaneHeight": 380
+          }
+        },
+        {
+          "action": "preferences_topmost_alerts_and_explicit_autostart_saved",
+          "passed": true,
+          "utc": "2026-10-23T03:40:48.578018+00:00",
+          "observed": {
+            "Topmost": true,
+            "MonitorOnLaunch": true,
+            "ConfirmExit": true,
+            "NativeAlertStatus": "macOS: optional osascript notification requests; OS delivery/permission is not guaranteed. Native notifications are opt-in. In-app alerts are separate."
+          }
+        },
+        {
+          "action": "secondary_apphost_request_completed",
+          "passed": true,
+          "utc": "2026-10-23T03:40:49.213416+00:00",
+          "observed": {
+            "previousActivations": 0,
+            "current_activations": 1,
+            "IsVisible": true,
+            "WindowState": 0
+          }
+        },
+        {
+          "action": "second_actual_apphost_restores_existing_instance",
+          "passed": true,
+          "utc": "2026-10-23T03:40:49.213537+00:00",
+          "observed": {
+            "minimized_visible": false,
+            "activation_count": 1,
+            "IsVisible": true,
+            "WindowState": 0
+          }
+        },
+        {
+          "action": "exit_confirmation_cancel_keeps_window_open",
+          "passed": true,
+          "utc": "2026-10-23T03:40:49.435606+00:00",
+          "observed": null
+        },
+        {
+          "action": "normal_close_requested",
+          "passed": true,
+          "utc": "2026-10-23T03:40:49.456103+00:00",
+          "observed": "External launcher must verify exit code and durable session end."
+        }
+      ],
+      "native_ui_launched": true,
+      "launches": [
+        {
+          "stage": "exercise",
+          "pid": 13852,
+          "started_utc": "2026-10-23T03:40:29.987525+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 1,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "restart",
+          "pid": 14146,
+          "started_utc": "2026-10-23T03:40:49.721395+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 2,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "interruption",
+          "pid": 14673,
+          "started_utc": "2026-10-23T03:41:04.002928+00:00",
+          "exit_code": -9,
+          "expected_external_termination": true,
+          "durable_sessions": 3,
+          "actual_outages": 0,
+          "status": "ready-for-termination"
+        },
+        {
+          "stage": "recover",
+          "pid": 15059,
+          "started_utc": "2026-10-23T03:41:17.513572+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-error",
+          "pid": 15348,
+          "started_utc": "2026-10-23T03:41:31.553876+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 4,
+          "actual_outages": 0,
+          "status": "passed"
+        },
+        {
+          "stage": "storage-recovered",
+          "pid": 15363,
+          "started_utc": "2026-10-23T03:41:33.212726+00:00",
+          "exit_code": 0,
+          "expected_external_termination": false,
+          "durable_sessions": 5,
+          "actual_outages": 0,
+          "status": "passed"
+        }
+      ],
+      "package_sha256": "541f8e08cd79a1ab5632e8d9280e81b4eb759a0ee1bbac0bac2fb82998a2d926",
+      "apphost_sha256": "f516fa3a4b740172e53bc9aa750d94cc7559d1619e76b2dd148d5bc119549f23",
+      "actual_published_apphost": true
+    }
+  ],
+  "new_core_coverage": {
+    "covered": 911,
+    "lines": 1049,
+    "percent": 86.84,
+    "files": {
+      "DiagnosticStore.cs": {
+        "covered": 160,
+        "lines": 164
+      },
+      "BoundedHostnameResolver.cs": {
+        "covered": 29,
+        "lines": 30
+      },
+      "DiagnosticEvidence.cs": {
+        "covered": 133,
+        "lines": 146
+      },
+      "DiagnosticModels.cs": {
+        "covered": 67,
+        "lines": 70
+      },
+      "DiagnosticRunner.cs": {
+        "covered": 71,
+        "lines": 77
+      },
+      "DnsDiagnosticTest.cs": {
+        "covered": 172,
+        "lines": 190
+      },
+      "IcmpDiagnosticTests.cs": {
+        "covered": 120,
+        "lines": 144
+      },
+      "NetworkConfigurationTest.cs": {
+        "covered": 22,
+        "lines": 66
+      },
+      "PathAnalysis.cs": {
+        "covered": 43,
+        "lines": 52
+      },
+      "ReverseDnsCache.cs": {
+        "covered": 66,
+        "lines": 75
+      },
+      "TcpConnectTest.cs": {
+        "covered": 28,
+        "lines": 35
+      }
+    },
+    "cobertura_sha256": "41afc1379f161442a37371955520cd8bc295c8ec243fb04afa9f77aaadede021"
+  },
+  "physical_desktop_tested": false,
+  "verified_redacted_exports": [
+    {
+      "manifest": "osx-arm64/published-apphost/reports/Synups-evidence-21e8a362393549818a0862e603a7bf25-263e8da7e11b4313ab07f1b122d84afa/manifest.json",
+      "sha256": "398178e44e2d18df030f399e1a7a30da16580b34e1577d62bbf36dc167a6a79a",
+      "session_id": "21e8a362-3935-4981-8a08-62e603a7bf25",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "osx-arm64/diagnostic-e2e/Synups-evidence-6f07471feeda424e9508ae82972b3263-b2ca3fc9ebd84fef9d23ed1a3bcb06cb/manifest.json",
+      "sha256": "c7b99dde0a2ed8718dc49b62dfadf8ee414ff695cbfc99122e96c979ef49e83a",
+      "session_id": "6f07471f-eeda-424e-9508-ae82972b3263",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "osx-arm64/diagnostic-e2e/Synups-evidence-b0fc95371ca547d0b3b2a00db3c66842-79d9272094304e56a7927c26daa7c657/manifest.json",
+      "sha256": "300263ca259241a2c7273242be98031175e2aa392e3670a0b72470464d03fab4",
+      "session_id": "b0fc9537-1ca5-47d0-b3b2-a00db3c66842",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "win-x64/published-apphost/reports/Synups-evidence-ecfb10f385904d2c94d29fe97fbf947f-4c8d2676adc2451d913a233071f74c8e/manifest.json",
+      "sha256": "551bf0c5383126afe7d20922b15846e55a3828522a5e70ad47575ed680fbd58c",
+      "session_id": "ecfb10f3-8590-4d2c-94d2-9fe97fbf947f",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "win-x64/diagnostic-e2e/Synups-evidence-cd7104edd0c34148821b41d88deec14a-82063e7ad2454dc5a36a6fa0166b25f1/manifest.json",
+      "sha256": "40614a88a83cd6ca9bd5614f9fb3dc69fe469b943a1640652527bab85b093f98",
+      "session_id": "cd7104ed-d0c3-4148-821b-41d88deec14a",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "win-x64/diagnostic-e2e/Synups-evidence-6e9a57fe48154e4b91d9d7cf60d98c2e-fda6610a1f4943e19a878dbf7088dfbd/manifest.json",
+      "sha256": "0d166d358e6688668d9c04c0a2dcbe74e4133380f16ed7212ff229c903dbe41d",
+      "session_id": "6e9a57fe-4815-4e4b-91d9-d7cf60d98c2e",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "linux-x64/published-apphost/reports/Synups-evidence-d6d16692f26248ac85c30decbf0a3849-4c79e21f89e3486781ed5746c46877be/manifest.json",
+      "sha256": "713a076e7cbc11b23434e985657303a5d4792fcf2cbc845f4ac63c4a470bbd06",
+      "session_id": "d6d16692-f262-48ac-85c3-0decbf0a3849",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "linux-x64/diagnostic-e2e/Synups-evidence-7132b96c42e143b19845dd39fba93c96-d49d8d77415c48e58d6fbc91f1e2bf81/manifest.json",
+      "sha256": "b9310db96ef54a3e7918914474fccab7251f5a0e4a1b3d0831fa785d6bcc9a12",
+      "session_id": "7132b96c-42e1-43b1-9845-dd39fba93c96",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "linux-x64/diagnostic-e2e/Synups-evidence-b1b6526308f5467e9afa2b15af3f7e02-33b685e643f44da1a62dcc2246071f25/manifest.json",
+      "sha256": "abea9390ee801a798c7e9a8fb7f2eed553be0fff39e0066eb221cb4c642e26c4",
+      "session_id": "b1b65263-08f5-467e-9afa-2b15af3f7e02",
+      "incident_id": null,
+      "state": 2
+    },
+    {
+      "manifest": "linux-x64/incident/Synups-evidence-2803cb81227848c787927ba4c37fdb01-06b08f67386a4dabb1a461281e0c9514/manifest.json",
+      "sha256": "1b393c71ea5b7104c5a11c6de8fba1a2bcc1d35be61e43169d60743ecc125c55",
+      "session_id": "2803cb81-2278-48c7-8792-7ba4c37fdb01",
+      "incident_id": "1e664d83-1bb2-4740-99c6-32a8bf8efb22",
+      "state": 3
+    },
+    {
+      "manifest": "linux-x64/incident/Synups-evidence-2803cb81227848c787927ba4c37fdb01-4bdd96392aab4ad99fc71528bb9bb2f6/manifest.json",
+      "sha256": "b0b467510e85fc80b10e552a722aef22e65d4fc277ffe0f5d1036091d859240e",
+      "session_id": "2803cb81-2278-48c7-8792-7ba4c37fdb01",
+      "incident_id": "1e664d83-1bb2-4740-99c6-32a8bf8efb22",
+      "state": 3
+    }
+  ],
+  "controlled_incident": {
+    "passed": true,
+    "incident_id": "1e664d83-1bb2-4740-99c6-32a8bf8efb22",
+    "session_id": "2803cb81-2278-48c7-8792-7ba4c37fdb01",
+    "native_ui": true,
+    "physical_interaction": false,
+    "dns_outcome": 8,
+    "dns_limit": "Literal endpoint: DNS query unsupported; no DNS answer fabricated. Independent configured-resolver DNS tests pass."
+  },
+  "real_three_hop_ipv4_trace": {
+    "passed": true,
+    "responders": [
+      [
+        "10.77.1.2"
+      ],
+      [
+        "10.77.2.2"
+      ],
+      [
+        "10.77.3.2"
+      ]
+    ],
+    "method": "ICMP echo TTL/hop-limit=1..5; probes/hop<=2; timeout=1000ms; RTT=monotonic send-to-reply elapsed (includes local scheduling); payload=0 bytes",
+    "elapsed_ms": 120.9421,
+    "scope": "Real IPv4 ICMP TTL expired at two isolated Linux routers, then destination echo; no IPv6 or physical-network certification"
+  },
+  "concurrent_monitoring": {
+    "win-x64": {
+      "BaselinePolls": 12,
+      "BaselineSeconds": 3.0083831,
+      "ConcurrentPolls": 12,
+      "ConcurrentSeconds": 3.0093712,
+      "ObservedMaximumGroupWorkers": 1,
+      "DiagnosticSessions": 2,
+      "UnsavedEvidence": false,
+      "Outages": 0,
+      "Scope": "Actual loopback ICMP, production monitoring and two diagnostics sharing SQLite. Short liveness/sample-rate observation; not physical-network throughput or a performance benchmark."
+    },
+    "linux-x64": {
+      "BaselinePolls": 12,
+      "BaselineSeconds": 2.9997142,
+      "ConcurrentPolls": 13,
+      "ConcurrentSeconds": 3.00538,
+      "ObservedMaximumGroupWorkers": 1,
+      "DiagnosticSessions": 2,
+      "UnsavedEvidence": false,
+      "Outages": 0,
+      "Scope": "Actual loopback ICMP, production monitoring and two diagnostics sharing SQLite. Short liveness/sample-rate observation; not physical-network throughput or a performance benchmark."
+    },
+    "osx-arm64": {
+      "BaselinePolls": 10,
+      "BaselineSeconds": 3.1458859,
+      "ConcurrentPolls": 12,
+      "ConcurrentSeconds": 3.0125144,
+      "ObservedMaximumGroupWorkers": 1,
+      "DiagnosticSessions": 2,
+      "UnsavedEvidence": false,
+      "Outages": 0,
+      "Scope": "Actual loopback ICMP, production monitoring and two diagnostics sharing SQLite. Short liveness/sample-rate observation; not physical-network throughput or a performance benchmark."
+    }
+  },
+  "all_six_jobs_passed": true
+}

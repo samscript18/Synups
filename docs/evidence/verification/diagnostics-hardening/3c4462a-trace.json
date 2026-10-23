@@ -1,0 +1,134 @@
+{
+  "Id": "56148fbf-84dd-4951-a288-ca14d50fcf0e",
+  "Kind": 4,
+  "Target": "10.77.3.2",
+  "StartedUtc": "2026-10-23T03:42:14.5317799+00:00",
+  "CompletedUtc": "2026-10-23T03:42:14.652724+00:00",
+  "Outcome": 0,
+  "Method": "ICMP echo TTL/hop-limit=1..5; probes/hop\u003C=2; timeout=1000ms; RTT=monotonic send-to-reply elapsed (includes local scheduling); payload=0 bytes",
+  "ElapsedMilliseconds": 120.9421,
+  "Observations": [
+    {
+      "Utc": "2026-10-23T03:42:14.5343089+00:00",
+      "Name": "Resolved target address",
+      "Certainty": 0,
+      "Value": null,
+      "Unit": null,
+      "Text": "10.77.3.2",
+      "Sample": null
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.5955706+00:00",
+      "Name": "Hop 1 ICMP status",
+      "Certainty": 0,
+      "Value": 58.918,
+      "Unit": "ms",
+      "Text": "TtlExpired; 10.77.1.2; None; ",
+      "Sample": 1
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.6110463+00:00",
+      "Name": "Hop 1 ICMP status",
+      "Certainty": 0,
+      "Value": 0.7402,
+      "Unit": "ms",
+      "Text": "TtlExpired; 10.77.1.2; None; ",
+      "Sample": 2
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.6224288+00:00",
+      "Name": "Hop 2 ICMP status",
+      "Certainty": 0,
+      "Value": 0.404,
+      "Unit": "ms",
+      "Text": "TtlExpired; 10.77.2.2; None; ",
+      "Sample": 1
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.6329612+00:00",
+      "Name": "Hop 2 ICMP status",
+      "Certainty": 0,
+      "Value": 0.3833,
+      "Unit": "ms",
+      "Text": "TtlExpired; 10.77.2.2; None; ",
+      "Sample": 2
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.6438132+00:00",
+      "Name": "Hop 3 ICMP status",
+      "Certainty": 0,
+      "Value": 0.5676,
+      "Unit": "ms",
+      "Text": "Success; 10.77.3.2; None; ",
+      "Sample": 1
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.6438283+00:00",
+      "Name": "Probes attempted",
+      "Certainty": 0,
+      "Value": 5,
+      "Unit": "probes",
+      "Text": null,
+      "Sample": null
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.6438285+00:00",
+      "Name": "Destination echo observed",
+      "Certainty": 0,
+      "Value": null,
+      "Unit": null,
+      "Text": "True",
+      "Sample": null
+    },
+    {
+      "Utc": "2026-10-23T03:42:14.6438312+00:00",
+      "Name": "Path visibility",
+      "Certainty": 2,
+      "Value": null,
+      "Unit": null,
+      "Text": "Intermediate nonresponse does not establish forwarding loss. ICMP filtering, suppression, rate limiting, ECMP, and asymmetric return paths can affect these observations.",
+      "Sample": null
+    }
+  ],
+  "Error": null,
+  "Statistics": null,
+  "Dns": null,
+  "Hops": [
+    {
+      "Hop": 1,
+      "Addresses": [
+        "10.77.1.2"
+      ],
+      "RttMilliseconds": [
+        58.918,
+        0.7402
+      ],
+      "Unanswered": 0,
+      "Hostname": null
+    },
+    {
+      "Hop": 2,
+      "Addresses": [
+        "10.77.2.2"
+      ],
+      "RttMilliseconds": [
+        0.404,
+        0.3833
+      ],
+      "Unanswered": 0,
+      "Hostname": null
+    },
+    {
+      "Hop": 3,
+      "Addresses": [
+        "10.77.3.2"
+      ],
+      "RttMilliseconds": [
+        0.5676
+      ],
+      "Unanswered": 0,
+      "Hostname": null
+    }
+  ],
+  "Network": null
+}

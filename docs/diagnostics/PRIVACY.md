@@ -18,7 +18,7 @@ Local SQLite history can contain approved target names, addresses and ports; DNS
 
 History, configuration, profiles, logs, verified migration backups and exports are not encrypted by Synups. They inherit operating-system file protection. Protect the containing account and disk, and inspect all files before sharing them. A local backup is another sensitive copy, not a sanitization operation. SQLite freed pages, backups and other copies are not claimed to provide secure erasure.
 
-Existing retention is opt-in and protects linked incidents. There is currently no separate diagnostic deletion/retention control; diagnostic evidence shares the configured history capacity. See [stability](STABILITY.md) for capacity failures and recovery.
+Existing retention is opt-in and protects linked incidents. Confirmed session/baseline deletion is available. Old terminal standalone diagnostics participate in existing opt-in retention; incident links, unfinished checkpoints and baseline/comparison sources are protected. Diagnostic evidence shares the configured history capacity. Exports/backups and freed SQLite pages are not securely erased. See [stability](STABILITY.md) for capacity failures and recovery.
 
 ## Export review and redaction
 
@@ -30,4 +30,4 @@ An unredacted export explicitly includes sensitive network details. JSON, Markdo
 
 For sensitive vulnerability reports, follow [SECURITY.md](../../SECURITY.md) rather than posting history, topology, comments, logs or screenshots publicly.
 
-System hostname lookups for TCP/ICMP are bounded by BoundedHostnameResolver (two native workers, no waiting queue). Caller cancellation can return promptly while the original OS lookup still owns its slot. Further lookups fail explicitly when those slots are occupied; literal IP requests avoid DNS. Shutdown also drains retained native tasks within the remaining seven-second target; a hung OS resolver keeps ownership and requires retry, rather than abandoning work. Direct DNS/PTR use owned cancellable UDP sockets.
+System hostname lookups for TCP/ICMP are bounded by BoundedHostnameResolver (two native workers, no waiting queue). Caller cancellation can return promptly while the original OS lookup still owns its slot. Further lookups fail explicitly when those slots are occupied; literal IP requests avoid DNS. Shutdown also drains retained native tasks within the remaining seven-second target; a hung OS resolver keeps ownership and requires retry, rather than abandoning work. Direct DNS uses owned cancellable UDP and, after validated truncation with spare probe budget, one same-endpoint TCP socket under the original deadline. PTR remains UDP.

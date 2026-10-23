@@ -1,0 +1,26 @@
+{
+  "scope": "Intermediate uncommitted hardening source; engineering harness, not packaged apphost. Final native candidate measurements are in 3c4462a-ci-summary.json.",
+  "concurrent_monitoring": {
+    "BaselinePolls": 12,
+    "BaselineSeconds": 3.0016417,
+    "ConcurrentPolls": 12,
+    "ConcurrentSeconds": 3.0067346,
+    "ObservedMaximumGroupWorkers": 1,
+    "DiagnosticSessions": 2,
+    "UnsavedEvidence": false,
+    "Outages": 0,
+    "Scope": "Actual loopback ICMP, production monitoring and two diagnostics sharing SQLite. Short liveness/sample-rate observation; not physical-network throughput or a performance benchmark."
+  },
+  "process_exit_codes": {
+    "restore": 0,
+    "build": 0,
+    "observe": 0,
+    "reload_1": 0,
+    "reload_2": 0,
+    "reload_3": 0,
+    "reload": 0
+  },
+  "separate_reload_processes": 3,
+  "copied_source_unchanged": true,
+  "core_cs_sha256": "6d1ff0f1282ae8182e772693f70b96691be9e5cda70fe4a0a1f9a549b313658f"
+}

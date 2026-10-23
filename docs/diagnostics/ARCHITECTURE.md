@@ -27,7 +27,7 @@ flowchart LR
 | Adapter | Actual mechanism | Explicit limit |
 |---|---|---|
 | TCP | System hostname resolution when needed, then one `Socket.ConnectAsync` to one selected resolved address and approved port | No application request, port scan, raw SYN or automatic address sweep |
-| DNS | Explicit A/AAAA question over UDP to an approved explicit resolver or the first resolver reported on an active interface | No TCP retry, DNSSEC validation, DoH or split-DNS policy inference; a truncated reply is Unsupported |
+| DNS | Explicit A/AAAA question over UDP to an approved explicit resolver or the first resolver reported on an active interface | One bounded same-endpoint TCP retry after validated truncation if probe cap permits; no DNSSEC validation, DoH or split-DNS policy inference |
 | Ping quality | OS ICMP echo with empty payload, bounded samples, intervals and deadlines | ICMP nonresponse is not proof of application loss; missing RTTs remain absent |
 | Traceroute | Real ICMP echo with increasing TTL/hop limit, bounded hops and samples | Control-plane replies do not prove the forwarding path, location or fault cause |
 | Configuration | .NET interface/address/gateway/DNS enumeration and existing bounded native default-route discovery | Default routes only; no configuration changes, complete route-table claim, proxy or search-domain capture |
@@ -43,7 +43,7 @@ A session checkpoint is saved before network work, and after each adapter return
 
 Completed evidence is retained as a typed, versioned session snapshot, with normalized result and observation rows. Successful saved sessions can be labeled as baselines. Comparisons must preserve differences in test definitions, windows, parameters and missing measurements rather than invent equivalent deltas.
 
-Existing opt-in monitoring retention remains. A diagnostic foreign key pins its linked incident and prevents retention of that incident's monitoring session. Diagnostics, baselines and comparisons currently have no separate deletion path, so they consume the shared history capacity. Reaching capacity surfaces a write error; it does not authorize automatic evidence deletion.
+Existing opt-in monitoring retention remains. A diagnostic foreign key pins its linked incident and prevents retention of that incident's monitoring session. Confirmed diagnostic deletion is transactional: baseline deletion removes associated comparisons while preserving sessions; referenced or active sessions cannot be deleted. Existing opt-in retention removes only old terminal standalone diagnostics with known completion times and no references. All share the history capacity. Reaching capacity surfaces a write error; it does not authorize automatic evidence deletion.
 
 ## Evidence rendering
 

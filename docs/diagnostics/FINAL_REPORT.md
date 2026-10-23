@@ -1,5 +1,7 @@
 # Synups diagnostics final verification report
 
+> Frozen e16e3cd baseline report. See [final hardening](HARDENING_REPORT.md) for follow-up changes, verification and the current release decision.
+
 **CONDITIONAL GO for the isolated diagnostics alpha.** The complete31-feature expansion is not finished. Core diagnostics, incident evidence, safe migration, restart and exports have source-specific native evidence on Windows x64, Linux x64 and macOS arm64. Unfinished optional capabilities remain unavailable. Publicv0.1.1 and the competition entry were not changed.
 
 ## A. Implementation and source revisions

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "network_namespace": "net:[4026532267]",
+  "child_namespaces": [
+    "net:[4026532326]",
+    "net:[4026532384]",
+    "net:[4026532442]"
+  ],
+  "host_namespace_untouched": true,
+  "internet_routes": false,
+  "target": "10.77.3.2",
+  "scope": "Real IPv4 ICMP TTL expired at two isolated Linux routers, then destination echo; no IPv6 or physical-network certification"
+}

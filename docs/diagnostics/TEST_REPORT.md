@@ -1,5 +1,7 @@
 # Diagnostics verification report
 
+> Frozen e16e3cd baseline report. See [final hardening](HARDENING_REPORT.md) for follow-up changes, verification and the current release decision.
+
 Development source revision will be frozen at the first candidate commit; starting reviewed HEAD `bbd92ef7395ae4cd20534920398b317353e41371`. Protected v0.1.1 application `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`. Host: macOS26.3, osx-arm64; .NET SDK10.0.402, runtime10.0.13. User-facing reporting date October22,2026, Africa/Lagos; machine observation times are retained in UTC.
 
 ## Commands and results so far
@@ -76,3 +78,10 @@ Final CI coverage:856/993 unique new Core source lines =86.20%. Final downloaded
 CI commands are exactly in `.github/workflows/synups.yml`: locked restore; NuGet audit; zero-warning Release build; deterministic/headless tests; separately enabled networking/audio; real Core diagnostic/restart/export harness; self-contained publish; package integrity; actual apphost/native UI checks; isolated Linux incident; coverage; and two additional build-only targets. The canonical local SDK path is `/private/tmp/synups-dotnet/dotnet`. Candidate artifacts remain development CI outputs; no public release was created.
 
 Final verdict: **CONDITIONAL GO for the isolated core diagnostics alpha**, with the complete31-item scope explicitly unfinished. Detailed limitations and entire feature table: FINAL_REPORT.md. No unresolved failing final CI job remains; broader unexecuted fault/physical/platform scenarios stay documented rather than counted as passes.
+
+
+## Final hardening follow-up
+
+Source `3c4462a71cbb90032603cd3eaf4366c2561474d7`, [run 39896104073](https://github.com/samscript18/Synups/actions/runs/39896104073): all six jobs passed; 251 total cases, Windows/macOS243 passed+8 gated skips, Linux244 passed+7 gated skips, zero failures; six separately enabled native network tests passed per OS; new Core coverage911/1049 lines=86.84%. Eighteen cases were added after the frozen alpha. See [HARDENING_REPORT.md](HARDENING_REPORT.md) for exact fault/control coverage, real multihop, extracted executables, export audit, package hashes, upgrade preservation and the retained first-run fixture failure.
+
+Commands: `.NET SDK10.0.402 dotnet test Synups.slnx -c Release --no-restore --logger trx` locally; `python3 -m unittest discover -s eng/tests -v` (9 passed); full native commands remain in `.github/workflows/synups.yml` at the frozen source. Real multihop runs `sudo env PATH=... DOTNET_ROOT=... unshare --net -- python eng/path-smoke.py --worker ASSEMBLY --output NEW_DIRECTORY`, only after guard checks. No host routing/firewall/sysctl changes or security bypass are permitted.

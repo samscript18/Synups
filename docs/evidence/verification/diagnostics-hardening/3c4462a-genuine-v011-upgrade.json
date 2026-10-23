@@ -1,0 +1,56 @@
+{
+  "Version": 1,
+  "RequiredLoopbackMeasurementsPassed": true,
+  "IncidentPayloadsUnchanged": true,
+  "OriginalIncidents": 1,
+  "OriginalComments": 1,
+  "IncidentLink": "Linked the first existing genuine incident",
+  "ProcessExitCodes": {
+    "restore": 0,
+    "build": 0,
+    "observe": 0,
+    "reload_1": 0,
+    "reload_2": 0,
+    "reload_3": 0,
+    "reload": 0
+  },
+  "EngineeringEnvironment": {
+    "sdk": "10.0.402",
+    "source_git_head": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+    "source_has_uncommitted_changes": true,
+    "core_cs_sha256": "c03e815d71e9ddc8d864dfd4a34e4db887f508d402f04c16c855138451583d43",
+    "harness_cs_sha256": "48d6e88d5f9176c4d34f93533052dd12f2f652c6a8b991448d4dbbae4dd09b7f",
+    "host_system": "Darwin",
+    "host_machine": "arm64",
+    "previous_data_supplied": true,
+    "copied_source_file_hashes": {
+      "history.v1.db": "244b8208c27d7e4e1a5f8fd85d801b1cc9b7096d4ed32aef4500dad50162c635",
+      "configuration.v1.json": "110236b4c1dc8f7bddcd40d1b22e4d9f9977c2976b701b1aa27dbbabb0374476",
+      "preferences.v1.json": "677a7cefada7b048def316e1e8f4c820b2b7f32834a1aba556c570e729c669e5"
+    },
+    "public_dns_explicitly_requested": false,
+    "claim_scope": "Real Core diagnostics; two separate application processes; not published apphost or physical UI"
+  },
+  "source_preservation": {
+    "source_files_unchanged": true,
+    "before_sha256": {
+      "history.v1.db": "244b8208c27d7e4e1a5f8fd85d801b1cc9b7096d4ed32aef4500dad50162c635",
+      "configuration.v1.json": "110236b4c1dc8f7bddcd40d1b22e4d9f9977c2976b701b1aa27dbbabb0374476",
+      "preferences.v1.json": "677a7cefada7b048def316e1e8f4c820b2b7f32834a1aba556c570e729c669e5"
+    },
+    "after_sha256": {
+      "history.v1.db": "244b8208c27d7e4e1a5f8fd85d801b1cc9b7096d4ed32aef4500dad50162c635",
+      "configuration.v1.json": "110236b4c1dc8f7bddcd40d1b22e4d9f9977c2976b701b1aa27dbbabb0374476",
+      "preferences.v1.json": "677a7cefada7b048def316e1e8f4c820b2b7f32834a1aba556c570e729c669e5"
+    },
+    "process_exit_codes": {
+      "restore": 0,
+      "build": 0,
+      "observe": 0,
+      "reload_1": 0,
+      "reload_2": 0,
+      "reload_3": 0,
+      "reload": 0
+    }
+  }
+}
