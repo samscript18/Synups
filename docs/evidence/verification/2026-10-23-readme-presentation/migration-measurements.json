@@ -1,0 +1,672 @@
+{
+  "method": "UTF-8-sig splitlines; physical and nonblank lines, including comments; tracked C# and XAML-family only",
+  "git_range": "61ae14391151ca9f209223e62c98fae3df5482b8..6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "commits": 39,
+  "original_production": {
+    "revision": "61ae14391151ca9f209223e62c98fae3df5482b8",
+    "prefixes": [
+      "src/WirePeep",
+      "src/WirePeep.Common"
+    ],
+    "files": [
+      {
+        "path": "src/WirePeep.Common/CommonOptions.cs",
+        "language": "C#",
+        "physical_lines": 143,
+        "nonblank_lines": 114
+      },
+      {
+        "path": "src/WirePeep.Common/Enumerations.cs",
+        "language": "C#",
+        "physical_lines": 46,
+        "nonblank_lines": 36
+      },
+      {
+        "path": "src/WirePeep.Common/Location.cs",
+        "language": "C#",
+        "physical_lines": 88,
+        "nonblank_lines": 65
+      },
+      {
+        "path": "src/WirePeep.Common/LocationState.cs",
+        "language": "C#",
+        "physical_lines": 95,
+        "nonblank_lines": 69
+      },
+      {
+        "path": "src/WirePeep.Common/Logger.cs",
+        "language": "C#",
+        "physical_lines": 190,
+        "nonblank_lines": 158
+      },
+      {
+        "path": "src/WirePeep.Common/PeerGroup.cs",
+        "language": "C#",
+        "physical_lines": 104,
+        "nonblank_lines": 77
+      },
+      {
+        "path": "src/WirePeep.Common/PeerGroupState.cs",
+        "language": "C#",
+        "physical_lines": 115,
+        "nonblank_lines": 87
+      },
+      {
+        "path": "src/WirePeep.Common/Pinger.cs",
+        "language": "C#",
+        "physical_lines": 124,
+        "nonblank_lines": 101
+      },
+      {
+        "path": "src/WirePeep.Common/Profile.cs",
+        "language": "C#",
+        "physical_lines": 262,
+        "nonblank_lines": 222
+      },
+      {
+        "path": "src/WirePeep.Common/StateManager.cs",
+        "language": "C#",
+        "physical_lines": 268,
+        "nonblank_lines": 208
+      },
+      {
+        "path": "src/WirePeep.Common/StateSnapshot.cs",
+        "language": "C#",
+        "physical_lines": 49,
+        "nonblank_lines": 32
+      },
+      {
+        "path": "src/WirePeep/AlertOptions.cs",
+        "language": "C#",
+        "physical_lines": 133,
+        "nonblank_lines": 108
+      },
+      {
+        "path": "src/WirePeep/App.xaml",
+        "language": "XAML",
+        "physical_lines": 5,
+        "nonblank_lines": 5
+      },
+      {
+        "path": "src/WirePeep/App.xaml.cs",
+        "language": "C#",
+        "physical_lines": 112,
+        "nonblank_lines": 91
+      },
+      {
+        "path": "src/WirePeep/AppOptions.cs",
+        "language": "C#",
+        "physical_lines": 107,
+        "nonblank_lines": 84
+      },
+      {
+        "path": "src/WirePeep/Commands.cs",
+        "language": "C#",
+        "physical_lines": 66,
+        "nonblank_lines": 50
+      },
+      {
+        "path": "src/WirePeep/LocationDialog.xaml",
+        "language": "XAML",
+        "physical_lines": 38,
+        "nonblank_lines": 37
+      },
+      {
+        "path": "src/WirePeep/LocationDialog.xaml.cs",
+        "language": "C#",
+        "physical_lines": 224,
+        "nonblank_lines": 187
+      },
+      {
+        "path": "src/WirePeep/LogRow.cs",
+        "language": "C#",
+        "physical_lines": 116,
+        "nonblank_lines": 87
+      },
+      {
+        "path": "src/WirePeep/LogRowCollection.cs",
+        "language": "C#",
+        "physical_lines": 18,
+        "nonblank_lines": 15
+      },
+      {
+        "path": "src/WirePeep/MainWindow.xaml",
+        "language": "XAML",
+        "physical_lines": 356,
+        "nonblank_lines": 333
+      },
+      {
+        "path": "src/WirePeep/MainWindow.xaml.cs",
+        "language": "C#",
+        "physical_lines": 797,
+        "nonblank_lines": 667
+      },
+      {
+        "path": "src/WirePeep/OptionsDialog.xaml",
+        "language": "XAML",
+        "physical_lines": 152,
+        "nonblank_lines": 142
+      },
+      {
+        "path": "src/WirePeep/OptionsDialog.xaml.cs",
+        "language": "C#",
+        "physical_lines": 186,
+        "nonblank_lines": 148
+      },
+      {
+        "path": "src/WirePeep/PeerGroupDialog.xaml",
+        "language": "XAML",
+        "physical_lines": 67,
+        "nonblank_lines": 62
+      },
+      {
+        "path": "src/WirePeep/PeerGroupDialog.xaml.cs",
+        "language": "C#",
+        "physical_lines": 259,
+        "nonblank_lines": 208
+      },
+      {
+        "path": "src/WirePeep/Properties/AssemblyInfo.cs",
+        "language": "C#",
+        "physical_lines": 5,
+        "nonblank_lines": 4
+      },
+      {
+        "path": "src/WirePeep/SimulateDialog.xaml",
+        "language": "XAML",
+        "physical_lines": 37,
+        "nonblank_lines": 34
+      },
+      {
+        "path": "src/WirePeep/SimulateDialog.xaml.cs",
+        "language": "C#",
+        "physical_lines": 73,
+        "nonblank_lines": 61
+      },
+      {
+        "path": "src/WirePeep/StatusRow.cs",
+        "language": "C#",
+        "physical_lines": 120,
+        "nonblank_lines": 92
+      },
+      {
+        "path": "src/WirePeep/StatusRowCollection.cs",
+        "language": "C#",
+        "physical_lines": 19,
+        "nonblank_lines": 16
+      }
+    ],
+    "excluded_generated": [
+      {
+        "path": "src/WirePeep.Common/Properties/Resources.Designer.cs",
+        "language": "C#",
+        "physical_lines": 88,
+        "nonblank_lines": 79
+      },
+      {
+        "path": "src/WirePeep/Properties/Resources.Designer.cs",
+        "language": "C#",
+        "physical_lines": 73,
+        "nonblank_lines": 64
+      }
+    ],
+    "excluded_artwork": [
+      {
+        "path": "src/WirePeep/Images/check-bold.xaml",
+        "language": "XAML",
+        "physical_lines": 1,
+        "nonblank_lines": 1
+      },
+      {
+        "path": "src/WirePeep/Images/close-thick.xaml",
+        "language": "XAML",
+        "physical_lines": 1,
+        "nonblank_lines": 1
+      }
+    ],
+    "file_count": 31,
+    "physical_lines": 4374,
+    "nonblank_lines": 3600,
+    "by_language": {
+      "C#": {
+        "files": 25,
+        "physical_lines": 3719,
+        "nonblank_lines": 2987
+      },
+      "XAML": {
+        "files": 6,
+        "physical_lines": 655,
+        "nonblank_lines": 613
+      }
+    }
+  },
+  "synups_production": {
+    "revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+    "prefixes": [
+      "synups/Synups.Core",
+      "synups/Synups.Desktop"
+    ],
+    "files": [
+      {
+        "path": "synups/Synups.Core/Alerts/AlertPolicy.cs",
+        "language": "C#",
+        "physical_lines": 78,
+        "nonblank_lines": 74
+      },
+      {
+        "path": "synups/Synups.Core/DefaultProfileReader.cs",
+        "language": "C#",
+        "physical_lines": 81,
+        "nonblank_lines": 74
+      },
+      {
+        "path": "synups/Synups.Core/Monitoring/Configuration.cs",
+        "language": "C#",
+        "physical_lines": 56,
+        "nonblank_lines": 51
+      },
+      {
+        "path": "synups/Synups.Core/Monitoring/ConnectivityProbe.cs",
+        "language": "C#",
+        "physical_lines": 80,
+        "nonblank_lines": 72
+      },
+      {
+        "path": "synups/Synups.Core/Monitoring/GroupMonitor.cs",
+        "language": "C#",
+        "physical_lines": 124,
+        "nonblank_lines": 119
+      },
+      {
+        "path": "synups/Synups.Core/Monitoring/MonitoringService.cs",
+        "language": "C#",
+        "physical_lines": 397,
+        "nonblank_lines": 393
+      },
+      {
+        "path": "synups/Synups.Core/Monitoring/MonitoringState.cs",
+        "language": "C#",
+        "physical_lines": 30,
+        "nonblank_lines": 26
+      },
+      {
+        "path": "synups/Synups.Core/Network/GatewayDiscovery.cs",
+        "language": "C#",
+        "physical_lines": 138,
+        "nonblank_lines": 134
+      },
+      {
+        "path": "synups/Synups.Core/Network/LegacyCandidateDiscovery.cs",
+        "language": "C#",
+        "physical_lines": 59,
+        "nonblank_lines": 56
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/AppPreferences.cs",
+        "language": "C#",
+        "physical_lines": 83,
+        "nonblank_lines": 81
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/AutomaticLogExporter.cs",
+        "language": "C#",
+        "physical_lines": 100,
+        "nonblank_lines": 96
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/ConfigurationStore.cs",
+        "language": "C#",
+        "physical_lines": 72,
+        "nonblank_lines": 66
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/CsvExporter.cs",
+        "language": "C#",
+        "physical_lines": 40,
+        "nonblank_lines": 35
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/HistoryStore.cs",
+        "language": "C#",
+        "physical_lines": 312,
+        "nonblank_lines": 298
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/IncidentPage.cs",
+        "language": "C#",
+        "physical_lines": 13,
+        "nonblank_lines": 11
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/LegacySettingsReader.cs",
+        "language": "C#",
+        "physical_lines": 77,
+        "nonblank_lines": 74
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/LogFilenameStyle.cs",
+        "language": "C#",
+        "physical_lines": 3,
+        "nonblank_lines": 2
+      },
+      {
+        "path": "synups/Synups.Core/Persistence/StoragePolicy.cs",
+        "language": "C#",
+        "physical_lines": 52,
+        "nonblank_lines": 47
+      },
+      {
+        "path": "synups/Synups.Desktop/App.axaml",
+        "language": "XAML",
+        "physical_lines": 8,
+        "nonblank_lines": 8
+      },
+      {
+        "path": "synups/Synups.Desktop/App.axaml.cs",
+        "language": "C#",
+        "physical_lines": 47,
+        "nonblank_lines": 43
+      },
+      {
+        "path": "synups/Synups.Desktop/ClipboardRows.cs",
+        "language": "C#",
+        "physical_lines": 52,
+        "nonblank_lines": 49
+      },
+      {
+        "path": "synups/Synups.Desktop/DesktopActions.cs",
+        "language": "C#",
+        "physical_lines": 99,
+        "nonblank_lines": 97
+      },
+      {
+        "path": "synups/Synups.Desktop/DesktopOptions.cs",
+        "language": "C#",
+        "physical_lines": 58,
+        "nonblank_lines": 56
+      },
+      {
+        "path": "synups/Synups.Desktop/Diagnostics/InstallationCheck.cs",
+        "language": "C#",
+        "physical_lines": 345,
+        "nonblank_lines": 343
+      },
+      {
+        "path": "synups/Synups.Desktop/GatewaySetup.cs",
+        "language": "C#",
+        "physical_lines": 61,
+        "nonblank_lines": 59
+      },
+      {
+        "path": "synups/Synups.Desktop/IncidentTimeline.cs",
+        "language": "C#",
+        "physical_lines": 68,
+        "nonblank_lines": 66
+      },
+      {
+        "path": "synups/Synups.Desktop/Integrations/AlertSoundSink.cs",
+        "language": "C#",
+        "physical_lines": 65,
+        "nonblank_lines": 63
+      },
+      {
+        "path": "synups/Synups.Desktop/Integrations/InstanceCoordinator.cs",
+        "language": "C#",
+        "physical_lines": 74,
+        "nonblank_lines": 72
+      },
+      {
+        "path": "synups/Synups.Desktop/Integrations/LoginRegistration.cs",
+        "language": "C#",
+        "physical_lines": 119,
+        "nonblank_lines": 117
+      },
+      {
+        "path": "synups/Synups.Desktop/Integrations/NativeAlerts.cs",
+        "language": "C#",
+        "physical_lines": 87,
+        "nonblank_lines": 84
+      },
+      {
+        "path": "synups/Synups.Desktop/Integrations/TrayController.cs",
+        "language": "C#",
+        "physical_lines": 41,
+        "nonblank_lines": 39
+      },
+      {
+        "path": "synups/Synups.Desktop/LegacyDiscoverySetup.cs",
+        "language": "C#",
+        "physical_lines": 80,
+        "nonblank_lines": 78
+      },
+      {
+        "path": "synups/Synups.Desktop/LegacyImport.cs",
+        "language": "C#",
+        "physical_lines": 30,
+        "nonblank_lines": 28
+      },
+      {
+        "path": "synups/Synups.Desktop/LogAndPanePreferences.cs",
+        "language": "C#",
+        "physical_lines": 15,
+        "nonblank_lines": 13
+      },
+      {
+        "path": "synups/Synups.Desktop/LoginPreferences.cs",
+        "language": "C#",
+        "physical_lines": 29,
+        "nonblank_lines": 27
+      },
+      {
+        "path": "synups/Synups.Desktop/MainWindow.axaml",
+        "language": "XAML",
+        "physical_lines": 286,
+        "nonblank_lines": 285
+      },
+      {
+        "path": "synups/Synups.Desktop/MainWindow.axaml.cs",
+        "language": "C#",
+        "physical_lines": 288,
+        "nonblank_lines": 283
+      },
+      {
+        "path": "synups/Synups.Desktop/MainWindowViewModel.cs",
+        "language": "C#",
+        "physical_lines": 543,
+        "nonblank_lines": 532
+      },
+      {
+        "path": "synups/Synups.Desktop/MonitoringRows.cs",
+        "language": "C#",
+        "physical_lines": 106,
+        "nonblank_lines": 101
+      },
+      {
+        "path": "synups/Synups.Desktop/ObservableObject.cs",
+        "language": "C#",
+        "physical_lines": 15,
+        "nonblank_lines": 13
+      },
+      {
+        "path": "synups/Synups.Desktop/Program.cs",
+        "language": "C#",
+        "physical_lines": 76,
+        "nonblank_lines": 71
+      },
+      {
+        "path": "synups/Synups.Desktop/Styles/Theme.axaml",
+        "language": "XAML",
+        "physical_lines": 82,
+        "nonblank_lines": 82
+      }
+    ],
+    "excluded_generated": [],
+    "excluded_artwork": [],
+    "file_count": 42,
+    "physical_lines": 4469,
+    "nonblank_lines": 4318,
+    "by_language": {
+      "C#": {
+        "files": 39,
+        "physical_lines": 4093,
+        "nonblank_lines": 3943
+      },
+      "XAML": {
+        "files": 3,
+        "physical_lines": 376,
+        "nonblank_lines": 375
+      }
+    }
+  },
+  "synups_tests": {
+    "revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+    "prefixes": [
+      "synups/Synups.Tests"
+    ],
+    "files": [
+      {
+        "path": "synups/Synups.Tests/AlertSoundTests.cs",
+        "language": "C#",
+        "physical_lines": 87,
+        "nonblank_lines": 85
+      },
+      {
+        "path": "synups/Synups.Tests/DesktopConvenienceTests.cs",
+        "language": "C#",
+        "physical_lines": 96,
+        "nonblank_lines": 91
+      },
+      {
+        "path": "synups/Synups.Tests/DesktopPreferencesTests.cs",
+        "language": "C#",
+        "physical_lines": 232,
+        "nonblank_lines": 220
+      },
+      {
+        "path": "synups/Synups.Tests/EngineTests.cs",
+        "language": "C#",
+        "physical_lines": 306,
+        "nonblank_lines": 286
+      },
+      {
+        "path": "synups/Synups.Tests/GatewayTests.cs",
+        "language": "C#",
+        "physical_lines": 118,
+        "nonblank_lines": 108
+      },
+      {
+        "path": "synups/Synups.Tests/HistoryTests.cs",
+        "language": "C#",
+        "physical_lines": 223,
+        "nonblank_lines": 212
+      },
+      {
+        "path": "synups/Synups.Tests/IncidentPagingTests.cs",
+        "language": "C#",
+        "physical_lines": 166,
+        "nonblank_lines": 158
+      },
+      {
+        "path": "synups/Synups.Tests/LegacyCharacterizationTests.cs",
+        "language": "C#",
+        "physical_lines": 98,
+        "nonblank_lines": 90
+      },
+      {
+        "path": "synups/Synups.Tests/LegacyCompletionTests.cs",
+        "language": "C#",
+        "physical_lines": 122,
+        "nonblank_lines": 120
+      },
+      {
+        "path": "synups/Synups.Tests/LegacyDiscoveryTests.cs",
+        "language": "C#",
+        "physical_lines": 76,
+        "nonblank_lines": 74
+      },
+      {
+        "path": "synups/Synups.Tests/LegacyImportTests.cs",
+        "language": "C#",
+        "physical_lines": 107,
+        "nonblank_lines": 105
+      },
+      {
+        "path": "synups/Synups.Tests/LogPaneTests.cs",
+        "language": "C#",
+        "physical_lines": 80,
+        "nonblank_lines": 78
+      },
+      {
+        "path": "synups/Synups.Tests/LoginRegistrationTests.cs",
+        "language": "C#",
+        "physical_lines": 92,
+        "nonblank_lines": 90
+      },
+      {
+        "path": "synups/Synups.Tests/MonitoringTestSupport.cs",
+        "language": "C#",
+        "physical_lines": 75,
+        "nonblank_lines": 71
+      },
+      {
+        "path": "synups/Synups.Tests/PersistenceTests.cs",
+        "language": "C#",
+        "physical_lines": 108,
+        "nonblank_lines": 100
+      },
+      {
+        "path": "synups/Synups.Tests/ProfileTests.cs",
+        "language": "C#",
+        "physical_lines": 44,
+        "nonblank_lines": 39
+      },
+      {
+        "path": "synups/Synups.Tests/ReleaseHardeningTests.cs",
+        "language": "C#",
+        "physical_lines": 89,
+        "nonblank_lines": 87
+      },
+      {
+        "path": "synups/Synups.Tests/ShellTests.cs",
+        "language": "C#",
+        "physical_lines": 242,
+        "nonblank_lines": 233
+      },
+      {
+        "path": "synups/Synups.Tests/StorageCollection.cs",
+        "language": "C#",
+        "physical_lines": 11,
+        "nonblank_lines": 9
+      },
+      {
+        "path": "synups/Synups.Tests/StoragePolicyTests.cs",
+        "language": "C#",
+        "physical_lines": 239,
+        "nonblank_lines": 225
+      },
+      {
+        "path": "synups/Synups.Tests/StorageSettingsTests.cs",
+        "language": "C#",
+        "physical_lines": 145,
+        "nonblank_lines": 137
+      }
+    ],
+    "excluded_generated": [],
+    "excluded_artwork": [],
+    "file_count": 21,
+    "physical_lines": 2756,
+    "nonblank_lines": 2618,
+    "by_language": {
+      "C#": {
+        "files": 21,
+        "physical_lines": 2756,
+        "nonblank_lines": 2618
+      },
+      "XAML": {
+        "files": 0,
+        "physical_lines": 0,
+        "nonblank_lines": 0
+      }
+    }
+  }
+}

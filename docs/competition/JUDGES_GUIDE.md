@@ -4,6 +4,10 @@
 
 **Evaluate the public [v0.1.1 release](https://github.com/samscript18/Synups/releases/tag/v0.1.1).** It contains unchanged internal **0.1.1-rc.4**, application `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`. No account, backend or .NET SDK is required. [Windows x64 ZIP](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip) · [macOS arm64 tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz) · [Linux x64 tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz) · [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS).
 
+## First 90 seconds
+
+Read the [four migration answers](../../README.md#the-migration-four-questions), then compare the genuine before/after images. The frozen October 16–22 migration range contains **39 commits**; consistently measured production C#/XAML is **4,374 original / 4,469 Synups physical lines**, plus **2,756 test lines** separately. [Exact Git range, method, exclusions and file-level results](../migration/MIGRATION_MEASUREMENTS.md). No developer-hours estimate is claimed. [Five selected screenshots and their individual provenance](SCREENSHOTS.md) include setup, import-loaded status (full preview is outside the retained viewport), and the historical rc.3 incident timeline.
+
 ## Migration at a Glance
 
 | Question | Review evidence |

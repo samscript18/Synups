@@ -1,5 +1,7 @@
 # Architecture — published release and diagnostics alpha
 
+[Reproducible migration size, Git range and exclusions](MIGRATION_MEASUREMENTS.md) · [Selected screenshots and exact provenance](../competition/SCREENSHOTS.md). Measurements apply only to frozen public v0.1.1 / internal rc.4.
+
 This document separates two implemented snapshots. **A: public v0.1.1**, application `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`, internal `0.1.1-rc.4`. **B: separate v0.2.0-alpha.1**, application `3c4462a71cbb90032603cd3eaf4366c2561474d7`. Alpha code and test counts are not evidence for released v0.1.1 bytes. Paused, uncommitted expansion work is not part of either snapshot. Earlier phase notes remain below as history.
 
 [Published source tree](https://github.com/samscript18/Synups/tree/6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/synups) · [alpha source tree](https://github.com/samscript18/Synups/tree/3c4462a71cbb90032603cd3eaf4366c2561474d7/synups) · [source-backed parity audit](FEATURE_PARITY.md) · [exact release execution evidence](../evidence/verification/2026-10-22-desktop-completion.json) · [alpha hardening evidence](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/HARDENING_REPORT.md).

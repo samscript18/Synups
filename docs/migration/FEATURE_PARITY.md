@@ -1,5 +1,7 @@
 # WirePeep migration parity — published v0.1.1
 
+[Reproducible migration size, Git range and exclusions](MIGRATION_MEASUREMENTS.md) · [Selected screenshots and exact provenance](../competition/SCREENSHOTS.md). Measurements apply only to frozen public v0.1.1 / internal rc.4.
+
 **Current score: (15 complete + 3 partially complete × 0.5) / 18 = 91.7%.** This is a coarse functional inventory: Complete = 1, Partial = 0.5. It is not percentage of effort, source coverage or physical OS certification. Alerts, preferences and placement/tray are the three partial items. Simulation is deliberately excluded from production; tests/builds are engineering gates, not extra scored features.
 
 Published [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1) contains unchanged application **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, internal **0.1.1-rc.4**. The original is Bill Menees’ MIT-licensed [WirePeep at 61ae143](https://github.com/menees/WirePeep/tree/61ae14391151ca9f209223e62c98fae3df5482b8). Source links below pin those snapshots; paused development edits are not release evidence.
