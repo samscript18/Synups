@@ -1,6 +1,176 @@
-# Synups architecture
+# Architecture — published release and diagnostics alpha
 
-The Phase 1/2 decisions below are historical. The Phase 3 section describes the current implementation.
+This document separates two implemented snapshots. **A: public v0.1.1**, application `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`, internal `0.1.1-rc.4`. **B: separate v0.2.0-alpha.1**, application `3c4462a71cbb90032603cd3eaf4366c2561474d7`. Alpha code and test counts are not evidence for released v0.1.1 bytes. Paused, uncommitted expansion work is not part of either snapshot. Earlier phase notes remain below as history.
+
+[Published source tree](https://github.com/samscript18/Synups/tree/6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/synups) · [alpha source tree](https://github.com/samscript18/Synups/tree/3c4462a71cbb90032603cd3eaf4366c2561474d7/synups) · [source-backed parity audit](FEATURE_PARITY.md) · [exact release execution evidence](../evidence/verification/2026-10-22-desktop-completion.json) · [alpha hardening evidence](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/HARDENING_REPORT.md).
+
+## Overall architecture
+
+```mermaid
+flowchart TB
+    subgraph Desktop[Synups.Desktop - Avalonia]
+        Life[Program and desktop lifetime]
+        Window[MainWindow and real controls]
+        VM[Observable ViewModel and bounded rows]
+        OS[Tray, login, clipboard and alert adapters]
+        Life --> Window --> VM
+        Window --> OS
+    end
+    subgraph Core[Synups.Core - no Avalonia reference]
+        Config[Validated configuration and profile import]
+        Monitor[MonitoringService and GroupMonitor]
+        Probe[Real IcmpProbe]
+        Store[Serialized SqliteHistoryStore]
+        CSV[Streaming CSV and derived logs]
+        Config --> Monitor --> Probe
+        Monitor --> Store --> CSV
+    end
+    VM --> Config
+    VM --> Monitor
+    VM --> Store
+    subgraph Alpha[Additional alpha components only]
+        Runner[Separate DiagnosticRunner]
+        Tests[DNS, TCP connect, ICMP, TTL and configuration adapters]
+        Evidence[Detached preview, redaction and export]
+        Runner --> Tests
+        Runner --> Store
+        Store --> Evidence
+    end
+    VM -. Alpha workspace .-> Runner
+    VM -. Alpha export .-> Evidence
+    Verification[Synups.Tests and engineering native apphost harnesses]
+    Verification -. Exercises real boundaries .-> Desktop
+    Verification -. Deterministic contracts .-> Core
+```
+
+The original WPF solution under `src/` remains separate. `Synups.slnx` includes Core, Desktop and Tests; no second backend, cloud host, WebView or DI container was introduced. Explicit construction keeps ownership visible. The original MIT default XML is linked as an embedded Core resource without running the original constructor's discovery side effects.
+
+## A. Published v0.1.1
+
+### Monitoring execution and evidence
+
+[MonitoringService](https://github.com/samscript18/Synups/blob/6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/synups/Synups.Core/Monitoring/MonitoringService.cs) serializes lifecycle changes. Start validates and freezes the profile, initializes/retries history, commits a new session, then owns independent group loops. A semaphore bounds active group polls to four by default; one group never overlaps itself. [GroupMonitor](https://github.com/samscript18/Synups/blob/6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/synups/Synups.Core/Monitoring/GroupMonitor.cs) rotates name-sorted targets, retains the original 20 ms eligibility tolerance and stops after the first success. Unvisited peers are stale/not checked, not newly measured healthy peers.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Stopped
+    Stopped --> Running: Explicit Start or saved launch opt-in
+    Running --> Running: Eligible group poll and durable batch
+    Running --> Stopping: Stop or close cancels owned work
+    Running --> Faulted: Durable write or session error
+    Stopping --> Stopping: Native call exceeds bounded wait; retry required
+    Stopping --> Stopped: Workers drain and evidence saves
+    Faulted --> Stopped: Stop and successful evidence retry
+    Stopped --> Running: New session after valid configuration
+```
+
+Inside a poll, sustained disconnected observations must reach the configured grace before one incident starts. Confirmation time is the incident start; first missed observation is retained separately. Measured success records recovery. An unavailable probe resets an unconfirmed streak but cannot recover a confirmed incident. Large scheduling gaps mark uncertainty. UTC is evidence; `Stopwatch`/`IMonitorClock` governs elapsed intervals. Stop ends observation without inventing recovery. [Original behavior and deliberate corrections](LEGACY_SEMANTICS.md) are backed by linked-original characterization and migrated-engine tests.
+
+[SqliteHistoryStore](https://github.com/samscript18/Synups/blob/6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/synups/Synups.Core/Persistence/HistoryStore.cs) owns one connection, one process file lease and a serialized off-thread I/O semaphore. Connection pooling is off, busy timeout is two seconds, journal mode is DELETE and `synchronous=FULL`. The file is `history.v1.db` with schema version 1 for this snapshot. A transaction commits changed outages, sequenced events and session observation metadata together; retries reuse stable identities. A failed write remains pending in owned memory, cancels monitoring and prevents a misleading clean-save claim. Corruption, unsupported versions and denied access preserve the file rather than resetting it.
+
+At restart an unended monitoring session becomes Interrupted; an unresolved incident keeps its last observation end and stored elapsed duration. No duration is extended through a process gap, and a new Start creates a new session. Capacity is a durable SQLite policy (default 1 GiB, UI range 256 MiB–10 GiB), not an unlimited log promise. Opt-in retention protects unresolved/interrupted evidence; freed pages are reused, not securely erased. A full SQLite backup is distinct from CSV export. See historical storage rationale below and [storage tests](https://github.com/samscript18/Synups/blob/6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/synups/Synups.Tests/StoragePolicyTests.cs).
+
+### Presentation, settings and platform boundaries
+
+The window's 250 ms dispatcher timer reads snapshots while monitoring runs; it does not schedule probes. Stable observable rows receive bounded updates. Incident history uses asynchronous bounded paging; CSV streams persisted rows. Draft changes save before replacing active configuration, and editing requires stopped monitoring so an old sample cannot attach to a changed address.
+
+`ConfigurationStore` and `PreferencesStore` use versioned JSON, validation and same-directory atomic replacement. Unreadable files are preserved and need explicit recovery/backup. The profile-only `LegacySettingsReader` uses bounded XML with DTD/external resolution disabled, a genuine Menees 5.1.2 fixture and explicit import preview/confirmation. Group/target GUIDs and supported timings survive; WirePeep settings, history and OS startup preferences are not overwritten by import. Windows-specific options are not blindly imported.
+
+OS-specific adapters contain native commands/APIs: gateway queries are read-only and bounded; startup registration is explicit and reversible; tray hiding is conservative when restoration is unestablished; clipboard and native storage pickers remain desktop concerns. In-app alerts work independently of optional native delivery. Windows native notifications were withdrawn after failed visible delivery; sound-process success does not establish audibility. Closing awaits pending UI work and drains monitor/storage ownership. A worker exceeding the seven-second target remains owned and restart/close is blocked for retry, not abandoned.
+
+## B. Separate diagnostics alpha
+
+[DiagnosticRunner](https://github.com/samscript18/Synups/blob/3c4462a71cbb90032603cd3eaf4366c2561474d7/synups/Synups.Core/Diagnostics/DiagnosticRunner.cs) owns a separate budget: two sessions by default, one per canonical endpoint, immediate rejection when full and no unbounded queue. `ValidatedCopy` checks target approval, tests, finite limits, resolver consent and probe cap before execution. The UI snapshots the exact request before confirmation. Each adapter runs serially within its session under linked cancellation/deadlines; diagnostic tasks never change monitoring targets, scheduler or incident recovery.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Confirmed: Exact target, methods, limits and consent reviewed
+    Confirmed --> Running: Capacity acquired; initial checkpoint saved
+    Running --> Running: Adapter returns; immutable result checkpoint saved
+    Running --> Completed: Every selected test succeeds
+    Running --> Partial: Deadline, missing tests or mixed outcomes
+    Running --> Failed: No successful result
+    Running --> Cancelled: Caller or shutdown cancellation
+    Running --> Interrupted: Process ends; next startup recovers saved checkpoint
+    Completed --> Reopened: Read history; no probes
+    Partial --> Reopened
+    Failed --> Reopened
+    Cancelled --> Reopened
+    Interrupted --> Reopened
+```
+
+Adapters record typed results, UTC observations, method/provenance and monotonic durations: real one-port TCP connect (first resolved address only), explicit A/AAAA DNS with bounded same-resolver UDP-to-TCP truncation fallback, ICMP quality, TTL/hop-limit path and read-only interfaces/default routes. Optional PTR is off by default, session-cached and bounded; failed names leave literal addresses. Two retained system-hostname workers prevent cancellation from spawning unlimited native resolver tasks. [Provider details and limits](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/ARCHITECTURE.md) include exact bounds and unsupported behavior.
+
+Schema 2 is additive and uses the same serialized store owner. Before upgrading schema 1, a SQLite backup is created and checked, then the schema transaction runs. A checkpoint precedes network work and follows each returned test; no SQL transaction spans network I/O. A crash can lose the current test's unsaved samples. Restart marks saved Pending/Running work Interrupted without assigning a fabricated completion time. Terminal results are immutable; baselines reference fully successful sessions; comparisons require compatible definitions and leave missing data Unknown. Links are chosen at request creation, not retroactively attached to another incident.
+
+```mermaid
+flowchart LR
+    Incident[Actual monitoring incident] --> Select[Diagnose and approve endpoint]
+    Select --> Session[Bounded session and checkpointed results]
+    Session --> History[SQLite history]
+    History --> Baseline[Optional successful baseline and comparison]
+    History --> Preview[Detached evidence preview]
+    Baseline --> Preview
+    Preview --> Redact[Apply selected redaction before rendering]
+    Redact --> JSON[JSON]
+    Redact --> Markdown[Markdown]
+    Redact --> PDF[Portable PDF]
+    JSON --> Hash[SHA-256 of actual files]
+    Markdown --> Hash
+    PDF --> Hash
+    Hash --> Manifest[Manifest and atomic new-directory publish]
+```
+
+The export is local/offline. JSON uses ordinal sorted-member serialization with array order preserved, not a claim of RFC 8785 compliance. JSON/Markdown retain Unicode; PDF shows explicit non-ASCII escapes. Each artifact is capped at 16 MB; cancellation/failure cleans normal staging, while process termination can leave an incomplete staging folder. SHA-256 detects changed bytes relative to the manifest, not origin/authorship. Redaction precedes all renderers; timestamps, IDs, units and metrics can still identify activity. [Privacy](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/PRIVACY.md), [migration/rollback](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/SQLITE_MIGRATION.md) and [hardening](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/HARDENING_REPORT.md) record the boundaries.
+
+### SQLite entities and enforced relationships
+
+```mermaid
+erDiagram
+    SESSIONS ||--o{ OUTAGES : "v1 application session GUID"
+    SESSIONS ||--o{ EVENTS : "v1 application session GUID"
+    STORAGE_POLICY { int id PK }
+    METADATA { int id PK }
+    SESSIONS { string id PK }
+    OUTAGES { string id PK }
+    EVENTS { string id PK }
+    OUTAGES o|--o{ DIAGNOSTIC_SESSIONS : "v2 incident FK restrict"
+    DIAGNOSTIC_SESSIONS ||--o{ DIAGNOSTIC_RESULTS : "FK cascade"
+    DIAGNOSTIC_RESULTS ||--o{ DIAGNOSTIC_OBSERVATIONS : "FK cascade"
+    DIAGNOSTIC_SESSIONS ||--o{ DIAGNOSTIC_BASELINES : "FK restrict"
+    DIAGNOSTIC_BASELINES ||--o{ DIAGNOSTIC_COMPARISONS : "FK restrict"
+    DIAGNOSTIC_SESSIONS ||--o{ DIAGNOSTIC_COMPARISONS : "FK restrict"
+```
+
+`SESSIONS`, `OUTAGES`, `EVENTS`, `METADATA` and `STORAGE_POLICY` exist in published schema 1. Their drawn session GUID relationships are application-managed, not newly invented SQL foreign keys. Only `DIAGNOSTIC_*` tables/relationships are alpha schema 2 additions; observations use `(result_id, ordinal)` as a composite primary key. Alpha enables foreign keys. An incident-linked diagnostic pins its original monitoring session against retention. Baselines/comparisons pin source sessions; deleting a confirmed baseline removes its comparisons transactionally and preserves those sessions. Confirmed terminal-session deletion cascades results/observations and rejects active or referenced work. Opt-in retention deletes only eligible old terminal standalone diagnostics. The baseline selector currently shows the latest 100; session history pages safely through equal timestamps.
+
+## Architecture decisions and operational trade-offs
+
+These are design alternatives recorded in source/history, not claims of experimental prototypes that never existed.
+
+| Decision | Alternatives considered | Rationale | Trade-off | Operational implication | Verification |
+|---|---|---|---|---|---|
+| Keep original source separate; port domain intent into UI-free Core | Reuse Windows-targeted Common unchanged or only translate WPF XAML | Legacy Common inherits Windows targets/settings/discovery; the window also owns orchestration | More explicit domain/presentation code | Original ancestry/resources stay reviewable; Core has no Avalonia dependency | Source inventory and five linked-original characterization tests |
+| Explicit three-project composition | Add a generic host/DI container or Infrastructure project immediately | Ownership is small and visible; original tests accept injected boundaries | Composition must be maintained deliberately | Lifetime/disposal paths are directly inspectable | Constructor/lifecycle tests and native close/restart |
+| Single serialized SQLite connection with DELETE/FULL | Rewrite a JSON snapshot; custom append journal; WAL with extra ownership/checkpoints | Atomic multi-record batches and crash rollback; one writer does not need a second concurrency model | Native SQLite packaging; busy/full errors still require handling | Off-dispatcher serialization; lease, bounded busy timeout and retained pending writes | Actual full/busy/corrupt/readonly/interruption tests, separately scoped to each source |
+| Monotonic elapsed time plus UTC evidence | Preserve UTC-only interval calculations | Clock changes and sleep must not invent continuous failure/recovery | Gaps and durations require explicit modelling | UTC sequence/timestamps remain evidence; observation gaps stay visible | Clock-jump/grace/gap tests |
+| Separate bounded diagnostic ownership | Reuse continuous monitoring's scheduler and outcomes | Diagnostic sampling and slow DNS/path work must not alter peer-selection or recovery semantics | Independent caps, cancellation and shutdown coordination | Two diagnostic sessions do not consume the monitoring semaphore or hold SQL locks over network I/O | Alpha real concurrent monitoring/diagnostics and worker/persistence checks |
+| Genuine profile-only import with confirmation | Guess historical Menees formats or import all Windows settings | Compatibility needs an actual fixture and bounded supported schema | Some historical variants intentionally refused | Original source untouched; destination backup before replacement; no automatic probing | All three rc.4 packaged import/backup/reload actions |
+| Untrimmed self-contained candidate, explicit unsupported trust | Trim/AOT immediately; assume a successful compile means runnable/trusted | Reflection/JSON/Avalonia resources/native assets need acceptance; signing needs credentials | Larger archives; signing and extra architectures remain limited | Preserve dependency licences and native assets; no security bypass or fabricated notarization | Per-file manifests, exact hashes, three native extracted apphosts; extra alpha RIDs build-only |
+
+## Native and release boundaries
+
+Published v0.1.1 evidence is Windows Server 2025 x64, macOS 15 arm64, Ubuntu 24.04 x64/X11/Xvfb/Openbox, plus the separately recorded local Mac run. The alpha additionally builds Linux-arm64 and macOS-x64 but does not execute them on matching hardware. Native IPv6 and physical-network topology, all Wayland/VPN/suspend cases, physical tray/picker/keyboard/notification/login delivery and real multi-display restoration are not universally certified.
+
+Both snapshots use untrimmed, non-AOT self-contained packaging. Runtime JSON/reflection and Avalonia/native SQLite/graphics resources are explicit trimming/AOT review surfaces, not proven incompatibilities or successful AOT support. Windows is unsigned; macOS has ad-hoc bundle integrity without Developer ID/notarization. Respect OS policy; do not disable security controls. Raw SYN/UDP diagnostic probes, capture, ASN enrichment, remote probes, scheduled diagnostics and new threshold/chart integrations remain unavailable in the frozen alpha. Uncommitted adapter experiments are not a verified release capability.
+
+## Historical phase architecture notes
+
+The following retained notes describe their original phase, not the current public release. Statements such as “planned”, “not implemented” or “Phase 3 current” apply only to those earlier checkpoints. Use snapshots A/B above for present claims.
+
+
+The entries below are preserved historical checkpoints; current release snapshots are documented above.
 
 ## Phase 1 decision
 

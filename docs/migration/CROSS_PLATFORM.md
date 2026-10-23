@@ -2,9 +2,13 @@
 
 **Current public release:** [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), source6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, internal0.1.1-rc.4,91.7% inventory. [Anonymous publication verification](../evidence/verification/synups-0.1.1-publication.json). Earlier unpublished/proposed-release statements below are historical. Remaining signing/physical/login/alert blockers are unchanged; competition submission is separate.
 
-Current22 October2026 checkpoint: [reviewed rc.4](../release/DESKTOP_COMPLETION_CANDIDATE.md), application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03,91.7% inventory/8.5 readiness. Earlier phase sections are historical. The user-selected proposed v0.1.1 payload is now frozen rc.4 at91.7%, with internal0.1.1-rc.4 version disclosed; public0.1.0 remains unchanged. Earlier rc.3 payload decisions below are historical.
+The current published evidence is the exact rc.4 [three-OS run 39850198899](https://github.com/samscript18/Synups/actions/runs/39850198899), retained [native action/archive reports](../evidence/verification/2026-10-22-desktop-completion.json) and [source-backed parity audit](FEATURE_PARITY.md). Windows/macOS default suites passed 159 cases with five intentional skips; Linux passed 160 with four skips; each passed three separate real/native checks, one audio request/fallback check, eight Python safety tests and all six extracted-apphost stages. There are 164 unique .NET cases across invocations/platforms. Physical delivery/login/tray/picker and trusted-signing limitations remain explicit.
 
-Targets are Windows, macOS and Linux. Target intent and successful cross-compilation do not establish runtime support. No downloadable release has been created. Phase 1/2 evidence is historical below; Phase 3 is historical; Phase 4A below is the current verification matrix.
+The separate `0.2.0-alpha.1` at `3c4462a71cbb90032603cd3eaf4366c2561474d7` has independent [hardening evidence](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/HARDENING_REPORT.md), including its larger test suite and isolated path cases. It is not included in public v0.1.1 and does not change its test counts or parity.
+
+## Historical platform checkpoints
+
+All phase/proposed/unpublished statements below are retained historical entries. Their source/date qualifies them; they are not the latest public release state. See the current snapshot above for evaluation.
 
 ## Toolchain
 - Avalonia 12.1.4 stable, verified via official latest release and NuGet index on 2026-10-16: https://github.com/AvaloniaUI/Avalonia/releases/tag/12.1.4

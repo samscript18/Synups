@@ -1,5 +1,7 @@
 # Actual migration log — Phase 1
 
+This is a chronological historical record, including earlier phase plans and proposed-release decisions. Current public v0.1.1 is frozen at `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`, internal `0.1.1-rc.4`, with 91.7% legacy parity. See [the current source-backed audit](FEATURE_PARITY.md) and [two architecture snapshots](ARCHITECTURE.md). The [diagnostics alpha hardening](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/HARDENING_REPORT.md) at `3c4462a71cbb90032603cd3eaf4366c2561474d7` is separate work, not part of those released downloads.
+
 Work date: 2026-10-16. This is an AI-assisted repository session, with an interruption and later continuation. No total development hours were instrumented; elapsed session time must not be interpreted as labor. Only command timings emitted by tools are reported below.
 
 ## Audit and baseline before implementation

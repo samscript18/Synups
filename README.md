@@ -8,6 +8,18 @@ Use it to investigate intermittent connectivity, maintain a local incident histo
 
 Built with **Avalonia, C# and XAML**, migrating [Bill Menees’ WirePeep](https://github.com/menees/WirePeep) for the [2026 Avalonia Port Challenge](https://avaloniaui.net/blog/avalonia-port-challenge), targeting **Best IT Pro Tool**. No account, backend or cloud service is required.
 
+## Migration at a Glance
+
+| What to review | Published v0.1.1 |
+|---|---|
+| Original | [Bill Menees’ WirePeep](https://github.com/menees/WirePeep), MIT; preserved Windows WPF source and resources |
+| Port | Avalonia desktop on Windows/macOS/Linux; UI-free monitoring and durable SQLite incidents |
+| Preserved / improved | Rotating peer groups, first success and failure grace; bounded cancellation, honest uncertainty, restartable history and genuine settings import |
+| Legacy parity | **91.7% = (15 complete + 3 partial × 0.5) / 18**; alerts, preferences and placement/tray remain partial |
+| Evidence / tour | [Source-backed 18-item audit](docs/migration/FEATURE_PARITY.md), [architecture and decisions](docs/migration/ARCHITECTURE.md), [judge’s five-minute guide](docs/competition/JUDGES_GUIDE.md) |
+
+[Download](#download) · [Quick start](#quick-start) · [Genuine before/after](#from-wirepeep-to-synups) · [Native verification](#platform-verification) · [Security/privacy](SECURITY.md)
+
 ## Download
 
 **Recommended public release: [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), 91.7% legacy parity.** These permanent downloads require neither a GitHub account nor a .NET SDK. Extract the complete archive and keep its files together.
@@ -22,7 +34,7 @@ Verify downloads against [SHA256SUMS](https://github.com/samscript18/Synups/rele
 
 **Released v0.1.1 uses the verified, unchanged 0.1.1-rc.4 binaries**, application source `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`. Help/About and manifests retain **0.1.1-rc.4**; no binary was rebuilt or relabelled. [Anonymous verification of all 15 public assets](docs/evidence/verification/synups-0.1.1-publication.json) · [Release notes](https://github.com/samscript18/Synups/releases/tag/v0.1.1) · [Exact source and evidence](docs/release/DESKTOP_COMPLETION_CANDIDATE.md). [v0.1.0 remains an unchanged rollback release](https://github.com/samscript18/Synups/releases/tag/v0.1.0).
 
-The frozen archive’s bundled README and approved release handoff documents retain their historical build/prepublication wording. Use this current README, the repository installation guide and publication receipt for current status and links. All approved asset bytes and the verbatim release body remain unchanged.
+The frozen archives and supplemental assets retain their original build-time/handoff text, including older prepublication wording. Their bytes are intentionally unchanged. Use this README, the corrected public release description and the repository installation guide for current status; [the original publication receipt](docs/evidence/verification/synups-0.1.1-publication.json) remains historical evidence.
 
 ## See Synups
 
@@ -120,9 +132,15 @@ The remaining partial areas are **alerts** (actual OS delivery/audibility/attent
 - **Data safety:** forced quit can lose uncommitted batches. Pending write failures require repair/Retry. CSV is not a full database backup; use the SQLite backup action. [Storage design](docs/migration/ARCHITECTURE.md).
 - **Scope:** broader IPv6/VPN/suspend/multi-display/long-running GUI acceptance, broader settings-format compatibility and remaining OS integrations need work. This is not a production-readiness or100%-parity claim.
 
+## Separate diagnostics development alpha
+
+Network diagnostics and incident investigation capabilities are under development separately in **v0.2.0-alpha.1**. **These features are not included in the v0.1.1 downloads.** The frozen alpha at `3c4462a71cbb90032603cd3eaf4366c2561474d7` adds explicit DNS/TCP/ICMP/path investigations, incident-linked sessions, baselines and local redacted PDF/JSON/Markdown evidence. Its tests, screenshots and package hashes are separate from the release evidence above, and it earns no additional legacy parity points.
+
+[Diagnostics branch](https://github.com/samscript18/Synups/tree/feat/network-diagnostics) · [31-feature matrix](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/FEATURE_MATRIX.md) · [hardening report and limits](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/HARDENING_REPORT.md) · [user guide](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/USER_GUIDE.md) · [upgrade/rollback](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/SQLITE_MIGRATION.md). The expansion is paused; raw SYN/UDP reachability, capture and external providers are not verified frozen-alpha capabilities. No alpha release or competition submission is implied.
+
 ## Architecture and development
 
-Three projects: **Synups.Core** (configuration, monitoring, persistence), **Synups.Desktop** (Avalonia/MVVM and OS integration), **Synups.Tests** (characterization, deterministic and headless tests). No WebView, backend or production mock probe. [Architecture](docs/migration/ARCHITECTURE.md) · [Release checklist](docs/migration/RELEASE_READINESS.md).
+Three projects: **Synups.Core** (configuration, monitoring, persistence), **Synups.Desktop** (Avalonia/MVVM and OS integration), **Synups.Tests** (characterization, deterministic and headless tests). No WebView, backend or production mock probe. [Two architecture snapshots and decision table](docs/migration/ARCHITECTURE.md) · [Release checklist](docs/migration/RELEASE_READINESS.md).
 
 With the pinned .NET10.0.402 SDK and Avalonia12.1.4:
 
