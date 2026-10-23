@@ -1,0 +1,281 @@
+{
+  "authentication_used": false,
+  "default_branch": "feat/avalonia-migration",
+  "branches": [
+    {
+      "branch": "feat/avalonia-migration",
+      "documentation_commit": "ff232770baca1f8f11d3d867c209930da4be7540",
+      "files": [
+        {
+          "path": "README.md",
+          "http_status": 200,
+          "bytes": 18561,
+          "sha256": "37ab0bbeb48a8139fa5738bafc3d698959fee743f555d425d8d301e2f8373110",
+          "matches_local": true
+        },
+        {
+          "path": "SECURITY.md",
+          "http_status": 200,
+          "bytes": 11998,
+          "sha256": "5793ac6099b9831fe9c926d93fd7d410bc45622fc585e0bdea5f5236926746ac",
+          "matches_local": true
+        },
+        {
+          "path": "docs/PARITY.md",
+          "http_status": 200,
+          "bytes": 3958,
+          "sha256": "de470e66b413f13eb51b357b494b1a94a4e03a7e3ca4daad99b31ffac5c70ac2",
+          "matches_local": true
+        },
+        {
+          "path": "docs/competition/JUDGES_GUIDE.md",
+          "http_status": 200,
+          "bytes": 9049,
+          "sha256": "dc779333c6fc955875a302ece73e45a4c35ca2b677b15eb6d7a4f2770c0e5a4c",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/FEATURE_PARITY.md",
+          "http_status": 200,
+          "bytes": 30097,
+          "sha256": "97464f1b5ab2b9e7d5c1c6eb7decb3b8339de979ecfef49f85fb402ebad54449",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/FEATURE_PARITY_HISTORY.md",
+          "http_status": 200,
+          "bytes": 24709,
+          "sha256": "6d9f5277187cd47fcfebef74879613def8d509ec237568ff7863bc06f5c24086",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/ARCHITECTURE.md",
+          "http_status": 200,
+          "bytes": 50298,
+          "sha256": "9e76694c31b847977211fa2ab370decb7f4939ff97cb5a7cb3d390608bdcc026",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/CROSS_PLATFORM.md",
+          "http_status": 200,
+          "bytes": 55969,
+          "sha256": "7f8a5d286e4fb10b4fae28f06f2717df8bc6590c021a839de61a375f86bb8a0d",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/MIGRATION_LOG.md",
+          "http_status": 200,
+          "bytes": 143365,
+          "sha256": "0a9a7459d176554551849f5bcaf0ebaa0e81587116732fd52222543da8ee0fcf",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/RELEASE_READINESS.md",
+          "http_status": 200,
+          "bytes": 27167,
+          "sha256": "5ab25495794706e3938ca9fa6adb1e3fad16f3b55b5c773188abedf3c71e364f",
+          "matches_local": true
+        },
+        {
+          "path": "docs/release/v0.1.1/RELEASE_BODY.md",
+          "http_status": 200,
+          "bytes": 9781,
+          "sha256": "7e613f6e63b18026a5b4be04a9ab084bfde5eb1aeb97889ae19f774b3507ed5f",
+          "matches_local": true
+        },
+        {
+          "path": "docs/release/v0.1.1/DOCUMENTATION_AUDIT.md",
+          "http_status": 200,
+          "bytes": 9262,
+          "sha256": "76475aaa3130f8a235e072311176c82757d5bec2c41e61b6362097f46f54a6ef",
+          "matches_local": true
+        },
+        {
+          "path": "docs/evidence/README.md",
+          "http_status": 200,
+          "bytes": 20682,
+          "sha256": "a7104a4606fe7b3c96fece16346db6be4519ba5a29ab07926be7c15771b32170",
+          "matches_local": true
+        },
+        {
+          "path": "eng/check-documentation.py",
+          "http_status": 200,
+          "bytes": 9211,
+          "sha256": "4efcdb57fc422d74b74a0a9093bfb79263e6dc1718d28eac066c4afab6021a4f",
+          "matches_local": true
+        },
+        {
+          "path": "eng/audit-release-description.py",
+          "http_status": 200,
+          "bytes": 6611,
+          "sha256": "88c02aba2f13635a1fe377a1a66e987e0a98903fec314f43f1885a54d34b05ef",
+          "matches_local": true
+        },
+        {
+          "path": "eng/tests/test_documentation.py",
+          "http_status": 200,
+          "bytes": 6040,
+          "sha256": "6c7091401e011e5f303bcfd984a4e480f677bb75b6340e005da4eeb660bd9ce8",
+          "matches_local": true
+        }
+      ]
+    },
+    {
+      "branch": "feat/network-diagnostics",
+      "documentation_commit": "7b4b478c2f2df4dc6d816a6fc4d1c52801efc91b",
+      "files": [
+        {
+          "path": "README.md",
+          "http_status": 200,
+          "bytes": 18289,
+          "sha256": "b1f1c92923c611cb3a5e54299cbb2bd413682c31863c056cdb75ccb7e2a53193",
+          "matches_local": true
+        },
+        {
+          "path": "SECURITY.md",
+          "http_status": 200,
+          "bytes": 11726,
+          "sha256": "0e3124eade5f8ab5c3776915e72681f2a0d30ef255c53ec60d36b20987fe7b05",
+          "matches_local": true
+        },
+        {
+          "path": "docs/PARITY.md",
+          "http_status": 200,
+          "bytes": 3739,
+          "sha256": "f0045f172af938ee3246246778ebb2ee913b761818b7f4b4b602ecf6bbc2a78c",
+          "matches_local": true
+        },
+        {
+          "path": "docs/competition/JUDGES_GUIDE.md",
+          "http_status": 200,
+          "bytes": 8909,
+          "sha256": "e152e8801529483e00b687d82a7005a80359fe7b312fceba03d2bd685a7aad54",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/FEATURE_PARITY.md",
+          "http_status": 200,
+          "bytes": 29957,
+          "sha256": "88adbbcc07e40bc4fc05d696199abe5013a68f8f4a7f1b90632688ae7ece7e0b",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/FEATURE_PARITY_HISTORY.md",
+          "http_status": 200,
+          "bytes": 24709,
+          "sha256": "6d9f5277187cd47fcfebef74879613def8d509ec237568ff7863bc06f5c24086",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/ARCHITECTURE.md",
+          "http_status": 200,
+          "bytes": 49948,
+          "sha256": "36c0c2b278a72475f7205ac757271bca9af117d806395d895795a63399bd8fd3",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/CROSS_PLATFORM.md",
+          "http_status": 200,
+          "bytes": 55899,
+          "sha256": "2bc14bae49b0470e8c59f29924d1d140b007a0f2f08c2685002d139230f99c82",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/MIGRATION_LOG.md",
+          "http_status": 200,
+          "bytes": 143295,
+          "sha256": "b11d424b67455d4ad3be8fbe309be481309af09704867a0bbfe370e85c3464ad",
+          "matches_local": true
+        },
+        {
+          "path": "docs/migration/RELEASE_READINESS.md",
+          "http_status": 200,
+          "bytes": 27167,
+          "sha256": "5ab25495794706e3938ca9fa6adb1e3fad16f3b55b5c773188abedf3c71e364f",
+          "matches_local": true
+        },
+        {
+          "path": "docs/release/v0.1.1/RELEASE_BODY.md",
+          "http_status": 200,
+          "bytes": 9781,
+          "sha256": "7e613f6e63b18026a5b4be04a9ab084bfde5eb1aeb97889ae19f774b3507ed5f",
+          "matches_local": true
+        },
+        {
+          "path": "docs/release/v0.1.1/DOCUMENTATION_AUDIT.md",
+          "http_status": 200,
+          "bytes": 9195,
+          "sha256": "95155a5af3af39f4c677235c04e9634b8b11b4fd37e6cfc371f54d3e5b48a06f",
+          "matches_local": true
+        },
+        {
+          "path": "docs/evidence/README.md",
+          "http_status": 200,
+          "bytes": 20682,
+          "sha256": "a7104a4606fe7b3c96fece16346db6be4519ba5a29ab07926be7c15771b32170",
+          "matches_local": true
+        },
+        {
+          "path": "eng/check-documentation.py",
+          "http_status": 200,
+          "bytes": 9211,
+          "sha256": "4efcdb57fc422d74b74a0a9093bfb79263e6dc1718d28eac066c4afab6021a4f",
+          "matches_local": true
+        },
+        {
+          "path": "eng/audit-release-description.py",
+          "http_status": 200,
+          "bytes": 6611,
+          "sha256": "88c02aba2f13635a1fe377a1a66e987e0a98903fec314f43f1885a54d34b05ef",
+          "matches_local": true
+        },
+        {
+          "path": "eng/tests/test_documentation.py",
+          "http_status": 200,
+          "bytes": 6040,
+          "sha256": "6c7091401e011e5f303bcfd984a4e480f677bb75b6340e005da4eeb660bd9ce8",
+          "matches_local": true
+        },
+        {
+          "path": "docs/diagnostics/ARCHITECTURE.md",
+          "http_status": 200,
+          "bytes": 7408,
+          "sha256": "ae7a7db65cae9ca944f874ed426eef3b270957273581a0c641dad716a1d2c974",
+          "matches_local": true
+        },
+        {
+          "path": "docs/diagnostics/PRIVACY.md",
+          "http_status": 200,
+          "bytes": 7030,
+          "sha256": "d9cc64c2799c3aee979ce34e0deafa38f459bb27d175dbe3a2a40a3e2a986865",
+          "matches_local": true
+        },
+        {
+          "path": "docs/diagnostics/HARDENING_REPORT.md",
+          "http_status": 200,
+          "bytes": 21263,
+          "sha256": "2e79b2129c1eb86f2e701362b0b0bbc6baab5ea027a0ff89e6bb70687aca50e9",
+          "matches_local": true
+        },
+        {
+          "path": "docs/diagnostics/FEATURE_MATRIX.md",
+          "http_status": 200,
+          "bytes": 11694,
+          "sha256": "b95d7820ff7cbc4155b46963404bc4f0bb015e0dea4689012bdba13834e7d3c5",
+          "matches_local": true
+        }
+      ]
+    }
+  ],
+  "release_id": 421217596,
+  "release_url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+  "application_commit": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "release_body_matches_reviewed_markdown": true,
+  "release_body_sha256": "7e613f6e63b18026a5b4be04a9ab084bfde5eb1aeb97889ae19f774b3507ed5f",
+  "all_15_asset_ids_names_sizes_api_digests_and_statuses_unchanged": true,
+  "publication_and_tag_unchanged": true,
+  "no_application_rebuild": true,
+  "no_asset_changes": true,
+  "no_alpha_publication": true,
+  "no_competition_submission": true
+}
