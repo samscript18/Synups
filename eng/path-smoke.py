@@ -87,6 +87,9 @@ def main():
         pair(r2, destination, 'r2b', 'd0', '10.77.3')
         for pid in (r1, r2):
             run('nsenter', '-t', pid, '-n', 'sysctl', '-w', 'net.ipv4.ip_forward=1')
+        # The source also needs a route back to the second router's responder address.
+        # Keep the kernel's source-validation policy intact; do not disable rp_filter.
+        ip(None, 'route', 'add', '10.77.2.0/30', 'via', '10.77.1.2')
         ip(None, 'route', 'add', '10.77.3.0/30', 'via', '10.77.1.2')
         ip(r1, 'route', 'add', '10.77.3.0/30', 'via', '10.77.2.2')
         ip(r2, 'route', 'add', '10.77.1.0/30', 'via', '10.77.2.1')
