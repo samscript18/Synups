@@ -1,0 +1,239 @@
+{
+  "source_commit": "a368d83dbb5494e283efa02b7e8036a9ce9664c4",
+  "branch": "feat/avalonia-migration",
+  "run_id": 38944933816,
+  "run_url": "https://github.com/samscript18/Synups/actions/runs/38944933816",
+  "run_attempt": 1,
+  "conclusion": "success",
+  "platforms": [
+    {
+      "rid": "win-x64",
+      "job_id": 117121549576,
+      "job_url": "https://github.com/samscript18/Synups/actions/runs/38944933816/job/117121549576",
+      "conclusion": "success",
+      "tests": [
+        {
+          "suite": "tests",
+          "total": 96,
+          "passed": 95,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "real-network",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "native_checks": [
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 18:09:41 +00:00 \u00b7 last success 2026-10-16 18:09:41 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=1; EVENTS=2",
+        "LAST_SESSION_OBSERVED_SECONDS=1.569",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 18:09:45 +00:00 \u00b7 last success 2026-10-16 18:09:45 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=2; EVENTS=4",
+        "LAST_SESSION_OBSERVED_SECONDS=1.562",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096"
+      ],
+      "artifact_id": 12066325237,
+      "artifact_download_sha256": "5c7f2428d4937f22c3a8d37a59972909f6af01611a42b5782dbf72065619b6eb",
+      "package_sha256": "d27902c656b62330d5ccd2949cb3c8599ed0513b77ac613b4ee4c584fdec3ba1",
+      "verified_file_count": 236,
+      "unix_apphost_mode": null,
+      "published_executable_launch": "not performed",
+      "native_capture_sha256": {
+        "synups-overview-compact.png": "a56a33430f367e6bdf56c787f11c4c91202159c23feb4ef00f7df61cd4d51492",
+        "synups-overview.png": "b25251da74cc15413e180d2f4c83665001020ab9759d665e650c3b29d7ec8dac",
+        "synups-storage.png": "f37e08ca4c8271447852731fb901f4557550c5f0fa9eba6ac04e8f0089908f23",
+        "synups-targets.png": "2a113ddffc0b4b993aea700d28a3f58e1cc7fa3874c02a340dd1f74de3d843fa"
+      },
+      "retained_overview_captures": [
+        "docs/evidence/after/2026-10-16-ui/ci/win-x64/synups-overview-compact.png",
+        "docs/evidence/after/2026-10-16-ui/ci/win-x64/synups-overview.png"
+      ],
+      "exact_original_license_bytes": true,
+      "runtime_notices_verified": true,
+      "release_build_warnings": 0,
+      "release_build_errors": 0,
+      "visual_review": "Normal and minimum 820x560 overview client captures viewed; compact layout uses scrolling."
+    },
+    {
+      "rid": "osx-arm64",
+      "job_id": 117121549911,
+      "job_url": "https://github.com/samscript18/Synups/actions/runs/38944933816/job/117121549911",
+      "conclusion": "success",
+      "tests": [
+        {
+          "suite": "tests",
+          "total": 96,
+          "passed": 95,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "real-network",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "native_checks": [
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 18:09:09 +00:00 \u00b7 last success 2026-10-16 18:09:09 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=1; EVENTS=2",
+        "LAST_SESSION_OBSERVED_SECONDS=1.648",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 18:09:14 +00:00 \u00b7 last success 2026-10-16 18:09:14 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=2; EVENTS=4",
+        "LAST_SESSION_OBSERVED_SECONDS=1.684",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096"
+      ],
+      "artifact_id": 12066005454,
+      "artifact_download_sha256": "7288e6a303c1c5f4bc7d8c6df7c54600bc0975c2c3c42ef4e3b62274d650e96f",
+      "package_sha256": "58d261dac3a568d8f37a8bdab74b3403104231d7eabe652e64913d29782a1481",
+      "verified_file_count": 233,
+      "unix_apphost_mode": "0o755",
+      "published_executable_launch": "not performed",
+      "native_capture_sha256": {
+        "synups-overview-compact.png": "e1da688738b26e40613711b31bbfc0eefbfda4766cc66e8abb83b28c9cd0bce8",
+        "synups-overview.png": "a5aca57c43fc39740818c9114e76781dfbd0035912cb47cc5bde1ed69cd40748",
+        "synups-storage.png": "91798b572ce9a762c09cf892928ab554d166fb867fbc5bc0ce71854c03c45e44",
+        "synups-targets.png": "d0613f760aaba1cf5bc4d4a089fc1fbd68f058c5f32c50442f2421f28e0d3b2d"
+      },
+      "retained_overview_captures": [
+        "docs/evidence/after/2026-10-16-ui/ci/osx-arm64/synups-overview-compact.png",
+        "docs/evidence/after/2026-10-16-ui/ci/osx-arm64/synups-overview.png"
+      ],
+      "exact_original_license_bytes": true,
+      "runtime_notices_verified": true,
+      "release_build_warnings": 0,
+      "release_build_errors": 0,
+      "visual_review": "Normal and minimum 820x560 overview client captures viewed; compact layout uses scrolling."
+    },
+    {
+      "rid": "linux-x64",
+      "job_id": 117121549893,
+      "job_url": "https://github.com/samscript18/Synups/actions/runs/38944933816/job/117121549893",
+      "conclusion": "success",
+      "tests": [
+        {
+          "suite": "tests",
+          "total": 96,
+          "passed": 95,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "real-network",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "native_checks": [
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 18:09:28 +00:00 \u00b7 last success 2026-10-16 18:09:28 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Tray restoration is not established here; minimizing keeps the taskbar/dock window available.",
+        "MINIMIZED_VISIBLE=True",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=1; EVENTS=2",
+        "LAST_SESSION_OBSERVED_SECONDS=1.542",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 18:09:32 +00:00 \u00b7 last success 2026-10-16 18:09:32 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Tray restoration is not established here; minimizing keeps the taskbar/dock window available.",
+        "MINIMIZED_VISIBLE=True",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=2; EVENTS=4",
+        "LAST_SESSION_OBSERVED_SECONDS=1.515",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096"
+      ],
+      "artifact_id": 12065445745,
+      "artifact_download_sha256": "751af4e43d9d3379c03d3267119a9468edffbbb7e3e264686502f4365fb7cc67",
+      "package_sha256": "d42aff42ca3b199bb1202048288d5d244c16809700b36a31a3fc2da0ec0245ca",
+      "verified_file_count": 233,
+      "unix_apphost_mode": "0o755",
+      "published_executable_launch": "not performed",
+      "native_capture_sha256": {
+        "synups-overview-compact.png": "14be6fd5f3698af9a0b235f8ff873fab3a682f12ddc90da9fb36bdddef1734be",
+        "synups-overview.png": "afc77392c3f6a2a010f5e56a0f3ff4cb408bd29e4d9e6db117f0707c63fe6c3b",
+        "synups-storage.png": "78c639331dbfcd6269adae8f185fe1fbdd369a221f57c046dddac5b630dee443",
+        "synups-targets.png": "8cdaff2f23e2ced0b77599e712495823c803acc8f48fb94841c4ab3ec5e6f2e5"
+      },
+      "retained_overview_captures": [
+        "docs/evidence/after/2026-10-16-ui/ci/linux-x64/synups-overview-compact.png",
+        "docs/evidence/after/2026-10-16-ui/ci/linux-x64/synups-overview.png"
+      ],
+      "exact_original_license_bytes": true,
+      "runtime_notices_verified": true,
+      "release_build_warnings": 0,
+      "release_build_errors": 0,
+      "visual_review": "Normal and minimum 820x560 overview client captures viewed; compact layout uses scrolling."
+    }
+  ],
+  "limitations": [
+    "Native runs use production composition in a verification harness, not the published apphost.",
+    "Linux runs on X11 under Xvfb, not a physical desktop/Wayland session.",
+    "No external outage, native notification delivery, endurance, accessibility or signing validation.",
+    "CI artifacts expire after 30 days; downloaded copies remain ignored locally."
+  ],
+  "runner_images": {
+    "osx-arm64": {
+      "os_lines": [
+        "macOS",
+        "15.7.9",
+        "24G830"
+      ],
+      "image_lines": [
+        "Version: 20260828.587",
+        "Image: macos-15-arm64",
+        "Version: 20260907.0337.1"
+      ]
+    },
+    "linux-x64": {
+      "os_lines": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "image_lines": [
+        "Version: 20261012.601",
+        "Image: ubuntu-24.04",
+        "Version: 20261012.334.1"
+      ]
+    },
+    "win-x64": {
+      "os_lines": [
+        "Microsoft Windows Server 2025",
+        "10.0.26100",
+        "Datacenter"
+      ],
+      "image_lines": [
+        "Version: 20261002.596",
+        "Image: windows-2025-vs2026",
+        "Version: 20261007.264.1"
+      ]
+    }
+  },
+  "inspection": "Downloaded all three complete artifact ZIPs and full workflow logs. API ZIP digests, sidecars, source revision, every published file hash, exact MIT bytes, runtime notices and Unix0755 mode verified. TRX confirms95 deterministic/headless passes plus1 opt-in skip and1 separate loopback pass per OS. Two native verifier processes passed on each OS. Normal/minimum-size captures visually inspected. Published apphosts not launched.",
+  "production_changes": "Shared desktop styling/layout and truthful state-derived presentation only; no engine/persistence/dependency change relative7b75296."
+}

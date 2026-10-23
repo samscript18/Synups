@@ -1,0 +1,11 @@
+<Project>
+  <UsingTask TaskName="CreateAppHost" AssemblyFile="$(MSBuildSDKsPath)/Microsoft.NET.Sdk/tools/net10.0/Microsoft.NET.Build.Tasks.dll" />
+  <Target Name="Build">
+    <Error Condition="'$(BundleHost)' == ''" Text="BundleHost output is required." />
+    <CreateAppHost AppHostSourcePath="$(MSBuildSDKsPath)/../AppHostTemplate/apphost"
+                   AppHostDestinationPath="$(BundleHost)"
+                   AppBinaryName="../Resources/runtime/Synups.Desktop.dll"
+                   IntermediateAssembly="$(BundleAssembly)"
+                   EnableMacOSCodeSign="false" />
+  </Target>
+</Project>

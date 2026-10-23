@@ -1,0 +1,2 @@
+SessionId,OutageId,GroupId,PeerGroup,StartedUtc,FirstFailureUtc,RecoveredUtc,ObservationEndedUtc,ElapsedSeconds,ContainsObservationGap,SincePreviousSeconds,Comment
+483ce465-9935-498d-96db-ed9ef21f03ff,26d9921f-71f9-4ab0-b49c-fa0b57297f90,1e2363e3-c11d-4f18-bdf0-8ea519b7ff38,Isolated real ICMP incident,2026-10-22T09:19:52.1138880+00:00,2026-10-22T09:19:49.8702205+00:00,2026-10-22T09:19:52.6619422+00:00,,0.548,false,,"Controlled disposable namespace ICMP filter; real packets, not an Internet outage."

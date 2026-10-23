@@ -1,0 +1,44 @@
+{
+  "upstream_revision": "61ae14391151ca9f209223e62c98fae3df5482b8",
+  "workflow_revision": "aecd5dde8e7c5e0cb8fea4e984c9fc5679e28c70",
+  "started_utc": "2026-10-22T19:35:06.6886752Z",
+  "os": "Microsoft Windows NT 10.0.26100.0",
+  "framework": "net48",
+  "original_product_source_modified": false,
+  "network_scope": "Disposable GitHub Windows runner; outbound connections from original WirePeep.exe explicitly blocked by temporary per-process firewall rule. Host/user networks elsewhere untouched.",
+  "method": "Actual original WPF executable, user32 PrintWindow, clean WM_CLOSE, actual Menees .stgx files written by app",
+  "screenshot_verified_visually": false,
+  "run_registry_key_existed": false,
+  "startup_entry_installed": false,
+  "firewall_rule_created": true,
+  "executable_sha256": "89b40a5118e5b0069923c16d90a9ee0883ab1997d0e00794cded099558864e89",
+  "capture_utc": "2026-10-22T19:35:25.8246313Z",
+  "window_title": "WirePeep - Network Downtime Monitor",
+  "process_id": 5988,
+  "window_handle": 328146,
+  "window_visible": true,
+  "loaded_runtime": [
+    {
+      "name": "clr.dll",
+      "sha256": "217a9b1911d3631e5b63b5146745d0fdc71c4b6aa37e550202ca0afba33ac79a",
+      "version": "4.8.9345.0 built by: NET481REL1LAST_25H2_C"
+    }
+  ],
+  "screenshot_sha256": "6af8dfc135aac260a2561b0f5f5a3b261e6e3adfae833328c51b96b2153060a2",
+  "window_dimensions": {
+    "height": 450,
+    "width": 800
+  },
+  "close_main_window_sent": true,
+  "process_exit_code": 0,
+  "settings": [
+    {
+      "name": "WirePeep-runnervm0xl3a-runneradmin.stgx",
+      "sha256": "95793b8df8b1702bb0ac9fbd50a2d4ba8a22ff37de5684a5f28a25596fc301ad",
+      "bytes": 6642
+    }
+  ],
+  "status": "passed-original-launch-capture-clean-exit-fixture-pending-visual-review",
+  "firewall_rule_removed": true,
+  "finished_utc": "2026-10-22T19:35:59.3974107Z"
+}

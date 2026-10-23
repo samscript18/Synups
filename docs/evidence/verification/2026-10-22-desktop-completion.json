@@ -1,0 +1,634 @@
+{
+  "application_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "version": "0.1.1-rc.4",
+  "workflow": "https://github.com/samscript18/Synups/actions/runs/39850198899",
+  "all_jobs_conclusion": "success",
+  "codeql_workflow": "https://github.com/samscript18/Synups/actions/runs/39851153694",
+  "codeql_sarif_results": 0,
+  "coverage": {
+    "line-rate": "0.7983374384236454",
+    "branch-rate": "0.668918918918919",
+    "complexity": "2942",
+    "version": "1.9",
+    "timestamp": "1792701407",
+    "lines-covered": "2593",
+    "lines-valid": "3248",
+    "branches-covered": "1881",
+    "branches-valid": "2812"
+  },
+  "packages": [
+    {
+      "rid": "win-x64",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "artifact_id": 12456054838,
+      "artifact_name": "synups-win-x64-6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "artifact_sha256": "8af0068601a9795b67de78924bd32905134a8bb1f7f6bd9038eca5c8752bbc7d",
+      "package_sha256": "cc02117abc393cc0e6baf39e75aceebf529c8d695e5d61e93a18262b36a9d570",
+      "apphost_sha256": "dc0e40d12a9242254621836476941d1a0feefcdc30c632b35a91b2474868e460",
+      "file_count": 277,
+      "notice_packages": 25,
+      "signing": "No publisher signature; not an installer.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "164",
+            "executed": "159",
+            "passed": "159",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "61d9ba7735ad3ef5f1cbb93401d3679d07f2426e8b7024a9a0f838e8919d233a"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "3",
+            "executed": "3",
+            "passed": "3",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "74e5ef23f6217b27a229d212aacaf9e8c419c217f951cae17ecbc5c593a06c03"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+        "package_sha256": "cc02117abc393cc0e6baf39e75aceebf529c8d695e5d61e93a18262b36a9d570",
+        "apphost_sha256": "dc0e40d12a9242254621836476941d1a0feefcdc30c632b35a91b2474868e460",
+        "rid": "win-x64",
+        "platform": "Windows-2025Server-10.0.26100-SP0",
+        "verified_utc": "2026-10-22T20:39:26.409696+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 4012,
+            "started_utc": "2026-10-22T20:38:09.429502+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 9052,
+            "started_utc": "2026-10-22T20:38:28.828204+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 2944,
+            "started_utc": "2026-10-22T20:38:42.843160+00:00",
+            "exit_code": 1,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 6352,
+            "started_utc": "2026-10-22T20:38:56.125906+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 9540,
+            "started_utc": "2026-10-22T20:39:10.233112+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 5268,
+            "started_utc": "2026-10-22T20:39:12.562991+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "exercise-compact.png": "8dd3f2d78638c8dd4587ea9b73514593c5141198254845f422a0ed71d9e51c7d",
+          "exercise-first-run.png": "966e0c8e9d04ac956c467aae1cb6741301fab5f7cd4767ce204869a8a9960f2a",
+          "exercise-focus.png": "06a3bb9b146105c7133ee08e48e3c07d9e65cc9874fd8bbf477d2f71792e7e99",
+          "exercise-gateway-preview.png": "9f83c8312078c1abf75b3642096f74d620a43fb5021f977862ffc53de479f8df",
+          "exercise-help-about.png": "7fa9be2a382fbb653325fead2f841b637ef0473af76e70796fa592b8db86e07d",
+          "exercise-legacy-import-preview.png": "115316bc5c546836299847b6bad807e3479514dad52bf8fd6f68259a161a19c2",
+          "exercise-overview.png": "36d0e5d8c80f85bf45b739311f50c1e4f3d422b835d36922662a480fc5cdf1e8",
+          "exercise-preferences.png": "934cb81a6a4b1cbd33d9720330d262dfeb5646262303802f8ff2f32714a1208f",
+          "interruption-compact.png": "319d1e254b36eafd10dfca6b57f09a3cfdac2ca284d73070c1292b82ad1dda82",
+          "interruption-focus.png": "81f6cd91d4ce0578bb8943923109223a8642885722f2a22062959c414903d3d1",
+          "interruption-overview.png": "485f3f6fa5e5711bec2f06595207ade5b642e1cd0de2eefd91697429e46106ee",
+          "recover-compact.png": "3c85f67fd78486904bc41a458f9a4a5ea1765dc6f5a29d57f0c4474d0c9c0021",
+          "recover-focus.png": "0305a31e56b32cb48154215c1558bdf572fbbe7dbf576df576ae8e0facefe89a",
+          "recover-overview.png": "9a35a4bf243c5e499fa710f1c6e954c4c4e1a21e7676a63d774f365faeb0c41e",
+          "restart-compact.png": "34a5f260091483b5562d379f90b239b39ac25d2e4d515ce783e03d67ef25b4bc",
+          "restart-focus.png": "e22632f8eb7637c5e16a17bda22e4b76d9a5d598d9e44106027d016e9fece737",
+          "restart-overview.png": "5111f39e91a564a7318631cb170382d1b6036db36eba5ce3329279560e4f6546",
+          "storage-error-read-only.png": "cd67525c85ed091a417ab6fc4b0bdf8eb2cc740c2d3efd5513349b16ff9fda4f",
+          "storage-recovered-compact.png": "b66c70522d5fb02f9ca1498a6a5fcefdeb9ad2033b77a450f426e57f16454877",
+          "storage-recovered-focus.png": "08adb5dca38fbd399e4b343937a89a8b370a3a1c5c09372cb14084a6131ed0dd",
+          "storage-recovered-overview.png": "ef66a262e827dfaf038807fc02526bc1b9a6678f37b6657d9285fde361128bdb"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0,
+      "audio": {
+        "RequestAccepted": true,
+        "Status": "Sound playback process completed. Audible delivery is not verified; OS output/volume policy applies.",
+        "audible_delivery_verified": false,
+        "os": "Microsoft Windows NT 10.0.26100.0"
+      },
+      "legacy_import_action": {
+        "action": "genuine_windows_legacy_fixture_preview_confirm_backup_import",
+        "passed": true,
+        "utc": "2026-10-22T20:38:16.2863789+00:00",
+        "observed": {
+          "sourceHash": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1",
+          "groups": 1,
+          "targets": 15,
+          "no_probe_started": true
+        }
+      }
+    },
+    {
+      "rid": "osx-arm64",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "artifact_id": 12456803189,
+      "artifact_name": "synups-osx-arm64-6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "artifact_sha256": "4384902203a843c660700a8b0a3f5837611a8fcba942056992fea5244e8b6bf3",
+      "package_sha256": "fa00e6a06255b4cd116ecb985806a05a02fb4e93db6977e34420a63f0cc31200",
+      "apphost_sha256": "1c64aab5ae7039dc95bf352a3c4b527bea2bf5fd4e079d8c1cffb48c98c66e11",
+      "file_count": 322,
+      "notice_packages": 24,
+      "signing": "Ad-hoc signed for bundle integrity only; no Developer ID identity, no notarization, no trusted publisher claim.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "164",
+            "executed": "159",
+            "passed": "159",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "c9ba014e658c79c13baba44d5b33689db00374b04c790401b89f2bedc79c5d5e"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "3",
+            "executed": "3",
+            "passed": "3",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "7ce694dc23493cb693c2b2b5d2e9ba0f7b58fa5acf5088a5cc97719ad1203ffd"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+        "package_sha256": "fa00e6a06255b4cd116ecb985806a05a02fb4e93db6977e34420a63f0cc31200",
+        "apphost_sha256": "1c64aab5ae7039dc95bf352a3c4b527bea2bf5fd4e079d8c1cffb48c98c66e11",
+        "rid": "osx-arm64",
+        "platform": "macOS-15.7.9-arm64-arm-64bit",
+        "verified_utc": "2026-10-22T20:38:26.990140+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 2276,
+            "started_utc": "2026-10-22T20:37:09.129737+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 2767,
+            "started_utc": "2026-10-22T20:37:29.122554+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 3017,
+            "started_utc": "2026-10-22T20:37:43.310346+00:00",
+            "exit_code": -9,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 3343,
+            "started_utc": "2026-10-22T20:37:57.044958+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 3512,
+            "started_utc": "2026-10-22T20:38:11.327380+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 3517,
+            "started_utc": "2026-10-22T20:38:13.071373+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "exercise-overview.png": "9fb22ffec6e5e52f840d00c8d28445b13d25fbcf77678527947d6ce307202c7b",
+          "exercise-focus.png": "749da6d505d079302e9bda2f0648a6af8e2cbdc0341e9dd1366b265599cfd2bf",
+          "interruption-overview.png": "3970c5245e21e982201117f60328c2a69b0ae490010b06955a6690d5dc4a1c16",
+          "storage-recovered-focus.png": "050a8f79e4ee000447e99ed81b25b3361cfad760739c35059c70611441c21f8f",
+          "exercise-gateway-preview.png": "a21742e73810de37920265ab3ff4b83d6b6ee32d7fb249758c78237bd7d502a8",
+          "restart-compact.png": "6ea7c8f63d8922c5c23f20c84ea47364b1f64319dae6dc24e450aad644d37433",
+          "storage-recovered-compact.png": "f2db41ebfd086a5857455cf645b4e446b8c68e6af8c1f127814c51772b2fe5ba",
+          "exercise-preferences.png": "e45346d0d6c901b0053137c1a4a8029b43b1efe2c07644eb7a5e98ebba7496e0",
+          "recover-compact.png": "09bbc275c92d74bb31d5ee806afc95b373917376e43e6a8b46db3bdb5f4b8048",
+          "storage-error-read-only.png": "943dbbe94bf2fce51a4b77f35d5ada023b03f407f2d23c5e50bc541358155d76",
+          "interruption-compact.png": "b4f812b47062e683192ac75b57d0e3eb408e6d3c53ed19e60fed71f7fefc2b14",
+          "storage-recovered-overview.png": "7668b8d1727811ab7dc343d65a1f77263610e08b0a2e5f71e8e18c1fe479576d",
+          "restart-overview.png": "d8b4eda9652304cb10c92516e0123afc88e34a169653a954ac6ef32d0cd89736",
+          "recover-focus.png": "d9f61724a73df8fad39cecc1251f2ff7ed094e7beed8b4931fe504888cb686e0",
+          "exercise-legacy-import-preview.png": "7648df57e56661248f6f514011993a9dd94fb65a912544b376a56d2c560b4576",
+          "recover-overview.png": "e6e17dd8d030599fa05d336cdaaaf6c556b526139b070296914bf1a7484b903f",
+          "restart-focus.png": "fb153b23c84abf2406de904407ef780c5c787737ba5f84741c6e814631fb0d29",
+          "exercise-compact.png": "175ee116969179fef107b9ae2ab4f97ccfa1a210f5c05ecc24663f680dc6a7cc",
+          "exercise-first-run.png": "5056f46c8f5d28e848dc2d44fe8df8616fb24b98b8c2e5f4cb66f8cdeac7c5fd",
+          "exercise-help-about.png": "dd0831289cc7a0c32047d5b10d4223a5cb5ebbc1ab517b43c1fcf1894723035f",
+          "interruption-focus.png": "227f08a18b354a379968317bc487bfd3b298fbfe7638c812178a9bb5b6c8c8ba"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0,
+      "audio": {
+        "RequestAccepted": true,
+        "Status": "Sound playback process completed. Audible delivery is not verified; OS output/volume policy applies.",
+        "audible_delivery_verified": false,
+        "os": "Unix 15.7.9"
+      },
+      "legacy_import_action": {
+        "action": "genuine_windows_legacy_fixture_preview_confirm_backup_import",
+        "passed": true,
+        "utc": "2026-10-22T20:37:16.11118+00:00",
+        "observed": {
+          "sourceHash": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1",
+          "groups": 1,
+          "targets": 15,
+          "no_probe_started": true
+        }
+      }
+    },
+    {
+      "rid": "linux-x64",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "artifact_id": 12457052510,
+      "artifact_name": "synups-linux-x64-6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "artifact_sha256": "bfb6bfed2ac91a4bfb517a9393b5955eb9d78f19b18555d2ef11b3d93182c99b",
+      "package_sha256": "49387bf6358b8d06478a64091f8780a64f41861f820df8f0ee1b04e17117c757",
+      "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+      "file_count": 275,
+      "notice_packages": 24,
+      "signing": "No publisher signature; not an installer.",
+      "tests": [
+        {
+          "kind": "tests",
+          "counters": {
+            "total": "164",
+            "executed": "160",
+            "passed": "160",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "3f73da16b46c27a41e916ec588eecd3db83c00a0a44caada309c99c1f32691b8"
+        },
+        {
+          "kind": "real-network",
+          "counters": {
+            "total": "3",
+            "executed": "3",
+            "passed": "3",
+            "failed": "0",
+            "error": "0",
+            "timeout": "0",
+            "aborted": "0",
+            "inconclusive": "0",
+            "passedButRunAborted": "0",
+            "notRunnable": "0",
+            "notExecuted": "0",
+            "disconnected": "0",
+            "warning": "0",
+            "completed": "0",
+            "inProgress": "0",
+            "pending": "0"
+          },
+          "trx_sha256": "eaf96a504af78d6fc6afa338b5538ede25a620074d82f7440b708c5fc7a5d315"
+        }
+      ],
+      "published_summary": {
+        "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+        "package_sha256": "49387bf6358b8d06478a64091f8780a64f41861f820df8f0ee1b04e17117c757",
+        "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+        "rid": "linux-x64",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "verified_utc": "2026-10-22T20:38:20.998042+00:00",
+        "actual_published_apphost": true,
+        "launches": [
+          {
+            "stage": "exercise",
+            "pid": 4626,
+            "started_utc": "2026-10-22T20:37:09.787159+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 1,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "restart",
+            "pid": 4697,
+            "started_utc": "2026-10-22T20:37:26.639114+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 2,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "interruption",
+            "pid": 4761,
+            "started_utc": "2026-10-22T20:37:39.885676+00:00",
+            "exit_code": -9,
+            "expected_external_termination": true,
+            "durable_sessions": 3,
+            "actual_outages": 0,
+            "status": "ready-for-termination"
+          },
+          {
+            "stage": "recover",
+            "pid": 4820,
+            "started_utc": "2026-10-22T20:37:52.731373+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-error",
+            "pid": 4884,
+            "started_utc": "2026-10-22T20:38:05.930178+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 4,
+            "actual_outages": 0,
+            "status": "passed"
+          },
+          {
+            "stage": "storage-recovered",
+            "pid": 4910,
+            "started_utc": "2026-10-22T20:38:07.750348+00:00",
+            "exit_code": 0,
+            "expected_external_termination": false,
+            "durable_sessions": 5,
+            "actual_outages": 0,
+            "status": "passed"
+          }
+        ],
+        "captures_sha256": {
+          "interruption-compact.png": "ac245aec21a123bbcaf85d39abcacf837a75233a73a048534dba28063f43693e",
+          "storage-error-read-only.png": "de618cce38898335959fa7704632b167c5a5c9128f621591f909f490b7407f23",
+          "storage-recovered-compact.png": "0e708b88f8b45fa8ada704150b9926f40def6721fc56a0441c87c396a0c9348b",
+          "exercise-focus.png": "0139c50bcba4c8a19d5735f2878b999086c34acb4e68c2bccb53e3f24ab2165e",
+          "restart-compact.png": "ee1f774a21523f3465e100f975de6b2b842f9ea5e7ddf7fc6ca1bd80ba69fda3",
+          "recover-focus.png": "ca5979620fc52dacab449354f196a857b3590856e89ec19b33bb0a037fdeb11a",
+          "recover-compact.png": "c5498e9beee5f6549fcac4fd37571eb5dd96d200b5934f5b92b8335b007c2d1d",
+          "restart-focus.png": "992bab3fb83f99f7c070b4b54c722583179281e076f166833631d6d2bbe0344f",
+          "storage-recovered-overview.png": "ed005f16bd93dbd2fb57c963453d3a1124eb9fcf4f16119b4355820e84b79a1c",
+          "exercise-compact.png": "2f51619b5c092631b24835088c3de915c278c2ecc4d5fa751ffdee541a6f9760",
+          "exercise-help-about.png": "3a59aee10e85c6ba23f39baf82872e912c11aafc76bfe25947d8c2a5d2203f6d",
+          "exercise-first-run.png": "921a7c4048d0c7f15024a7a1d8d357013e2ef9e505ab104ba1d1824d634e22ee",
+          "recover-overview.png": "27b888781597f6a02aabe4657fed466541a157bd7297c07e1b1873c6dacd727e",
+          "storage-recovered-focus.png": "38be117b4332157177602aa07a072c6bd29b77294c9d7ff21ef3b1cac301bc15",
+          "exercise-preferences.png": "c956a0fd7ed0479a120f38b97a9007177e27a30d751848c5f519647cabff70b0",
+          "restart-overview.png": "fa0faf2dd64a0867a10a39d21fa6252aafbb195ca9cd523ed984881fa5bb2b6a",
+          "exercise-overview.png": "523c94aa073ef6d43f0e1a809c0f5295c5dde959960679a675a5f09e600cf291",
+          "exercise-legacy-import-preview.png": "970edea9a564de9453e37d4b5a15270d987ba84c18bed006d5290e300fa7898b",
+          "interruption-focus.png": "c5ae135fe07ca15772c0a78d7c95245aeae5535f0b2c3b9a0a945cefe97efde8",
+          "interruption-overview.png": "bc6b733501fd9e193e3976a2080610202d0c3cd4a3d480900fb66fecbd342a25",
+          "exercise-gateway-preview.png": "881dbd9c76150e82d03539295039eb5cd1fc41dbb0a9e23df1fb6f822f19b933"
+        },
+        "full_manifest_verified": true,
+        "limits": [
+          "Programmatic real-control automation; no physical tray/menu clicks or OS-native save picker automation.",
+          "Loopback only. Controlled process termination is not a real network outage or a physical power-failure test.",
+          "Linux uses Xvfb in CI; Wayland/installed desktop and native accessibility remain separate."
+        ]
+      },
+      "history_sessions": 5,
+      "interrupted_sessions": 1,
+      "actual_outages": 0,
+      "audio": {
+        "RequestAccepted": false,
+        "Status": "Sound unavailable or cancelled: An error occurred trying to start process '/usr/bin/paplay' with working directory '/home/runner/work/Synups/Synups/synups/Synups.Tests/bin/Release/net10.0'. No such file or directory. In-app alerts remain.",
+        "audible_delivery_verified": false,
+        "os": "Unix 6.17.0.1022"
+      },
+      "legacy_import_action": {
+        "action": "genuine_windows_legacy_fixture_preview_confirm_backup_import",
+        "passed": true,
+        "utc": "2026-10-22T20:37:14.4694403+00:00",
+        "observed": {
+          "sourceHash": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1",
+          "groups": 1,
+          "targets": 15,
+          "no_probe_started": true
+        }
+      }
+    }
+  ],
+  "captures": [
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-first-run.png",
+      "sha256": "966e0c8e9d04ac956c467aae1cb6741301fab5f7cd4767ce204869a8a9960f2a",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-legacy-import-preview.png",
+      "sha256": "115316bc5c546836299847b6bad807e3479514dad52bf8fd6f68259a161a19c2",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-preferences.png",
+      "sha256": "934cb81a6a4b1cbd33d9720330d262dfeb5646262303802f8ff2f32714a1208f",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-first-run.png",
+      "sha256": "5056f46c8f5d28e848dc2d44fe8df8616fb24b98b8c2e5f4cb66f8cdeac7c5fd",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-legacy-import-preview.png",
+      "sha256": "7648df57e56661248f6f514011993a9dd94fb65a912544b376a56d2c560b4576",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-preferences.png",
+      "sha256": "e45346d0d6c901b0053137c1a4a8029b43b1efe2c07644eb7a5e98ebba7496e0",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-first-run.png",
+      "sha256": "921a7c4048d0c7f15024a7a1d8d357013e2ef9e505ab104ba1d1824d634e22ee",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-legacy-import-preview.png",
+      "sha256": "970edea9a564de9453e37d4b5a15270d987ba84c18bed006d5290e300fa7898b",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-preferences.png",
+      "sha256": "c956a0fd7ed0479a120f38b97a9007177e27a30d751848c5f519647cabff70b0",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "kind": "actual extracted apphost client-tree capture, not physical input"
+    }
+  ],
+  "local_release_build": {
+    "warnings": 0,
+    "errors": 0,
+    "elapsed_seconds": 4.98,
+    "default_passed": 159,
+    "default_intentional_skips": 5,
+    "real_native_passed": 3,
+    "real_native_duration_ms": 86,
+    "python_passed": 8
+  },
+  "limitations": [
+    "No physical Mac tray/Save-panel/keyboard/multi-display or actual-login verification; user unavailable and permissions denied.",
+    "Windows native notification delivery not observed in run39848205141; adapter withdrawn in this exact source. In-app fallback retained.",
+    "Windows/Mac audio process accepted the request; audible delivery not verified. Linux helper absent, safe fallback verified.",
+    "Public v0.1.0 and all preceding candidates unchanged; proposed v0.1.1 still uses frozen rc.3."
+  ],
+  "parity": {
+    "complete": 15,
+    "partial": 3,
+    "total": 18,
+    "percentage": 91.7
+  },
+  "genuine_legacy_fixture_sha256": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1"
+}

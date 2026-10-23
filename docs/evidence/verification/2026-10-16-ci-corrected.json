@@ -1,0 +1,232 @@
+{
+  "source_commit": "7b75296f97ea62d986e7d16b152dedaabcf999d6",
+  "branch": "feat/avalonia-migration",
+  "run_id": 38940757093,
+  "run_url": "https://github.com/samscript18/Synups/actions/runs/38940757093",
+  "run_attempt": 1,
+  "conclusion": "success",
+  "platforms": [
+    {
+      "rid": "win-x64",
+      "job_id": 117107477127,
+      "job_url": "https://github.com/samscript18/Synups/actions/runs/38940757093/job/117107477127",
+      "conclusion": "success",
+      "tests": [
+        {
+          "suite": "tests",
+          "total": 96,
+          "passed": 95,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "real-network",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "native_checks": [
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 17:37:06 +00:00 \u00b7 last success 2026-10-16 17:37:06 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=1; EVENTS=2",
+        "LAST_SESSION_OBSERVED_SECONDS=1.711",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 17:37:10 +00:00 \u00b7 last success 2026-10-16 17:37:10 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=2; EVENTS=4",
+        "LAST_SESSION_OBSERVED_SECONDS=1.580",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096"
+      ],
+      "artifact_id": 12062264115,
+      "artifact_download_sha256": "907f97782d44bfcf3e26a86df4e44a31bbe29c0f64760dd807fb5a65daca6af8",
+      "package_sha256": "cace09be10786c79fa654a547395e1916b82b2dad0c04c14007dc0d2086da802",
+      "verified_file_count": 236,
+      "unix_apphost_mode": null,
+      "published_executable_launch": "not performed",
+      "native_capture_sha256": {
+        "synups-overview.png": "7f9ceda004dd1b1ad2b9fb64f3d6537a56bf7d4a6c5e30f719c3be5861d03b99",
+        "synups-storage.png": "c7df2614000df8e67c265cc781b5e9380612e4cf3b65295e0578232c1f11f982",
+        "synups-targets.png": "4da9e1bf52ea124301d5839e0b171505c41ed6f723db4813226e7154627b18cc"
+      },
+      "exact_original_license_bytes": true,
+      "runtime_notices_verified": true,
+      "release_build_warnings": 0,
+      "release_build_errors": 0,
+      "package_readme_revision": "README from source commit 7b75296f97ea62d986e7d16b152dedaabcf999d6"
+    },
+    {
+      "rid": "osx-arm64",
+      "job_id": 117107477151,
+      "job_url": "https://github.com/samscript18/Synups/actions/runs/38940757093/job/117107477151",
+      "conclusion": "success",
+      "tests": [
+        {
+          "suite": "tests",
+          "total": 96,
+          "passed": 95,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "real-network",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "native_checks": [
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 17:36:08 +00:00 \u00b7 last success 2026-10-16 17:36:08 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=1; EVENTS=2",
+        "LAST_SESSION_OBSERVED_SECONDS=1.704",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 17:36:12 +00:00 \u00b7 last success 2026-10-16 17:36:12 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Native tray menu initialized: Show Synups / Exit Synups.",
+        "MINIMIZED_VISIBLE=False",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=2; EVENTS=4",
+        "LAST_SESSION_OBSERVED_SECONDS=1.762",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096"
+      ],
+      "artifact_id": 12063031811,
+      "artifact_download_sha256": "80b4af752cd701f6711fe1c96646e4ffb8824505a35af561f2fb66a46ef1050c",
+      "package_sha256": "eb3ac76fdfa6ce93520a9cf4744cd425a17d11e79c462cd6b6cf93ff67e29c12",
+      "verified_file_count": 233,
+      "unix_apphost_mode": "0o755",
+      "published_executable_launch": "not performed",
+      "native_capture_sha256": {
+        "synups-overview.png": "483f0ab391b162c50f3c9f4237bbc21cda63ac4eede555591d3ea5cf4d665dac",
+        "synups-storage.png": "84cd19b2d4c0dacfb54e1a7424033a9607778e2bfdad6e3cf4f0f1bd546d5819",
+        "synups-targets.png": "8b5e2c0b4ffa241a318c975287e3dd55d50430196e3586925b1f7ab5a5d911ff"
+      },
+      "exact_original_license_bytes": true,
+      "runtime_notices_verified": true,
+      "release_build_warnings": 0,
+      "release_build_errors": 0,
+      "package_readme_revision": "README from source commit 7b75296f97ea62d986e7d16b152dedaabcf999d6"
+    },
+    {
+      "rid": "linux-x64",
+      "job_id": 117107477026,
+      "job_url": "https://github.com/samscript18/Synups/actions/runs/38940757093/job/117107477026",
+      "conclusion": "success",
+      "tests": [
+        {
+          "suite": "tests",
+          "total": 96,
+          "passed": 95,
+          "failed": 0,
+          "skipped": 1
+        },
+        {
+          "suite": "real-network",
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "native_checks": [
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 17:36:19 +00:00 \u00b7 last success 2026-10-16 17:36:19 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Tray restoration is not established here; minimizing keeps the taskbar/dock window available.",
+        "MINIMIZED_VISIBLE=True",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=1; EVENTS=2",
+        "LAST_SESSION_OBSERVED_SECONDS=1.533",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096",
+        "NATIVE_VISIBLE=True",
+        "REAL_TARGET=127.0.0.1; Responded \u00b7 latest cycle; Checked 2026-10-16 17:36:22 +00:00 \u00b7 last success 2026-10-16 17:36:22 +00:00 \u00b7 response 0 ms",
+        "TRAY_STATUS=Tray restoration is not established here; minimizing keeps the taskbar/dock window available.",
+        "MINIMIZED_VISIBLE=True",
+        "NATIVE_START_MEASURE_STOP=PASS",
+        "DURABLE_CLEAN_SESSIONS=2; EVENTS=4",
+        "LAST_SESSION_OBSERVED_SECONDS=1.518",
+        "SQLITE_CONFIGURED_BYTES=1073741824; EFFECTIVE_LIMIT_BYTES=1073741824; PAGE_SIZE=4096"
+      ],
+      "artifact_id": 12063491106,
+      "artifact_download_sha256": "c381d2235a0b15acef65ea9849f33bf938a7f21810ccd8b7e88949bc2fd798ac",
+      "package_sha256": "46d76c79800eb42a17ef54fca12049e8b304563bd39be9985e395b8ffddc9c85",
+      "verified_file_count": 233,
+      "unix_apphost_mode": "0o755",
+      "published_executable_launch": "not performed",
+      "native_capture_sha256": {
+        "synups-overview.png": "fb0f0b9293622225458cce249ab4476ea8a090014d0362240d77c1a51f1a3b36",
+        "synups-storage.png": "f7a35b088d7d870fd3870ddb712bedb9e3ff18acfdea7d27d9709fcb5117a5ea",
+        "synups-targets.png": "b77e6ae0b752a4301a8a8e2f6d2d285934ba9c99ad2b11f5e15d86369118aaee"
+      },
+      "exact_original_license_bytes": true,
+      "runtime_notices_verified": true,
+      "release_build_warnings": 0,
+      "release_build_errors": 0,
+      "package_readme_revision": "README from source commit 7b75296f97ea62d986e7d16b152dedaabcf999d6"
+    }
+  ],
+  "limitations": [
+    "Native runs use production composition in a verification harness, not the published apphost.",
+    "Linux runs on X11 under Xvfb, not a physical desktop/Wayland session.",
+    "No external outage, native notification delivery, endurance, accessibility or signing validation.",
+    "CI artifacts expire after 30 days; downloaded copies remain ignored locally."
+  ],
+  "runner_images": {
+    "osx-arm64": {
+      "os_lines": [
+        "macOS",
+        "15.7.9",
+        "24G830"
+      ],
+      "image_lines": [
+        "Version: 20260828.587",
+        "Image: macos-15-arm64",
+        "Version: 20260907.0337.1"
+      ]
+    },
+    "linux-x64": {
+      "os_lines": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "image_lines": [
+        "Version: 20261012.601",
+        "Image: ubuntu-24.04",
+        "Version: 20261012.334.1"
+      ]
+    },
+    "win-x64": {
+      "os_lines": [
+        "Microsoft Windows Server 2025",
+        "10.0.26100",
+        "Datacenter"
+      ],
+      "image_lines": [
+        "Version: 20261002.596",
+        "Image: windows-2025-vs2026",
+        "Version: 20261007.264.1"
+      ]
+    }
+  },
+  "previous_failure": {
+    "source_commit": "43446f535b29d35701c723dfeedceae698ca8646",
+    "run_id": 38939047265,
+    "run_url": "https://github.com/samscript18/Synups/actions/runs/38939047265",
+    "platform": "win-x64",
+    "test": "HistoryTests.EngineHistoryCommentsAndIdsSurviveNewServiceAndStore",
+    "failure": "Seven-second monitoring worker drain exceeded during overlapping disk fixtures. Root cause not proven.",
+    "correction": "Isolate real disk fixtures in one nonparallel collection, retain deadline/concurrency tests, add real SQLite four-group outage/stop/reopen regression. No production deadline or warnings/auditing changed."
+  },
+  "inspection": "All three artifact ZIP digests match GitHub metadata. TRX counts, zero-warning builds and two native runs checked. Every published file SHA-256, sidecar, exact original LICENSE bytes and .NET runtime notices verified. Unix apphost mode 0755. Three native overview captures visually inspected. Published executables were not launched."
+}

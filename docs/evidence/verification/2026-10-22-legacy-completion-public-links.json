@@ -1,0 +1,299 @@
+{
+  "documentation_revision": "428701dbd94f25c2ed2a53f6811e0171572c3ef0",
+  "application_revision": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+  "anonymous_files": [
+    {
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/README.md",
+      "status": 200,
+      "sha256": "23a7f52f2e2937f9a7cafaf779975456f521bedabc579bce7f6f81650f88fa3a"
+    },
+    {
+      "path": "docs/competition/JUDGES_GUIDE.md",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/competition/JUDGES_GUIDE.md",
+      "status": 200,
+      "sha256": "5338052b59e392e15559f91144491b722a558d0e23b9dab5fdb7f316806b9536"
+    },
+    {
+      "path": "docs/competition/REAL_INCIDENT.md",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/competition/REAL_INCIDENT.md",
+      "status": 200,
+      "sha256": "2edbea0188efaed489ac8a4644a261f5ad5decfe8db91dc33e33f300a1b6a0ee"
+    },
+    {
+      "path": "docs/release/LEGACY_COMPLETION_CANDIDATE.md",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/release/LEGACY_COMPLETION_CANDIDATE.md",
+      "status": 200,
+      "sha256": "2aeceb89319631b2c03417dba8fd0b414a6a3aa5dece08d4d4949507fcccd5c8"
+    },
+    {
+      "path": "docs/migration/FEATURE_PARITY.md",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/migration/FEATURE_PARITY.md",
+      "status": 200,
+      "sha256": "52178713073919dc8781520f70684c8a158161b43667fff2b4941953210430a2"
+    },
+    {
+      "path": "docs/release/SUBMISSION.md",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/release/SUBMISSION.md",
+      "status": 200,
+      "sha256": "42dc96350455fabe301d78c78d3e94c1e671f5f7ce27028a4955c22af601f37b"
+    },
+    {
+      "path": "docs/evidence/before/wirepeep-upstream.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/before/wirepeep-upstream.png",
+      "status": 200,
+      "sha256": "08210f548df07c4a06484df1b37324487cfa7444c73a04c5ce891c0fdd807e8e"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-final.json",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-final.json",
+      "status": 200,
+      "sha256": "c3d6c13068d646d29d74676374bdd2545e8c903c2a94359981cf820a672942db"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/win-x64/overview.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/win-x64/overview.png",
+      "status": 200,
+      "sha256": "d9726474991a62bec0187416a56f423ecd83491874690d0332738dadda72d444"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/win-x64/first-run.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/win-x64/first-run.png",
+      "status": 200,
+      "sha256": "966e0c8e9d04ac956c467aae1cb6741301fab5f7cd4767ce204869a8a9960f2a"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/win-x64/focus.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/win-x64/focus.png",
+      "status": 200,
+      "sha256": "d0d92d86952a679a239156d979f64a721248b3543fcc5987342bd5b7593da038"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/win-x64/help-about.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/win-x64/help-about.png",
+      "status": 200,
+      "sha256": "7fa9be2a382fbb653325fead2f841b637ef0473af76e70796fa592b8db86e07d"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/overview.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/overview.png",
+      "status": 200,
+      "sha256": "188175096d39dca3aa303b1e3c4667712275fb3c7a4d69f3a5118f1fbec66f2d"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/first-run.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/first-run.png",
+      "status": 200,
+      "sha256": "5056f46c8f5d28e848dc2d44fe8df8616fb24b98b8c2e5f4cb66f8cdeac7c5fd"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/focus.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/focus.png",
+      "status": 200,
+      "sha256": "cc20998189d7b52f91e96892febfa7400d04371dcfb0c0178b00393be3e372fb"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/help-about.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/osx-arm64/help-about.png",
+      "status": 200,
+      "sha256": "dd0831289cc7a0c32047d5b10d4223a5cb5ebbc1ab517b43c1fcf1894723035f"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-x64/overview.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-x64/overview.png",
+      "status": 200,
+      "sha256": "d9f03604343838d24a87b698f078e8542b9776ee4dd8400f0146ece21c9cb7bc"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-x64/first-run.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-x64/first-run.png",
+      "status": 200,
+      "sha256": "921a7c4048d0c7f15024a7a1d8d357013e2ef9e505ab104ba1d1824d634e22ee"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-x64/focus.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-x64/focus.png",
+      "status": 200,
+      "sha256": "fa3174dc3c170fd8ced650a748fdf95bd946c583df963402112d37b06bfd9e7f"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-x64/help-about.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-x64/help-about.png",
+      "status": 200,
+      "sha256": "3a59aee10e85c6ba23f39baf82872e912c11aafc76bfe25947d8c2a5d2203f6d"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/macos-normal-launch.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/macos-normal-launch.png",
+      "status": 200,
+      "sha256": "4042add63d68994c5b4321157d709425a78d463ce3fb182a0e3b35c53239e5ef"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-incident/healthy.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-incident/healthy.png",
+      "status": 200,
+      "sha256": "d0781c886f24757e9b82745c019346a9eb646e9198be1914c0e1758cf2617630"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-incident/failure-grace.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-incident/failure-grace.png",
+      "status": 200,
+      "sha256": "ce2720067ea7f71d45769a03d4ce663dc22e8452bdb42c1b2dcc9cef8815ec6d"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-incident/confirmed-outage.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-incident/confirmed-outage.png",
+      "status": 200,
+      "sha256": "dc961c8107a4e17716a2593371d5dfe6be660cf3df728a283715b564d96cd31a"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-incident/recovered-history.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-incident/recovered-history.png",
+      "status": 200,
+      "sha256": "71f792402d0073412448d71746d2e85a5d23296cbc4fe541a8c09e99e7c31c54"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-legacy-completion/linux-incident/restart-history.png",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/after/2026-10-22-legacy-completion/linux-incident/restart-history.png",
+      "status": 200,
+      "sha256": "cd5c03344b51d2d8ad73866b69f826a59716d42051726b61fb8afd907238bf25"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-reports.zip",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-reports.zip",
+      "status": 200,
+      "sha256": "599f5e3699240f98f2e9d4885d80ce54c1911ad788ef369aa706091c59bbb3c1"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-ci-logs.zip",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-ci-logs.zip",
+      "status": 200,
+      "sha256": "d3ab0d7916e63a2d5c72178f8a7a83e8f7932d0a21faa124a9ec2d944aa52f1d"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-failed-ci-logs.zip",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-failed-ci-logs.zip",
+      "status": 200,
+      "sha256": "6c761d5d347242d0bd0e177559f1e54efd868e04a8a27fe0b1f65c8ca205a0e3"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-incident/incident.json",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-incident/incident.json",
+      "status": 200,
+      "sha256": "8882077ab3980bf533772fdb56ce2de74b6e7bf25bc49b3cad00076093706c45"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-incident/real-incident.csv",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-incident/real-incident.csv",
+      "status": 200,
+      "sha256": "dea1c50b117b554203220a4ad59e9e7a5bb1e71e449ce326547b196081af894e"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-incident/namespace-evidence.json",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-incident/namespace-evidence.json",
+      "status": 200,
+      "sha256": "09c1fe2292cfa1c3bbfda0ebbc77adb61f074ccfa1278effeb7e9e691ea1a9f7"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-legacy-completion-incident/restart.json",
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/428701dbd94f25c2ed2a53f6811e0171572c3ef0/docs/evidence/verification/2026-10-22-legacy-completion-incident/restart.json",
+      "status": 200,
+      "sha256": "8478a29e8e8abf11fd4a3ed1c656e96c25cf5c31c75ea62acbcacbc2fd41c461"
+    }
+  ],
+  "default_branch": "feat/avalonia-migration",
+  "default_readme_matches": true,
+  "stable_release": "https://github.com/samscript18/Synups/releases/tag/v0.1.0",
+  "stable_tag_commit": "2973d3349fcb5af5639597920842288e6549bbd0",
+  "stable_assets_api_digest_matched": [
+    {
+      "name": "INSTALLATION.md",
+      "api_sha256": "43e425007330c5a272f6ac96d085d51bb10d7ff6daa42dea2a8b83ab9c708ad1",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/INSTALLATION.md"
+    },
+    {
+      "name": "LICENSE",
+      "api_sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/LICENSE"
+    },
+    {
+      "name": "PUBLICATION.md",
+      "api_sha256": "912e65e6eac0d17a8fa66409bd160852f47334ca08571e5d4a1fd970232612fb",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/PUBLICATION.md"
+    },
+    {
+      "name": "RELEASE_NOTES.md",
+      "api_sha256": "9135a025b9f8683be4011af01c787a82e97c9b3854a9346ad73af4a0fe910777",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/RELEASE_NOTES.md"
+    },
+    {
+      "name": "SHA256SUMS",
+      "api_sha256": "cbdaa38c3c698f717f6f5cfa49f97402807c888391f7ec98426510cf06a83b78",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS"
+    },
+    {
+      "name": "SOURCE_REVISION.txt",
+      "api_sha256": "51cf063f176919e08c3145fd18697a0bc32c6d2495be678b179f8b8c424a4a3d",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SOURCE_REVISION.txt"
+    },
+    {
+      "name": "SUBMISSION.md",
+      "api_sha256": "f4b1850c415355eac10bc7f72ff08b46cfea87a099c35e9dc6e63e0a64124ceb",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SUBMISSION.md"
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz",
+      "api_sha256": "cf072e7b31c55e16ee39e544882453c926204338a86cfe6df7553b62b1477222",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz"
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz.sha256",
+      "api_sha256": "80794c0535cae4d8da56e4586bb2aab6b95702542615f37ff1e2859bc49ff819",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz.sha256"
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz",
+      "api_sha256": "40cc8ccdcc8cfde7bea19e6c9759b0502313182e9c1b8d74f1b198a4e9cc3bcc",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz"
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz.sha256",
+      "api_sha256": "14eb1e43c2f69aeedaa74092956c254dcf3cb9c389345abb999ba2b15d9e1965",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz.sha256"
+    },
+    {
+      "name": "Synups-win-x64.zip",
+      "api_sha256": "94d39f3320ead8cd1b1620c2f29ab7887faca7920f352d0f3b470712a03ee2d6",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip"
+    },
+    {
+      "name": "Synups-win-x64.zip.sha256",
+      "api_sha256": "287c059f022d5dc59c13f8ee04bb6d498dc0d9efaa669963883537a555652ff7",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip.sha256"
+    },
+    {
+      "name": "VERIFICATION.json",
+      "api_sha256": "690849e7a55268e6e196c6302ad5d63eaa4d25421249cf4c844c22805516b0f3",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/VERIFICATION.json"
+    },
+    {
+      "name": "VERIFICATION_EVIDENCE.zip",
+      "api_sha256": "b483967ae9e90422c6c3bb53c34683b9a857c66a6f3c0845f980ec7f55be8600",
+      "browser_download_url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/VERIFICATION_EVIDENCE.zip"
+    }
+  ],
+  "limits": "Stable assets compared using anonymous GitHub API digests to locally reviewed bytes; not re-downloaded in this check. Candidate archives remain unpublished. Physical desktop/signing limitations unchanged.",
+  "verified_ci": [
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39821153798",
+      "head_sha": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+      "conclusion": "success"
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39821182932",
+      "head_sha": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+      "conclusion": "success"
+    }
+  ],
+  "verified_utc": "2026-10-22T18:50:43.962227+00:00"
+}

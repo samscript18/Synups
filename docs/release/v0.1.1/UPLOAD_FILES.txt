@@ -1,0 +1,15 @@
+Synups-win-x64.zip
+Synups-win-x64.zip.sha256
+Synups-osx-arm64.tar.gz
+Synups-osx-arm64.tar.gz.sha256
+Synups-linux-x64.tar.gz
+Synups-linux-x64.tar.gz.sha256
+LICENSE
+INSTALLATION.md
+PUBLICATION.md
+SUBMISSION.md
+RELEASE_NOTES.md
+SOURCE_REVISION.txt
+VERIFICATION.json
+VERIFICATION_EVIDENCE.zip
+SHA256SUMS

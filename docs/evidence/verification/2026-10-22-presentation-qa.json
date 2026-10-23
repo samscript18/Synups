@@ -1,0 +1,20 @@
+{
+  "application_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "unchanged_rollback_checksum_sets": {
+    "artifacts/phase5/final-release-candidate": 14,
+    "artifacts/competitive/0.1.1-rc.1": 8,
+    "artifacts/hardening/0.1.1-rc.2": 7,
+    "artifacts/parity-completion/0.1.1-rc.3": 3,
+    "artifacts/presentation/0.1.1-rc.4": 7,
+    "artifacts/presentation/v0.1.1-proposed-final": 14
+  },
+  "original_licence_and_source_unchanged": true,
+  "upstream_ancestry_preserved": true,
+  "secret_pattern_scan_findings": [],
+  "markdown_server_renderer_http": 200,
+  "rendered_structure": "Title, slogan, headings, tables and image/link structure present; no browser visual-layout certification.",
+  "prepared_release_assets": 15,
+  "prepared_payload_source": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+  "public_existing_links": "20/23 anonymous HEAD checks passed; form and SignPath host refused this HTTP client, separately checked via available browsing where possible.",
+  "new_release_or_submission_created": false
+}

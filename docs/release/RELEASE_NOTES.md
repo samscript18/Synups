@@ -1,0 +1,17 @@
+> **Publication complete:** [Synups v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), exact application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, internal0.1.1-rc.4. [All15 anonymous public checks](../evidence/verification/synups-0.1.1-publication.json). Earlier preparation/checklist wording below is historical. Public assets and the approved release body are unchanged. No competition submission.
+
+> Historical v0.1.0 materials. The current **unpublished** v0.1.1 proposal uses frozen rc.4; see the [aligned checklist](v0.1.1/PUBLICATION.md) and [release body](v0.1.1/RELEASE_BODY.md). Existing public v0.1.0 assets are unchanged.
+
+# Synups 0.1.0 — published portable release
+
+Synups ports Bill Menees' WirePeep network downtime monitor to real Avalonia/C#/XAML on .NET 10. It retains the original Git history, MIT licence and source attribution. User-authorized [Synups 0.1.0](https://github.com/samscript18/Synups/releases/tag/v0.1.0) is published at exact source 2973d3349fcb5af5639597920842288e6549bbd0. All 15 public assets were anonymously downloaded/hash-checked; no binary was rebuilt or replaced. Competition submission is a separate action and has not been performed.
+
+Delivered: real cancellable ICMP, characterized peer-group rotation/stop-on-success/freshness, explicit failure grace and observed recovery, editable persistent literal-IP profiles, honest live status, durable SQLite incidents/comments/sessions, automatic session logs, CSV export, storage policy/backups/retention, in-app alerts, desktop preferences and a consistent native desktop UI. Probe errors never invent recovery; ordinary shutdown never marks an unresolved incident recovered.
+
+Release hardening adds explicit portable-data and installation checks in the shipped apphost, per-workspace single-instance restoration, a Synups-specific icon/identity, complete dependency notice inventory and a macOS app bundle. The monitoring evaluator/probe semantics remain intact. The installation-check driver uses the real packaged application with loopback-only isolated data; test/engineering harness assemblies are not included in distribution archives.
+
+Candidate targets: Windows x64 portable ZIP, Apple-silicon macOS app bundle in tar.gz, Linux x64 tar.gz. Exact OS/runtime/test and apphost results belong to the source-SHA evidence and CROSS_PLATFORM.md. Publishing and signature verification alone do not establish ordinary downloaded-desktop usability. macOS uses ad-hoc integrity signing only, with no Developer ID/notarization. Windows is unsigned; Linux is a portable directory, not a distro package.
+
+Still missing or limited: validated legacy settings import, explicit gateway/modem discovery, login registration, sound/taskbar/focus parity, native Windows notifications, complete legacy menu/clipboard/help parity, installers/trusted signing, broad installed-desktop/accessibility/permission/IPv6/VPN/sleep-resume/endurance proof. Linux native CI uses Xvfb and does not certify Wayland or tray-host behavior on every desktop. In-app alerts are distinct from OS notifications. No analytics/cloud/account features or production fake metrics are added.
+
+Before distribution, review INSTALLATION.md, the exact manifest/checksums, licences and the release readiness checklist. Public Release assets now retain the approved packages and CI evidence beyond CI expiration. Bundled handoff documents retain their reviewed pre-publication wording; the public release description/current repository record actual publication.

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Fixtures/WirePeep-5.1.2-windows.stgx" />
+    <Compile Include="../../src/WirePeep.Common/PeerGroupState.cs" Link="Legacy/PeerGroupState.cs" />
+    <Compile Include="../../src/WirePeep.Common/LocationState.cs" Link="Legacy/LocationState.cs" />
+    <Compile Include="../../src/WirePeep.Common/StateSnapshot.cs" Link="Legacy/StateSnapshot.cs" />
+    <Compile Include="../../src/WirePeep.Common/Enumerations.cs" Link="Legacy/Enumerations.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Synups.Desktop/Synups.Desktop.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" PrivateAssets="all" />
+    <PackageReference Include="Avalonia.Headless.XUnit" Version="12.1.4" />
+  </ItemGroup>
+</Project>

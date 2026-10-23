@@ -1,0 +1,79 @@
+{
+  "checked_utc": "2026-10-21T22:18:12.095250+00:00",
+  "authentication_used": false,
+  "results": [
+    {
+      "url": "https://github.com/samscript18/Synups",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/README.md",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/README.md",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/LICENSE",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/LICENSE",
+      "authenticated": false
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39682197118",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups/actions/runs/39682197118",
+      "authenticated": false
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/tag/v0.1.0",
+      "status": 404,
+      "authenticated": false
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip",
+      "status": 404,
+      "authenticated": false
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz",
+      "status": 404,
+      "authenticated": false
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz",
+      "status": 404,
+      "authenticated": false
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS",
+      "status": 404,
+      "authenticated": false
+    },
+    {
+      "url": "https://forms.gle/bgvQLAmJpTCNcqwR9",
+      "error": "URLError",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/docs/evidence/after/2026-10-21-apphost/win-x64/exercise-overview.png",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/docs/evidence/after/2026-10-21-apphost/win-x64/exercise-overview.png",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/docs/evidence/after/2026-10-21-apphost/osx-arm64/exercise-overview.png",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/docs/evidence/after/2026-10-21-apphost/osx-arm64/exercise-overview.png",
+      "authenticated": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/docs/evidence/after/2026-10-21-apphost/linux-x64/exercise-overview.png",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/samscript18/Synups/2973d3349fcb5af5639597920842288e6549bbd0/docs/evidence/after/2026-10-21-apphost/linux-x64/exercise-overview.png",
+      "authenticated": false
+    }
+  ],
+  "limitation": "Planned Release assets return404. Submission form could not be fetched. No publication/submission performed."
+}

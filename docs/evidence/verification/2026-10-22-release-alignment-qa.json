@@ -1,0 +1,72 @@
+{
+  "verified_utc": "2026-10-22T21:16:40.362284+00:00",
+  "application_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "internal_version": "0.1.1-rc.4",
+  "proposed_public_tag": "v0.1.1",
+  "prepared_directory": "artifacts/release-alignment/v0.1.1-rc4/",
+  "upload_file_count": 15,
+  "archive_checks": [
+    {
+      "rid": "win-x64",
+      "sha256": "cc02117abc393cc0e6baf39e75aceebf529c8d695e5d61e93a18262b36a9d570",
+      "bytes": 49329805,
+      "full_manifest_rid_cpu_sqlite_runtime_licence_permissions_verified": true
+    },
+    {
+      "rid": "osx-arm64",
+      "sha256": "fa00e6a06255b4cd116ecb985806a05a02fb4e93db6977e34420a63f0cc31200",
+      "bytes": 46458693,
+      "full_manifest_rid_cpu_sqlite_runtime_licence_permissions_verified": true
+    },
+    {
+      "rid": "linux-x64",
+      "sha256": "49387bf6358b8d06478a64091f8780a64f41861f820df8f0ee1b04e17117c757",
+      "bytes": 46438274,
+      "full_manifest_rid_cpu_sqlite_runtime_licence_permissions_verified": true
+    }
+  ],
+  "all15_asset_and_checksum_hashes_passed": true,
+  "negative_integrity_test": "A separately written incorrect SOURCE_REVISION.txt in a disposable linked copy was rejected; originals unchanged.",
+  "live_ci_exact_revision_success": true,
+  "public_existing_links": [
+    {
+      "url": "https://github.com/samscript18/Synups/releases/tag/v0.1.0",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-win-x64.zip",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-osx-arm64.tar.gz",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/Synups-linux-x64.tar.gz",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.0/SHA256SUMS",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39850198899",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39851153694",
+      "status": 200
+    }
+  ],
+  "markdown_local_targets_and_json": "passed",
+  "github_markdown_server_render": "HTTP200; expected title/tables/91.7%/internal rc.4; not browser visual-layout certification",
+  "genuine_three_os_overview_captures_inspected": true,
+  "original_mit_and_ancestry_preserved": true,
+  "application_build_workflow_and_original_source_changed": false,
+  "new_runtime_test_execution": "None: release alignment only. Existing exact-source native run and downloaded reports rechecked; binaries not rebuilt or replaced.",
+  "official_article": "accessible22 October2026",
+  "official_form": "linked by official article; inaccessible through available tool, no submission attempted",
+  "bundled_readme_disclosure": "Frozen archive README is historical build-time rc.3 text, intentionally unchanged. Current external release/installation/evidence files identify rc.4.",
+  "recommendation": "GO for publishing the disclosed rc.4 unsigned/ad-hoc portable build after separate authorization; not universal desktop/trusted-signing certification.",
+  "release_or_tag_or_submission_created": false
+}

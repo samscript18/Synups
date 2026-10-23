@@ -1,0 +1,223 @@
+{
+  "proposed_tag": "v0.1.1",
+  "title": "Synups 0.1.1 \u2014 verified rc.4 build",
+  "publication_status": "published and independently anonymously verified; all approved asset bytes unchanged",
+  "application_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "internal_binary_version": "0.1.1-rc.4",
+  "workflow": "https://github.com/samscript18/Synups/actions/runs/39850198899",
+  "verified_utc": "2026-10-22T21:13:58.447079+00:00",
+  "prepared_directory": "artifacts/release-alignment/v0.1.1-rc4/",
+  "archives": [
+    {
+      "rid": "win-x64",
+      "name": "Synups-win-x64.zip",
+      "bytes": 49329805,
+      "sha256": "cc02117abc393cc0e6baf39e75aceebf529c8d695e5d61e93a18262b36a9d570",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "internal_version": "0.1.1-rc.4",
+      "apphost_sha256": "dc0e40d12a9242254621836476941d1a0feefcdc30c632b35a91b2474868e460",
+      "reviewed_file_count": 278,
+      "runtime_libraries": [
+        "Synups.Desktop/0.1.1-rc.4",
+        "runtimepack.Microsoft.NETCore.App.Runtime.win-x64/10.0.13",
+        "Avalonia/12.1.4",
+        "Avalonia.Angle.Windows.Natives/2.1.27548.20260419",
+        "Avalonia.Desktop/12.1.4",
+        "Avalonia.Fonts.Inter/12.1.4",
+        "Avalonia.FreeDesktop/12.1.4",
+        "Avalonia.FreeDesktop.AtSpi/12.1.4",
+        "Avalonia.HarfBuzz/12.1.4",
+        "Avalonia.Native/12.1.4",
+        "Avalonia.Remote.Protocol/12.1.4",
+        "Avalonia.Skia/12.1.4",
+        "Avalonia.Themes.Fluent/12.1.4",
+        "Avalonia.Win32/12.1.4",
+        "Avalonia.X11/12.1.4",
+        "HarfBuzzSharp/8.3.1.3",
+        "HarfBuzzSharp.NativeAssets.Win32/8.3.1.3",
+        "MicroCom.Runtime/0.11.6",
+        "Microsoft.Data.Sqlite/10.0.13",
+        "Microsoft.Data.Sqlite.Core/10.0.13",
+        "SkiaSharp/3.119.4",
+        "SkiaSharp.NativeAssets.Win32/3.119.4",
+        "SQLitePCLRaw.bundle_e_sqlite3/2.1.13",
+        "SQLitePCLRaw.core/2.1.13",
+        "SQLitePCLRaw.lib.e_sqlite3/2.1.13",
+        "SQLitePCLRaw.provider.e_sqlite3/2.1.13",
+        "Tmds.DBus.Protocol/0.94.1",
+        "Synups.Core/0.1.1-rc.4"
+      ],
+      "notice_packages": 25,
+      "signing": "No publisher signature; not an installer.",
+      "bundled_readme_sha256": "5d16d8477d29cdc7d19b840e2df675c295d9b2153ec1a254b8ca6d4a7f644a7e",
+      "bundled_readme_note": "Unmodified build-time snapshot describes historical rc.3 proposal; current supplemental release/installation/evidence documents identify rc.4."
+    },
+    {
+      "rid": "osx-arm64",
+      "name": "Synups-osx-arm64.tar.gz",
+      "bytes": 46458693,
+      "sha256": "fa00e6a06255b4cd116ecb985806a05a02fb4e93db6977e34420a63f0cc31200",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "internal_version": "0.1.1-rc.4",
+      "apphost_sha256": "1c64aab5ae7039dc95bf352a3c4b527bea2bf5fd4e079d8c1cffb48c98c66e11",
+      "reviewed_file_count": 323,
+      "runtime_libraries": [
+        "Synups.Desktop/0.1.1-rc.4",
+        "runtimepack.Microsoft.NETCore.App.Runtime.osx-arm64/10.0.13",
+        "Avalonia/12.1.4",
+        "Avalonia.Desktop/12.1.4",
+        "Avalonia.Fonts.Inter/12.1.4",
+        "Avalonia.FreeDesktop/12.1.4",
+        "Avalonia.FreeDesktop.AtSpi/12.1.4",
+        "Avalonia.HarfBuzz/12.1.4",
+        "Avalonia.Native/12.1.4",
+        "Avalonia.Remote.Protocol/12.1.4",
+        "Avalonia.Skia/12.1.4",
+        "Avalonia.Themes.Fluent/12.1.4",
+        "Avalonia.Win32/12.1.4",
+        "Avalonia.X11/12.1.4",
+        "HarfBuzzSharp/8.3.1.3",
+        "HarfBuzzSharp.NativeAssets.macOS/8.3.1.3",
+        "MicroCom.Runtime/0.11.6",
+        "Microsoft.Data.Sqlite/10.0.13",
+        "Microsoft.Data.Sqlite.Core/10.0.13",
+        "SkiaSharp/3.119.4",
+        "SkiaSharp.NativeAssets.macOS/3.119.4",
+        "SQLitePCLRaw.bundle_e_sqlite3/2.1.13",
+        "SQLitePCLRaw.core/2.1.13",
+        "SQLitePCLRaw.lib.e_sqlite3/2.1.13",
+        "SQLitePCLRaw.provider.e_sqlite3/2.1.13",
+        "Tmds.DBus.Protocol/0.94.1",
+        "Synups.Core/0.1.1-rc.4"
+      ],
+      "notice_packages": 24,
+      "signing": "Ad-hoc signed for bundle integrity only; no Developer ID identity, no notarization, no trusted publisher claim.",
+      "bundled_readme_sha256": "23a7f52f2e2937f9a7cafaf779975456f521bedabc579bce7f6f81650f88fa3a",
+      "bundled_readme_note": "Unmodified build-time snapshot describes historical rc.3 proposal; current supplemental release/installation/evidence documents identify rc.4."
+    },
+    {
+      "rid": "linux-x64",
+      "name": "Synups-linux-x64.tar.gz",
+      "bytes": 46438274,
+      "sha256": "49387bf6358b8d06478a64091f8780a64f41861f820df8f0ee1b04e17117c757",
+      "source_revision": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+      "internal_version": "0.1.1-rc.4",
+      "apphost_sha256": "7b23692859eb58cb1272646cbd44f3f8588f8994c770125aedfe1403a084eebf",
+      "reviewed_file_count": 276,
+      "runtime_libraries": [
+        "Synups.Desktop/0.1.1-rc.4",
+        "runtimepack.Microsoft.NETCore.App.Runtime.linux-x64/10.0.13",
+        "Avalonia/12.1.4",
+        "Avalonia.Desktop/12.1.4",
+        "Avalonia.Fonts.Inter/12.1.4",
+        "Avalonia.FreeDesktop/12.1.4",
+        "Avalonia.FreeDesktop.AtSpi/12.1.4",
+        "Avalonia.HarfBuzz/12.1.4",
+        "Avalonia.Native/12.1.4",
+        "Avalonia.Remote.Protocol/12.1.4",
+        "Avalonia.Skia/12.1.4",
+        "Avalonia.Themes.Fluent/12.1.4",
+        "Avalonia.Win32/12.1.4",
+        "Avalonia.X11/12.1.4",
+        "HarfBuzzSharp/8.3.1.3",
+        "HarfBuzzSharp.NativeAssets.Linux/8.3.1.3",
+        "MicroCom.Runtime/0.11.6",
+        "Microsoft.Data.Sqlite/10.0.13",
+        "Microsoft.Data.Sqlite.Core/10.0.13",
+        "SkiaSharp/3.119.4",
+        "SkiaSharp.NativeAssets.Linux/3.119.4",
+        "SQLitePCLRaw.bundle_e_sqlite3/2.1.13",
+        "SQLitePCLRaw.core/2.1.13",
+        "SQLitePCLRaw.lib.e_sqlite3/2.1.13",
+        "SQLitePCLRaw.provider.e_sqlite3/2.1.13",
+        "Tmds.DBus.Protocol/0.94.1",
+        "Synups.Core/0.1.1-rc.4"
+      ],
+      "notice_packages": 24,
+      "signing": "No publisher signature; not an installer.",
+      "bundled_readme_sha256": "23a7f52f2e2937f9a7cafaf779975456f521bedabc579bce7f6f81650f88fa3a",
+      "bundled_readme_note": "Unmodified build-time snapshot describes historical rc.3 proposal; current supplemental release/installation/evidence documents identify rc.4."
+    }
+  ],
+  "assets": [
+    {
+      "name": "INSTALLATION.md",
+      "bytes": 9119,
+      "sha256": "62eabcec63e3158f261bde903dc9888f3e8d377ed19dae03dd2dcf09d066b5be"
+    },
+    {
+      "name": "LICENSE",
+      "bytes": 1068,
+      "sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e"
+    },
+    {
+      "name": "PUBLICATION.md",
+      "bytes": 5063,
+      "sha256": "3ec53ee18269402c8673c196b1c4d3b920ea3eeb6b4c944e470f908f71064c3e"
+    },
+    {
+      "name": "RELEASE_NOTES.md",
+      "bytes": 7241,
+      "sha256": "9d3a8a6b7d4567ce1dbb6390e870a3eaf45a29bb80fe8e31806413e921978783"
+    },
+    {
+      "name": "SOURCE_REVISION.txt",
+      "bytes": 351,
+      "sha256": "8e112fa38d5c5f63a7cb79c66e71e7151da97754207fc8db37f252f5b0eecc71"
+    },
+    {
+      "name": "SUBMISSION.md",
+      "bytes": 8422,
+      "sha256": "b93f03ec00e80722fcf17d3847624b987bc95f1b85e8a66fb6a05480f6f6f24a"
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz",
+      "bytes": 46438274,
+      "sha256": "49387bf6358b8d06478a64091f8780a64f41861f820df8f0ee1b04e17117c757"
+    },
+    {
+      "name": "Synups-linux-x64.tar.gz.sha256",
+      "bytes": 90,
+      "sha256": "f0fe7b8261cdc720f8eff39ef4513e4a36f8d13975aed0fb60df603f357b6cc1"
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz",
+      "bytes": 46458693,
+      "sha256": "fa00e6a06255b4cd116ecb985806a05a02fb4e93db6977e34420a63f0cc31200"
+    },
+    {
+      "name": "Synups-osx-arm64.tar.gz.sha256",
+      "bytes": 90,
+      "sha256": "b29de26f38bb6ed4e8446387b55b9e26d735b9dbfc1a674f6a98697abc98a0e5"
+    },
+    {
+      "name": "Synups-win-x64.zip",
+      "bytes": 49329805,
+      "sha256": "cc02117abc393cc0e6baf39e75aceebf529c8d695e5d61e93a18262b36a9d570"
+    },
+    {
+      "name": "Synups-win-x64.zip.sha256",
+      "bytes": 86,
+      "sha256": "bfafffb943f985d55f88407bdf613657368743297cc63f00ae0f0facbbcfa746"
+    },
+    {
+      "name": "VERIFICATION.json",
+      "bytes": 28636,
+      "sha256": "c626d4e68be25177febb05f51d114af9a6dca43adaadb927dcc0aa4cf13619a1"
+    },
+    {
+      "name": "VERIFICATION_EVIDENCE.zip",
+      "bytes": 2922669,
+      "sha256": "399071e96ebaa82ff39493a3886c5961caaa478f49c9fe2799370e2b4daa1ecd"
+    }
+  ],
+  "checksum_file": "SHA256SUMS",
+  "checksum_file_sha256": "69633fb5a7b20f19f36596b19c6505c91e8102eefcd07e2b3dd6c71ca9d7769f",
+  "checksum_file_note": "14 payload files plus SHA256SUMS =15 upload assets. SHA256SUMS does not hash itself; its hash is recorded here. This review manifest and UPLOAD_FILES.txt are source documents, not upload assets.",
+  "supersedes": "Earlier rc.3 proposal preserved in Git040944283a935878def71a39b7c4535aa772badf and artifacts/presentation/v0.1.1-ready/. Never upload those files for this aligned release.",
+  "no_binaries_rebuilt_replaced_or_resigned": true,
+  "release_url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+  "release_id": 421217596,
+  "published_at": "2026-10-22T21:32:10Z",
+  "public_verification_record": "docs/evidence/verification/synups-0.1.1-publication.json"
+}

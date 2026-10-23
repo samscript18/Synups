@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "documentation_files": 49,
+  "link_targets_checked": 814,
+  "image_references_checked": 60,
+  "pinned_code_paths_checked": 70,
+  "legacy_statuses": {
+    "Complete": 15,
+    "Partial": 3
+  },
+  "legacy_parity": "91.7%",
+  "public_application": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "alpha_application": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+  "licence_sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+  "errors": []
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "Static declared theme token pairs only; not an accessibility or OS-control certification. Visible Tab-style focus also captured from the actual macOS apphost.",
+  "pairs": [
+    {
+      "foreground": "TextBrush",
+      "background": "CanvasBrush",
+      "ratio": 17.02,
+      "meets_4_5": true
+    },
+    {
+      "foreground": "MutedBrush",
+      "background": "CanvasBrush",
+      "ratio": 9.86,
+      "meets_4_5": true
+    },
+    {
+      "foreground": "MutedBrush",
+      "background": "SurfaceBrush",
+      "ratio": 8.8,
+      "meets_4_5": true
+    },
+    {
+      "foreground": "AccentBrush",
+      "background": "AccentSoftBrush",
+      "ratio": 8.41,
+      "meets_4_5": true
+    },
+    {
+      "foreground": "WarningBrush",
+      "background": "WarningSoftBrush",
+      "ratio": 8.46,
+      "meets_4_5": true
+    },
+    {
+      "foreground": "DangerBrush",
+      "background": "DangerSoftBrush",
+      "ratio": 8.26,
+      "meets_4_5": true
+    }
+  ]
+}

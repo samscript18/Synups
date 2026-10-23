@@ -1,0 +1,147 @@
+name: Synups verification and artifacts
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  coverage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+        working-directory: synups
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: synups/global.json
+      - name: Headless font prerequisites
+        run: sudo apt-get update && sudo apt-get install -y libfontconfig1 python3-gi desktop-file-utils
+      - name: Isolated optimized Release coverage build
+        run: |
+          set -o pipefail
+          mkdir -p ../artifacts/coverage-results
+          dotnet test ../Synups.slnx -c Release --artifacts-path ../artifacts/coverage-build -p:DebugType=portable -p:DebugSymbols=true -p:RestoreLockedMode=true -p:UseSharedCompilation=false --settings ../eng/coverage.runsettings --collect 'Code Coverage' --logger trx --results-directory ../artifacts/coverage-results 2>&1 | tee ../artifacts/coverage-results/coverage.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: synups-coverage-${{ github.sha }}
+          path: |
+            artifacts/coverage-results/**/*.cobertura.xml
+            artifacts/coverage-results/*.trx
+            artifacts/coverage-results/coverage.log
+          retention-days: 30
+  build-test-publish:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+          - os: macos-15
+            rid: osx-arm64
+          - os: ubuntu-24.04
+            rid: linux-x64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    defaults:
+      run:
+        shell: bash
+        working-directory: synups
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: synups/global.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Evidence directory
+        run: mkdir -p ../artifacts/logs
+      - name: Linux native display prerequisites
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1 iproute2 iptables python3-gi desktop-file-utils openbox x11-utils
+      - name: Archive tool safety tests
+        run: python -m unittest discover -s ../eng/tests -v
+      - name: Locked dependency restore
+        run: |
+          set -o pipefail
+          dotnet restore ../Synups.slnx --locked-mode --disable-parallel 2>&1 | tee ../artifacts/logs/restore.txt
+      - name: Release build
+        run: |
+          set -o pipefail
+          dotnet build ../Synups.slnx -c Release --no-restore -p:SourceRevisionId=${{ github.sha }} 2>&1 | tee ../artifacts/logs/build.txt
+      - name: Deterministic and Avalonia headless tests
+        run: |
+          set -o pipefail
+          dotnet test ../Synups.slnx -c Release --no-build --logger trx --results-directory ../artifacts/tests 2>&1 | tee ../artifacts/logs/tests.txt
+      - name: Explicit real loopback ICMP integration
+        run: |
+          set -o pipefail
+          dotnet test ../Synups.slnx -c Release --no-build --filter 'FullyQualifiedName~RealLoopback|FullyQualifiedName~RealDefaultGateway' --logger trx --results-directory ../artifacts/real-network 2>&1 | tee ../artifacts/logs/icmp.txt
+        env:
+          SYNUPS_REAL_NETWORK_TESTS: '1'
+      - name: Explicit native audio request or safe unsupported fallback
+        run: |
+          set -o pipefail
+          dotnet test ../Synups.slnx -c Release --no-build --filter FullyQualifiedName~NativeSoundRequest --logger trx --results-directory ../artifacts/audio 2>&1 | tee ../artifacts/logs/audio.txt
+        env:
+          SYNUPS_SOUND_TESTS: '1'
+          SYNUPS_AUDIO_EVIDENCE: ${{ github.workspace }}/artifacts/audio
+      - name: Publish self-contained platform directory
+        run: |
+          set -o pipefail
+          dotnet publish Synups.Desktop -c Release -r ${{ matrix.rid }} --self-contained true --no-restore -p:SourceRevisionId=${{ github.sha }} -o ../artifacts/publish/${{ matrix.rid }} 2>&1 | tee ../artifacts/logs/publish.txt
+          cp ../LICENSE ../artifacts/publish/${{ matrix.rid }}/LICENSE
+          cp ../README.md ../artifacts/publish/${{ matrix.rid }}/README.md
+      - name: Archive runnable files with Unix permissions and checksums
+        run: python ../eng/package-artifacts.py --source ../artifacts/publish/${{ matrix.rid }} --rid ${{ matrix.rid }} --output ../artifacts/packages --revision ${{ github.sha }}
+      - name: Extract and execute the actual published application
+        if: runner.os != 'Linux'
+        run: |
+          set -o pipefail
+          python ../eng/published-smoke.py --package ../artifacts/packages/Synups-${{ matrix.rid }}.${{ runner.os == 'Windows' && 'zip' || 'tar.gz' }} --rid ${{ matrix.rid }} --expected-revision ${{ github.sha }} --output ../artifacts/published-apphost --seconds 10 2>&1 | tee ../artifacts/logs/published-apphost.txt
+      - name: Extract and execute actual Linux apphost under Xvfb
+        if: runner.os == 'Linux'
+        run: |
+          set -o pipefail
+          xvfb-run -a -s '-screen 0 1440x1000x24' bash ../eng/x11-smoke.sh python ../eng/published-smoke.py --package ../artifacts/packages/Synups-linux-x64.tar.gz --rid linux-x64 --expected-revision ${{ github.sha }} --output ../artifacts/published-apphost --seconds 10 2>&1 | tee ../artifacts/logs/published-apphost.txt
+      - name: Native UI, real loopback, graceful close and process restart
+        if: runner.os != 'Linux'
+        run: |
+          set -o pipefail
+          python ../eng/native-smoke.py --screenshots ../artifacts/screenshots 2>&1 | tee ../artifacts/logs/native.txt
+      - name: Real ICMP incident in disposable Linux network namespace
+        if: runner.os == 'Linux'
+        run: |
+          set -o pipefail
+          python ../eng/incident-smoke.py --prepare ../artifacts/incident-build 2>&1 | tee ../artifacts/logs/incident-build.txt
+          xvfb-run -a -s '-screen 0 1440x1000x24' bash ../eng/x11-smoke.sh bash -c 'sudo env "PATH=$PATH" "DOTNET_ROOT=$DOTNET_ROOT" "DISPLAY=$DISPLAY" "XAUTHORITY=$XAUTHORITY" "GITHUB_SHA=$GITHUB_SHA" unshare --net -- python ../eng/incident-smoke.py --worker ../artifacts/incident-build/bin/Release/net10.0/Synups.IncidentSmoke.dll --output ../artifacts/incident' 2>&1 | tee ../artifacts/logs/incident.txt
+      - name: Linux X11 native smoke under Xvfb
+        if: runner.os == 'Linux'
+        run: |
+          set -o pipefail
+          xvfb-run -a -s '-screen 0 1440x1000x24' bash ../eng/x11-smoke.sh python ../eng/native-smoke.py --screenshots ../artifacts/screenshots 2>&1 | tee ../artifacts/logs/native.txt
+      - name: Preserve verification evidence (including failures)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: synups-${{ matrix.rid }}-${{ github.sha }}
+          path: |
+            artifacts/logs/
+            artifacts/tests/
+            artifacts/real-network/
+            artifacts/audio/
+            artifacts/notifications/
+            artifacts/screenshots/
+            artifacts/packages/
+            artifacts/published-apphost/reports/
+            artifacts/published-apphost/launch-summary.json
+            artifacts/published-apphost/isolated-data/
+            artifacts/incident/
+          retention-days: 30

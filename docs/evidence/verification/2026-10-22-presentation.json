@@ -1,0 +1,13 @@
+{
+  "original_source": "61ae14391151ca9f209223e62c98fae3df5482b8",
+  "workflow": "https://github.com/samscript18/Synups/actions/runs/39841203591",
+  "screenshot": "before/2026-10-22-wirepeep-windows.png",
+  "screenshot_sha256": "6af8dfc135aac260a2561b0f5f5a3b261e6e3adfae833328c51b96b2153060a2",
+  "independent_visual_review": "Actual original main window and populated target rows reviewed; not the earlier error dialog.",
+  "network_context": "Disposable Windows runner, application-scoped outbound firewall block; failed replies do not indicate a real ISP outage.",
+  "exit_code": 0,
+  "fixture_workflow": "https://github.com/samscript18/Synups/actions/runs/39840176062",
+  "fixture_sha256": "37b66a46f1fffaee7912b2733d00d76ef9fb06589635bdb7f8b6e7020d0ed7c1",
+  "fixture": "../../../synups/Synups.Tests/Fixtures/WirePeep-5.1.2-windows.stgx",
+  "manual_macos_acceptance": "User unavailable; Accessibility/event-post permission denied. Physical tray/Save/keyboard/multiple-display/login checks remain blocked."
+}

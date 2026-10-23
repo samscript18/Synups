@@ -1,0 +1,178 @@
+{
+  "date": "2026-10-16",
+  "platform": "macOS 26.3.1 (25D2128) arm64",
+  "sdk": "10.0.402",
+  "runtime": "10.0.13",
+  "avalonia": "12.1.4",
+  "scope": "Configurable SQLite capacity follow-up; working tree, no commit/push/publish.",
+  "test_counts": [
+    {
+      "suite": "tests",
+      "total": 95,
+      "executed": 94,
+      "passed": 94,
+      "failed": 0,
+      "skipped": 1
+    },
+    {
+      "suite": "loopback",
+      "total": 1,
+      "executed": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "new_storage_test_cases": 24,
+  "commands": [
+    {
+      "name": "restore",
+      "command": [
+        "dotnet",
+        "restore",
+        "../Synups.slnx",
+        "--locked-mode",
+        "--disable-parallel",
+        "-m:1",
+        "-nr:false"
+      ],
+      "exit_code": 0,
+      "audit_enabled": true,
+      "note": "Approved network retry passed after sandbox NU1900; no audit suppression. Duration not measured."
+    },
+    {
+      "name": "build",
+      "command": [
+        "dotnet",
+        "build",
+        "../Synups.slnx",
+        "-c",
+        "Release",
+        "--no-restore",
+        "-m:1",
+        "-nr:false",
+        "-p:UseSharedCompilation=false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.692,
+      "cwd": "$REPO/synups"
+    },
+    {
+      "name": "tests",
+      "command": [
+        "dotnet",
+        "test",
+        "../Synups.slnx",
+        "-c",
+        "Release",
+        "--no-build",
+        "-m:1",
+        "-nr:false",
+        "--logger",
+        "trx",
+        "--results-directory",
+        "$REPO/artifacts/storage-verified/tests"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.651,
+      "cwd": "$REPO/synups"
+    },
+    {
+      "name": "loopback",
+      "command": [
+        "dotnet",
+        "test",
+        "../Synups.slnx",
+        "-c",
+        "Release",
+        "--no-build",
+        "-m:1",
+        "-nr:false",
+        "--filter",
+        "FullyQualifiedName~RealLoopback",
+        "--logger",
+        "trx",
+        "--results-directory",
+        "$REPO/artifacts/storage-verified/loopback"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.076,
+      "cwd": "$REPO/synups",
+      "environment": {
+        "SYNUPS_REAL_NETWORK_TESTS": "1"
+      }
+    },
+    {
+      "name": "native",
+      "command": [
+        "python3",
+        "$REPO/eng/native-smoke.py",
+        "--dotnet",
+        "dotnet",
+        "--seconds",
+        "60",
+        "--repeat",
+        "2",
+        "--screenshots",
+        "$REPO/artifacts/storage-verified/captures"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 131.469,
+      "cwd": "$REPO/synups"
+    }
+  ],
+  "native_observed_seconds": [
+    60.623,
+    60.595
+  ],
+  "native_clean_sessions": [
+    1,
+    2
+  ],
+  "native_effective_limit_bytes": 1073741824,
+  "no_synups_processes_after_verification": true,
+  "production_source_sha256": {
+    "synups/Synups.Core/Alerts/AlertPolicy.cs": "7d781466d93cc765b419e76fdf86bc45ca43af78bcecc099e1539e3b72a65dfb",
+    "synups/Synups.Core/DefaultProfileReader.cs": "abb112ef1842a25034481e78cb16bb7a18725c9042170f684c3b92d4126b62b6",
+    "synups/Synups.Core/Monitoring/Configuration.cs": "cd24bb1f572821b7063f7907e145e619f5237879042a81399cfe76bbba36bc2c",
+    "synups/Synups.Core/Monitoring/ConnectivityProbe.cs": "bcf781fabc6cb74423d20303ba0954a69071b5c928337e98e61fa0f23b75babd",
+    "synups/Synups.Core/Monitoring/GroupMonitor.cs": "9e9bea3c3b86cd242ce51045204c502fd17541c5f87e823a8e7cf3c4385a8f5e",
+    "synups/Synups.Core/Monitoring/MonitoringService.cs": "4782bea236ab05ccd6320563d15d1e77d41ba456c4674ee375ba65a5c39a0fcd",
+    "synups/Synups.Core/Monitoring/MonitoringState.cs": "13d54485b2b75d51fa9f4333f34ccda3b151cf3ba2697be2f26a3a150ed3cbef",
+    "synups/Synups.Core/Persistence/AppPreferences.cs": "52a37e99e59506b633723636ef118dfc0c4fc1b75688199aeded59febdb03b78",
+    "synups/Synups.Core/Persistence/AutomaticLogExporter.cs": "6e0c0d550bbebdc1e0818a1507376ae925c60fd0339d29423508d6fe5531cdc3",
+    "synups/Synups.Core/Persistence/ConfigurationStore.cs": "f9ab851beed9a8373d5208a004fde1793510f84741c5dd2315e0ef9906077a2f",
+    "synups/Synups.Core/Persistence/CsvExporter.cs": "f18d784f2f3d6105636856192a1b02084bc5d46238a1324b5f94881f6c58ed1d",
+    "synups/Synups.Core/Persistence/HistoryStore.cs": "2b663d4b6d67ebaa8edd43ed48f21e8e6b01cc3e557c5cec126f64b101c389a3",
+    "synups/Synups.Core/Persistence/StoragePolicy.cs": "c623a890a3ed962bf7577d65b03c684308182e467244d2eafdb79831b3a89871",
+    "synups/Synups.Desktop/App.axaml": "260f7029915acd7dc6879f9bc417fc10aee3c23a2f05f6ca4f6055601c167213",
+    "synups/Synups.Desktop/App.axaml.cs": "d362f1666fdaec18dc23d89b54921372911ee6c7d885490aea980a3180ae9328",
+    "synups/Synups.Desktop/Integrations/NativeAlerts.cs": "ad7141eeba754edf2a6e876ac2030fbca80bc8f9a36301af384e4f6d3b7a1755",
+    "synups/Synups.Desktop/Integrations/TrayController.cs": "de41144181c14889a4c25095092a259cb5dfcad13ee42f0e3d6798455cd536ba",
+    "synups/Synups.Desktop/MainWindow.axaml": "7ff8894bbd6aecb2fc7f508e068170e3f4677b291c1279a1aebeedf9b2a5ee9c",
+    "synups/Synups.Desktop/MainWindow.axaml.cs": "651a2bf887e6c49c64668b5076e9a3abe04d27a308a54187bd35cd86af3c71d1",
+    "synups/Synups.Desktop/MainWindowViewModel.cs": "0cad4419553d25807075e711199eb67ba6b1fd179dcd16e8007d75100b7c819c",
+    "synups/Synups.Desktop/MonitoringRows.cs": "505edd5220c02335e95ce1eb99362a0c85633096464799aedf592ee316882af7",
+    "synups/Synups.Desktop/ObservableObject.cs": "048de9d6466e2b490d0d7ab1e46d20480b8c19402bac45d4c84bfcd79d1e91bf",
+    "synups/Synups.Desktop/Program.cs": "2f359135e480cbc82633302cc2d30303ad820964112da65681398bee1ef12d32",
+    "synups/Synups.Desktop/Styles/Theme.axaml": "505a3c22e3614d3deb95ddb3585fe144fd8f40631af5c9ecb86801f9f68e2a75"
+  },
+  "tooling_sha256": {
+    "eng/native-smoke.cs": "925ca91b5d8fa572a5b8ec22af27422b8d11f10a66993c4c076754b07fa47a01",
+    "eng/native-smoke.py": "5dc4710ff414c17cec43fe50a96c617127713f13ba5de4f817f8955aa853ebbb"
+  },
+  "captures_sha256": {
+    "artifacts/storage-verified/captures/synups-overview.png": "eb62bc2c14af4b840777dae9e5e0b84690f5fe049a257154c3fea6525d3f5f66",
+    "artifacts/storage-verified/captures/synups-storage.png": "f0dd99b2d1f07f2309ea5d323292f855cbf7800704d8d4b5e050e205331d902e",
+    "artifacts/storage-verified/captures/synups-targets.png": "9c7b1574e36985da42cd2e07b16aef30dcc10e45cf3cd6ea5bb4f6c99e1c93d7"
+  },
+  "local_artifacts": "artifacts/storage-verified/",
+  "limits": [
+    "No Windows/Linux runtime or hosted workflow result for this tree.",
+    "Native harness uses the production App/VM/probe; it is not a published apphost launch.",
+    "No full-size multi-GiB or hours/days endurance proof; records still materialize in memory.",
+    "No genuine physical ENOSPC, abrupt-process/power-loss, or complete cross-filesystem restore/repair experiment.",
+    "Existing published artifacts predate this storage change; none regenerated.",
+    "Captures show the actual native client tree, without OS chrome."
+  ]
+}

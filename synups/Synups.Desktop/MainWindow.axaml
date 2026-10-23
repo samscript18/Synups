@@ -1,0 +1,286 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:Synups.Desktop" xmlns:monitor="using:Synups.Core.Monitoring"
+        x:Class="Synups.Desktop.MainWindow" x:DataType="local:MainWindowViewModel"
+        Title="Synups — Network reliability" Icon="/Assets/Synups.ico" Width="1180" Height="840" MinWidth="820" MinHeight="560">
+  <Grid Name="Workspace" ColumnDefinitions="Auto,*">
+    <Border Classes="sidebar">
+      <Grid RowDefinitions="Auto,*,Auto" Margin="12,28,12,20">
+        <ScrollViewer Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,16">
+        <StackPanel Spacing="28">
+          <Grid ColumnDefinitions="Auto,*" Margin="12,0">
+            <Border Width="34" Height="34" CornerRadius="10" Background="{DynamicResource AccentSoftBrush}" VerticalAlignment="Center">
+              <Path Data="M3,12 L7,12 L10,5 L14,19 L17,12 L21,12" Width="24" Height="24" Stretch="Uniform" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.8" />
+            </Border>
+            <StackPanel Grid.Column="1" Margin="10,0,0,0" Spacing="2">
+              <TextBlock Text="Synups" FontSize="23" FontWeight="SemiBold" LetterSpacing="-0.7" />
+              <TextBlock Text="NETWORK RELIABILITY" FontSize="8" LetterSpacing="1.1" Classes="muted sidebarCaption" />
+            </StackPanel>
+          </Grid>
+          <StackPanel Spacing="12">
+            <TextBlock Text="WORKSPACE" Classes="eyebrow" Margin="14,0" />
+            <ListBox Name="Navigation" Classes="workspace" SelectionChanged="NavigationChanged" ItemsSource="{Binding NavigationItems}" SelectedIndex="{Binding SelectedPage, Mode=TwoWay}" AutomationProperties.Name="Workspace navigation">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="local:WorkspacePage">
+                  <Grid ColumnDefinitions="20,*">
+                    <Path Data="{Binding IconData}" Width="18" Height="18" Stretch="Uniform" Stroke="{DynamicResource MutedBrush}" StrokeThickness="1.5" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Margin="12,0,0,0" Spacing="4">
+                      <TextBlock Text="{Binding Title}" FontSize="13" FontWeight="Medium" />
+                      <TextBlock Text="{Binding Description}" FontSize="10" Classes="muted navDescription" />
+                    </StackPanel>
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Row="2" Classes="inset" BorderThickness="1" BorderBrush="{DynamicResource LineBrush}" Padding="14">
+          <StackPanel Spacing="8">
+            <StackPanel Orientation="Horizontal" Spacing="7"><Ellipse Width="6" Height="6" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Center" /><TextBlock Text="LOCAL FIRST" Classes="eyebrow" /></StackPanel>
+            <TextBlock Text="Your network. Your evidence." FontSize="12" />
+            <TextBlock Text="Stored on this device.
+No cloud account required." Classes="caption sidebarCaption" />
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+    <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto,*,Auto">
+      <Border Padding="24,18" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource LineBrush}">
+        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+          <TextBlock Text="{Binding PageTitle}" Classes="muted" FontSize="13" VerticalAlignment="Center" />
+          <Border Grid.Column="1" Classes="badge" Classes.connected="{Binding IsCurrentlyConnected}" Classes.outage="{Binding HasCurrentOutage}" Classes.warning="{Binding HasCurrentUncertainty}" VerticalAlignment="Center" Margin="12,0">
+            <TextBlock Name="SessionState" Text="{Binding MonitoringState}" />
+          </Border>
+          <Button Grid.Column="2" Name="StartMonitoring" Classes="primary" IsEnabled="{Binding CanStart}" Click="StartClicked" Margin="0,0,8,0" AutomationProperties.Name="Start monitoring" ToolTip.Tip="{Binding StartGuidance}">
+            <StackPanel Orientation="Horizontal" Spacing="8"><Path Data="M0,0 L0,10 L8,5 Z" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Width="8" Height="10" Stretch="Uniform" VerticalAlignment="Center" /><TextBlock Text="Start monitoring" /></StackPanel>
+          </Button>
+          <Button Grid.Column="3" Name="StopMonitoring" Classes="secondary" Content="Stop" IsEnabled="{Binding CanStop}" Click="StopClicked" />
+        </Grid>
+      </Border>
+      <Border Grid.Row="1" Padding="24,12" Background="{DynamicResource SidebarBrush}" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource LineBrush}">
+        <StackPanel Spacing="6"><TextBlock Name="Feedback" Text="{Binding Message}" Classes="caption" /><TextBlock Name="StartGuidance" Text="{Binding StartGuidance}" Classes="caption" /></StackPanel>
+      </Border>
+      <Border Grid.Row="2" Padding="24,12" IsVisible="{Binding HasAlertBanner}" Background="{DynamicResource WarningSoftBrush}">
+        <TextBlock Text="{Binding AlertBanner}" Foreground="{DynamicResource WarningBrush}" />
+      </Border>
+      <ScrollViewer Grid.Row="3" Name="PageScroll" HorizontalScrollBarVisibility="Disabled">
+        <Grid Classes="page">
+          <StackPanel IsVisible="{Binding IsOverview}" Spacing="24">
+            <StackPanel Spacing="7"><TextBlock Text="{Binding OverviewEyebrow}" Classes="eyebrow accent" /><TextBlock Text="Network overview" Classes="h1" /><TextBlock Text="A clear view of your configured ICMP connections." Classes="muted" /></StackPanel>
+            <Border Classes="card" IsVisible="{Binding HasNoGroups}">
+              <StackPanel Spacing="14" IsEnabled="{Binding CanEdit}">
+                <TextBlock Text="Monitor your first connection" Classes="h2" />
+                <TextBlock Text="A target is an IP address you choose. A peer group contains alternative targets: one response makes that group reachable. Synups records confirmed missed replies and observed recovery, not universal Internet uptime." Classes="muted" />
+                <Grid ColumnDefinitions="*,*">
+                  <StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Group name" Classes="caption" /><TextBox Name="FirstGroupName" Text="{Binding FirstGroupName, Mode=TwoWay}" AutomationProperties.Name="First group name" /></StackPanel>
+                  <StackPanel Grid.Column="1" Spacing="7"><TextBlock Text="Target name" Classes="caption" /><TextBox Name="FirstTargetName" Text="{Binding FirstTargetName, Mode=TwoWay}" AutomationProperties.Name="First target name" /></StackPanel>
+                </Grid>
+                <StackPanel Spacing="7"><TextBlock Text="IP address · IPv4 or IPv6" Classes="caption" /><TextBox Name="FirstTargetAddress" Text="{Binding FirstTargetAddress, Mode=TwoWay}" PlaceholderText="Enter an IP you are authorized to monitor" AutomationProperties.Name="First target IP address" /></StackPanel>
+                <Button Name="CreateFirstTarget" Content="Add target and create group" Classes="primary" Click="CreateFirstTargetClicked" HorizontalAlignment="Left" />
+                <TextBlock Text="Setup saves locally and does not probe. Next choose Start monitoring above. Defaults: check every 5s, confirm after 10s of failed observations, timeout 1s; change these in Targets and groups." Classes="caption" />
+                <Button Content="Create groups or restore original defaults…" Classes="quiet" Click="ConfigureClicked" HorizontalAlignment="Left" />
+              </StackPanel>
+            </Border>
+            <Border Classes="card">
+              <StackPanel Spacing="20">
+                <Grid ColumnDefinitions="Auto,*">
+                  <Border Background="{DynamicResource RaisedBrush}" Width="46" Height="46" CornerRadius="12" VerticalAlignment="Top">
+                    <Path Data="M2,12 L6,12 L9,4 L14,20 L18,12 L22,12" Width="26" Height="26" Stretch="Uniform" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.6" />
+                  </Border>
+                  <StackPanel Grid.Column="1" Margin="16,0,0,0" Spacing="8">
+                    <TextBlock Name="ConnectivityAssessment" Text="{Binding ConnectivityAssessment}" Classes="h2" />
+                    <TextBlock Name="MonitoringSummary" Text="{Binding OverviewSummary}" Classes="muted" FontSize="13" />
+                  </StackPanel>
+                </Grid>
+                <Border Height="1" Background="{DynamicResource LineBrush}" />
+                <Grid ColumnDefinitions="*,Auto">
+                  <StackPanel Spacing="5"><TextBlock Text="LAST ACCEPTED MEASUREMENT · LOCAL TIME" Classes="eyebrow" /><TextBlock Name="LastMeasurement" Text="{Binding LastMeasurement}" FontSize="13" /><TextBlock Name="MonitoredTime" Text="{Binding MonitoredTime}" Classes="caption" /></StackPanel>
+                  <Button Grid.Column="1" Name="ConfigureTargets" Classes="secondary" Content="Configure targets" Click="ConfigureClicked" Margin="12,0,0,0" VerticalAlignment="Center" />
+                </Grid>
+              </StackPanel>
+            </Border>
+            <StackPanel Spacing="12">
+              <TextBlock Text="{Binding MetricContext}" Classes="caption" />
+              <UniformGrid Columns="4">
+                <Border Classes="card metricCard" Margin="0,0,8,0"><StackPanel Spacing="9"><TextBlock Text="{Binding EnabledGroupCount}" Classes="metric" /><TextBlock Text="Enabled groups" Classes="caption" /></StackPanel></Border>
+                <Border Classes="card metricCard" Margin="0,0,8,0"><StackPanel Spacing="9"><TextBlock Name="ConnectedMetric" Text="{Binding ConnectedGroupCount}" Classes="metric" /><TextBlock Text="Connected groups" Classes="caption" /></StackPanel></Border>
+                <Border Classes="card metricCard" Margin="0,0,8,0"><StackPanel Spacing="9"><TextBlock Text="{Binding ConfirmedOutageCount}" Classes="metric" /><TextBlock Text="Unresolved outages" Classes="caption" /></StackPanel></Border>
+                <Border Classes="card metricCard"><StackPanel Spacing="9"><TextBlock Text="{Binding UnavailableGroupCount}" Classes="metric" /><TextBlock Text="Unavailable groups" Classes="caption" /></StackPanel></Border>
+              </UniformGrid>
+            </StackPanel>
+            <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Monitored groups" Classes="h2" /><TextBlock Grid.Column="1" Text="ICMP CONNECTIVITY" Classes="eyebrow" VerticalAlignment="Center" /></Grid>
+
+            <ItemsControl ItemsSource="{Binding Groups}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:GroupRow">
+                  <Border Classes="card" Margin="0,0,0,12">
+                    <StackPanel Spacing="14">
+                      <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{Binding Name}" Classes="h2" VerticalAlignment="Center" /><Border Grid.Column="1" Classes="badge" Classes.connected="{Binding IsConnected}" Classes.outage="{Binding HasOutage}" Classes.warning="{Binding IsUncertain}" Margin="12,0,0,0"><TextBlock Text="{Binding Status}" /></Border></Grid>
+                      <TextBlock Text="{Binding TimingDescription}" Classes="caption" />
+                      <TextBlock Text="{Binding TargetDescription}" Classes="caption" /><TextBlock Text="{Binding TransitionDescription}" Classes="caption" />
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text="A responding peer establishes ICMP connectivity for its group. It does not establish that every target is online or that all Internet services work." Classes="caption" />
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsTargets}" Spacing="20">
+            <Border Classes="card"><StackPanel Spacing="12">
+              <TextBlock Text="Discover a default gateway" Classes="h2" />
+              <TextBlock Text="Read the OS default routes without scanning or sending probes. VPN/split routes can differ by destination. Select a result, then confirm adding it to the selected group (or a new group)." Classes="caption" />
+              <WrapPanel><Button Name="DiscoverGateway" Content="Discover gateway" Click="DiscoverGatewayClicked" IsEnabled="{Binding CanDiscover}" Classes="secondary" Margin="0,0,8,8" /><Button Name="CancelDiscovery" Content="Cancel discovery" Click="CancelDiscoveryClicked" IsEnabled="{Binding IsDiscovering}" Classes="quiet" Margin="0,0,0,8" /></WrapPanel>
+              <TextBlock Name="DiscoveryFeedback" Text="{Binding DiscoveryMessage}" Classes="caption" />
+              <ComboBox Name="GatewayPreview" ItemsSource="{Binding GatewayCandidates}" SelectedItem="{Binding SelectedGateway, Mode=TwoWay}" HorizontalAlignment="Stretch" AutomationProperties.Name="Discovered gateway preview" />
+              <Button Name="SetupOriginalRouter" Content="Use selected gateway for original router group…" Click="SetupOriginalRouterClicked" IsEnabled="{Binding CanAcceptGateway}" Classes="secondary" HorizontalAlignment="Left" />
+              <Button Name="AcceptGateway" Content="Add selected gateway…" Click="AcceptGatewayClicked" IsEnabled="{Binding CanAcceptGateway}" Classes="primary" HorizontalAlignment="Left" />
+            </StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12"><TextBlock Text="Original modem/transceiver candidates" Classes="h2" /><TextBlock Text="Explicit ICMP only, after confirmation. Checks stop at the first response. Responding IPs are not verified device identities; missing replies may mean filtering. Existing targets are unchanged until confirmed Add." Classes="caption" /><ComboBox Name="LegacyRulePreview" IsEnabled="{Binding CanDiscover}" ItemsSource="{Binding LegacyRules}" SelectedItem="{Binding SelectedLegacyRule, Mode=TwoWay}" HorizontalAlignment="Stretch" AutomationProperties.Name="Original candidate addresses to check" /><WrapPanel><Button Name="CheckLegacyCandidates" Content="Check displayed candidates…" Click="CheckLegacyCandidatesClicked" IsEnabled="{Binding CanCheckLegacy}" Classes="secondary" Margin="0,0,8,8" /><Button Content="Cancel check" Click="CancelDiscoveryClicked" IsEnabled="{Binding IsDiscovering}" Classes="quiet" /></WrapPanel><TextBlock Text="{Binding CandidateMessage}" Classes="caption" /><ItemsControl ItemsSource="{Binding LegacyAttempts}" /><Button Name="AcceptLegacyCandidate" Content="Add responding candidate and enable its group…" Click="AcceptLegacyCandidateClicked" IsEnabled="{Binding CanAcceptLegacy}" Classes="primary" HorizontalAlignment="Left" /></StackPanel></Border>
+            <StackPanel Spacing="7"><TextBlock Text="MONITORING PROFILE" Classes="eyebrow accent" /><TextBlock Text="Targets and groups" Classes="h1" /><TextBlock Text="Organize your connections. Stop monitoring to edit; applied changes save immediately." Classes="muted" /><TextBlock Text="Create group → Apply → Add target → Apply → enable group → Apply. One responding peer establishes group connectivity. Original router/modem discovery-only defaults are disabled until you add a manual or explicitly confirmed discovered IP. Gateway and candidate setup preserve existing IDs and can enable only the confirmed group." Classes="caption" /></StackPanel>
+            <Expander Name="LegacyImportExpander" Header="Import original WirePeep profile" IsEnabled="{Binding CanEdit}"><StackPanel Margin="16" Spacing="12"><TextBlock Text="Read-only preview of genuine Menees .stgx profiles. Confirmed replacement creates a backup; original IDs/timings are preserved. Desktop/OS settings and history are not imported or changed." Classes="caption" /><Button Name="PreviewLegacyImport" Content="Choose WirePeep settings…" Click="PreviewLegacyImportClicked" HorizontalAlignment="Left" /><TextBlock Name="LegacyImportPreviewText" Text="{Binding LegacyImportPreview}" Classes="caption" /><Button Name="ImportLegacyProfile" Content="Back up and import preview…" Click="ImportLegacyClicked" IsEnabled="{Binding CanImportLegacy}" HorizontalAlignment="Left" /></StackPanel></Expander>
+            <WrapPanel><Button Name="AddMissingDefaults" Classes="secondary" Content="Add missing original groups…" Click="AddMissingDefaultsClicked" IsEnabled="{Binding CanEdit}" Margin="0,0,8,8" /><Button Classes="secondary" Content="Restore original defaults…" IsEnabled="{Binding CanEdit}" Click="RestoreClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Reload configuration" IsEnabled="{Binding CanReload}" Click="ReloadClicked" Margin="0,0,8,8" /><Button Classes="secondary" Content="Recover with original defaults…" IsVisible="{Binding CanRecover}" Click="RecoverClicked" Margin="0,0,8,8" /></WrapPanel>
+            <Border Classes="card">
+              <StackPanel Spacing="14">
+                <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Peer groups" Classes="h2" VerticalAlignment="Center" /><Button Name="NewGroup" Grid.Column="1" Classes="secondary" Content="+ New group" IsEnabled="{Binding CanEdit}" Click="NewGroupClicked" /></Grid>
+                <TextBlock Text="Add a group, then add targets and enable it, or restore the original literal defaults." IsVisible="{Binding HasNoGroups}" Classes="muted" />
+                <ListBox Name="GroupList" ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup, Mode=TwoWay}" MaxHeight="{Binding SavedPreferences.GroupPaneHeight}" AutomationProperties.Name="Monitoring groups">
+                  <ListBox.ItemTemplate><DataTemplate x:DataType="local:GroupRow"><Grid ColumnDefinitions="*,Auto"><StackPanel Spacing="5"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" /><TextBlock Text="{Binding TimingDescription}" Classes="caption" /></StackPanel><Border Grid.Column="1" Classes="badge" Classes.connected="{Binding IsConnected}" Classes.outage="{Binding HasOutage}" Classes.warning="{Binding IsUncertain}" Margin="12,0,0,0" VerticalAlignment="Center"><TextBlock Text="{Binding Status}" /></Border></Grid></DataTemplate></ListBox.ItemTemplate>
+                </ListBox>
+              </StackPanel>
+            </Border>
+            <Border Classes="card">
+              <Expander Header="Group configuration" IsExpanded="{Binding CanEdit}">
+              <StackPanel Spacing="16" Margin="16" IsEnabled="{Binding CanEdit}">
+                <StackPanel Spacing="7"><TextBlock Text="Group name" Classes="caption" /><TextBox Name="GroupNameEditor" Text="{Binding GroupName, Mode=TwoWay}" PlaceholderText="e.g. Internet providers" AutomationProperties.Name="Group name" /></StackPanel>
+                <CheckBox Name="GroupEnabledEditor" Content="Enable this group (requires a target)" IsChecked="{Binding GroupEnabled, Mode=TwoWay}" />
+                <Grid ColumnDefinitions="*,*,*">
+                  <StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Poll interval · seconds" Classes="caption" /><TextBox Name="PollSecondsEditor" Text="{Binding PollSeconds, Mode=TwoWay}" AutomationProperties.Name="Poll interval in seconds" /></StackPanel>
+                  <StackPanel Grid.Column="1" Spacing="7" Margin="0,0,12,0"><TextBlock Text="Failure threshold · seconds" Classes="caption" /><TextBox Name="FailSecondsEditor" Text="{Binding FailSeconds, Mode=TwoWay}" AutomationProperties.Name="Failure threshold in seconds" /></StackPanel>
+                  <StackPanel Grid.Column="2" Spacing="7"><TextBlock Text="Probe timeout · ms" Classes="caption" /><TextBox Name="TimeoutEditor" Text="{Binding TimeoutMilliseconds, Mode=TwoWay}" AutomationProperties.Name="Probe timeout in milliseconds" /></StackPanel>
+                </Grid>
+                <WrapPanel><Button Name="ApplyGroup" Classes="primary" Content="Apply group" Click="ApplyGroupClicked" Margin="0,0,8,8" /><Button Name="RemoveGroup" Classes="danger" Content="Remove group…" IsEnabled="{Binding HasSelectedGroup}" Click="RemoveGroupClicked" Margin="0,0,0,8" /></WrapPanel>
+              </StackPanel>
+              </Expander>
+            </Border>
+            <Border Classes="card">
+              <StackPanel Spacing="14">
+                <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Targets in selected group" Classes="h2" VerticalAlignment="Center" /><Button Name="NewTarget" Grid.Column="1" Classes="secondary" Content="+ New target" IsEnabled="{Binding CanEdit}" Click="NewTargetClicked" /></Grid>
+                <ListBox Name="TargetList" ItemsSource="{Binding SelectedGroup.Targets}" SelectedItem="{Binding SelectedTarget, Mode=TwoWay}" MaxHeight="{Binding SavedPreferences.TargetPaneHeight}" AutomationProperties.Name="Monitoring targets">
+                  <ListBox.ContextMenu><ContextMenu><MenuItem Header="Copy IP address" Click="CopyTargetClicked" /><MenuItem Header="Copy selected value" Click="CopyTargetValueClicked" /><MenuItem Header="Copy row" Click="CopyTargetRowClicked" /><Separator /><MenuItem Header="Edit target" Click="EditSelectedClicked" /><MenuItem Header="Remove target…" Click="RemoveTargetClicked" /><MenuItem Header="Clear selection" Click="UnselectTargetClicked" /></ContextMenu></ListBox.ContextMenu>
+                  <ListBox.ItemTemplate><DataTemplate x:DataType="local:TargetRow"><StackPanel Spacing="8"><Grid ColumnDefinitions="*,Auto"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" /><TextBlock Grid.Column="1" Text="{Binding Address}" Classes="muted" Margin="12,0,0,0" /></Grid><TextBlock Text="{Binding Status}" FontSize="13" /><TextBlock Text="{Binding Details}" Classes="caption" /></StackPanel></DataTemplate></ListBox.ItemTemplate>
+                </ListBox>
+                <WrapPanel><ComboBox Name="TargetCopyColumn" ItemsSource="{Binding TargetCopyColumns}" SelectedItem="{Binding TargetCopyColumn, Mode=TwoWay}" MinWidth="150" AutomationProperties.Name="Target value to copy" Margin="0,0,8,8" /><Button Name="CopyTargetValue" Content="Copy value" Click="CopyTargetValueClicked" IsEnabled="{Binding HasSelectedTarget}" Classes="secondary" Margin="0,0,8,8" /><Button Name="CopyTargetRow" Content="Copy row" Click="CopyTargetRowClicked" IsEnabled="{Binding HasSelectedTarget}" Classes="secondary" Margin="0,0,0,8" /></WrapPanel>
+                <Button Name="CopyTargetAddress" Content="Copy selected target IP" Classes="secondary" Click="CopyTargetClicked" IsEnabled="{Binding HasSelectedTarget}" HorizontalAlignment="Left" />
+                <TextBlock Text="Groups stop after a responding peer. Unprobed targets remain not checked or stale; a group response does not prove that every target is online." Classes="caption" />
+              </StackPanel>
+            </Border>
+            <Border Classes="card">
+              <Expander Header="Target configuration" IsExpanded="{Binding CanEdit}">
+              <StackPanel Spacing="16" Margin="16" IsEnabled="{Binding CanEdit}">
+                <Grid ColumnDefinitions="*,*"><StackPanel Spacing="7" Margin="0,0,12,0"><TextBlock Text="Target name" Classes="caption" /><TextBox Name="TargetNameEditor" Text="{Binding TargetName, Mode=TwoWay}" PlaceholderText="e.g. Primary resolver" AutomationProperties.Name="Target name" /></StackPanel><StackPanel Grid.Column="1" Spacing="7"><TextBlock Text="Literal IPv4 or IPv6 address" Classes="caption" /><TextBox Name="TargetAddressEditor" Text="{Binding TargetAddress, Mode=TwoWay}" PlaceholderText="Enter an IP address" AutomationProperties.Name="Target IP address" /></StackPanel></Grid>
+                <StackPanel Spacing="7"><TextBlock Text="Group membership" Classes="caption" /><ComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding TargetGroup, Mode=TwoWay}" HorizontalAlignment="Stretch" AutomationProperties.Name="Target group" /></StackPanel>
+                <WrapPanel><Button Name="ApplyTarget" Classes="primary" Content="Apply target" Click="ApplyTargetClicked" Margin="0,0,8,8" /><Button Name="RemoveTarget" Classes="danger" Content="Remove selected target…" Click="RemoveTargetClicked" Margin="0,0,0,8" /></WrapPanel>
+              </StackPanel>
+              </Expander>
+            </Border>
+            <Expander Header="Profile details"><StackPanel Spacing="8" Margin="16"><TextBlock Text="IDs survive edits and moves. Removing the last target disables its group. Hostname resolution and automatic discovery are not implemented." Classes="caption" /><TextBlock Text="{Binding ConfigurationPath}" Classes="caption" /></StackPanel></Expander>
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsHistory}" Spacing="20">
+            <StackPanel Spacing="7"><TextBlock Text="LOCAL EVIDENCE" Classes="eyebrow accent" /><TextBlock Text="Activity and outages" Classes="h1" /><TextBlock Text="Observed incidents, recoveries and the context you add." Classes="muted" /></StackPanel>
+            <Border Classes="card"><StackPanel Spacing="14"><TextBlock Text="{Binding HistoryStatus}" /><WrapPanel><Button Name="ExportOutages" Classes="primary" Content="Export outages CSV…" Click="ExportClicked" IsEnabled="{Binding CanExport}" Margin="0,0,8,8" /><Button Classes="secondary" Content="Retry history storage" Click="RetryHistoryClicked" Margin="0,0,0,8" /></WrapPanel><TextBlock Text="History and comments survive restart. Stopping observation never implies recovery. Durations begin at outage confirmation; marked gaps mean continuity was uncertain." Classes="caption" /></StackPanel></Border>
+            <Border Classes="card" IsVisible="{Binding HasNoOutages}"><StackPanel Spacing="10"><TextBlock Text="No incidents in this history range" Classes="h2" /><TextBlock Text="Choose Latest to refresh the range. Start monitoring to collect actual observations; confirmed incidents appear with their recovery or unresolved status." Classes="muted" /></StackPanel></Border>
+            <WrapPanel><Button Name="LatestIncidents" Content="Latest incidents" Classes="secondary" IsEnabled="{Binding CanReadTimeline}" Click="LatestIncidentsClicked" Margin="0,0,8,8" /><Button Name="OlderIncidents" Content="Older incidents" Classes="secondary" IsEnabled="{Binding CanReadOlderIncidents}" Click="OlderIncidentsClicked" Margin="0,0,0,8" /></WrapPanel>
+            <TextBlock Name="TimelineFeedback" Text="{Binding TimelineMessage}" Classes="caption" />
+            <ListBox Name="IncidentTimeline" ItemsSource="{Binding Outages}" SelectedItem="{Binding SelectedOutage, Mode=TwoWay}" MaxHeight="{Binding SavedPreferences.IncidentPaneHeight}" AutomationProperties.Name="Incident timeline, newest recorded first">
+              <ListBox.ContextMenu><ContextMenu><MenuItem Header="Copy details" Click="CopyIncidentClicked" /><MenuItem Header="Copy selected value" Click="CopyIncidentValueClicked" /><MenuItem Header="Copy row" Click="CopyIncidentRowClicked" /><MenuItem Header="Edit comment" Click="EditSelectedClicked" /><MenuItem Header="Clear selection" Click="UnselectIncidentClicked" /></ContextMenu></ListBox.ContextMenu>
+              <ListBox.ItemTemplate><DataTemplate x:DataType="local:OutageRow"><Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="3,0,0,0" Padding="14,4"><StackPanel Spacing="8"><TextBlock Text="{Binding GroupName}" FontWeight="SemiBold" /><Border Classes="badge" Classes.connected="{Binding IsRecovered}" Classes.outage="{Binding IsConfirmed}" Classes.warning="{Binding IsEndedUnresolved}" HorizontalAlignment="Left"><TextBlock Text="{Binding State}" /></Border><TextBlock Text="{Binding Summary}" FontSize="13" /><TextBlock Text="{Binding Comment}" Classes="muted" /><TextBlock Text="{Binding Session}" Classes="caption" /><Expander Header="Exact UTC evidence"><TextBlock Text="{Binding Details}" Classes="caption" Margin="12" /></Expander></StackPanel></Border></DataTemplate></ListBox.ItemTemplate>
+            </ListBox>
+            <WrapPanel><ComboBox Name="IncidentCopyColumn" ItemsSource="{Binding IncidentCopyColumns}" SelectedItem="{Binding IncidentCopyColumn, Mode=TwoWay}" MinWidth="150" AutomationProperties.Name="Incident value to copy" Margin="0,0,8,8" /><Button Name="CopyIncidentValue" Content="Copy value" Click="CopyIncidentValueClicked" IsEnabled="{Binding HasSelectedOutage}" Classes="secondary" Margin="0,0,8,8" /><Button Name="CopyIncidentRow" Content="Copy row" Click="CopyIncidentRowClicked" IsEnabled="{Binding HasSelectedOutage}" Classes="secondary" Margin="0,0,0,8" /></WrapPanel>
+            <Button Name="CopyIncidentDetails" Content="Copy selected incident details" Classes="secondary" Click="CopyIncidentClicked" IsEnabled="{Binding HasSelectedOutage}" HorizontalAlignment="Left" />
+            <Border Classes="card" IsVisible="{Binding HasSelectedOutage}"><StackPanel Spacing="12" IsEnabled="{Binding CanComment}"><TextBlock Text="Incident comment" Classes="h2" /><TextBox Name="IncidentCommentEditor" Text="{Binding OutageComment, Mode=TwoWay}" AcceptsReturn="True" MaxLength="4000" MinHeight="80" PlaceholderText="Add context for this outage…" AutomationProperties.Name="Outage comment" /><Button Classes="primary" Content="Save comment" Click="SaveCommentClicked" HorizontalAlignment="Left" /></StackPanel></Border>
+            <StackPanel Spacing="6"><TextBlock Text="Session activity" Classes="h2" /><TextBlock Text="Latest 500 events · occurrence order · UTC timestamps" Classes="caption" /></StackPanel>
+            <ItemsControl ItemsSource="{Binding Activity}">
+              <ItemsControl.ItemTemplate><DataTemplate x:DataType="monitor:MonitorEvent"><Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource LineBrush}" Padding="4,14"><Grid ColumnDefinitions="Auto,*"><Ellipse Width="6" Height="6" Fill="{DynamicResource MutedBrush}" VerticalAlignment="Top" Margin="0,6,16,0" /><StackPanel Grid.Column="1" Spacing="6"><TextBlock Text="{Binding Message}" FontSize="13" /><TextBlock Text="{Binding Utc}" Classes="caption" /></StackPanel></Grid></Border></DataTemplate></ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsPreferences}" Spacing="20">
+            <StackPanel Spacing="7"><TextBlock Text="APPLICATION" Classes="eyebrow accent" /><TextBlock Text="Preferences" Classes="h1" /><TextBlock Text="Keep your evidence safe and your workspace comfortable." Classes="muted" /></StackPanel>
+            <Border Classes="card">
+              <StackPanel Spacing="16">
+                <Grid ColumnDefinitions="*,Auto"><TextBlock Name="HistoryStorageHeading" Text="History storage" Classes="h2" VerticalAlignment="Center" /><Button Grid.Column="1" Content="Refresh usage" Classes="secondary" Click="RefreshStorageClicked" /></Grid>
+                <TextBlock Text="{Binding StorageSummary}" FontSize="13" />
+                <TextBlock Text="{Binding StorageWarning}" IsVisible="{Binding HasStorageWarning}" Foreground="{DynamicResource WarningBrush}" />
+                <Expander Header="Measured files and capacity details"><StackPanel Spacing="12" Margin="12"><TextBlock Text="{Binding StorageDetails}" Classes="caption" /><TextBlock Text="Capacity limits SQLite main database pages, not total disk use. Backups, sidecars, logs and temporary work need extra space. Measurements refresh every five seconds while monitoring. Only managed backups and the selected log folder are counted; external copies are not tracked." Classes="caption" /></StackPanel></Expander>
+                <StackPanel IsEnabled="{Binding CanManageStorage}" Spacing="12">
+                  <TextBlock Text="Database capacity · MiB" Classes="caption" />
+                  <Grid ColumnDefinitions="*,Auto"><TextBox Name="CapacityEditor" Text="{Binding PrefCapacityMiB, Mode=TwoWay}" AutomationProperties.Name="Maximum history database capacity in MiB" /><Button Grid.Column="1" Name="ApplyCapacity" Classes="secondary" Content="Apply capacity" Click="ApplyCapacityClicked" Margin="12,0,0,0" /></Grid>
+                  <TextBlock Text="256–10240 MiB · default 1 GiB. Stop monitoring to change capacity. It saves separately in SQLite. Raise capacity before Retry if writes are pending; lowering below allocated size is refused." Classes="caption" />
+                  <Border Height="1" Background="{DynamicResource LineBrush}" />
+                  <Button Name="BackupHistory" Classes="secondary" Content="Create full history backup…" Click="BackupHistoryClicked" HorizontalAlignment="Left" />
+                  <TextBlock Text="Manual cleanup age · days (1–3650)" Classes="caption" />
+                  <TextBox Text="{Binding CleanupDays, Mode=TwoWay}" AutomationProperties.Name="Manual history cleanup age in days" />
+                  <Button Name="CleanupHistory" Classes="secondary" Content="Back up and clean eligible history…" IsEnabled="{Binding CanCleanupHistory}" Click="CleanupHistoryClicked" HorizontalAlignment="Left" />
+                </StackPanel>
+              </StackPanel>
+            </Border>
+            <Border Classes="card"><StackPanel Spacing="12" IsEnabled="{Binding CanPreferences}">
+              <TextBlock Text="Desktop and startup" Classes="h2" />
+              <CheckBox Name="PrefConfirmExit" Content="Confirm before exiting" IsChecked="{Binding PrefConfirmExit, Mode=TwoWay}" />
+              <CheckBox Name="PrefTopmost" Content="Always on top" IsChecked="{Binding PrefTopmost, Mode=TwoWay}" />
+              <CheckBox Name="PrefTray" IsChecked="{Binding PrefTray, Mode=TwoWay}"><TextBlock Text="Minimize to tray when reliable restoration is available" /></CheckBox>
+              <CheckBox Content="Launch minimized" IsChecked="{Binding PrefMinimized, Mode=TwoWay}" />
+              <CheckBox Name="PrefAutoStart" IsChecked="{Binding PrefAutoStart, Mode=TwoWay}"><TextBlock Text="Start monitoring on launch (off by default; uses saved targets)" /></CheckBox>
+              <CheckBox Name="PrefFocusEvents" IsChecked="{Binding PrefFocus, Mode=TwoWay}"><TextBlock Text="Bring Synups forward on confirmed outage/recovery (off by default; independent of notifications)" /></CheckBox>
+              <TextBlock Text="{Binding LoginStatus}" Classes="caption" /><WrapPanel><Button Name="EnableLogin" Content="Enable launch at login…" Click="EnableLoginClicked" IsEnabled="{Binding LoginCanEnable}" Classes="secondary" Margin="0,0,8,8" /><Button Name="RemoveLogin" Content="Remove launch at login…" Click="RemoveLoginClicked" IsEnabled="{Binding LoginCanRemove}" Classes="quiet" Margin="0,0,0,8" /></WrapPanel><TextBlock Name="TrayCapability" Text="Tray initializes when the native window opens." Classes="caption" />
+              <TextBlock Text="A taskbar/dock fallback stays available when tray restoration is uncertain. These options apply when Synups starts. Login registration below is separate and only changes after explicit confirmation." Classes="caption" />
+            </StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12" IsEnabled="{Binding CanPreferences}">
+              <TextBlock Text="Remember pane sizes · logical pixels" Classes="h2" />
+              <TextBlock Text="Groups / targets / incident list maximum heights. Values are restored safely with this workspace; each list still scrolls." Classes="caption" />
+              <NumericUpDown Name="PrefGroupHeight" Value="{Binding PrefGroupHeight, Mode=TwoWay}" Minimum="80" Maximum="2000" Increment="20" AutomationProperties.Name="Group pane height" />
+              <NumericUpDown Name="PrefTargetHeight" Value="{Binding PrefTargetHeight, Mode=TwoWay}" Minimum="80" Maximum="2000" Increment="20" AutomationProperties.Name="Target pane height" />
+              <NumericUpDown Name="PrefIncidentHeight" Value="{Binding PrefIncidentHeight, Mode=TwoWay}" Minimum="80" Maximum="2000" Increment="20" AutomationProperties.Name="Incident pane height" />
+              <TextBlock Text="Notifications" Classes="h2" />
+              <CheckBox Name="PrefOutage" Content="Confirmed ICMP outages" IsChecked="{Binding PrefOutage, Mode=TwoWay}" />
+              <CheckBox Name="PrefRecovery" Content="Confirmed recovery" IsChecked="{Binding PrefRecovery, Mode=TwoWay}" />
+              <CheckBox Name="PrefErrors" Content="Monitoring errors (rate limited)" IsChecked="{Binding PrefErrors, Mode=TwoWay}" />
+              <CheckBox IsChecked="{Binding PrefNative, Mode=TwoWay}"><TextBlock Text="Also request native OS notifications where supported" /></CheckBox>
+              <CheckBox Name="PrefOutageSound" Content="Play selected WAV once per confirmed outage" IsChecked="{Binding PrefOutageSound, Mode=TwoWay}" />
+              <CheckBox Name="PrefRecoverySound" Content="Play selected WAV once per observed recovery" IsChecked="{Binding PrefRecoverySound, Mode=TwoWay}" />
+              <TextBox Name="AlertSoundFile" Text="{Binding PrefSoundFile, Mode=TwoWay}" PlaceholderText="Absolute local WAV path (up to 2MB; playback bounded to 5s)" AutomationProperties.Name="Optional alert WAV file" />
+              <WrapPanel><Button Content="Choose WAV…" Click="ChooseSoundClicked" Classes="secondary" Margin="0,0,8,8" /><Button Content="Test selected sound" Click="TestSoundClicked" Classes="secondary" /></WrapPanel>
+              <TextBlock Text="{Binding SoundStatus}" Classes="caption" />
+              <TextBlock Text="{Binding NativeAlertStatus}" Classes="caption" /><TextBlock Text="In-app alerts appear inside Synups. OS requests and sound playback can be denied or unavailable; actual delivery is not guaranteed." Classes="caption" />
+            </StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12" IsEnabled="{Binding CanPreferences}">
+              <TextBlock Text="Automatic logs and retention" Classes="h2" />
+              <CheckBox IsChecked="{Binding PrefLogs, Mode=TwoWay}"><TextBlock Text="Export session logs and outage CSV automatically at session end" /></CheckBox>
+              <ComboBox Name="LogFilenameStyle" ItemsSource="{Binding LogNameChoices}" SelectedItem="{Binding PrefLogName, Mode=TwoWay}" HorizontalAlignment="Stretch" AutomationProperties.Name="Automatic log filename style" /><TextBlock Text="Fixed snapshots have a 16MiB combined limit and never delete per-session copies. Local names include their UTC offset. SQLite remains the source of truth." Classes="caption" /><TextBlock Text="Changing naming keeps old log copies; the separate cap still applies." Classes="caption" /><TextBlock Text="Absolute log directory" Classes="caption" /><TextBox Text="{Binding PrefLogDirectory, Mode=TwoWay}" AutomationProperties.Name="Automatic log directory" />
+              <TextBlock Text="The history database stays in the Synups data directory. Automatic logs have a separate 256 MiB cap and require manual archival." Classes="caption" />
+              <TextBlock Text="Automatic history cleanup · days" Classes="caption" /><TextBox Text="{Binding PrefRetentionDays, Mode=TwoWay}" AutomationProperties.Name="History retention days" />
+              <TextBlock Text="0 keeps all history (default). A positive value, 1–3650 days, requires confirmation and deletes only eligible fully ended sessions now, at launch and daily during monitoring. Entire unresolved/interrupted sessions stay. Freed pages are reused." Classes="caption" />
+            </StackPanel></Border>
+            <WrapPanel IsEnabled="{Binding CanPreferences}"><Button Name="ApplyPreferences" Classes="primary" Content="Apply preferences…" Click="ApplyPreferencesClicked" Margin="0,0,8,8" /><Button Classes="quiet" Content="Recover unreadable preferences…" Click="RecoverPreferencesClicked" Margin="0,0,0,8" /></WrapPanel>
+          </StackPanel>
+          <StackPanel IsVisible="{Binding IsHelp}" Spacing="20">
+            <StackPanel Spacing="7"><TextBlock Text="HELP AND ABOUT" Classes="eyebrow accent" /><TextBlock Text="Keep the evidence" Classes="h1" /><TextBlock Text="Synups monitors the ICMP reachability of the IP groups you configure. It does not infer universal Internet uptime." Classes="muted" /></StackPanel>
+            <Border Classes="card"><StackPanel Spacing="14">
+              <TextBlock Text="Start a useful session" Classes="h2" />
+              <TextBlock Text="1. Add a literal IP you are authorized to monitor. A peer group holds alternative targets; one response establishes group reachability, not the status of every peer. On an empty profile, the Overview saves your first target and enabled group together." />
+              <TextBlock Text="2. In Targets and groups, optionally Discover gateway. This reads OS routes without probing. Preview and confirm before saving. VPN and split routes may change which gateway serves a destination." />
+              <TextBlock Text="3. Choose Start monitoring, or press F5. Stop before editing configuration. Unknown means not checked; stale means a peer was skipped in the latest cycle. ICMP filtering can block replies even when services work. Permission errors remain indeterminate, not confirmed downtime." />
+              <TextBlock Text="4. Activity and outages shows up to 50 incidents per page, with local dates and exact UTC details. Recovery requires a real response. Stop, close or restart cannot manufacture recovery. Add comments, copy details, or export the complete incident CSV." />
+              <TextBlock Text="5. Preferences offers a full SQLite backup, storage limits and opt-in retention. CSV is not a complete database backup. A write error preserves pending evidence in memory: repair storage and Retry; force quit can lose uncommitted data." />
+            </StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12"><TextBlock Text="Keyboard and desktop behavior" Classes="h2" /><TextBlock Text="{Binding KeyboardHelp}" /><TextBlock Text="Closing stops owned workers and saves evidence. Minimize-to-tray requires a reliable restoration path; Linux keeps a taskbar fallback. Focus-on-event is off by default and OS activation policies may refuse foreground focus. In-app alerts are separate from optional native requests, whose actual delivery is controlled by the OS." Classes="caption" /></StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12"><TextBlock Text="About Synups" Classes="h2" /><TextBlock Name="ApplicationVersion" Text="{Binding VersionText}" FontFamily="monospace" /><TextBlock Text="A native Avalonia C#/XAML migration of Bill Menees’ WirePeep. Original MIT licence, attribution and Git ancestry are retained. Built for the 2026 Avalonia Port Challenge; acceptance or endorsement is not implied." /><TextBlock Text="Source: https://github.com/samscript18/Synups · local-first, no backend or account. Windows portable builds are unsigned. Mac ad-hoc integrity is not Developer ID/notarization. Linux physical desktop/Wayland and native OS notification delivery need separate acceptance checks." Classes="caption" /></StackPanel></Border>
+          </StackPanel>
+        </Grid>
+      </ScrollViewer>
+      <Border Grid.Row="4" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource LineBrush}" Padding="24,11">
+        <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Real ICMP · Evidence stored locally" Classes="caption" /><TextBlock Grid.Column="1" Text="WirePeep by Bill Menees · MIT" Classes="caption" /></Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</Window>

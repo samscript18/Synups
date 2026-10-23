@@ -1,0 +1,266 @@
+{
+  "date": "2026-10-16",
+  "platform": "macOS 26.3.1 (25D2128) arm64",
+  "sdk": "10.0.402",
+  "runtime": "10.0.13",
+  "avalonia": "12.1.4",
+  "upstream": "61ae14391151ca9f209223e62c98fae3df5482b8",
+  "observed_head": "144ad224cc27b858a60f713c69c47b266305d09e",
+  "production_source_file_count": 23,
+  "production_source_sha256": "e59064a98d44b8c1561ff1adb91f62bf179aed9f8e29549ef73f8ff94351c992",
+  "license_sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+  "protected_original_files_unchanged": true,
+  "test_counts": [
+    {
+      "suite": "tests",
+      "total": 71,
+      "executed": 70,
+      "passed": 70,
+      "failed": 0,
+      "skipped": 1
+    },
+    {
+      "suite": "real-network",
+      "total": 1,
+      "executed": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "commands": [
+    {
+      "name": "restore",
+      "command": [
+        "dotnet",
+        "restore",
+        "Synups.slnx",
+        "--locked-mode",
+        "--disable-parallel",
+        "-m:1",
+        "-nr:false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.195
+    },
+    {
+      "name": "build",
+      "command": [
+        "dotnet",
+        "build",
+        "Synups.slnx",
+        "-c",
+        "Release",
+        "--no-restore",
+        "-m:1",
+        "-nr:false",
+        "-p:UseSharedCompilation=false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.28
+    },
+    {
+      "name": "tests",
+      "command": [
+        "dotnet",
+        "test",
+        "Synups.slnx",
+        "-c",
+        "Release",
+        "--no-build",
+        "--logger",
+        "trx",
+        "--results-directory",
+        "$REPO/artifacts/phase3-final/tests",
+        "-m:1",
+        "-nr:false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.06
+    },
+    {
+      "name": "real-loopback",
+      "command": [
+        "dotnet",
+        "test",
+        "Synups.slnx",
+        "-c",
+        "Release",
+        "--no-build",
+        "--filter",
+        "FullyQualifiedName~RealLoopback",
+        "--logger",
+        "trx",
+        "--results-directory",
+        "$REPO/artifacts/phase3-final/real-network",
+        "-m:1",
+        "-nr:false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.069
+    },
+    {
+      "name": "publish-osx-arm64",
+      "command": [
+        "dotnet",
+        "publish",
+        "synups/Synups.Desktop/Synups.Desktop.csproj",
+        "-c",
+        "Release",
+        "-r",
+        "osx-arm64",
+        "--self-contained",
+        "true",
+        "--no-restore",
+        "-o",
+        "$REPO/artifacts/publish/osx-arm64",
+        "-m:1",
+        "-nr:false",
+        "-p:UseSharedCompilation=false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.441
+    },
+    {
+      "name": "publish-win-x64",
+      "command": [
+        "dotnet",
+        "publish",
+        "synups/Synups.Desktop/Synups.Desktop.csproj",
+        "-c",
+        "Release",
+        "-r",
+        "win-x64",
+        "--self-contained",
+        "true",
+        "--no-restore",
+        "-o",
+        "$REPO/artifacts/publish/win-x64",
+        "-m:1",
+        "-nr:false",
+        "-p:UseSharedCompilation=false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.556
+    },
+    {
+      "name": "publish-linux-x64",
+      "command": [
+        "dotnet",
+        "publish",
+        "synups/Synups.Desktop/Synups.Desktop.csproj",
+        "-c",
+        "Release",
+        "-r",
+        "linux-x64",
+        "--self-contained",
+        "true",
+        "--no-restore",
+        "-o",
+        "$REPO/artifacts/publish/linux-x64",
+        "-m:1",
+        "-nr:false",
+        "-p:UseSharedCompilation=false"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.486
+    },
+    {
+      "name": "native",
+      "command": [
+        "python3",
+        "eng/native-smoke.py",
+        "--dotnet",
+        "dotnet",
+        "--screenshots",
+        "docs/evidence/after/macos-arm64",
+        "--repeat",
+        "2"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 13.372
+    },
+    {
+      "name": "package-osx-arm64",
+      "command": [
+        "python3",
+        "eng/package-artifacts.py",
+        "--source",
+        "artifacts/publish/osx-arm64",
+        "--rid",
+        "osx-arm64",
+        "--output",
+        "artifacts/packages"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 14.247
+    },
+    {
+      "name": "package-win-x64",
+      "command": [
+        "python3",
+        "eng/package-artifacts.py",
+        "--source",
+        "artifacts/publish/win-x64",
+        "--rid",
+        "win-x64",
+        "--output",
+        "artifacts/packages"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 12.395
+    },
+    {
+      "name": "package-linux-x64",
+      "command": [
+        "python3",
+        "eng/package-artifacts.py",
+        "--source",
+        "artifacts/publish/linux-x64",
+        "--rid",
+        "linux-x64",
+        "--output",
+        "artifacts/packages"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 16.365
+    }
+  ],
+  "captures_sha256": {
+    "docs/evidence/before/wirepeep-upstream.png": "08210f548df07c4a06484df1b37324487cfa7444c73a04c5ce891c0fdd807e8e",
+    "docs/evidence/after/macos-arm64/synups-targets.png": "7bc594ec54d3994a00a4d16caf79dcc749d9b3fdd585356399bb30427093081a",
+    "docs/evidence/after/macos-arm64/synups-overview.png": "f256e4c93abcdbf67221100992134cfec933471ff6ab4ae0b16cc611483bcc1c"
+  },
+  "limits": [
+    "Windows/Linux binaries were cross-published only, not run.",
+    "Native smoke uses production composition in a verification harness, not a direct published apphost launch.",
+    "No hosted CI result exists for final working tree.",
+    "Client-area captures exclude OS window chrome."
+  ],
+  "archives": [
+    {
+      "path": "artifacts/packages/Synups-linux-x64.tar.gz",
+      "bytes": 46171021,
+      "sha256": "eb0ed13601ea396ee99222afcf28a4f42bfa517e0040c21c953639764b22cc34",
+      "unix_apphost_mode": "0o755"
+    },
+    {
+      "path": "artifacts/packages/Synups-osx-arm64.tar.gz",
+      "bytes": 46011991,
+      "sha256": "e1c007bccc108eb89d7d532abcb13d1c69d0e846ae28b6275002432fdc101a1b",
+      "unix_apphost_mode": "0o755"
+    },
+    {
+      "path": "artifacts/packages/Synups-win-x64.zip",
+      "bytes": 75427172,
+      "sha256": "4ddbb499531d03808ec6ddb3c0c375a7ae77d8b77874619e2c6f70b30724b08a",
+      "unix_apphost_mode": null
+    }
+  ],
+  "tooling_sha256": {
+    "eng/native-smoke.py": "5dc4710ff414c17cec43fe50a96c617127713f13ba5de4f817f8955aa853ebbb",
+    "eng/native-smoke.cs": "0642c48138c226542d5b360e85d86866001de78fc2c2d350310795e2ab33847f",
+    "eng/package-artifacts.py": "80fc327e52b009705c0485fd07dfd672e18cb25f1764cc84f281fe538648f326",
+    ".github/workflows/synups.yml": "7daed815dfe7e88707586c97bda701f17124e809bd75e1c9c495c6c564954221"
+  }
+}

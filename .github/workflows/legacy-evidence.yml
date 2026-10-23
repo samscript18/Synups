@@ -1,0 +1,35 @@
+name: Original WirePeep Windows evidence
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-wpf:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: 61ae14391151ca9f209223e62c98fae3df5482b8
+          path: original-wirepeep
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: synups/global.json
+      - name: Build untouched upstream .NET Framework application
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts/original | Out-Null
+          dotnet build original-wirepeep/src/WirePeep/WirePeep.csproj -c Release -p:TargetFrameworks=net48 -p:UseSharedCompilation=false 2>&1 | Tee-Object artifacts/original/build.log
+          if ($LASTEXITCODE -ne 0) { throw 'Original build failed; evidence cannot be claimed.' }
+          git -C original-wirepeep diff --exit-code
+          if ($LASTEXITCODE -ne 0) { throw 'Original product source changed.' }
+      - name: Launch actual WPF app, capture window and genuine saved settings
+        shell: pwsh
+        run: ./eng/original-wirepeep-evidence.ps1 -Executable original-wirepeep/src/WirePeep/bin/Release/net48/WirePeep.exe -OutputDirectory artifacts/original
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: original-wirepeep-windows-${{ github.sha }}
+          path: artifacts/original/
+          retention-days: 30

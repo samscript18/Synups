@@ -1,0 +1,84 @@
+{
+  "scope": [
+    "README.md",
+    "docs/competition/JUDGES_GUIDE.md",
+    "docs/competition/SCREENSHOTS.md"
+  ],
+  "method": "Anonymous HTTP HEAD with redirects; remote anchors are not evaluated",
+  "checked": 12,
+  "passed": 12,
+  "results": [
+    {
+      "url": "https://avaloniaui.net/blog/avalonia-port-challenge",
+      "status": 200,
+      "final_url": "https://avaloniaui.net/blog/avalonia-port-challenge",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/menees/WirePeep",
+      "status": 200,
+      "final_url": "https://github.com/menees/WirePeep",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39821153798",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups/actions/runs/39821153798",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39841203591",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups/actions/runs/39841203591",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39850198899",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups/actions/runs/39850198899",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/actions/runs/39851153694",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups/actions/runs/39851153694",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS",
+      "status": 200,
+      "final_url": "https://release-assets.githubusercontent.com/github-production-release-asset/1421857962/8d82a896-7f44-42aa-9eeb-d29aa6de45eb",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz",
+      "status": 200,
+      "final_url": "https://release-assets.githubusercontent.com/github-production-release-asset/1421857962/d03c3f2f-b7e5-4dba-b69d-bad37b97eb65",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz",
+      "status": 200,
+      "final_url": "https://release-assets.githubusercontent.com/github-production-release-asset/1421857962/cbe1d3fc-0e53-4127-8831-fb18f584132a",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip",
+      "status": 200,
+      "final_url": "https://release-assets.githubusercontent.com/github-production-release-asset/1421857962/a28c8b99-a4e2-4664-9fff-8307f1824da8",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups/releases/tag/v0.1.1",
+      "passed": true
+    },
+    {
+      "url": "https://github.com/samscript18/Synups/tree/feat/network-diagnostics",
+      "status": 200,
+      "final_url": "https://github.com/samscript18/Synups/tree/feat/network-diagnostics",
+      "passed": true
+    }
+  ]
+}

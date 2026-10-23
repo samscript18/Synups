@@ -1,0 +1,58 @@
+{
+  "documentation_revision": "343946c26714cc90e62e0c5be107186abab7602f",
+  "anonymous_evidence": [
+    {
+      "path": "README.md",
+      "status": 200,
+      "sha256": "b2ec72a1af4a926271d361401ff549144a7d3224fb393b9ab5b6ac35d2c9d609"
+    },
+    {
+      "path": "docs/competition/JUDGES_GUIDE.md",
+      "status": 200,
+      "sha256": "ae3e04ccb9135ca929c39c9bbb00301bd46554d380bb8af43c579c2f00c62a7a"
+    },
+    {
+      "path": "docs/competition/REAL_INCIDENT.md",
+      "status": 200,
+      "sha256": "f591bc7cb2e2ad1bea7808f43fb46ab59f91ac13317fafbf2f6068559ed1a60a"
+    },
+    {
+      "path": "docs/release/FINAL_HARDENING_CANDIDATE.md",
+      "status": 200,
+      "sha256": "ad3ef8b4ef1a5b1c98b46943f0754b472fe70e07d42a60c81caf8a3332526fbe"
+    },
+    {
+      "path": "docs/evidence/before/wirepeep-upstream.png",
+      "status": 200,
+      "sha256": "08210f548df07c4a06484df1b37324487cfa7444c73a04c5ce891c0fdd807e8e"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/macos-normal-launch.png",
+      "status": 200,
+      "sha256": "8b0df7dce7be6b11bdcf2a6a6f4baf6a3d3d4069c215cca032c5f77253f73751"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/win-x64/first-run.png",
+      "status": 200,
+      "sha256": "43d8b850633862d13019fa0685dd455c684b6922a03301ea07a24ea0779e69e5"
+    },
+    {
+      "path": "docs/evidence/after/2026-10-22-hardening/linux-incident/confirmed-outage.png",
+      "status": 200,
+      "sha256": "5c8c288c7334231629f109d51304f23db27190678a08f72d57715f273a0dbeb1"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-hardening-incident/real-incident.csv",
+      "status": 200,
+      "sha256": "24ab825400c5d4e20d826866aa5303a793ced1c9159a5a414b000d9a5831a5a1"
+    },
+    {
+      "path": "docs/evidence/verification/2026-10-22-hardening-reports.zip",
+      "status": 200,
+      "sha256": "2cb631e717691d9f99e2da3d391e55825a46a9482f8b66ffdde81e5c45530104"
+    }
+  ],
+  "stable_release": "https://github.com/samscript18/Synups/releases/tag/v0.1.0",
+  "stable_assets_unchanged": 15,
+  "verified_utc": "2026-10-22T15:13:12.869202+00:00"
+}

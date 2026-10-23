@@ -1,0 +1,74 @@
+{
+  "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+  "probe": "Synups.Core.Monitoring.IcmpProbe",
+  "target": "127.0.0.1",
+  "grace_milliseconds": 2000,
+  "grace_observed_utc": "2026-10-22T13:01:08.2319188+00:00",
+  "outage": {
+    "Id": "7cdbd394-7c5a-4cce-b9d0-5775055765d5",
+    "SessionId": "e5b6d061-7a55-4d1b-b56e-87f33ff4acd7",
+    "GroupId": "4520293c-4ca1-4479-bd68-d3a52fd7eaf2",
+    "GroupName": "Isolated real ICMP incident",
+    "StartedUtc": "2026-10-22T13:01:10.4520179+00:00",
+    "FirstFailureUtc": "2026-10-22T13:01:08.2108246+00:00",
+    "RecoveredUtc": "2026-10-22T13:01:10.9992237+00:00",
+    "ObservationEndedUtc": null,
+    "Elapsed": "00:00:00.5472800",
+    "ContainsObservationGap": false,
+    "SincePrevious": null,
+    "Comment": "Controlled disposable namespace ICMP filter; real packets, not an Internet outage."
+  },
+  "Events": [
+    {
+      "Sequence": 1,
+      "SessionId": "e5b6d061-7a55-4d1b-b56e-87f33ff4acd7",
+      "GroupId": null,
+      "Utc": "2026-10-22T13:01:07.4539465+00:00",
+      "Kind": 0,
+      "Message": "Monitoring session started by user or explicit launch preference.",
+      "Id": "305b0d27-53c2-4eb1-bbf2-de05b9ae7e0a"
+    },
+    {
+      "Sequence": 2,
+      "SessionId": "e5b6d061-7a55-4d1b-b56e-87f33ff4acd7",
+      "GroupId": "4520293c-4ca1-4479-bd68-d3a52fd7eaf2",
+      "Utc": "2026-10-22T13:01:10.4524421+00:00",
+      "Kind": 2,
+      "Message": "Isolated real ICMP incident: ICMP outage confirmed.",
+      "Id": "cfb4857a-25cd-49b6-8695-2024cb8fa0fd"
+    },
+    {
+      "Sequence": 3,
+      "SessionId": "e5b6d061-7a55-4d1b-b56e-87f33ff4acd7",
+      "GroupId": "4520293c-4ca1-4479-bd68-d3a52fd7eaf2",
+      "Utc": "2026-10-22T13:01:10.5572862+00:00",
+      "Kind": 6,
+      "Message": "Outage 7cdbd394-7c5a-4cce-b9d0-5775055765d5 comment: Controlled disposable namespace ICMP filter; real packets, not an Internet outage.",
+      "Id": "d51ffbe2-128c-441a-a638-f99d521a9575"
+    },
+    {
+      "Sequence": 4,
+      "SessionId": "e5b6d061-7a55-4d1b-b56e-87f33ff4acd7",
+      "GroupId": "4520293c-4ca1-4479-bd68-d3a52fd7eaf2",
+      "Utc": "2026-10-22T13:01:10.9993269+00:00",
+      "Kind": 3,
+      "Message": "Isolated real ICMP incident: ICMP connectivity recovered.",
+      "Id": "448a2dfe-acd6-4969-8bb1-1cb3ef5b62de"
+    },
+    {
+      "Sequence": 5,
+      "SessionId": "e5b6d061-7a55-4d1b-b56e-87f33ff4acd7",
+      "GroupId": null,
+      "Utc": "2026-10-22T13:01:11.3008979+00:00",
+      "Kind": 1,
+      "Message": "Monitoring stopped; unresolved outages were not marked recovered.",
+      "Id": "3bda5386-e97c-4228-bb2b-934d51717788"
+    }
+  ],
+  "actual_native_client": true,
+  "physical_interaction": false,
+  "native_window_restored_on_confirmed_outage": true,
+  "confirmed_focus_requests": 2,
+  "actual_native_clipboard_incident_verified": true,
+  "explanation": "Real ICMP dropped and restored by a filter confined to a disposable network namespace. Not an Internet outage."
+}

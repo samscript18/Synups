@@ -1,0 +1,115 @@
+# Before / after evidence
+
+Capture/verification date: 2026-10-16. These images use different systems and observation periods and are not a connectivity benchmark.
+
+| Asset | Provenance and limits |
+|---|---|
+| [Before: WirePeep](before/wirepeep-upstream.png) | Downloaded unchanged from [Bill Menees' original published illustration](https://www.menees.com/Images/WirePeep.png), linked by the original README. Copyright Bill Menees; retained original MIT attribution. Its visible dates are June 2020. This is not a freshly captured baseline run or proof of this session's Windows execution. |
+| [After: overview](after/macos-arm64/synups-overview.png) | Synups Release, Avalonia 12.1.4 / .NET 10.0.13, macOS 26.3.1 arm64. Actual visible native window client tree rendered with Avalonia RenderTargetBitmap, no OS chrome. Explicit temporary 127.0.0.1 configuration, live real ICMP and one connected group. |
+| [After: targets](after/macos-arm64/synups-targets.png) | Same native process/profile, scrolled to the actual target. A successful loopback integer RTT of 0ms is a real PingReply, not a substituted unknown. |
+
+Final captures show local time 2026-10-16 17:17:52 +01:00. They were inspected after generation. No screenshot metrics, device rows or outages were invented; no image-generation/editing tool was used. No real outage was induced for imagery. The earlier OS screencapture failure remains unexplained; this capture method does not claim Screen Recording permission or a compositor/desktop screenshot.
+
+Reproduce in a native GUI session:
+
+```sh
+python3 eng/native-smoke.py --dotnet /path/to/dotnet --screenshots artifacts/screenshots --repeat 2
+```
+
+The harness creates temporary configuration/history/logs, probes only explicitly configured loopback, verifies bound values, minimizes/restores, stops and closes, then reloads durable sessions in a separate process launch. It is excluded from production. Captures are current working-tree implementation evidence, not a signed/published package screenshot. Source/capture hashes and actual results: [verification manifest](verification/2026-10-16-macos-arm64.json). Raw local command logs/TRX are under ignored `artifacts/phase3-final/`; these local files are not hosted CI evidence.
+
+An original WirePeep Windows runtime capture remains outstanding. Phase 4A obtained genuine Synups native client captures on Windows Server 2025 x64, macOS 15.7.9 arm64 and Ubuntu 24.04.5 x64 under Xvfb. The corrected checkpoint captures were downloaded and viewed; source revision, PNG hashes and job/artifact links are in the [three-OS verification manifest](verification/2026-10-16-ci-corrected.json). Raw images remain in the run artifacts/local ignored downloads. They show explicit loopback in a production-composition verifier, not the published executable or OS desktop chrome. Use the [platform matrix](../migration/CROSS_PLATFORM.md) when making support claims.
+
+
+Storage-capacity follow-up (same date): the original captures/manifest above are preserved as the Phase 3 baseline. [Storage-policy verification](verification/2026-10-16-storage-policy-macos-arm64.json) records the new source, 94 deterministic/headless passes plus separate loopback pass, and two one-minute native launches with 1 GiB page-limit checks. Actual overview/targets/Settings client captures and logs/TRX remain locally in ignored `artifacts/storage-verified/`; the Settings capture was inspected after fixing post-Stop log-total refresh. No new image was generated or edited, and no published package was produced.
+
+
+## Desktop UI refinement captures
+
+The user-requested shared UI refinement is captured separately; the older Phase 3 images above remain unchanged. macOS 26.3.1 arm64, Release/.NET10.0.13/Avalonia12.1.4, final local loopback capture **2026-10-16 19:05:42 +01:00**. [Overview](after/2026-10-16-ui/macos-arm64/synups-overview.png), [minimum 820×560 layout](after/2026-10-16-ui/macos-arm64/synups-overview-compact.png), [targets, scrolled to actual sample](after/2026-10-16-ui/macos-arm64/synups-targets.png) and [Preferences/storage](after/2026-10-16-ui/macos-arm64/synups-storage.png) were rendered from the visible native client tree and inspected. All measurements are actual explicit loopback; there are no invented outages. Native window chrome is excluded. Exact source/capture hashes, test counts and two clean monitoring/restart runs: [UI verification manifest](verification/2026-10-16-ui-macos-arm64.json). These local captures do not certify Windows/Linux or published apphosts; the new pushed source needs separate CI results.
+
+
+The refreshed UI subsequently passed its own [three-OS run38944933816](https://github.com/samscript18/Synups/actions/runs/38944933816) at **a368d83dbb5494e283efa02b7e8036a9ce9664c4**. Downloaded complete logs/packages/TRX and viewed actual native overview captures at both sizes. Selected captures are retained without editing:
+
+| Actual native runner | Normal overview | Minimum820×560 |
+|---|---|---|
+| Windows Server2025 x64 | [Overview](after/2026-10-16-ui/ci/win-x64/synups-overview.png) | [Compact](after/2026-10-16-ui/ci/win-x64/synups-overview-compact.png) |
+| macOS15.7.9 arm64 | [Overview](after/2026-10-16-ui/ci/osx-arm64/synups-overview.png) | [Compact](after/2026-10-16-ui/ci/osx-arm64/synups-overview-compact.png) |
+| Ubuntu24.04.5 x64 / X11 Xvfb | [Overview](after/2026-10-16-ui/ci/linux-x64/synups-overview.png) | [Compact](after/2026-10-16-ui/ci/linux-x64/synups-overview-compact.png) |
+
+These are actual loopback observations at different times, not a benchmark. Below-viewport content scrolls; Windows/macOS runner work areas can constrain the normal window. Client-area rendering excludes OS chrome and does not establish native screen-reader/desktop behavior. [UI CI manifest](verification/2026-10-16-ci-ui.json) records exact source, job/artifact IDs and original PNG hashes. Published apphosts were not launched; the separate native verifier references production composition.
+
+
+## Phase 4B — actual published apphosts (2026-10-21)
+
+The earlier verifier captures remain historical. New captures below come from the **real extracted self-contained executables** at source **292b847bffa96d2a23d771c3ba0ce4648c06844b**, [run 39678991269](https://github.com/samscript18/Synups/actions/runs/39678991269). All three complete artifact ZIPs and workflow logs were downloaded; API digests, inner checksums, every file hash, licences/notices, native architecture, actual PID/apphost/runtime paths, reports and SQLite records were independently checked. These are actual visible-window client renders, not physical desktop/compositor screenshots. No image generation/editing or fabricated measurements were used.
+
+| Actual OS | Overview | Minimum layout with real programmatic focus | Actual read-only error |
+|---|---|---|---|
+| Windows Server 2025 x64 | [Overview](after/2026-10-21-apphost/win-x64/exercise-overview.png) | [Focus](after/2026-10-21-apphost/win-x64/exercise-focus.png) | [Error](after/2026-10-21-apphost/win-x64/storage-error-read-only.png) |
+| macOS 15.7.9 arm64 | [Overview](after/2026-10-21-apphost/osx-arm64/exercise-overview.png) | [Focus](after/2026-10-21-apphost/osx-arm64/exercise-focus.png) | [Error](after/2026-10-21-apphost/osx-arm64/storage-error-read-only.png) |
+| Ubuntu 24.04.5 x64 / X11 Xvfb | [Overview](after/2026-10-21-apphost/linux-x64/exercise-overview.png) | [Focus](after/2026-10-21-apphost/linux-x64/exercise-focus.png) | [Error](after/2026-10-21-apphost/linux-x64/storage-error-read-only.png) |
+
+[Exact artifact/apphost/capture/test hashes, timestamps, job links and limitations](verification/2026-10-21-published-apphosts.json). Each suite used explicit 127.0.0.1; all normal exits were0, and only the deliberate interruption was nonzero. The final downloaded Mac bundle passes strict/deep signature validation and a local LaunchServices/real-monitor/close check on macOS 26.3.1. Gatekeeper assessment rejects it (exit3): ad-hoc integrity is not Developer ID/notarization or browser-download trust.
+
+[GUI resource observations](verification/2026-10-21-gui-resources-macos-arm64.json) retain two separate five-minute apphost processes at the preceding 3cf2720 checkpoint, including exact package/apphost hashes and5s samples. This is not multi-hour GUI endurance or proof of no leak. The earlier overlapping GUI observation failed focus and remains documented; it is not counted as a pass. [Static token contrast](verification/2026-10-21-theme-contrast.json) and visible focus captures are narrow checks, not a keyboard/screen-reader/high-contrast certification. Physical tray/save-picker/notification delivery and original fresh WPF Windows capture still need review.
+
+
+The [two-hour real-Core observation](verification/2026-10-21-engine-endurance-macos-arm64.json) completed on local macOS arm64 with28,792 real loopback probes and clean stop/restart/reopen. [Raw720 samples](verification/2026-10-21-engine-endurance-samples.jsonl) retain CPU/RSS/descriptors/workers/probes/database data. Source/build qualification is explicit: earlier working-tree Core subsequently committed unchanged, exact loaded assembly hash retained; not a published-apphost or multi-hour GUI claim. No actual outage, physical power failure or leak-free result is fabricated.
+
+
+## Genuine macOS OS-window capture —22 October2026
+
+[Normal launch of unchanged published0.1.0 including native OS chrome](after/2026-10-22-competitive/macos-stable-normal-launch.png), [exact source/apphost/PID/permission/quit record](verification/2026-10-22-macos-desktop-acceptance.json). Used the reviewed downloaded bundle at2973d3349fcb5af5639597920842288e6549bbd0 through LaunchServices with a fresh isolated profile, no installation-check mode and no configured target. CoreGraphics identified only its owned native window; screencapture for that exact window succeeded. Zero sessions were created; no measurements are implied. Native OS quit request completed, but application exit code is unknown. Accessibility permission remains false, so this is not evidence of physical tray/keyboard/save-picker interaction. Earlier failed screenshot attempts remain historical; no image was generated, edited or staged with invented metrics.
+
+
+## Competitive incident evidence — 22 October 2026
+
+[Source-specific independent package/runtime audit](verification/2026-10-22-competitive-candidate.json), [CI logs](verification/2026-10-22-competitive-ci-logs.zip) and [controlled incident protocol](../competition/REAL_INCIDENT.md) retain exact source/run/hash distinctions. Linux namespace-local real ICMP packet loss/recovery produced the healthy/grace/confirmed/recovered/restarted images under `after/2026-10-22-competitive/linux-incident/`. These are genuine native client-tree renders from the production-source component verifier, not physical desktop/OS-notification captures or a packaged-apphost incident claim. Raw transition/restart/CSV evidence is in `verification/2026-10-22-real-incident/`.
+
+The normal Mac stable-release capture has OS chrome and separate source/hash/permission evidence. Candidate fresh-profile captures are from actual extracted apphosts; they show no invented measurements. Initial Windows first-run capture revealed a stale-layout capture race after screen clamping; the follow-up capture-only correction and source-specific verification are recorded separately. Do not relabel preceding-source captures as later binaries.
+
+
+Final first-run images in `after/2026-10-22-competitive/{win-x64,osx-arm64,linux-x64}/first-run.png` are from actual extracted **65d917ac645139836cf97e48c48c137a09825942** apphosts, [run 39761184906](https://github.com/samscript18/Synups/actions/runs/39761184906); native viewport checks and independent visual review pass. `win-x64/first-run-before-fix.png` intentionally retains the failed 375e2f7 state. The incident PNGs remain from successful 535b91f; later final 65d917a independently repeats transitions with raw data under `verification/2026-10-22-real-incident-final/`. [Final archive/runtime/capture/TRX hashes](verification/2026-10-22-competitive-candidate-final.json), [final CI logs](verification/2026-10-22-competitive-ci-logs-final.zip). No source substitution or invented measurements.
+
+[Retained final TRX and actual apphost action reports](verification/2026-10-22-competitive-reports-final.zip) preserve the six test invocations and eighteen process-stage JSON reports beyond CI artifact expiry; their archive hash is in the final verification record.
+
+
+## Final hardening rc.2 —22 October2026
+
+Frozen source **6446990571c285b5c2e2a4bb293cbd8e3af40171**, [three-OS run39782799326](https://github.com/samscript18/Synups/actions/runs/39782799326). All15 retained images under `after/2026-10-22-hardening/` are copied unchanged, with source/kind/SHA-256 in [the final record](verification/2026-10-22-hardening-final.json).
+
+- `{win-x64,osx-arm64,linux-x64}/{first-run,help-about,focus}.png`: real extracted self-contained apphost client-tree renders, actual empty first-run or explicit real loopback, programmatic native controls/focus. Focus screenshots at820×560 show a genuine rendered focus border, not physical keyboard traversal certification.
+- `linux-incident/{healthy,failure-grace,confirmed-outage,recovered-history,restart-history}.png`: actual production-source probe/engine/native UI in disposable Linux namespace; genuine ICMP packet loss/restoration. They are source-component verifier images, not packaged-executable incident claims. [Exact evidence and raw CSV](../competition/REAL_INCIDENT.md#final-hardening-timeline-and-focus-verification).
+- `macos-normal-launch.png`: actual normally launched exact downloaded rc.2 bundle on macOS26.3.1, owned OS window including chrome, fresh stopped profile/zero sessions, followed by native OS quit. [Launch/PID/hash/permission record](verification/2026-10-22-hardening-macos-desktop.json). Accessibility/event-post false prevents physical acceptance; no permission or security setting was changed.
+
+No image generation/editing, synthetic incident rows or metric overlays were used. Gateway query results are verified by native tests/apphost action reports; the retained diagnostic gateway-named capture was scrolled below the preview and is not presented as visual proof of discovery. [CI logs](verification/2026-10-22-hardening-ci-logs.zip), [failed Windows test logs](verification/2026-10-22-hardening-failed-ci-logs.zip), [retained TRX/action reports/CodeQL SARIF/Cobertura and synthetic-scale reproduction](verification/2026-10-22-hardening-reports.zip) preserve successes and failures beyond CI artifact expiration. ZIP files contain CI runner paths, not credentials or user profiles. Physical tray/native Save-panel/keyboard/minimize/resize/active-close remain uncertified; use [the manual checklist](../release/MACOS_ACCEPTANCE.md).
+
+## Final legacy completion rc.3 —22October2026
+
+Exact application **7ca85cccce6e3609d08d64e4f23172fa14fffb25**. [Final evidence/hash record](verification/2026-10-22-legacy-completion-final.json), [reports/TRX/SARIF/coverage/upgrade reproduction](verification/2026-10-22-legacy-completion-reports.zip), [successful CI logs](verification/2026-10-22-legacy-completion-ci-logs.zip), [failed CI logs](verification/2026-10-22-legacy-completion-failed-ci-logs.zip), [candidate packages and limits](../release/LEGACY_COMPLETION_CANDIDATE.md).
+
+`after/2026-10-22-legacy-completion/{win-x64,osx-arm64,linux-x64}/` contains unchanged authentic first-run/overview/focus/help client-area PNGs captured from actual extracted executables on native CI runners (Linux Xvfb+Openbox), driven programmatically. They are not OS desktop screenshots or physical-keyboard certification. [Mac normal launch](after/2026-10-22-legacy-completion/macos-normal-launch.png) is a genuine macOS 26.3.1 OS-window capture of the exact downloaded bundle on a fresh stopped profile, with zero monitoring sessions; normal LaunchServices launch and native OS quit succeeded. Physical tray/keyboard/Save-panel interaction remains blocked by denied Accessibility/event-post permission.
+
+`after/2026-10-22-legacy-completion/linux-incident/` captures actual production IcmpProbe/engine during isolated kernel-filtered ICMP failure/grace/confirmation/recovery/restart. These are source-component native UI captures, separately labelled from packaged-executable checks, not fabricated measurements or Internet downtime. Raw incident/restart/CSV/namespace hashes are under [verification incident evidence](verification/2026-10-22-legacy-completion-incident/incident.json). Every retained capture has its exact hash/type/source in the final evidence record. No screenshot was synthesized or edited; upstream before attribution remains unchanged.
+
+Anonymous publication check: [33 public files byte-verified](verification/2026-10-22-legacy-completion-public-links.json) at documentation checkpoint 428701dbd94f25c2ed2a53f6811e0171572c3ef0, including README, judge/candidate notes, 18 genuine captures, raw incident CSV/JSON, reports and CI logs. The default-branch README matched. All 15 stable release asset API digests still match reviewed local bytes; this check did not re-download those assets. Stable tag remains 2973d3349fcb5af5639597920842288e6549bbd0; no new candidate release was published. Both final candidate CI/CodeQL runs were independently confirmed successful for application 7ca85cc.
+
+
+## Original Windows execution — 22 October 2026
+
+The earlier unavailable-WPF statements are historical. [Run39841203591](https://github.com/samscript18/Synups/actions/runs/39841203591) builds untouched upstream61ae14391151ca9f209223e62c98fae3df5482b8 for net48 and runs it under actual Windows/.NET Framework4.8. The populated main-window capture uses native PrintWindow and was independently inspected. Application-scoped outbound blocking confines startup probes to the disposable test environment; failed rows are not an ISP outage. Normal WM_CLOSE exited0. This proves original build/launch, not full original functional certification. The first runner lacked the empty standard Run key and displayed an error dialog; the harness now creates/removes that empty key without installing a startup entry. An initial too-early capture and settings-search failure were retained in CI history. A genuine Menees5.1.2 .stgx fixture was generated by the original executable in run39840176062; it is test-only and unmodified.
+
+[Exact source, image hash and raw-report references](verification/2026-10-22-presentation.json).
+
+
+## rc.4 and final presentation evidence —22 October2026
+
+[Source-specific rc.4 record](verification/2026-10-22-desktop-completion.json) retains exact source/run/archive/TRX/audio/capture hashes. New images under after/2026-10-22-desktop-completion are actual extracted-apphost client-tree captures. The legacy-import-named capture records the preview-loaded status banner but its scroll position shows gateway controls; **it is not visual proof of the full import preview**. Actual preview/confirmation/backup action reports verify import. No image was reconstructed or edited. The fresh rc.3 Mac normal-launch capture includes native OS chrome and is separately source-qualified; it is not rc.4 or physical input certification.
+
+The final original Windows image is genuine untouched upstream61ae143, captured under controlled per-application outbound blocking; failed rows are not an ISP outage. The raw original report conservatively leaves screenshot_verified_visually=false; a separate presentation record adds subsequent independent inspection without modifying raw evidence. The actual fixture used for import came from run39840176062, not the later screenshot run's different random IDs. The older attributed upstream illustration remains historical. [Presentation provenance](verification/2026-10-22-presentation.json). Manual macOS acceptance remains blocked by permissions and owner unavailability.
+
+
+## Published v0.1.1 — exact selected rc.4 overviews
+
+The three exercise-overview.png images under after/2026-10-22-desktop-completion are copied unchanged from the exact6c812fd extracted-apphost reports in successful run39850198899. They show real loopback and actual native client-tree rendering, not physical input or OS notification delivery. [Exact image hashes, live CI source/artifact recheck and release-alignment record](verification/2026-10-22-release-alignment.json). The original Windows before image retains upstream61ae143 and its controlled outbound-blocking provenance. The incident sequence and earlier normal Mac OS-window capture remain explicitly rc.3 evidence, never relabelled as rc.4.

@@ -1,0 +1,46 @@
+{
+  "started_utc": "2026-10-22T14:37:22.957427+00:00",
+  "candidate": "0.1.1-rc.2",
+  "source_revision": "6446990571c285b5c2e2a4bb293cbd8e3af40171",
+  "apphost_sha256": "bf69743391411bc951738eeae971e807fc7d85d65cde07ee527cc611e1973c57",
+  "normal_launch_without_installation_check": true,
+  "physical_interaction_verified": false,
+  "launchservices_exit_code": 0,
+  "process_id": 81305,
+  "owned_on_screen_windows": [
+    {
+      "kCGWindowAlpha": 1,
+      "kCGWindowBounds": {
+        "Height": 779,
+        "Width": 1180,
+        "X": 130,
+        "Y": 30
+      },
+      "kCGWindowIsOnscreen": true,
+      "kCGWindowLayer": 0,
+      "kCGWindowMemoryUsage": 2368,
+      "kCGWindowName": "Synups \u2014 Network reliability",
+      "kCGWindowNumber": 26531,
+      "kCGWindowOwnerName": "Synups",
+      "kCGWindowOwnerPID": 81305,
+      "kCGWindowSharingState": 1,
+      "kCGWindowStoreType": 1
+    }
+  ],
+  "accessibility_permission": "false",
+  "blocked_interactions": [
+    "physical tray Show/Exit",
+    "keyboard Tab/Shift+Tab/Enter/Space/Escape",
+    "native CSV save dialog",
+    "physical minimize/restore",
+    "physical close while monitoring/pending storage",
+    "physical resize/readability review"
+  ],
+  "os_window_capture_exit_code": 0,
+  "os_window_capture_error": "",
+  "native_quit_request": "true",
+  "owned_process_exited_after_native_quit": true,
+  "application_exit_code": "Not observable through LaunchServices; not claimed as0",
+  "sessions_on_passive_normal_launch": 0,
+  "finished_utc": "2026-10-22T14:37:27.889793+00:00"
+}
