@@ -40,6 +40,7 @@ internal static class DiagnosticsSmoke
     {
         var database = Path.Combine(output, "data", "history.v1.db");
         Require(!File.Exists(Path.Combine(output, "checkpoint.json")), "Refusing to overwrite previous smoke evidence.");
+        var concurrency = await ConcurrentMonitoring(output);
         var before = Fingerprint(database);
         var exports = new List<ExportCheckpoint>(); var sessions = new List<DiagnosticSession>();
         DiagnosticBaseline? baseline = null; DiagnosticComparison? comparison = null; DiagnosticSession? dns = null;
@@ -103,7 +104,7 @@ internal static class DiagnosticsSmoke
         await Write(Path.Combine(output, "checkpoint.json"), checkpoint);
         await Write(Path.Combine(output, "report.json"), new
         {
-            Version = 1, Utc = DateTimeOffset.UtcNow, Stage = "observe", RequiredLoopbackMeasurementsPassed = required,
+            Version = 1, Utc = DateTimeOffset.UtcNow, Stage = "observe", ConcurrentMonitoring = concurrency, RequiredLoopbackMeasurementsPassed = required,
             Runtime = RuntimeInformation.FrameworkDescription, Platform = RuntimeInformation.OSDescription,
             Architecture = RuntimeInformation.ProcessArchitecture.ToString(), ApplicationVersion = sessions[0].ApplicationVersion,
             IncidentPayloadsUnchanged = before == after, OriginalIncidents = before.Count, OriginalComments = before.Comments,
@@ -123,6 +124,40 @@ internal static class DiagnosticsSmoke
         });
         Require(required, "Required real loopback measurements were missing; partial results and redacted exports were preserved.");
         Console.WriteLine("REAL_DIAGNOSTIC_OBSERVE=PASS");
+    }
+
+    private static async Task<object> ConcurrentMonitoring(string output)
+    {
+        await using var store = new SqliteHistoryStore(Path.Combine(output, "concurrency.db"));
+        await using var engine = new MonitoringService(history: store);
+        await using var runner = new DiagnosticRunner(store);
+        await engine.StartAsync(new(1, [new(Guid.NewGuid(), "Real loopback monitoring", true, 250, 2000, 500,
+            [new(Guid.NewGuid(), "Loopback", "127.0.0.1")])]));
+        var clock = System.Diagnostics.Stopwatch.StartNew();
+        await Task.Delay(3000);
+        var baselineSeconds = clock.Elapsed.TotalSeconds;
+        var baselinePolls = engine.Diagnostics.CompletedPolls;
+        var before = engine.Diagnostics.CompletedPolls;
+        clock.Restart();
+        var runs = new[] { "127.0.0.1", "localhost" }.Select(target => runner.RunAsync(new(Guid.NewGuid(), target,
+            [DiagnosticKind.PingQuality], new() { SampleCount = 50, IntervalMilliseconds = 50, ProbeTimeoutMilliseconds = 500, SessionTimeoutSeconds = 10 }, new(true)))).ToArray();
+        var maximumWorkers = 0;
+        while (clock.Elapsed < TimeSpan.FromSeconds(3))
+        {
+            maximumWorkers = Math.Max(maximumWorkers, engine.Diagnostics.ActiveGroupWorkers);
+            await Task.Delay(10);
+        }
+        var concurrentSeconds = clock.Elapsed.TotalSeconds;
+        var concurrentPolls = engine.Diagnostics.CompletedPolls - before;
+        var sessions = await Task.WhenAll(runs);
+        await engine.StopAsync();
+        Require(baselinePolls >= 3 && concurrentPolls >= 3 && maximumWorkers <= 4 && !engine.HasUnsavedEvidence && engine.Capture().Outages.Count == 0,
+            "Monitoring liveness, worker cap or persistence changed while diagnostics ran.");
+        Require(sessions.All(s => s.State == DiagnosticState.Completed), "Concurrent loopback diagnostics did not complete successfully.");
+        return new { BaselinePolls = baselinePolls, BaselineSeconds = baselineSeconds, ConcurrentPolls = concurrentPolls,
+            ConcurrentSeconds = concurrentSeconds, ObservedMaximumGroupWorkers = maximumWorkers, DiagnosticSessions = sessions.Length,
+            UnsavedEvidence = engine.HasUnsavedEvidence, Outages = engine.Capture().Outages.Count,
+            Scope = "Actual loopback ICMP, production monitoring and two diagnostics sharing SQLite. Short liveness/sample-rate observation; not physical-network throughput or a performance benchmark." };
     }
 
     private static async Task Reload(string output)

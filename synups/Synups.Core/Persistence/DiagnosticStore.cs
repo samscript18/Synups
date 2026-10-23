@@ -142,17 +142,42 @@ public sealed partial class SqliteHistoryStore : IDiagnosticRepository
         try { var result = Parse<DiagnosticSession>(payload); CheckSession(result); return result; }
         catch (Exception ex) when (ex is JsonException or ArgumentException or NullReferenceException) { throw new InvalidDataException("Corrupt diagnostic row; original evidence preserved.", ex); }
     });
-    public Task<IReadOnlyList<DiagnosticSessionSummary>> ReadDiagnosticSessionsAsync(int limit = 50, DateTimeOffset? before = null, Guid? incidentId = null) => WorkAsync<IReadOnlyList<DiagnosticSessionSummary>>(() =>
+    public Task<IReadOnlyList<DiagnosticSessionSummary>> ReadDiagnosticSessionsAsync(int limit = 50, DateTimeOffset? before = null, Guid? incidentId = null, Guid? beforeId = null) => WorkAsync<IReadOnlyList<DiagnosticSessionSummary>>(() =>
     {
         if (limit is < 1 or > 100) throw new ArgumentOutOfRangeException(nameof(limit));
         Open(); using var command = connection!.CreateCommand();
-        command.CommandText = "SELECT id,target,incident_id,started_utc,state,profile FROM diagnostic_sessions WHERE ($before IS NULL OR started_utc<$before) AND ($incident IS NULL OR incident_id=$incident) ORDER BY started_utc DESC,id DESC LIMIT $limit";
+        command.CommandText = "SELECT id,target,incident_id,started_utc,state,profile FROM diagnostic_sessions WHERE ($before IS NULL OR started_utc<$before OR (started_utc=$before AND $beforeId IS NOT NULL AND id<$beforeId)) AND ($incident IS NULL OR incident_id=$incident) ORDER BY started_utc DESC,id DESC LIMIT $limit";
         command.Parameters.AddWithValue("$before", (object?)before?.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) ?? DBNull.Value);
+        command.Parameters.AddWithValue("$beforeId", (object?)beforeId?.ToString() ?? DBNull.Value);
         command.Parameters.AddWithValue("$incident", (object?)incidentId?.ToString() ?? DBNull.Value); command.Parameters.AddWithValue("$limit", limit);
         using var reader = command.ExecuteReader(); var rows = new List<DiagnosticSessionSummary>();
         while (reader.Read()) rows.Add(new(Guid.Parse(reader.GetString(0)), reader.GetString(1), reader.IsDBNull(2) ? null : Guid.Parse(reader.GetString(2)),
             DateTimeOffset.Parse(reader.GetString(3), CultureInfo.InvariantCulture), (DiagnosticState)reader.GetInt32(4), reader.GetString(5)));
         return rows;
+    });
+    public Task<bool> DeleteDiagnosticSessionAsync(Guid id) => WorkAsync(() =>
+    {
+        Open(); using var tx = connection!.BeginTransaction();
+        using var get = connection.CreateCommand(); get.Transaction = tx;
+        get.CommandText = "SELECT state FROM diagnostic_sessions WHERE id=$id"; get.Parameters.AddWithValue("$id", id.ToString());
+        var state = get.ExecuteScalar();
+        if (state is null) return false;
+        if ((DiagnosticState)Convert.ToInt32(state, CultureInfo.InvariantCulture) is DiagnosticState.Running or DiagnosticState.Pending)
+            throw new InvalidOperationException("Running diagnostics cannot be deleted. Cancel and wait for completion first.");
+        using var remove = connection.CreateCommand(); remove.Transaction = tx;
+        remove.CommandText = "DELETE FROM diagnostic_sessions WHERE id=$id AND NOT EXISTS(SELECT 1 FROM diagnostic_baselines WHERE session_id=$id) AND NOT EXISTS(SELECT 1 FROM diagnostic_comparisons WHERE session_id=$id)";
+        remove.Parameters.AddWithValue("$id", id.ToString());
+        if (remove.ExecuteNonQuery() != 1) throw new InvalidOperationException("Session is referenced by a baseline or comparison. Delete the associated baseline first; its comparisons will also be removed.");
+        tx.Commit(); return true;
+    });
+    public Task<bool> DeleteDiagnosticBaselineAsync(Guid id) => WorkAsync(() =>
+    {
+        Open(); using var tx = connection!.BeginTransaction();
+        using var command = connection.CreateCommand(); command.Transaction = tx;
+        command.CommandText = "DELETE FROM diagnostic_comparisons WHERE baseline_id=$id";
+        command.Parameters.AddWithValue("$id", id.ToString()); command.ExecuteNonQuery();
+        command.CommandText = "DELETE FROM diagnostic_baselines WHERE id=$id";
+        var removed = command.ExecuteNonQuery(); tx.Commit(); return removed == 1;
     });
     public Task SaveDiagnosticBaselineAsync(DiagnosticBaseline baseline) => WorkAsync(() =>
     {

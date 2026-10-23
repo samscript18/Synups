@@ -30,6 +30,20 @@ public partial class MainWindow
     private void ClearDiagnosticIncidentClicked(object? sender,RoutedEventArgs e) => ViewModel?.ClearDiagnosticIncident();
     private async void RefreshDiagnosticHistoryClicked(object? sender,RoutedEventArgs e)
     { if(ViewModel is { } vm) await vm.RefreshDiagnosticHistoryAsync(); }
+    private async void LoadOlderDiagnosticsClicked(object? sender,RoutedEventArgs e)
+    { if(ViewModel is { } vm) await vm.LoadOlderDiagnosticsAsync(); }
+    private async void DeleteDiagnosticClicked(object? sender,RoutedEventArgs e)
+    {
+        if(closing || ViewModel is not { CanDeleteDiagnostic:true,SelectedDiagnosticHistory: { } selected } vm) return;
+        if(await ConfirmAsync("Delete diagnostic session",$"Delete saved diagnostic {selected.Id} for {selected.Target} ({selected.StartedUtc:O})? Its results and observations will be removed. Baseline/comparison references prevent deletion. Monitoring incidents and existing exports are preserved. This cannot be undone."))
+            await vm.DeleteDiagnosticAsync(selected.Id,confirmed:true);
+    }
+    private async void DeleteDiagnosticBaselineClicked(object? sender,RoutedEventArgs e)
+    {
+        if(closing || ViewModel is not { CanDeleteDiagnosticBaseline:true,SelectedDiagnosticBaseline: { } selected } vm) return;
+        if(await ConfirmAsync("Delete diagnostic baseline",$"Delete baseline ‘{selected.Label}’ ({selected.Id}) and all its saved comparisons? Source diagnostic sessions and existing exports are preserved. This cannot be undone."))
+            await vm.DeleteDiagnosticBaselineAsync(selected.Id,confirmed:true);
+    }
     private async void OpenDiagnosticClicked(object? sender,RoutedEventArgs e)
     { if(ViewModel is { } vm) await vm.OpenDiagnosticHistoryAsync(); }
     private async void SaveDiagnosticBaselineClicked(object? sender,RoutedEventArgs e)

@@ -31,6 +31,7 @@ public sealed class DnsDiagnosticTest : IDiagnosticTest
         var observations = new List<DiagnosticObservation>();
         var answers = new List<DnsAnswer>();
         int? rcode = null;
+        var transport = "UDP";
         var resolver = !string.IsNullOrWhiteSpace(request.Parameters.ResolverAddress)
             ? new IPEndPoint(IPAddress.Parse(request.Parameters.ResolverAddress), 53)
             : _resolver ?? _configuredResolverProvider();
@@ -48,12 +49,15 @@ public sealed class DnsDiagnosticTest : IDiagnosticTest
                 using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellation);
                 timeout.CancelAfter(request.Parameters.ProbeTimeoutMilliseconds);
                 progress?.Report(new(request.Id, Kind, "Querying resolver", 0, 1));
-                var response = await DnsWire.QueryAsync(resolver, request.Target, (ushort)request.Parameters.RecordType, timeout.Token).ConfigureAwait(false);
+                var baseCost = request.Tests.Sum(t => t switch { DiagnosticKind.PingQuality => request.Parameters.SampleCount, DiagnosticKind.TraceRoute => request.Parameters.MaximumHops * request.Parameters.ProbesPerHop + (request.Parameters.ResolveHopNames ? Math.Min(64, request.Parameters.MaximumHops * request.Parameters.ProbesPerHop) : 0), DiagnosticKind.NetworkConfiguration => 0, _ => 1 });
+                var response = await DnsWire.QueryAsync(resolver, request.Target, (ushort)request.Parameters.RecordType, timeout.Token,
+                    tcpFallback: request.Parameters.MaximumProbes > baseCost,
+                    onTcpFallback: () => { transport = "UDP → TCP"; progress?.Report(new(request.Id, Kind, "Truncated UDP reply; retrying same resolver over TCP", 1, 2)); }).ConfigureAwait(false);
                 rcode = response.ResponseCode;
                 if (response.Truncated)
                 {
                     outcome = DiagnosticOutcome.Unsupported;
-                    error = "Resolver set the truncated flag. UDP answer is incomplete; TCP retry is not implemented.";
+                    error = "Resolver set the truncated flag. Answer is incomplete; TCP retry was unavailable within the approved probe cap or remained truncated.";
                 }
                 else if (rcode != 0)
                 {
@@ -81,12 +85,13 @@ public sealed class DnsDiagnosticTest : IDiagnosticTest
                 : ex.SocketErrorCode is SocketError.HostUnreachable or SocketError.NetworkUnreachable ? DiagnosticOutcome.Unreachable : DiagnosticOutcome.NetworkError;
             error = ex.Message;
         }
+        catch (IOException ex) { outcome = DiagnosticOutcome.NetworkError; error = ex.Message; }
         if (rcode.HasValue) observations.Add(new(DateTimeOffset.UtcNow, "DNS response code", DiagnosticCertainty.Observed, rcode, Text: DnsWire.ResponseCodeName(rcode.Value)));
         observations.Add(new(DateTimeOffset.UtcNow, "DNS resolver selection", DiagnosticCertainty.Observed, Text:
             request.Parameters.ResolverAddress is not null ? "User approved explicit resolver" : _resolver is not null ? "Application supplied resolver" : "First DNS resolver on an active interface; split DNS routing is not inferred"));
         progress?.Report(new(request.Id, Kind, "Finished", 1, 1));
-        return new(Guid.NewGuid(), Kind, request.Target, started, DateTimeOffset.UtcNow, outcome, "Explicit DNS A/AAAA query over UDP", watch.Elapsed.TotalMilliseconds,
-            observations, error, Dns: new(resolver?.ToString() ?? "Unavailable", request.Parameters.RecordType, rcode, answers));
+        return new(Guid.NewGuid(), Kind, request.Target, started, DateTimeOffset.UtcNow, outcome, "Explicit DNS A/AAAA query over " + transport, watch.Elapsed.TotalMilliseconds,
+            observations, error, Dns: new(resolver?.ToString() ?? "Unavailable", request.Parameters.RecordType, rcode, answers, transport));
     }
 }
 
@@ -110,7 +115,7 @@ internal static class DnsWire
 
     internal static string ResponseCodeName(int code) => code switch { 0 => "NOERROR", 1 => "FORMERR", 2 => "SERVFAIL", 3 => "NXDOMAIN", 4 => "NOTIMP", 5 => "REFUSED", _ => "Other" };
 
-    internal static async Task<DnsWireResponse> QueryAsync(IPEndPoint resolver, string domain, ushort type, CancellationToken cancellation)
+    internal static async Task<DnsWireResponse> QueryAsync(IPEndPoint resolver, string domain, ushort type, CancellationToken cancellation, bool tcpFallback = false, Action? onTcpFallback = null)
     {
         var canonical = new System.Globalization.IdnMapping().GetAscii(domain.TrimEnd('.')).ToLowerInvariant();
         var id = (ushort)RandomNumberGenerator.GetInt32(65536);
@@ -125,7 +130,28 @@ internal static class DnsWire
         catch (SocketException ex) when (ex.SocketErrorCode == SocketError.MessageSize)
         { throw new InvalidDataException("DNS datagram exceeds the 4096-byte response bound.", ex); }
         if (size > 4096) throw new InvalidDataException("DNS datagram exceeds the 4096-byte response bound.");
-        return Parse(buffer.AsSpan(0, size), canonical, type, id);
+        var response = Parse(buffer.AsSpan(0, size), canonical, type, id);
+        if (!response.Truncated || !tcpFallback) return response;
+        onTcpFallback?.Invoke();
+        // Same endpoint, question and total caller deadline; one bounded retry, never another resolver.
+        using var client = new TcpClient(resolver.AddressFamily);
+        await client.ConnectAsync(resolver.Address, resolver.Port, cancellation).ConfigureAwait(false);
+        await using var stream = client.GetStream();
+        var frame = new byte[query.Length + 2];
+        BinaryPrimitives.WriteUInt16BigEndian(frame, checked((ushort)query.Length));
+        query.CopyTo(frame, 2);
+        await stream.WriteAsync(frame, cancellation).ConfigureAwait(false);
+        var prefix = new byte[2];
+        try
+        {
+            await stream.ReadExactlyAsync(prefix, cancellation).ConfigureAwait(false);
+            var length = BinaryPrimitives.ReadUInt16BigEndian(prefix);
+            if (length is < 12 or > 4096) throw new InvalidDataException("DNS TCP frame is outside the 12–4096 byte response bound.");
+            var body = new byte[length];
+            await stream.ReadExactlyAsync(body, cancellation).ConfigureAwait(false);
+            return Parse(body, canonical, type, id);
+        }
+        catch (EndOfStreamException ex) { throw new InvalidDataException("DNS TCP response ended before its declared frame was complete.", ex); }
     }
 
     private static byte[] BuildQuery(string name, ushort type, ushort id)

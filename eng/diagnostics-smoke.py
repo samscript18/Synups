@@ -131,7 +131,9 @@ def main():
             statuses['observe'] = run_logged(observe, logs / 'observe.txt', repo / 'synups', timeout=120)
             # Preserve and inspect partial observe evidence even if native permissions caused failure.
             if (output / 'checkpoint.json').exists():
-                statuses['reload'] = run_logged([args.dotnet, str(assembly), str(output), 'reload'], logs / 'reload.txt', repo / 'synups', timeout=60)
+                for cycle in range(1, 4):
+                    statuses['reload_' + str(cycle)] = run_logged([args.dotnet, str(assembly), str(output), 'reload'], logs / ('reload-' + str(cycle) + '.txt'), repo / 'synups', timeout=60)
+                statuses['reload'] = max(statuses['reload_' + str(cycle)] for cycle in range(1, 4))
             else:
                 statuses['reload'] = None
         passed = statuses.get('observe') == 0 and statuses.get('reload') == 0

@@ -79,6 +79,7 @@ public sealed class DiagnosticRunner : IDiagnosticRunner
             session = session with { Results = results.ToArray() };
             // Persist completed/partial child results before starting another network call. No transaction spans network I/O.
             await repository.SaveDiagnosticSessionAsync(session).ConfigureAwait(false);
+            try { progress?.Report(new(request.Id, kind, "Result saved", results.Count, request.Tests.Count, result)); } catch { }
         }
         var cancelled = cancellation.IsCancellationRequested || shutdown.IsCancellationRequested;
         var deadline = token.IsCancellationRequested && !cancelled;

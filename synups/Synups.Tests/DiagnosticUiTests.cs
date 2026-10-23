@@ -178,4 +178,97 @@ public class DiagnosticUiTests
         }
         finally { window.Close(); await UntilAsync(()=>!window.IsVisible); await vm.DisposeAsync(); if(Directory.Exists(dir)) Directory.Delete(dir,true); }
     }
+    [AvaloniaFact]
+    public async Task ActualManagementControlsConfirmExactDeletionAndPreserveSourceEvidence()
+    {
+        var dir=NewDirectory(); var repository=new SqliteHistoryStore(Path.Combine(dir,"history.db")); var runner=new StubRunner(repository);
+        var vm=new MainWindowViewModel(new MonitoringService(history:repository),new ConfigurationStore(Path.Combine(dir,"configuration.json")),diagnosticRunner:runner);
+        var window=new MainWindow { DataContext=vm };
+        void Click(string name) => window.FindControl<Button>(name)!.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        async Task Confirm(bool accept)
+        {
+            await UntilAsync(()=>window.OwnedWindows.Count==1);
+            var modal=window.OwnedWindows.Single();
+            modal.GetVisualDescendants().OfType<Button>().Single(b=>b.Name==(accept?"ConfirmContinue":"ConfirmCancel")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            await UntilAsync(()=>window.OwnedWindows.Count==0);
+        }
+        try
+        {
+            window.Show(); await UntilAsync(()=>vm.CanEdit); vm.SelectedPage=5; Assert.Empty(vm.DiagnosticHistory);
+            Assert.Contains("No saved",vm.DiagnosticHistorySummary); Assert.False(vm.CanDeleteDiagnostic); Assert.False(vm.CanLoadOlderDiagnostics);
+            vm.DiagnosticTarget="127.0.0.1"; Click("SaveDiagnosticProfile"); await UntilAsync(()=>vm.DiagnosticProfiles.Count==6);
+            await vm.RunDiagnosticAsync(vm.PrepareDiagnosticRequest(),true);
+            Click("SaveDiagnosticBaseline"); await UntilAsync(()=>vm.DiagnosticBaselines.Count==1);
+            vm.SelectedDiagnosticBaseline=vm.DiagnosticBaselines.Single(); Click("CompareDiagnostic"); await UntilAsync(()=>vm.DiagnosticComparisonText!="No comparison selected.");
+            Click("PreviewDiagnosticEvidence"); await UntilAsync(()=>vm.HasDiagnosticEvidencePreview);
+            Click("ExportDiagnosticEvidence"); await Confirm(false); Assert.DoesNotContain("Evidence exported:",vm.DiagnosticStatus);
+            vm.SelectedDiagnosticHistory=vm.DiagnosticHistory.Single(); Click("DeleteDiagnostic"); await Confirm(false); Assert.Single(vm.DiagnosticHistory);
+            Click("DeleteDiagnostic"); await Confirm(true); await UntilAsync(()=>vm.DiagnosticStatus.StartsWith("Session deletion failed:")); Assert.Single(vm.DiagnosticHistory);
+            Click("DeleteDiagnosticBaseline"); await Confirm(false); Assert.Single(vm.DiagnosticBaselines);
+            Click("DeleteDiagnosticBaseline"); await Confirm(true); await UntilAsync(()=>vm.DiagnosticBaselines.Count==0); Assert.Single(vm.DiagnosticHistory);
+            vm.SelectedDiagnosticHistory=null; Click("RefreshDiagnosticHistory"); await UntilAsync(()=>!vm.IsDiagnosticHistoryLoading);
+            vm.SelectedDiagnosticHistory=vm.DiagnosticHistory.Single(); Click("OpenDiagnostic"); await UntilAsync(()=>vm.DiagnosticStatus.StartsWith("Reopened"));
+            Click("DeleteDiagnostic"); await Confirm(true); await UntilAsync(()=>vm.DiagnosticHistory.Count==0);
+            Assert.Empty(vm.DiagnosticResults); Assert.False(vm.HasDiagnosticEvidencePreview); Assert.False(vm.CanUseDiagnosticEvidence); Assert.Equal(1,runner.Calls);
+        }
+        finally { window.Close(); await UntilAsync(()=>!window.IsVisible); await vm.DisposeAsync(); if(Directory.Exists(dir)) Directory.Delete(dir,true); }
+    }
+    private sealed class CheckpointTest(DiagnosticKind kind,bool block) : IDiagnosticTest
+    {
+        public DiagnosticKind Kind => kind;
+        public async Task<DiagnosticTestResult> ExecuteAsync(DiagnosticRequest request,IProgress<DiagnosticProgress>? progress,CancellationToken cancellation)
+        {
+            if(block) await Task.Delay(Timeout.Infinite,cancellation);
+            return DiagnosticWorkflowTests.Result(request) with { Kind=kind };
+        }
+    }
+    [AvaloniaFact]
+    public async Task SavedPartialResultsAreVisibleWhileNextTestRunsAndCancelControlRetainsThem()
+    {
+        var dir=NewDirectory(); var repository=new SqliteHistoryStore(Path.Combine(dir,"history.db"));
+        await using var runner=new DiagnosticRunner(repository,[new CheckpointTest(DiagnosticKind.TcpConnect,false),new CheckpointTest(DiagnosticKind.PingQuality,true)]);
+        var vm=new MainWindowViewModel(new MonitoringService(history:repository),new ConfigurationStore(Path.Combine(dir,"configuration.json")),diagnosticRunner:runner);
+        var window=new MainWindow { DataContext=vm };
+        try
+        {
+            window.Show(); await UntilAsync(()=>vm.CanEdit); vm.SelectedPage=5; vm.DiagnosticTarget="127.0.0.1"; vm.DiagnosticNetwork=false;
+            var running=vm.RunDiagnosticAsync(vm.PrepareDiagnosticRequest(),true);
+            await UntilAsync(()=>vm.IsDiagnosticRunning && vm.DiagnosticResults.Count==1);
+            Assert.False(vm.CanUseDiagnosticEvidence); Assert.False(vm.CanOpenDiagnostic);
+            window.FindControl<Button>("CancelDiagnostic")!.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); await running;
+            Assert.Equal(DiagnosticState.Cancelled,Assert.Single(vm.DiagnosticHistory).State); Assert.Equal(2,vm.DiagnosticResults.Count);
+            Assert.Contains("Success",vm.DiagnosticResults[0].Title); Assert.Contains("Cancelled",vm.DiagnosticResults[1].Title);
+        }
+        finally { window.Close(); await UntilAsync(()=>!window.IsVisible); await vm.DisposeAsync(); if(Directory.Exists(dir)) Directory.Delete(dir,true); }
+    }
+
+    [AvaloniaFact]
+    public async Task LoadOlderButtonIncludesTiedTimestampsAndDeletionUsesConfirmedSnapshot()
+    {
+        var dir=NewDirectory(); var repository=new SqliteHistoryStore(Path.Combine(dir,"history.db")); var runner=new StubRunner(repository);
+        var at=DateTimeOffset.UtcNow;
+        for(var i=0;i<103;i++)
+        {
+            var request=DiagnosticWorkflowTests.Request();
+            await repository.SaveDiagnosticSessionAsync(DiagnosticSession.Start(request) with { StartedUtc=at,CompletedUtc=at,State=DiagnosticState.Completed,Results=[DiagnosticWorkflowTests.Result(request)] });
+        }
+        var vm=new MainWindowViewModel(new MonitoringService(history:repository),new ConfigurationStore(Path.Combine(dir,"configuration.json")),diagnosticRunner:runner);
+        var window=new MainWindow { DataContext=vm };
+        void Click(string name) => window.FindControl<Button>(name)!.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        try
+        {
+            window.Show(); await UntilAsync(()=>vm.CanEdit && vm.DiagnosticHistory.Count==50); vm.SelectedPage=5;
+            Click("LoadOlderDiagnostics"); await UntilAsync(()=>vm.DiagnosticHistory.Count==100 && !vm.IsDiagnosticHistoryLoading);
+            Click("LoadOlderDiagnostics"); await UntilAsync(()=>vm.DiagnosticHistory.Count==103 && !vm.IsDiagnosticHistoryLoading);
+            Assert.False(vm.CanLoadOlderDiagnostics); Assert.Equal(103,vm.DiagnosticHistory.Select(r=>r.Id).Distinct().Count());
+            var selected=vm.DiagnosticHistory[0]; vm.SelectedDiagnosticHistory=selected; Click("DeleteDiagnostic");
+            await UntilAsync(()=>window.OwnedWindows.Count==1); vm.SelectedDiagnosticHistory=vm.DiagnosticHistory[1];
+            window.OwnedWindows.Single().GetVisualDescendants().OfType<Button>().Single(b=>b.Name=="ConfirmContinue").RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            await UntilAsync(()=>window.OwnedWindows.Count==0 && !vm.IsDiagnosticHistoryLoading && vm.DiagnosticHistory.Count==50);
+            Assert.Null(await repository.FindDiagnosticSessionAsync(selected.Id)); Assert.NotNull(await repository.FindDiagnosticSessionAsync(vm.SelectedDiagnosticHistory!.Id));
+            Assert.Equal(0,runner.Calls);
+        }
+        finally { window.Close(); await UntilAsync(()=>!window.IsVisible); await vm.DisposeAsync(); if(Directory.Exists(dir)) Directory.Delete(dir,true); }
+    }
+
 }

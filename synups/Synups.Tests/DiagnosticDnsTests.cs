@@ -51,9 +51,9 @@ public class DiagnosticDnsTests
         var noData = await new DnsDiagnosticTest(empty.Endpoint).ExecuteAsync(Request(), null, TestContext.Current.CancellationToken);
         Assert.Equal(DiagnosticOutcome.NoAnswer, noData.Outcome);
         await using var truncated = new DnsServer(q => Header(q, 0x8380));
-        var incomplete = await new DnsDiagnosticTest(truncated.Endpoint).ExecuteAsync(Request(), null, TestContext.Current.CancellationToken);
+        var incomplete = await new DnsDiagnosticTest(truncated.Endpoint).ExecuteAsync(Request() with { Parameters = new() { MaximumProbes = 1 } }, null, TestContext.Current.CancellationToken);
         Assert.Equal(DiagnosticOutcome.Unsupported, incomplete.Outcome);
-        Assert.Contains("TCP retry is not implemented", incomplete.Error);
+        Assert.Contains("approved probe cap", incomplete.Error);
         Assert.Empty(incomplete.Dns!.Answers);
     }
 
@@ -235,6 +235,62 @@ public class DiagnosticDnsTests
         Assert.Equal(DiagnosticOutcome.Success, result.Outcome);
         Assert.NotEmpty(result.Dns!.Answers);
         Assert.Equal(0, result.Dns.ResponseCode);
+    }
+
+    [Theory]
+    [InlineData("answer", DiagnosticOutcome.Success)]
+    [InlineData("short", DiagnosticOutcome.MalformedResponse)]
+    [InlineData("oversized", DiagnosticOutcome.MalformedResponse)]
+    [InlineData("wrong-id", DiagnosticOutcome.MalformedResponse)]
+    [InlineData("truncated", DiagnosticOutcome.Unsupported)]
+    [InlineData("refused", DiagnosticOutcome.Refused)]
+    [InlineData("silent", DiagnosticOutcome.Timeout)]
+    [InlineData("cancel", DiagnosticOutcome.Cancelled)]
+    public async Task TruncatedUdpRetriesOneBoundedFramedTcpQueryWithSharedDeadline(string mode, DiagnosticOutcome expected)
+    {
+        using var stop = new CancellationTokenSource();
+        var tcp = new TcpListener(IPAddress.Loopback, 0); tcp.Start();
+        var endpoint = (IPEndPoint)tcp.LocalEndpoint;
+        using var udp = new UdpClient(endpoint);
+        var reachedTcp = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var fixture = Task.Run(async () =>
+        {
+            try
+            {
+                var q = await udp.ReceiveAsync(stop.Token);
+                await udp.SendAsync(Header(q.Buffer, 0x8380), q.RemoteEndPoint, stop.Token);
+                using var peer = await tcp.AcceptTcpClientAsync(stop.Token);
+                await using var stream = peer.GetStream();
+                var prefix = new byte[2]; await stream.ReadExactlyAsync(prefix, stop.Token);
+                var query = new byte[BinaryPrimitives.ReadUInt16BigEndian(prefix)];
+                await stream.ReadExactlyAsync(query, stop.Token);
+                Assert.Equal(q.Buffer, query); reachedTcp.SetResult();
+                if (mode is "silent" or "cancel") { await Task.Delay(Timeout.Infinite, stop.Token); return; }
+                var response = mode == "truncated" ? Header(query, 0x8380) : mode == "refused" ? Header(query, 0x8185) : Answer(query, 1, [192, 0, 2, 42]);
+                if (mode == "wrong-id") response[0] ^= 1;
+                BinaryPrimitives.WriteUInt16BigEndian(prefix, mode == "oversized" ? (ushort)4097 : checked((ushort)response.Length));
+                // Deliberately fragmented length prefix and body exercise exact stream reads.
+                await stream.WriteAsync(prefix.AsMemory(0, 1), stop.Token);
+                await stream.WriteAsync(prefix.AsMemory(1, 1), stop.Token);
+                if (mode == "oversized") return;
+                if (mode == "short") { await stream.WriteAsync(response.AsMemory(0, 5), stop.Token); return; }
+                foreach (var value in response) await stream.WriteAsync(new byte[] { value }, stop.Token);
+            }
+            catch (OperationCanceledException) when (stop.IsCancellationRequested) { }
+        }, TestContext.Current.CancellationToken);
+        using var caller = new CancellationTokenSource();
+        try
+        {
+            var operation = new DnsDiagnosticTest(endpoint).ExecuteAsync(Request(timeout: 1000), null, caller.Token);
+            await reachedTcp.Task.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
+            if (mode == "cancel") caller.Cancel();
+            var result = await operation;
+            Assert.Equal(expected, result.Outcome);
+            Assert.Equal("UDP → TCP", result.Dns!.Transport);
+            if (expected == DiagnosticOutcome.Success) Assert.Equal("192.0.2.42", Assert.Single(result.Dns.Answers).Address);
+            else Assert.Empty(result.Dns.Answers);
+        }
+        finally { stop.Cancel(); tcp.Stop(); await fixture; }
     }
 
     private static byte[] Header(byte[] query, ushort flags)

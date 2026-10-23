@@ -300,6 +300,18 @@ public sealed partial class SqliteHistoryStore(string fileName, long maxBytes = 
                     """;
                 command.Parameters.AddWithValue("$id", s.Id.ToString()); count += command.ExecuteNonQuery();
             }
+            using var diagnostics = connection.CreateCommand(); diagnostics.Transaction = tx;
+            diagnostics.CommandText = """
+                DELETE FROM diagnostic_sessions WHERE incident_id IS NULL AND state NOT IN ($pending,$running)
+                AND json_extract(payload,'$.CompletedUtc') IS NOT NULL
+                AND julianday(json_extract(payload,'$.CompletedUtc')) < julianday($cutoff)
+                AND NOT EXISTS(SELECT 1 FROM diagnostic_baselines b WHERE b.session_id=diagnostic_sessions.id)
+                AND NOT EXISTS(SELECT 1 FROM diagnostic_comparisons c WHERE c.session_id=diagnostic_sessions.id);
+                """;
+            diagnostics.Parameters.AddWithValue("$pending", (int)Synups.Core.Diagnostics.DiagnosticState.Pending);
+            diagnostics.Parameters.AddWithValue("$running", (int)Synups.Core.Diagnostics.DiagnosticState.Running);
+            diagnostics.Parameters.AddWithValue("$cutoff", cutoff.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture));
+            count += diagnostics.ExecuteNonQuery();
             tx.Commit();
         }
         // Freed pages are reused within the limit. Avoid a second, potentially disk-full VACUUM after a successful deletion.

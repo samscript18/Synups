@@ -82,6 +82,8 @@ jobs:
         run: |
           set -o pipefail
           dotnet test ../Synups.slnx -c Release --no-build --logger trx --results-directory ../artifacts/tests 2>&1 | tee ../artifacts/logs/tests.txt
+        env:
+          SYNUPS_LARGE_EXPORT_EVIDENCE: ${{ github.workspace }}/artifacts/large-export-fixtures
       - name: Explicit real loopback ICMP integration
         run: |
           set -o pipefail
@@ -120,6 +122,12 @@ jobs:
         run: |
           set -o pipefail
           python ../eng/native-smoke.py --screenshots ../artifacts/screenshots 2>&1 | tee ../artifacts/logs/native.txt
+      - name: Real three-hop traceroute in disconnected disposable network namespaces
+        if: runner.os == 'Linux'
+        run: |
+          set -o pipefail
+          python ../eng/path-smoke.py --prepare ../artifacts/path-build 2>&1 | tee ../artifacts/logs/path-build.txt
+          sudo env "PATH=$PATH" "DOTNET_ROOT=$DOTNET_ROOT" unshare --net -- python ../eng/path-smoke.py --worker ../artifacts/path-build/bin/Release/net10.0/Synups.PathSmoke.dll --output ../artifacts/path 2>&1 | tee ../artifacts/logs/path.txt
       - name: Real ICMP incident in disposable Linux network namespace
         if: runner.os == 'Linux'
         run: |
@@ -147,6 +155,8 @@ jobs:
             artifacts/published-apphost/reports/
             artifacts/published-apphost/launch-summary.json
             artifacts/published-apphost/isolated-data/
+            artifacts/large-export-fixtures/
+            artifacts/path/
             artifacts/incident/
             artifacts/diagnostic-e2e/report.json
             artifacts/diagnostic-e2e/reload-report.json

@@ -78,7 +78,7 @@ public sealed record DiagnosticSession(int Version, DiagnosticRequest Request, D
         RuntimeInformation.OSDescription + "; " + RuntimeInformation.RuntimeIdentifier,
         typeof(DiagnosticSession).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "unknown");
 }
-public sealed record DiagnosticProgress(Guid SessionId, DiagnosticKind? Kind, string Phase, int Completed, int Total);
+public sealed record DiagnosticProgress(Guid SessionId, DiagnosticKind? Kind, string Phase, int Completed, int Total, DiagnosticTestResult? SavedResult = null);
 public interface IDiagnosticTest
 {
     DiagnosticKind Kind { get; }
@@ -99,7 +99,9 @@ public interface IDiagnosticRepository
     Task InitializeDiagnosticsAsync();
     Task SaveDiagnosticSessionAsync(DiagnosticSession session);
     Task<DiagnosticSession?> FindDiagnosticSessionAsync(Guid id);
-    Task<IReadOnlyList<DiagnosticSessionSummary>> ReadDiagnosticSessionsAsync(int limit = 50, DateTimeOffset? before = null, Guid? incidentId = null);
+    Task<IReadOnlyList<DiagnosticSessionSummary>> ReadDiagnosticSessionsAsync(int limit = 50, DateTimeOffset? before = null, Guid? incidentId = null, Guid? beforeId = null);
+    Task<bool> DeleteDiagnosticSessionAsync(Guid id);
+    Task<bool> DeleteDiagnosticBaselineAsync(Guid id);
     Task SaveDiagnosticBaselineAsync(DiagnosticBaseline baseline);
     Task<IReadOnlyList<DiagnosticBaseline>> ReadDiagnosticBaselinesAsync(int limit = 50);
     Task SaveDiagnosticComparisonAsync(DiagnosticComparison comparison);

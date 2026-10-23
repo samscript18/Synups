@@ -93,7 +93,7 @@ public partial class MainWindow : Window
     private async void ApplyPreferencesClicked(object? sender, RoutedEventArgs e)
     {
         if (ViewModel is { } vm && int.TryParse(vm.PrefRetentionDays, out var days) && days > 0 &&
-            !await ConfirmAsync("Enable automatic history cleanup", $"Delete completed, recovered sessions older than {days} days now, at launch and once daily while monitoring? Unresolved or interrupted sessions are kept. This also deletes eligible events/comments. Logs and backups are kept separately. Set retention to 0 to disable cleanup.")) return;
+            !await ConfirmAsync("Enable automatic history cleanup", $"Delete completed, recovered sessions older than {days} days now, at launch and once daily while monitoring? Old, completed, standalone diagnostic sessions are also removed; diagnostic baselines, comparisons, incident-linked sessions and unfinished checkpoints are protected. Unresolved or interrupted monitoring sessions are kept. This also deletes eligible events/comments. Logs and backups are kept separately. Set retention to 0 to disable cleanup.")) return;
         await RunAsync(async () => { if (ViewModel is { } model) await model.SavePreferencesAsync(confirmRetention: true); ApplyDesktopPreferences(); });
     }
     private async void RecoverPreferencesClicked(object? sender, RoutedEventArgs e)

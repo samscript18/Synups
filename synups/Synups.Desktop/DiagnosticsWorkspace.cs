@@ -29,7 +29,13 @@ public sealed partial class MainWindowViewModel
     public bool IsDiagnostics => SelectedPage == 5;
     public bool IsDiagnosticRunning => diagnosticRunning;
     public bool CanRunDiagnostic => !diagnosticRunning && !diagnosticsClosing && !disposed && diagnosticRunner is not null;
-    public bool CanOpenDiagnostic => !diagnosticRunning && SelectedDiagnosticHistory is not null;
+    public bool CanOpenDiagnostic => !diagnosticRunning && !diagnosticsClosing && !diagnosticHistoryLoading && SelectedDiagnosticHistory is not null;
+    public bool CanDeleteDiagnostic => CanOpenDiagnostic;
+    public bool CanDeleteDiagnosticBaseline => !diagnosticRunning && !diagnosticsClosing && !diagnosticHistoryLoading && SelectedDiagnosticBaseline is not null;
+    private bool diagnosticHistoryLoading, diagnosticHistoryHasMore;
+    public bool IsDiagnosticHistoryLoading => diagnosticHistoryLoading;
+    public bool CanLoadOlderDiagnostics => !diagnosticHistoryLoading && !diagnosticsClosing && diagnosticHistoryHasMore;
+    public string DiagnosticHistorySummary => diagnosticHistoryLoading ? "Loading saved diagnostics…" : DiagnosticHistory.Count == 0 ? "No saved diagnostic sessions." : $"{DiagnosticHistory.Count} saved sessions loaded. Reopening sends no probes.";
     public bool CanUseDiagnosticEvidence => !diagnosticRunning && diagnosticSession is not null && diagnosticRepository is not null;
     public bool CanSaveDiagnosticBaseline => CanUseDiagnosticEvidence && diagnosticSession!.State==DiagnosticState.Completed && diagnosticSession.Results.Count>0 && diagnosticSession.Results.All(r=>r.Outcome==DiagnosticOutcome.Success);
     public bool CanCompareDiagnostic => CanUseDiagnosticEvidence && SelectedDiagnosticBaseline is not null;
@@ -85,7 +91,7 @@ public sealed partial class MainWindowViewModel
     private void DiagnosticDraftChanged() => Changed(nameof(DiagnosticPreview));
     private void DiagnosticControlsChanged()
     {
-        foreach(var name in new[]{nameof(IsDiagnosticRunning),nameof(CanRunDiagnostic),nameof(CanOpenDiagnostic),nameof(CanUseDiagnosticEvidence),nameof(CanCompareDiagnostic),nameof(CanSaveDiagnosticBaseline),nameof(DiagnosticElapsed),nameof(DiagnosticAnalysis)}) Changed(name);
+        foreach(var name in new[]{nameof(IsDiagnosticRunning),nameof(CanRunDiagnostic),nameof(CanOpenDiagnostic),nameof(CanUseDiagnosticEvidence),nameof(CanCompareDiagnostic),nameof(CanSaveDiagnosticBaseline),nameof(DiagnosticElapsed),nameof(DiagnosticAnalysis),nameof(CanDeleteDiagnostic),nameof(CanDeleteDiagnosticBaseline),nameof(IsDiagnosticHistoryLoading),nameof(CanLoadOlderDiagnostics),nameof(DiagnosticHistorySummary)}) Changed(name);
     }
     public DiagnosticRequest PrepareDiagnosticRequest()
     {
@@ -100,7 +106,7 @@ public sealed partial class MainWindowViewModel
     {
         get { try { return DescribeDiagnosticRequest(PrepareDiagnosticRequest()); } catch(Exception ex) { return "Cannot run: "+ex.Message; } }
     }
-    public static string DescribeDiagnosticRequest(DiagnosticRequest r) => $"Endpoint: {r.Target} · TCP port {r.Parameters.Port}\nTests: {string.Join(", ",r.Tests)} · profile {r.ProfileId} v{r.ProfileVersion}\nPing samples {r.Parameters.SampleCount}, interval {r.Parameters.IntervalMilliseconds} ms; each probe timeout {r.Parameters.ProbeTimeoutMilliseconds} ms. Session deadline {r.Parameters.SessionTimeoutSeconds} s, maximum {r.Parameters.MaximumProbes} probes. Estimated maximum {r.Tests.Sum(t=>t switch { DiagnosticKind.PingQuality=>r.Parameters.SampleCount, DiagnosticKind.TraceRoute=>r.Parameters.MaximumHops*r.Parameters.ProbesPerHop, DiagnosticKind.NetworkConfiguration=>0, _=>1 })} probes for selected tests. Path: ≤{r.Parameters.MaximumHops} hops × {r.Parameters.ProbesPerHop} probes.\nDNS: {r.Parameters.RecordType}; resolver {r.Parameters.ResolverAddress ?? "system configured resolver"}. Hostname tests may disclose the target to system DNS; an explicit resolver receives the query. TCP performs a connection without application data. ICMP and path responses may be filtered. Protocols: TCP connect, DNS UDP/53 when selected; ICMP echo for ping/path. No external lookup services. ICMP/path may require OS permission; permission failures are recorded, and Synups never elevates automatically.\nHop names: {(r.Parameters.ResolveHopNames?$"enabled, explicit PTR queries disclose responding hop addresses to the configured resolver; timeout {r.Parameters.ReverseDnsTimeoutMilliseconds} ms each; ≤64 distinct hop PTR candidates, cache32, concurrency1; shared session deadline":"disabled; literal hop addresses only, no PTR lookups")}.\nIncident: {r.IncidentId?.ToString() ?? "none"}. Running makes network requests to this exact endpoint; a failed probe does not establish an outage cause.";
+    public static string DescribeDiagnosticRequest(DiagnosticRequest r) => $"Endpoint: {r.Target} · TCP port {r.Parameters.Port}\nTests: {string.Join(", ",r.Tests)} · profile {r.ProfileId} v{r.ProfileVersion}\nPing samples {r.Parameters.SampleCount}, interval {r.Parameters.IntervalMilliseconds} ms; each probe timeout {r.Parameters.ProbeTimeoutMilliseconds} ms. Session deadline {r.Parameters.SessionTimeoutSeconds} s, maximum {r.Parameters.MaximumProbes} probes. Estimated maximum {r.Tests.Sum(t=>t switch { DiagnosticKind.PingQuality=>r.Parameters.SampleCount, DiagnosticKind.TraceRoute=>r.Parameters.MaximumHops*r.Parameters.ProbesPerHop, DiagnosticKind.NetworkConfiguration=>0, _=>1 })} initial probes for selected tests; DNS reserves one additional retry only if the session cap permits. Path: ≤{r.Parameters.MaximumHops} hops × {r.Parameters.ProbesPerHop} probes.\nDNS: {r.Parameters.RecordType}; resolver {r.Parameters.ResolverAddress ?? "system configured resolver"}. Hostname tests may disclose the target to system DNS; an explicit resolver receives the query. TCP performs a connection without application data. ICMP and path responses may be filtered. Protocols: TCP connect, DNS UDP/53 and one TCP/53 retry to the same resolver after truncation when the probe cap permits; ICMP echo for ping/path. No external lookup services. ICMP/path may require OS permission; permission failures are recorded, and Synups never elevates automatically.\nHop names: {(r.Parameters.ResolveHopNames?$"enabled, explicit PTR queries disclose responding hop addresses to the configured resolver; timeout {r.Parameters.ReverseDnsTimeoutMilliseconds} ms each; ≤64 distinct hop PTR candidates, cache32, concurrency1; shared session deadline":"disabled; literal hop addresses only, no PTR lookups")}.\nIncident: {r.IncidentId?.ToString() ?? "none"}. Running makes network requests to this exact endpoint; a failed probe does not establish an outage cause.";
     public void DiagnoseSelectedIncident()
     {
         if(IsDiagnosticRunning || SelectedOutage is null) return;
@@ -119,7 +125,7 @@ public sealed partial class MainWindowViewModel
         try
         {
             request=request.ValidatedCopy(); diagnosticRunning=true; diagnosticClock.Restart(); diagnosticCancellation=new(); DiagnosticResults.Clear(); diagnosticSession=null; diagnosticComparison=null; diagnosticEvidence=null; DiagnosticEvidencePreview="Preview the completed or cancelled session before exporting."; Changed(nameof(HasDiagnosticEvidencePreview)); DiagnosticPhase="Starting"; DiagnosticStatus="Running approved diagnostics…"; DiagnosticControlsChanged();
-            var progress=new Progress<DiagnosticProgress>(p=> { if(!diagnosticRunning || p.SessionId!=request.Id) return; DiagnosticPhase=$"{p.Kind?.ToString() ?? "Session"}: {p.Phase} · {p.Completed}/{p.Total}"; Changed(nameof(DiagnosticElapsed)); });
+            var progress=new Progress<DiagnosticProgress>(p=> { if(!diagnosticRunning || p.SessionId!=request.Id) return; if(p.SavedResult is { } result) DiagnosticResults.Add(new(result)); DiagnosticPhase=$"{p.Kind?.ToString() ?? "Session"}: {p.Phase} · {p.Completed}/{p.Total}"; Changed(nameof(DiagnosticElapsed)); });
             var clock=UpdateDiagnosticClockAsync(diagnosticCancellation.Token);
             try { ShowDiagnosticSession(await diagnosticRunner!.RunAsync(request,progress,diagnosticCancellation.Token)); }
             finally { diagnosticCancellation.Cancel(); await clock; }
@@ -138,18 +144,57 @@ public sealed partial class MainWindowViewModel
     {
         diagnosticSession=session; diagnosticComparison=null; diagnosticEvidence=null; DiagnosticEvidencePreview="Preview the viewed session before exporting."; Changed(nameof(HasDiagnosticEvidencePreview)); DiagnosticResults.Clear(); foreach(var result in session.Results) DiagnosticResults.Add(new(result)); DiagnosticComparisonText="No comparison selected."; DiagnosticControlsChanged();
     }
-    public async Task RefreshDiagnosticHistoryAsync()
+    public Task RefreshDiagnosticHistoryAsync() => ReadDiagnosticHistoryAsync(false);
+    public Task LoadOlderDiagnosticsAsync() => ReadDiagnosticHistoryAsync(true);
+    private async Task ReadDiagnosticHistoryAsync(bool older)
     {
-        if(diagnosticRepository is null || diagnosticsClosing) return;
+        if(diagnosticRepository is null || diagnosticsClosing || diagnosticHistoryLoading || (older && !CanLoadOlderDiagnostics)) return;
+        diagnosticHistoryLoading=true; DiagnosticControlsChanged();
         try
         {
-            await diagnosticRepository.InitializeDiagnosticsAsync();
-            await LoadDiagnosticProfilesAsync();
-            var rows=await diagnosticRepository.ReadDiagnosticSessionsAsync(50); var baselines=await diagnosticRepository.ReadDiagnosticBaselinesAsync(50);
-            DiagnosticHistory.Clear(); foreach(var r in rows) DiagnosticHistory.Add(r);
+            await diagnosticRepository.InitializeDiagnosticsAsync(); await LoadDiagnosticProfilesAsync();
+            var last=older ? DiagnosticHistory.LastOrDefault() : null;
+            var rows=await diagnosticRepository.ReadDiagnosticSessionsAsync(50,last?.StartedUtc,beforeId:last?.Id);
+            var baselines=await diagnosticRepository.ReadDiagnosticBaselinesAsync(100);
+            if(diagnosticsClosing) return;
+            var sessionId=SelectedDiagnosticHistory?.Id; var baselineId=SelectedDiagnosticBaseline?.Id;
+            if(!older) DiagnosticHistory.Clear();
+            foreach(var r in rows) DiagnosticHistory.Add(r);
+            diagnosticHistoryHasMore=rows.Count==50;
             DiagnosticBaselines.Clear(); foreach(var b in baselines) DiagnosticBaselines.Add(b);
+            SelectedDiagnosticHistory=DiagnosticHistory.FirstOrDefault(r=>r.Id==sessionId);
+            SelectedDiagnosticBaseline=DiagnosticBaselines.FirstOrDefault(b=>b.Id==baselineId);
         }
         catch(Exception ex) { DiagnosticStatus="Diagnostic history unavailable: "+ex.Message; }
+        finally { diagnosticHistoryLoading=false; DiagnosticControlsChanged(); }
+    }
+    public async Task DeleteDiagnosticAsync(Guid id,bool confirmed=false)
+    {
+        if(!confirmed || IsDiagnosticRunning || diagnosticsClosing || diagnosticRepository is null) return;
+        try
+        {
+            var removed=await diagnosticRepository.DeleteDiagnosticSessionAsync(id);
+            if(removed && diagnosticSession?.Request.Id==id)
+            {
+                diagnosticSession=null; diagnosticComparison=null; diagnosticEvidence=null; DiagnosticResults.Clear();
+                DiagnosticEvidencePreview="No evidence preview generated."; DiagnosticComparisonText="No comparison selected.";
+                Changed(nameof(HasDiagnosticEvidencePreview)); DiagnosticControlsChanged();
+            }
+            await RefreshDiagnosticHistoryAsync(); DiagnosticStatus=removed ? "Diagnostic session deleted. Monitoring incidents and exported files are preserved." : "Session was already removed.";
+        }
+        catch(Exception ex) { DiagnosticStatus="Session deletion failed: "+ex.Message; }
+    }
+    public async Task DeleteDiagnosticBaselineAsync(Guid id,bool confirmed=false)
+    {
+        if(!confirmed || IsDiagnosticRunning || diagnosticsClosing || diagnosticRepository is null) return;
+        try
+        {
+            var removed=await diagnosticRepository.DeleteDiagnosticBaselineAsync(id);
+            diagnosticComparison=null; diagnosticEvidence=null; DiagnosticComparisonText="No comparison selected.";
+            DiagnosticEvidencePreview="Baseline changed; preview evidence again."; Changed(nameof(HasDiagnosticEvidencePreview));
+            await RefreshDiagnosticHistoryAsync(); DiagnosticStatus=removed ? "Baseline and its saved comparisons deleted. Source diagnostic sessions are preserved." : "Baseline was already removed.";
+        }
+        catch(Exception ex) { DiagnosticStatus="Baseline deletion failed: "+ex.Message; }
     }
     public async Task OpenDiagnosticHistoryAsync()
     {
@@ -181,9 +226,11 @@ public sealed partial class MainWindowViewModel
             var baseline=SelectedDiagnosticBaseline!; var current=diagnosticSession!;
             var previous=await diagnosticRepository!.FindDiagnosticSessionAsync(baseline.SessionId) ?? throw new IOException("Baseline session is unavailable.");
             if(IsDiagnosticRunning || diagnosticSession?.Request.Id!=current.Request.Id || diagnosticsClosing) return;
-            diagnosticComparison=DiagnosticEvidence.Compare(previous,current,baseline.Id);
-            await diagnosticRepository.SaveDiagnosticComparisonAsync(diagnosticComparison);
-            DiagnosticComparisonText=string.Join("\n",diagnosticComparison.Differences.Select(o=>$"[{o.Certainty}] {o.Name}: {o.Value?.ToString("G",CultureInfo.InvariantCulture)} {o.Unit} {o.Text}"));
+            var comparison=DiagnosticEvidence.Compare(previous,current,baseline.Id);
+            await diagnosticRepository.SaveDiagnosticComparisonAsync(comparison);
+            if(IsDiagnosticRunning || diagnosticsClosing || diagnosticSession?.Request.Id!=current.Request.Id || SelectedDiagnosticBaseline?.Id!=baseline.Id) return;
+            diagnosticComparison=comparison;
+            DiagnosticComparisonText=string.Join("\n",comparison.Differences.Select(o=>$"[{o.Certainty}] {o.Name}: {o.Value?.ToString("G",CultureInfo.InvariantCulture)} {o.Unit} {o.Text}"));
             diagnosticEvidence=null; Changed(nameof(HasDiagnosticEvidencePreview));
         } catch(Exception ex) { DiagnosticComparisonText=ex.Message; }
     }

@@ -137,8 +137,13 @@ public static class DiagnosticEvidence
         System.IO.Directory.CreateDirectory(temporary);
         try
         {
+            cancellation.ThrowIfCancellationRequested();
+            var json = CanonicalJson(evidence);
+            if (json.Length > 16_000_000) throw new InvalidDataException("Evidence artifact exceeds 16 MB.");
             var markdown = ToMarkdown(evidence);
-            var payloads = new Dictionary<string, byte[]> { ["evidence.json"] = CanonicalJson(evidence), ["evidence.md"] = Encoding.UTF8.GetBytes(markdown), ["evidence.pdf"] = PortableEvidencePdf.Render(markdown) };
+            if (Encoding.UTF8.GetByteCount(markdown) > 16_000_000) throw new InvalidDataException("Evidence artifact exceeds 16 MB.");
+            cancellation.ThrowIfCancellationRequested();
+            var payloads = new Dictionary<string, byte[]> { ["evidence.json"] = json, ["evidence.md"] = Encoding.UTF8.GetBytes(markdown), ["evidence.pdf"] = PortableEvidencePdf.Render(markdown, cancellation) };
             var manifest = new List<object>();
             foreach (var (file, bytes) in payloads)
             {
@@ -157,12 +162,13 @@ public static class DiagnosticEvidence
 /// <summary>Small deterministic PDF 1.4 text renderer, fixed-width wrapping and true multipage output. No OS/font dependency.</summary>
 internal static class PortableEvidencePdf
 {
-    public static byte[] Render(string markdown)
+    public static byte[] Render(string markdown, CancellationToken cancellation = default)
     {
         static string Portable(string value) { var b = new StringBuilder(); foreach (var c in value) { if (c is >= ' ' and <= '~') b.Append(c); else if (c == '\t') b.Append("    "); else if (c != '\r') b.Append($"\\u{(int)c:X4}"); } return b.ToString(); }
         var lines = new List<string>();
         foreach (var raw in markdown.Split('\n'))
         {
+            cancellation.ThrowIfCancellationRequested();
             var text = Portable(raw); if (text.Length == 0) lines.Add("");
             while (text.Length > 0) { var count = Math.Min(98, text.Length); lines.Add(text[..count]); text = text[count..]; }
         }
@@ -174,6 +180,7 @@ internal static class PortableEvidencePdf
         objects.Add(B("<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>"));
         for (var i = 0; i < pages.Length; i++)
         {
+            cancellation.ThrowIfCancellationRequested();
             var pageId = 4 + i * 2; var content = new StringBuilder("BT /F1 8 Tf 10 TL 42 780 Td\n");
             content.Append($"({Escape("SYNUPS EVIDENCE - UTC timestamps")}) Tj T* T*\n");
             foreach (var line in pages[i]) content.Append($"({Escape(line)}) Tj T*\n");
