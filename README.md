@@ -1,161 +1,86 @@
 # Synups
 
-**Know when your network drops. Know how long it lasts. Keep the evidence.**
+Synups is a local-first Avalonia desktop monitor that turns real ICMP reachability checks into durable outage timelines, comments and exportable evidence on Windows, macOS and Linux.
 
-Synups is a local-first network reliability monitor for Windows, macOS and Linux. Monitor the peers you choose, record confirmed ICMP outages and observed recoveries, and keep incident timelines, comments and troubleshooting evidence in local SQLite.
+| Before: Bill Menees’ WirePeep · Windows WPF | After: Synups · Windows Avalonia |
+|---|---|
+| ![Original WirePeep WPF window on a disposable Windows runner, with controlled failed replies](docs/evidence/before/2026-10-22-wirepeep-windows.png) | ![Extracted Synups rc.4 Windows client monitoring a real loopback target](docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-overview.png) |
 
-Use it to investigate intermittent connectivity, maintain a local incident history, and export records when discussing a problem with your IT team or ISP. A failed ICMP check describes reachability to configured peers; it does not establish that the entire Internet is down.
+Before: untouched upstream `61ae143`, actual Windows/.NET Framework 4.8 window; outbound traffic blocked **only for that executable**. After: public v0.1.1 / internal rc.4, source `6c812fd`, Windows Server 2025 x64, actual extracted apphost client-tree render with real loopback. These are different observations, not a benchmark or ISP outage. [Exact revisions, execution context and image hashes](docs/competition/SCREENSHOTS.md).
 
-Built with **Avalonia, C# and XAML**, migrating [Bill Menees’ WirePeep](https://github.com/menees/WirePeep) for the [2026 Avalonia Port Challenge](https://avaloniaui.net/blog/avalonia-port-challenge), targeting **Best IT Pro Tool**. No account, backend or cloud service is required.
+## The migration: four questions
+
+**How much work did the migration take?** Work began **October 16, 2026**; the application froze **October 22**. The verified upstream-to-release Git range contains **39 commits**. Using the same C#/XAML physical-line method, original production source has **4,374 lines** and Synups **4,469**, with **2,756 test lines** counted separately. The new scope includes durable storage, async execution and OS adapters; line counts are not effort estimates. Work was AI-assisted; no developer-hours total was measured. The release has **164 unique .NET cases** across platform/invocation combinations and **91.7% weighted legacy parity**. [Reproducible measurements, exclusions and exact range](docs/migration/MIGRATION_MEASUREMENTS.md).
+
+**What translated cleanly?** Target GUIDs and literal-IP identity, peer grouping, sorted rotating probes, stop on first success, failure grace and incident/comment intent survived the port. Original settings compatibility preserves supported profile IDs and timings using a genuine Menees `.stgx` fixture, preview and confirmed replacement with backup. Five linked-original characterization tests protect the inherited state/rotation behavior. [Original semantics and source](docs/migration/LEGACY_SEMANTICS.md) · [source-to-source audit, including settings](docs/migration/FEATURE_PARITY.md).
+
+**What needed rethinking?** WPF composition and window-owned scheduling could not carry over to other desktops. Avalonia presentation now sits over UI-free monitoring with bounded async probes, owned cancellation and awaited shutdown. Monotonic time measures durations; UTC records observations. Explicit error/unknown states prevent a failed probe or shutdown from inventing recovery. SQLite replaces session-only incidents with durable comments, restart handling and failed-write recovery. Native tray, login and alert adapters isolate OS-specific behavior. [Original problems, implementations and tests](docs/migration/FEATURE_PARITY.md#why-this-migration-was-technically-difficult) · [architecture decisions](docs/migration/ARCHITECTURE.md#architecture-decisions-and-operational-trade-offs).
+
+**What surprised you?** A Linux window without a real window manager did not prove minimize/restore behavior; Openbox made that check meaningful. Notification requests did not prove delivery, and the failed Windows adapter was withdrawn. macOS archive handling affected signature integrity. Async UI actions exposed focus/lifecycle races, while SQLite failures required retaining pending evidence through shutdown. These failures changed the implementation and the acceptance claims. [Dated migration log](docs/migration/MIGRATION_LOG.md) · [distribution findings](docs/release/DISTRIBUTION_TRUST.md).
 
 ## Migration at a Glance
 
-| What to review | Published v0.1.1 |
+| Review point | Public v0.1.1 |
 |---|---|
-| Original | [Bill Menees’ WirePeep](https://github.com/menees/WirePeep), MIT; preserved Windows WPF source and resources |
-| Port | Avalonia desktop on Windows/macOS/Linux; UI-free monitoring and durable SQLite incidents |
-| Preserved / improved | Rotating peer groups, first success and failure grace; bounded cancellation, honest uncertainty, restartable history and genuine settings import |
-| Legacy parity | **91.7% = (15 complete + 3 partial × 0.5) / 18**; alerts, preferences and placement/tray remain partial |
-| Evidence / tour | [Source-backed 18-item audit](docs/migration/FEATURE_PARITY.md), [architecture and decisions](docs/migration/ARCHITECTURE.md), [judge’s five-minute guide](docs/competition/JUDGES_GUIDE.md) |
+| Origin / attribution | [Bill Menees’ WirePeep](https://github.com/menees/WirePeep), MIT; original source and resources preserved |
+| Port | WPF → Avalonia, C# and XAML; Core monitoring separated from desktop composition |
+| Parity rubric | **(15 complete + 3 partial × 0.5) / 18 = 91.7%**; alerts, preferences and placement/tray remain partial |
+| Evaluation | [2026 Avalonia Port Challenge](https://avaloniaui.net/blog/avalonia-port-challenge), intended Best IT Pro Tool category; [five-minute judge’s guide](docs/competition/JUDGES_GUIDE.md) |
 
-[Download](#download) · [Quick start](#quick-start) · [Genuine before/after](#from-wirepeep-to-synups) · [Native verification](#platform-verification) · [Security/privacy](SECURITY.md)
+## Download and run
 
-## Download
+**Public [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1)** needs no account, backend or .NET SDK. Extract the **complete archive** and keep its files together.
 
-**Recommended public release: [v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), 91.7% legacy parity.** These permanent downloads require neither a GitHub account nor a .NET SDK. Extract the complete archive and keep its files together.
-
-| Platform | Download | Launch / installation note |
+| Platform | Direct download | Installation |
 |---|---|---|
-| Windows x64 | [ZIP](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip) | `Synups.exe` — unsigned; Windows or organizational policy may warn/block. |
-| macOS arm64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz) | `Synups.app` — ad-hoc integrity only, **not notarized; Gatekeeper rejects trusted distribution**. Read the [installation guidance](docs/release/INSTALLATION.md). |
-| Linux x64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz) | `./Synups` — retain executable permissions; native desktop libraries are required. |
+| Windows x64 | [ZIP](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip) | Extract; launch `Synups.exe`. Unsigned: Windows or organizational policy may warn or block. |
+| macOS arm64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz) | Extract; launch `Synups.app` where system policy permits. No Developer ID signing or notarization; retained Gatekeeper assessment rejects trusted distribution. |
+| Linux x64 | [tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz) | Extract preserving executable permission; launch `./Synups` in a graphical desktop with required native libraries. Tested on Ubuntu 24.04, X11/Xvfb + Openbox. |
 
-Verify downloads against [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS). The runtime, Avalonia, SQLite, licences and dependency notices are bundled. Do not disable operating-system security protections.
+[Installation and native dependencies](docs/release/INSTALLATION.md) · [SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS). Do not bypass OS security protections. Checksums establish byte integrity, not publisher identity.
 
-**Released v0.1.1 uses the verified, unchanged 0.1.1-rc.4 binaries**, application source `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`. Help/About and manifests retain **0.1.1-rc.4**; no binary was rebuilt or relabelled. [Anonymous verification of all 15 public assets](docs/evidence/verification/synups-0.1.1-publication.json) · [Release notes](https://github.com/samscript18/Synups/releases/tag/v0.1.1) · [Exact source and evidence](docs/release/DESKTOP_COMPLETION_CANDIDATE.md). [v0.1.0 remains an unchanged rollback release](https://github.com/samscript18/Synups/releases/tag/v0.1.0).
+Released binaries retain internal **0.1.1-rc.4**, frozen application **`6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`**. About/manifests and historical archive handoff text remain unchanged; this README and the public release description describe current publication status. [All 15 published assets and hashes](docs/evidence/verification/synups-0.1.1-publication.json).
 
-The frozen archives and supplemental assets retain their original build-time/handoff text, including older prepublication wording. Their bytes are intentionally unchanged. Use this README, the corrected public release description and the repository installation guide for current status; [the original publication receipt](docs/evidence/verification/synups-0.1.1-publication.json) remains historical evidence.
+This is desktop-first because monitoring needs local ICMP, native lifecycle/tray integration and persistent local evidence. A browser sandbox or mobile background lifecycle would require a different execution model; neither is a supported product here.
 
-## See Synups
+## Key product capabilities
 
-These genuine overview captures show the exact **v0.1.1 / internal rc.4 binaries**, using real loopback ICMP. The separately linked incident sequence retains its original rc.3 source qualification: controlled packet filtering in an isolated Linux namespace, not an ISP outage.
+- **Monitor selected peers:** configurable groups, rotating alternatives, finite-timeout ICMP and failure grace. A group stops probing after its first success; other peers can remain stale/not checked.
+- **Retain evidence:** confirmed incidents, observed recovery, comments, interrupted sessions and SQLite history; paginated review, database backup, chronological UTC CSV and automatic session logs.
+- **See uncertainty:** connected, disconnected, unavailable, stale and not-checked states. Only successful probes produce RTT; ICMP loss alone does not establish Internet failure.
+- **Configure deliberately:** first-target setup, original-profile import, preferences and explicit gateway/candidate discovery. Confirm before adding; no automatic subnet scan or network reconfiguration.
 
-![Synups rc.4 monitoring a real loopback target on Windows](docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-overview.png)
-
-| Windows | macOS | Linux / X11 |
+| First-target setup · rc.4 | Original-settings import action · rc.4 | Incident timeline · historical rc.3 |
 |---|---|---|
-| ![Windows overview](docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-overview.png) | ![macOS overview](docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-overview.png) | ![Linux overview](docs/evidence/after/2026-10-22-desktop-completion/linux-x64/exercise-overview.png) |
+| ![Synups rc.4 Windows first-run form with group, target and authorized IP fields; monitoring stopped](docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-first-run.png) | ![Synups rc.4 Windows import action showing Preview loaded status above gateway controls; full preview is outside the viewport](docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-legacy-import-preview.png) | ![Synups rc.3 Linux incident history showing observed recovery after controlled namespace-local ICMP filtering](docs/evidence/after/2026-10-22-legacy-completion/linux-incident/recovered-history.png) |
 
-[Fresh first run](docs/evidence/after/2026-10-22-desktop-completion/osx-arm64/exercise-first-run.png) · [Actual Mac OS window](docs/evidence/after/2026-10-22-legacy-completion/macos-normal-launch.png) · [Real incident demonstration](docs/competition/INCIDENT_DEMO.md) · [Screenshot provenance](docs/evidence/README.md)
+Setup/import: source `6c812fd`, Windows Server 2025 x64, programmatically driven extracted apphost client renders. **The retained import image shows “Preview loaded”, not the complete review UI**; a full-preview screenshot is unavailable. Import/confirmation/backup are verified in native action reports. Incident: source `7ca85cc`, Linux Xvfb/Openbox production-source component harness in a disposable network namespace, **not a fresh rc.4 packaged-executable demo**. [Per-image provenance](docs/competition/SCREENSHOTS.md) · [original rc.3 incident sequence and CSV](docs/competition/INCIDENT_DEMO.md).
 
-## Features and practical uses
+To begin: launch, enter a group/name and authorized literal IP, choose **Add target and create group**, then **Start monitoring**. Opening the app sends no probes unless monitoring-on-launch was deliberately enabled. Review **Activity and outages** when records exist; stop before editing configuration. [Evaluation walkthrough](docs/competition/JUDGES_GUIDE.md#five-minute-evaluation).
 
-- **Diagnose intermittent reachability:** real finite-timeout ICMP, configurable peer groups, polling intervals and failure grace.
-- **Keep useful evidence:** confirmed incidents, observed recoveries, comments, interrupted sessions and local SQLite history across restarts.
-- **Understand uncertainty:** connected, disconnected, unavailable, stale and not-checked states; actual RTT only after a successful probe.
-- **Share troubleshooting records:** chronological UTC CSV, automatic JSON/CSV session logs and observed-duration summaries.
-- **Configure your own monitoring:** named IPv4/IPv6 targets, group membership, persistent settings and guided first-target setup.
-- **Migrate actual WirePeep profiles in rc.4:** preview a genuine Menees `.stgx` profile, confirm replacement and keep a backup; original IDs/timings are preserved and nothing starts automatically. Unsupported formats are refused.
-- **Use desktop controls:** Start/Stop, window preferences, clipboard/context actions, Help, transition alerts and safe tray/restoration behavior.
-- **Discover deliberately:** inspect native gateway candidates or explicitly check the original modem/transceiver addresses, then confirm before adding. No subnet scan, network change or startup discovery.
+## Cross-platform verification
 
-Some features are newer than v0.1.0; the [version-specific inventory](docs/migration/FEATURE_PARITY.md) distinguishes them from public v0.1.0.
+These are **v0.1.1-specific** results from [exact-source native CI](https://github.com/samscript18/Synups/actions/runs/39850198899), not diagnostics alpha results.
 
-## Quick start
+| Executed environment | Compiled .NET default tests | Separate real/native evidence | Extracted executable | Major remaining limitation |
+|---|---|---|---|---|
+| Windows Server 2025 x64 | 159 passed, 5 intentional skips | 3 passed; 1 audio-request check | Six stages passed | Unsigned; native notification delivery failed observation |
+| macOS 15 arm64 | 159 passed, 5 intentional skips | 3 passed; 1 audio-request check | Six stages passed; repeated locally | No Developer ID/notarization; physical acceptance incomplete |
+| Ubuntu 24.04 x64, Xvfb + Openbox | 160 passed, 4 intentional skips | 3 passed; 1 safe audio-fallback check | Six stages passed | Virtual X11 desktop; wider Wayland/physical acceptance unverified |
 
-1. Extract and launch the platform package, following its installation guidance.
-2. In v0.1.1 (internal rc.4), enter a group name, target name and a literal IP you are authorized to monitor, then choose **Add target and create group**. In v0.1.0, use **Targets and groups** to create the group and target.
-3. Choose **Start monitoring**. Opening Synups does not probe automatically unless you deliberately enable monitoring on launch.
-4. Review live results, then **Activity and outages** for confirmed incidents. Add comments and export CSV when records exist.
-5. Stop before editing configuration. Settings and recorded evidence survive a clean restart.
+Each OS also passed eight Python safety tests and zero-warning Release builds. The **164 unique .NET cases** span invocations/platforms; they are not 164 default passes per OS. Extracted apphosts exercised real loopback, native windows/restoration, clipboard, genuine import/backup, preferences and SQLite restart/interruption/read-only repair. Five normal stages exited zero; the deliberate-kill stage expected nonzero termination. These are executed binaries with programmatically driven controls, not physical tray/keyboard/Save-panel or audible-delivery certification. [Retained reports and package hashes](docs/evidence/verification/2026-10-22-desktop-completion.json) · [full platform matrix](docs/migration/CROSS_PLATFORM.md).
 
-A peer group contains alternative targets: probing stops after its first success. Other members may remain stale or not checked. If ICMP is filtered or permission is denied, inspect the error and try an authorized responsive peer; missing replies alone do not identify the cause.
+## Known limitations and distribution trust
 
-## From WirePeep to Synups
+- **Distribution:** unsigned Windows; macOS ad-hoc integrity without Developer ID/notarization. Linux evidence covers the stated X11 environment. [Trust findings](docs/release/DISTRIBUTION_TRUST.md).
+- **Desktop integration:** notification delivery/audibility, actual next-login startup/removal, physical tray/keyboard/native Save-panel and multi-display acceptance remain incomplete. macOS Accessibility/event-post permission was denied; in-app alerts remain available. [Physical acceptance checklist](docs/release/MACOS_ACCEPTANCE.md).
+- **Environment:** wider IPv6, VPN, suspend and long-running GUI behavior are not comprehensively validated. Weighted parity remains **91.7%**, a functional inventory rather than effort or production-readiness certification.
+- **Evidence and storage:** missing replies do not identify a cause; stopping never implies recovery. Forced quit can lose uncommitted batches; failed writes require repair/Retry. CSV is not a complete database backup. [Storage/lifecycle design](docs/migration/ARCHITECTURE.md) · [security/privacy](SECURITY.md).
 
-| Original WirePeep | Synups |
-|---|---|
-| Windows WPF, .NET Framework/Windows-targeted .NET and Menees desktop integrations | Avalonia desktop UI on Windows, macOS and Linux |
-| WPF window owns scheduling, state presentation, logging and alerts | UI-free Core services, observable presentation and explicit OS boundaries |
-| Synchronous probes and wall-clock timing | Bounded asynchronous groups, finite cancellation and monotonic elapsed timing |
-| Sorted rotating peers, stop on success, failure grace and outage comments | Those intents preserved and characterized against original source |
-| Session-memory outage list and text logs | Durable SQLite incidents/comments, bounded history pages, streaming CSV and backups |
-| Unavailable results could clear failures | Errors remain indeterminate; only observed success recovers an incident |
+## Detailed technical documentation
 
-| Before: original WirePeep on Windows | After: actual rc.4 Avalonia client |
-|---|---|
-| ![Original WirePeep, actual preserved WPF application on Windows](docs/evidence/before/2026-10-22-wirepeep-windows.png) | ![Synups actual Windows client](docs/evidence/after/2026-10-22-desktop-completion/win-x64/exercise-overview.png) |
+[Judge’s guide](docs/competition/JUDGES_GUIDE.md) · [18-item source-backed parity audit](docs/migration/FEATURE_PARITY.md) · [architecture diagrams and trade-offs](docs/migration/ARCHITECTURE.md) · [migration measurements](docs/migration/MIGRATION_MEASUREMENTS.md) · [migration log](docs/migration/MIGRATION_LOG.md) · [source baseline](docs/migration/BASELINE.md) · [release readiness](docs/migration/RELEASE_READINESS.md) · [presentation audit](docs/release/v0.1.1/README_PRESENTATION_AUDIT.md).
 
-The original was freshly built from preserved upstream `61ae143` and captured on a disposable Windows runner with outbound traffic blocked for that executable. Its failed replies are controlled test results, not an ISP outage. [Original run](https://github.com/samscript18/Synups/actions/runs/39841203591) · [Before/after provenance](docs/evidence/README.md). The attributed upstream illustration is also retained.
+**Separate development:** **v0.2.0-alpha.1** diagnostics are **not included in the v0.1.1 downloads** and add no legacy parity points. Frozen alpha `3c4462a71cbb90032603cd3eaf4366c2561474d7` has separate [31-feature evidence](docs/diagnostics/FEATURE_MATRIX.md) and [hardening results/limits](docs/diagnostics/HARDENING_REPORT.md). Expansion work is paused; raw SYN/UDP reachability, capture and external providers are not verified frozen-alpha capabilities.
 
-## Migration challenges and accomplishments
-
-WirePeep.Common inherited Windows targets and depended on Menees configuration/discovery. Its WPF window also coordinated monitoring, logging, alerts and lifetime. Replacing the UI alone would not make the application portable.
-
-**What translated cleanly?** Literal-IP models, peer/group identity, sorted round-robin selection, stop-after-success, failure grace and outage/comment intent. The original default XML is reused; five linked-original characterization tests protect its state/rotation behavior.
-
-**What needed rethinking?** Presentation and platform integration were rewritten in Avalonia. Monitoring gained owned cancellation and bounded concurrency; UTC timestamps remain evidence while monotonic time governs durations. Probe errors and shutdown cannot invent recovery. SQLite reload, interruption handling, storage safeguards, paginated incidents and streaming export extend the original session-only evidence.
-
-**What surprised us?** Native minimize/restoration required a real Linux window manager, Mac archive handling affected signature integrity, Windows cold route queries needed bounded startup allowance, async UI actions could lose focus, and SQLite write failures required retaining evidence through shutdown. Actual failures and fixes are retained in the [migration log](docs/migration/MIGRATION_LOG.md).
-
-**What did it cost?** Repository sessions began **16 October 2026**; the frozen rc.4 application was committed **22 October**. It contains **39 commits** after upstream `61ae14391151ca9f209223e62c98fae3df5482b8` (1 June 2024): reproduce with `git rev-list --count 61ae14391151ca9f209223e62c98fae3df5482b8..6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`. Work was AI-assisted. No total developer hours were measured or invented; command timings are not labor hours.
-
-[Judge’s guide](docs/competition/JUDGES_GUIDE.md) · [Baseline](docs/migration/BASELINE.md) · [Exact legacy semantics](docs/migration/LEGACY_SEMANTICS.md) · [Migration log](docs/migration/MIGRATION_LOG.md)
-
-## Platform verification
-
-Frozen released application: **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**, internal version **0.1.1-rc.4**. [Successful exact-source three-OS run](https://github.com/samscript18/Synups/actions/runs/39850198899).
-
-| Actual environment | Default tests | Separate real/native | Audio request/fallback | Extracted executable |
-|---|---:|---:|---:|---|
-| Windows Server 2025 x64 |159 passed|3 passed|1 passed|Six stages passed|
-| macOS 15 arm64 |159 passed|3 passed|1 passed|Six stages passed|
-| Ubuntu 24.04 x64, Xvfb + Openbox |160 passed|3 passed|1 passed|Six stages passed|
-
-Each OS also passed eight Python safety tests, locked restore/auditing and zero-warning Release builds. There are **164 unique .NET cases** across invocations and platforms: four opt-in cases and one Linux-only Gio case explain intentional skips. Actual packaged apphosts verify native windows, minimized/restored state, clipboard, genuine profile preview/import/backup, real loopback, pane/log preferences, configuration, SQLite restart/interruption and read-only error/repair. Five normal exits are zero; deliberate termination is separate. The downloaded Mac apphost repeated all six stages locally.
-
-[CodeQL](https://github.com/samscript18/Synups/actions/runs/39851153694) retained zero SARIF results; scoped coverage is **79.83% lines / 66.89% branches**. [Reports and hashes](docs/evidence/verification/2026-10-22-desktop-completion.json). These tests drive real controls programmatically; they are not physical tray/keyboard/native Save-panel certification. Windows/macOS audio requests completed without audible-delivery verification; Linux's missing helper produced a safe fallback. Windows native notification delivery failed independent observation and that adapter was withdrawn; in-app alerts remain. Earlier endurance and controlled-incident evidence retain their original source qualification.
-
-Public v0.1.0 remains pinned to `2973d3349fcb5af5639597920842288e6549bbd0`: [105 default +1 opt-in per OS and packaged verification](https://github.com/samscript18/Synups/actions/runs/39682197118), [anonymous release verification](docs/evidence/verification/synups-0.1.0-publication.json). [Full platform matrix](docs/migration/CROSS_PLATFORM.md).
-
-## Legacy parity
-
-**Released v0.1.1 / verified rc.4: (15 complete + 3 partial × 0.5) / 18 = 91.7%.** Public v0.1.0 remains 72.2%; frozen rc.3 remains 88.9%. Existing binaries are never upgraded by changing a document.
-
-The remaining partial areas are **alerts** (actual OS delivery/audibility/attention), **preferences** (actual next-login execution/removal) and **placement/tray** (physical menu and multiple-display acceptance). Genuine settings-profile import is now tested using a fixture emitted by the untouched original Windows executable. This is a coarse functional inventory, not percent effort or universal platform certification. [Unchanged 18-item rubric](docs/migration/FEATURE_PARITY.md).
-
-## Known limitations
-
-- **Distribution trust:** Windows is unsigned; Mac ad-hoc integrity is not Developer ID signing/notarization and Gatekeeper rejects it. Linux proof is X11/Xvfb, not every Wayland desktop. [Installation](docs/release/INSTALLATION.md), [signing findings](docs/release/DISTRIBUTION_TRUST.md).
-- **Desktop acceptance:** macOS Accessibility/event-post permission prevents physical tray, keyboard and native Save-panel automation. [Exact human acceptance checklist](docs/release/MACOS_ACCEPTANCE.md). Native notification request acceptance does not establish delivery.
-- **Evidence semantics:** ICMP is not universal Internet health. Unobserved intervals stay uncertain; stopping never recovers an incident. No fabricated uptime or historical latency series exists.
-- **Data safety:** forced quit can lose uncommitted batches. Pending write failures require repair/Retry. CSV is not a full database backup; use the SQLite backup action. [Storage design](docs/migration/ARCHITECTURE.md).
-- **Scope:** broader IPv6/VPN/suspend/multi-display/long-running GUI acceptance, broader settings-format compatibility and remaining OS integrations need work. This is not a production-readiness or100%-parity claim.
-
-## Separate diagnostics development alpha
-
-Network diagnostics and incident investigation capabilities are under development separately in **v0.2.0-alpha.1**. **These features are not included in the v0.1.1 downloads.** The frozen alpha at `3c4462a71cbb90032603cd3eaf4366c2561474d7` adds explicit DNS/TCP/ICMP/path investigations, incident-linked sessions, baselines and local redacted PDF/JSON/Markdown evidence. Its tests, screenshots and package hashes are separate from the release evidence above, and it earns no additional legacy parity points.
-
-[Diagnostics branch](https://github.com/samscript18/Synups/tree/feat/network-diagnostics) · [31-feature matrix](docs/diagnostics/FEATURE_MATRIX.md) · [hardening report and limits](docs/diagnostics/HARDENING_REPORT.md) · [user guide](docs/diagnostics/USER_GUIDE.md) · [upgrade/rollback](docs/diagnostics/SQLITE_MIGRATION.md). The expansion is paused; raw SYN/UDP reachability, capture and external providers are not verified frozen-alpha capabilities. No alpha release or competition submission is implied.
-
-## Architecture and development
-
-Three projects: **Synups.Core** (configuration, monitoring, persistence), **Synups.Desktop** (Avalonia/MVVM and OS integration), **Synups.Tests** (characterization, deterministic and headless tests). No WebView, backend or production mock probe. [Two architecture snapshots and decision table](docs/migration/ARCHITECTURE.md) · [Release checklist](docs/migration/RELEASE_READINESS.md).
-
-With the pinned .NET10.0.402 SDK and Avalonia12.1.4:
-
-```sh
-cd synups
-dotnet restore ../Synups.slnx --locked-mode
-dotnet build ../Synups.slnx -c Release --no-restore
-dotnet test ../Synups.slnx -c Release --no-build
-dotnet run --project Synups.Desktop -c Release --no-build
-```
-
-The default tests do not require a public endpoint. Explicit native/network checks: set `SYNUPS_REAL_NETWORK_TESTS=1` and filter `FullyQualifiedName~RealLoopback|FullyQualifiedName~RealDefaultGateway`. Original `WirePeep.sln` and source remain separate. Local data paths and workspace selection are described in [installation](docs/release/INSTALLATION.md).
-
-## Licence, attribution and acknowledgements
-
-[MIT licence](LICENSE). Original WirePeep and resources: **Bill Menees**. The original source, copyright notices and [upstream ancestry](https://github.com/menees/WirePeep/commit/61ae14391151ca9f209223e62c98fae3df5482b8) are preserved. Bundled third-party licences/notices accompany every package. Thanks to Avalonia and the original library maintainers.
-
-[Prepared competition information](docs/release/SUBMISSION.md) answers the submission questions. Synups is built for the challenge; no official entry or acceptance is claimed. Publishing a newer release and submitting the form require separate authorization.
+[MIT licence](LICENSE); original WirePeep source/resources and copyright **Bill Menees** retained. [Prepared submission material](docs/release/SUBMISSION.md) is guidance only; no competition submission, acceptance or award is claimed. Public v0.1.0 remains an unchanged rollback release.

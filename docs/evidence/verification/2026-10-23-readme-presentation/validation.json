@@ -1,0 +1,70 @@
+{
+  "task": "Documentation and presentation only",
+  "task_start_commit": "c8537e9b50232ff98c4360953a404fca3b82c7e9",
+  "readme_before": {
+    "lines": 161,
+    "words": 1998,
+    "utf8_bytes": 18289
+  },
+  "readme_after": {
+    "lines": 86,
+    "words": 1407,
+    "utf8_bytes": 12953
+  },
+  "public_default_readme_after": {
+    "lines": 86,
+    "words": 1407,
+    "utf8_bytes": 13089
+  },
+  "unique_readme_screenshots": 5,
+  "screenshot_bytes_unchanged": true,
+  "full_import_preview_screenshot_available": false,
+  "incident_evidence_revision": "7ca85cccce6e3609d08d64e4f23172fa14fffb25",
+  "documentation_and_safety_tests": {
+    "passed": 22,
+    "failed": 0
+  },
+  "external_links": {
+    "passed": 12,
+    "failed": 0
+  },
+  "source_paths_verified_against_git": 70,
+  "migration_commits": 39,
+  "original_production_physical_lines": 4374,
+  "new_production_physical_lines": 4469,
+  "new_test_physical_lines": 2756,
+  "public_asset_set_read_only_verification": {
+    "passed": 15,
+    "failed": 0
+  },
+  "paused_source_patch_and_untracked_source_preserved": true,
+  "application_source_edits_by_this_task": false,
+  "application_builds": 0,
+  "executable_changes": false,
+  "asset_replacements": false,
+  "tag_changes": false,
+  "new_release_publication": false,
+  "competition_submission": false,
+  "claims_removed_or_corrected": [
+    "Removed duplicate overview screenshots and adjacent repeated migration/parity sections",
+    "Explicitly labelled import capture as Preview loaded status, with full review UI outside viewport",
+    "Preserved rc.3 component-harness incident qualification rather than calling it rc.4 packaged execution",
+    "Measured 39-commit exact Git range; no 103+ claim or developer-hour estimate",
+    "Excluded generated wrappers and third-party artwork from source measurements",
+    "Kept compiled, programmatically executed and physically accepted platform claims distinct"
+  ],
+  "public_default_documentation_and_safety_tests": {
+    "passed": 21,
+    "failed": 0
+  },
+  "local_documentation_links": {
+    "diagnostics_branch": 832,
+    "public_default_branch": 773,
+    "broken_links": 0
+  },
+  "public_default_readme_before": {
+    "lines": 161,
+    "words": 1998,
+    "utf8_bytes": 18561
+  }
+}
