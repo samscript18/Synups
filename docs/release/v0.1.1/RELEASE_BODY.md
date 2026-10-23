@@ -1,12 +1,24 @@
 # Synups 0.1.1 — verified rc.4 build
 
-**Prepared for review; not published.** Proposed tag `v0.1.1` must point to **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**. The downloadable application is the unchanged, verified **0.1.1-rc.4** build. Help/About, assembly identification and embedded manifests retain that internal version. The public release name does not patch or relabel the executable.
+**Published and available for download.** Public tag `v0.1.1` points to **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03**. The downloads contain the unchanged, verified **0.1.1-rc.4** application. Help/About, assembly identification and embedded manifests retain that internal version; the public release name does not patch or relabel the executable.
 
 Know when your network drops. Know how long it lasts. Keep the evidence.
 
 Synups is a local-first Avalonia network reliability monitor migrated from Bill Menees' WirePeep. Record confirmed ICMP incidents, observed recoveries, comments and durable local evidence. Reachability to configured peers does not prove whole-Internet availability.
 
 The README inside each frozen archive is the original build-time documentation snapshot and still discusses the older rc.3 proposal (88.9%). It is intentionally preserved byte-for-byte; use the accompanying current RELEASE_NOTES.md, INSTALLATION.md and VERIFICATION.json for this rc.4 payload (91.7%). Application identity is established by Help/About and ARTIFACT_MANIFEST.json, both identifying rc.4 and its exact source.
+
+## Download and run
+
+| Platform | Complete portable archive | Launch / important limit |
+|---|---|---|
+| Windows x64 | [Synups-win-x64.zip](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-win-x64.zip) | Extract all files, run `Synups.exe`. Unsigned; Windows/organizational policy may block it. |
+| macOS arm64 | [Synups-osx-arm64.tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-osx-arm64.tar.gz) | Extract `Synups.app`. Ad-hoc integrity only; not notarized, and Gatekeeper rejects trusted distribution. Do not bypass OS protections. |
+| Linux x64 | [Synups-linux-x64.tar.gz](https://github.com/samscript18/Synups/releases/download/v0.1.1/Synups-linux-x64.tar.gz) | Retain executable permissions and run `./Synups` in a supported graphical session with required native libraries. |
+
+[SHA256SUMS](https://github.com/samscript18/Synups/releases/download/v0.1.1/SHA256SUMS) · [installation guidance](https://github.com/samscript18/Synups/blob/feat/avalonia-migration/docs/release/INSTALLATION.md) · [judge’s quick tour](https://github.com/samscript18/Synups/blob/feat/avalonia-migration/docs/competition/JUDGES_GUIDE.md). No account, backend or .NET SDK is required; the runtime, SQLite and licences/notices are bundled. Keep the complete extracted directory together.
+
+For a quick check, create a named peer group and a literal IP you are authorized to monitor, choose **Start monitoring**, review real results/freshness, then inspect **Activity and outages** and CSV if an actual incident exists. Stop before editing. Restart to confirm saved settings/history. An empty history is valid; missing replies do not prove a whole-Internet outage.
 
 ## Highlights since v0.1.0
 
@@ -59,4 +71,10 @@ There are 164 unique .NET cases across invocations/platforms; four opt-in cases 
 
 Broader IPv6/VPN/suspend/accessibility/endurance remain limited. No simulated monitoring or invented recovery is introduced. Back up history through Synups; CSV is not a full database backup. Repair pending storage errors before clean close rather than force quitting.
 
-Public v0.1.0 and all historical candidates remain unchanged rollback baselines. Preparing or publishing this release does not submit the competition entry.
+## Separate diagnostics development
+
+Network diagnostics and incident investigation capabilities are under development separately in v0.2.0-alpha.1. These features are not included in the v0.1.1 downloads.
+
+[Diagnostics branch](https://github.com/samscript18/Synups/tree/feat/network-diagnostics) · [source-specific alpha hardening report](https://github.com/samscript18/Synups/blob/feat/network-diagnostics/docs/diagnostics/HARDENING_REPORT.md). Alpha features, screenshots, test counts and hashes do not change this release’s 91.7% legacy score or its verification results.
+
+Original WirePeep is by **Bill Menees**, retained under the [MIT licence](https://github.com/samscript18/Synups/blob/6c812fde9a29eeb8cfd6399a2f1a75e333e81e03/LICENSE). [Original project](https://github.com/menees/WirePeep) and source ancestry remain preserved. Public v0.1.0 and all historical candidates remain unchanged rollback baselines. Publishing or editing this release description does not submit the competition entry.

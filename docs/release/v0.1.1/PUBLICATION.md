@@ -1,4 +1,4 @@
-> **Publication complete:** [Synups v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), exact application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, internal0.1.1-rc.4. [All15 anonymous public checks](../../evidence/verification/synups-0.1.1-publication.json). Earlier preparation/checklist wording below is historical. Public assets and the approved release body are unchanged. No competition submission.
+> **Publication complete:** [Synups v0.1.1](https://github.com/samscript18/Synups/releases/tag/v0.1.1), exact application6c812fde9a29eeb8cfd6399a2f1a75e333e81e03, internal0.1.1-rc.4. [All15 anonymous public checks](../../evidence/verification/synups-0.1.1-publication.json). Earlier preparation/checklist wording below is historical. Public asset bytes remain unchanged. The release description is maintained separately from frozen assets; earlier approval/prepublication text below is historical. No competition submission.
 
 # v0.1.1 publication checklist — rc.4 alignment
 

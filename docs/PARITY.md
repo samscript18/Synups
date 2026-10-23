@@ -2,7 +2,7 @@
 
 The protected public v0.1.1 application is source `6c812fde9a29eeb8cfd6399a2f1a75e333e81e03`, internally `0.1.1-rc.4`. Its released inventory score is **16.5/18 = 91.7%**. The diagnostics expansion does not add points to that score or retroactively change released bytes.
 
-The authoritative inventory, historical scores, evidence and release alignment remain in [Feature inventory and parity](migration/FEATURE_PARITY.md#desktop-completion-rc4--current-application-inventory), including its [final public-release assessment](migration/FEATURE_PARITY.md#public-v011-917-released-inventory). This document restates the same original 18 rows. Complete = 1 point, partial = 0.5, pending = 0. Simulation is deliberately excluded from production, and tests/builds are an engineering gate; those two original source-inventory rows remain outside the denominator.
+The authoritative current inventory is in [Feature inventory and parity](migration/FEATURE_PARITY.md#current-18-item-inventory), with [historical assessments](migration/FEATURE_PARITY_HISTORY.md) retained separately. This document restates the same original 18 rows. Complete = 1 point, partial = 0.5, pending = 0. Simulation is deliberately excluded from production, and tests/builds are an engineering gate; those two original source-inventory rows remain outside the denominator.
 
 | Original inventory item | Frozen v0.1.1 score | Qualification preserved |
 |---|---|---|

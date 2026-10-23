@@ -110,6 +110,6 @@ The earlier unavailable-WPF statements are historical. [Run39841203591](https://
 The final original Windows image is genuine untouched upstream61ae143, captured under controlled per-application outbound blocking; failed rows are not an ISP outage. The raw original report conservatively leaves screenshot_verified_visually=false; a separate presentation record adds subsequent independent inspection without modifying raw evidence. The actual fixture used for import came from run39840176062, not the later screenshot run's different random IDs. The older attributed upstream illustration remains historical. [Presentation provenance](verification/2026-10-22-presentation.json). Manual macOS acceptance remains blocked by permissions and owner unavailability.
 
 
-## Aligned proposed v0.1.1 — exact rc.4 overviews
+## Published v0.1.1 — exact selected rc.4 overviews
 
 The three exercise-overview.png images under after/2026-10-22-desktop-completion are copied unchanged from the exact6c812fd extracted-apphost reports in successful run39850198899. They show real loopback and actual native client-tree rendering, not physical input or OS notification delivery. [Exact image hashes, live CI source/artifact recheck and release-alignment record](verification/2026-10-22-release-alignment.json). The original Windows before image retains upstream61ae143 and its controlled outbound-blocking provenance. The incident sequence and earlier normal Mac OS-window capture remain explicitly rc.3 evidence, never relabelled as rc.4.

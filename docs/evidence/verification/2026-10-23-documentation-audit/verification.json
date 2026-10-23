@@ -1,0 +1,39 @@
+{
+  "task": "Documentation, migration audit and release presentation only",
+  "public_application": "6c812fde9a29eeb8cfd6399a2f1a75e333e81e03",
+  "alpha_application": "3c4462a71cbb90032603cd3eaf4366c2561474d7",
+  "public_release_id": 421217596,
+  "release_title_unchanged": true,
+  "tag_and_publication_status_unchanged": true,
+  "all_15_asset_ids_names_sizes_and_sha256_digests_unchanged": true,
+  "live_body_matches_reviewed_file": true,
+  "before_body_sha256": "9d3a8a6b7d4567ce1dbb6390e870a3eaf45a29bb80fe8e31806413e921978783",
+  "after_body_sha256": "7e613f6e63b18026a5b4be04a9ab084bfde5eb1aeb97889ae19f774b3507ed5f",
+  "asset_hash_source": "All 15 live GitHub API SHA-256 digests and sizes match the reviewed frozen asset manifest; local frozen archives independently verified.",
+  "frozen_local_15_asset_archive_verifier": "Passed; no builds, signing or asset changes",
+  "cached_dotnet_regression": {
+    "total": 251,
+    "passed": 243,
+    "failed": 0,
+    "skipped": 8,
+    "command": "dotnet test Synups.slnx -c Release --no-build --no-restore",
+    "scope": "Pre-existing compiled test binaries only; not a build or certification of paused application edits",
+    "trx_sha256": "ba587e21bc82ae28312e55884a53c134f9eec53d547c52e4f432879f99fd079b"
+  },
+  "python_safety_and_documentation_tests": {
+    "diagnostics_branch": 19,
+    "public_branch": 18,
+    "failures": 0
+  },
+  "paused_application_files_unchanged": {
+    "synups/Synups.Core/Diagnostics/DiagnosticModels.cs": "d537b07e77a6bfedd0826d3ef8ca179183012a1692308b8ffd5afca83fd7c9d9",
+    "synups/Synups.Core/Persistence/DiagnosticStore.cs": "91d19136049e266c0c72b9507c28f61d8437c2e6dba092d71bd7e5507fe4df35",
+    "synups/Synups.Core/Diagnostics/UdpProbeTest.cs": "cb810fc2fa6aa36a09139b8558585f0c9c7cef5a5e95bab48ca81a6d6f61cbf8"
+  },
+  "original_source_tree": "fdd4ac81bc936dccae7e0697d95dd3b16d579419",
+  "original_licence_sha256": "68f2ae1659c084bc448af6d450e8ba1149a34ae990f6183c421fd695b20d548e",
+  "no_application_binaries_rebuilt": true,
+  "no_release_assets_changed": true,
+  "no_alpha_publication": true,
+  "no_competition_submission": true
+}

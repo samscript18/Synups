@@ -1,6 +1,6 @@
 # Diagnostics candidate architecture
 
-This describes the development candidate, not certification of a released binary. Feature and platform acceptance belongs in [FEATURE_MATRIX.md](FEATURE_MATRIX.md); earlier release evidence does not validate changed candidate code. The existing monitoring architecture is documented in [the migration architecture](../migration/ARCHITECTURE.md).
+This describes frozen alpha **3c4462a71cbb90032603cd3eaf4366c2561474d7 / 0.2.0-alpha.1**, separate from published v0.1.1 at **6c812fde9a29eeb8cfd6399a2f1a75e333e81e03 / 0.1.1-rc.4**. Paused uncommitted adapter experiments are outside this snapshot. See [the two architecture snapshots and engineering decisions](../migration/ARCHITECTURE.md). Feature and platform acceptance belongs in [FEATURE_MATRIX.md](FEATURE_MATRIX.md); earlier release evidence does not validate changed candidate code. The existing monitoring architecture is documented in [the migration architecture](../migration/ARCHITECTURE.md).
 
 ## Boundaries and data flow
 
@@ -12,7 +12,7 @@ The Avalonia diagnostics workspace prepares an exact target, selected tests, lim
 flowchart LR
     UI[Confirmed diagnostics workspace] --> Runner[Bounded diagnostic runner]
     Runner --> TCP[TCP connect]
-    Runner --> DNS[Explicit DNS UDP]
+    Runner --> DNS[Explicit DNS UDP with bounded TCP fallback]
     Runner --> ICMP[ICMP quality and TTL path]
     Runner --> Config[Read-only configuration]
     Runner --> Store[Serialized SQLite history store]

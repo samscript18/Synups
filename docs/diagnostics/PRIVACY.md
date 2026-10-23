@@ -1,4 +1,6 @@
-# Diagnostics privacy behavior
+# Diagnostics privacy — separate frozen alpha
+
+This describes `0.2.0-alpha.1` at **3c4462a71cbb90032603cd3eaf4366c2561474d7**, not the public v0.1.1 downloads. Published monitoring/CSV and alpha diagnostics have different data/traffic scopes. Paused, uncommitted expansion experiments and future per-run-consent plans are not verified capabilities. See the [two-snapshot security policy](../../SECURITY.md) and [architecture](../migration/ARCHITECTURE.md).
 
 Diagnostics are local, explicit network investigations. There is no runtime telemetry or automatic upload in this candidate. This statement does not mean a requested network test is offline: probes and resolver queries disclose information to the systems receiving them.
 
@@ -10,7 +12,7 @@ Using an alternative literal resolver requires explicit resolver consent in addi
 
 Optional reverse DNS is off by default. When enabled, it discloses observed hop addresses through PTR questions to the configured or approved resolver. It uses finite timeouts and a session-scoped cache, keeps literal addresses on failure, and does not contact enrichment services. Resolver-side caching may still apply; direct querying does not bypass upstream caches.
 
-There is no packet-capture provider, ASN lookup, remote probe service, diagnostic scheduler or new diagnostic threshold-alert delivery in this candidate. Disabled capabilities do not request elevation, collect packet payloads or call external providers. Existing monitoring notifications retain their separate existing configuration; diagnostic results do not silently enable them.
+In this frozen alpha, raw SYN and UDP reachability/traceroute are unavailable, packet capture is blocked/disabled, and ASN enrichment, remote probes, scheduled diagnostics and new diagnostic threshold alerts remain deferred. DNS-over-UDP is a separate implemented DNS transport. There is no claim that capture/external-service privacy protections were validated for absent providers. Disabled capabilities do not request elevation, collect packet payloads or call external providers. Existing monitoring notifications retain their separate existing configuration; diagnostic results do not silently enable them.
 
 ## What is stored
 
@@ -31,3 +33,9 @@ An unredacted export explicitly includes sensitive network details. JSON, Markdo
 For sensitive vulnerability reports, follow [SECURITY.md](../../SECURITY.md) rather than posting history, topology, comments, logs or screenshots publicly.
 
 System hostname lookups for TCP/ICMP are bounded by BoundedHostnameResolver (two native workers, no waiting queue). Caller cancellation can return promptly while the original OS lookup still owns its slot. Further lookups fail explicitly when those slots are occupied; literal IP requests avoid DNS. Shutdown also drains retained native tasks within the remaining seven-second target; a hung OS resolver keeps ownership and requires retry, rather than abandoning work. Direct DNS uses owned cancellable UDP and, after validated truncation with spare probe budget, one same-endpoint TCP socket under the original deadline. PTR remains UDP.
+
+## Evidence and distribution boundaries
+
+[The final source-specific audit](HARDENING_REPORT.md#final-evidence-export-audit) independently checked all 17 native-job bundles and 687 PDF pages; six bundles are explicitly labelled synthetic test-text fixtures, not production measurements. Exact-byte manifests, parse/bounds checks and representative rendering complement user redaction review. They do not authenticate authorship or guarantee anonymization. A user/attacker able to replace both files and hashes can regenerate a matching bundle.
+
+Public v0.1.1 remains unsigned on Windows and ad-hoc/non-notarized on macOS; neither checksums nor an alpha test pass establish publisher trust. Linux evidence is limited to the named runtime environments. Do not bypass OS protections. [Distribution and private reporting](../../SECURITY.md#distribution-and-dependency-security).
